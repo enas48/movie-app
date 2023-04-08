@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Link, useHistory } from "react-router-dom";
+import {FiSearch} from 'react-icons/fi'
 
 function Header() {
     return (
@@ -43,7 +43,7 @@ function Header() {
                 className="me-2"
                 aria-label="Search"
               />
-              <Button variant="outline-success">Search</Button>
+              <Button variant="outline-success"><FiSearch/></Button>
             </Form>
           </Navbar.Collapse>
         </Container>
