@@ -45,7 +45,6 @@ function Home(props) {
             width="100vw"
             height="70vh"
             captionStyle={captionStyle}
-            radius="10px"
             slideNumber={false}
             captionPosition="bottom"
             automatic={true}

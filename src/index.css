@@ -1,0 +1,13 @@
+.carousel-image{
+    width: fit-content;
+}
+.carousel-container{
+    background: #000!important;
+}
+.active, .dot:hover {
+    background-color:inherit;
+}
+body{
+    background-color: #000;
+    
+}
