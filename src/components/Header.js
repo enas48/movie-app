@@ -9,7 +9,7 @@ import {FiSearch} from 'react-icons/fi'
 
 function Header() {
     return (
-      <Navbar bg="light" expand="lg">
+      <Navbar  bg="dark" variant='dark'   expand="lg">
         <Container >
           <LinkContainer to="/">
             <Navbar.Brand>Movie</Navbar.Brand>
@@ -39,11 +39,11 @@ function Header() {
             <Form className="d-flex">
               <Form.Control
                 type="search"
-                placeholder="Search"
+                placeholder="Search for Movies"
                 className="me-2"
                 aria-label="Search"
               />
-              <Button variant="outline-success"><FiSearch/></Button>
+              <Button variant="outline-light"><FiSearch/></Button>
             </Form>
           </Navbar.Collapse>
         </Container>

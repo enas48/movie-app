@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import * as MovieApi from '../MovieApi';
+import * as MovieApi from '../api/MovieApi';
 import Header from "../components/Header";
 import { Carousel } from 'react-carousel-minimal';
 function Home(props) {
@@ -12,41 +12,44 @@ function Home(props) {
         fontSize: '2em',
         fontWeight: 'bold',
     }
-
+/*615 1023313*/
     useEffect(() => {
         let preloadImages = async (results) => {
+            console.log(results);
             for (let data of results) {
-                const response = await fetch(`https://image.tmdb.org/t/p/w500/${data.poster_path}`)
+                if(data?.backdrop_path && data.backdrop_path!==null){
+                const response = await fetch(`https://image.tmdb.org/t/p/w500/${data.backdrop_path}`)
                 const image = await response
+                if(image?.url){
+                    if(data?.id !== 615 && data?.id !== 1023313 && data?.id !== 943822  && data?.id !== 677179){
                 imageArr.push({ id: data.id, image: image.url, caption: data.original_title })
-            }
-
+                    }
+                 } }
+                }
+                console.log(imageArr)
             setImages(imageArr)
         }
         MovieApi.popularMovies().then(movie => {
-            console.log(movie);
             preloadImages(movie.results)
         })
 
     }, [])
     return (
-        <>
+        <div className="home">
             <Header />
-            <Container fluid>
-                <Row className="justify-content-md-center">
-                    <Col >
+          
         <div style={{
-          padding: "0 20px"
+          padding: "0"
         }}>
             {images.length!==0&&
           <Carousel
             data={images}
-            time={5000}
+            time={2100}
             width="100vw"
-            height="70vh"
+            height="92.5vh"
             captionStyle={captionStyle}
             slideNumber={false}
-            captionPosition="bottom"
+            captionPosition="center"
             automatic={true}
             dots={true}
             pauseIconColor="white"
@@ -54,21 +57,19 @@ function Home(props) {
             slideBackgroundColor="darkgrey"
             slideImageFit="cover"
             thumbnails={true}
-            thumbnailWidth="100px"
+            thumbnailWidth="185px"
             style={{
               textAlign: "center",
               maxWidth: "100vw",
-              maxHeight: "70vh",
-              margin: "40px auto",
+              maxHeight: "92.5vh",
+              margin: "0px auto",
             }}
           />
         }
         </div>
 
-                    </Col>
-                </Row>
-            </Container>
-        </>
+        
+        </div>
     );
 }
 

@@ -1,4 +1,5 @@
 import Home from "./pages/Home";
+import './index.css';
 import Series from "./pages/Series";
 import Upcoming from "./pages/Upcoming";
 import Movies from "./pages/Movies";

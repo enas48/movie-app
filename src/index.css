@@ -1,13 +1,117 @@
-.carousel-image{
+:root {
+    --primary: #f00000;
+    --primary-active: #e80d0d;
+    --secondry: #f7bb0e;
+    --secondry-active: #eab414;
+    --white: #fbfbfb;
+    --white-active: #f9f9f9;
+    --dark: #0d0d0f;
+    --dark-active: #1a171e;
+}
+
+body {
+    background: var(--dark);
+    color: var(--white);
+}
+
+.active,
+.dot:hover {
+    background-color: inherit;
+}
+
+a {
+    text-decoration: none;
+}
+.navbar-toggler:focus{
+    box-shadow: 0px 0px 1px 0.03rem #eee;
+}
+/*header*/
+.navbar {
+    background-color: var(--dark-active) !important;
+    z-index: 22;
+}
+
+.navbar-brand {
+    color: var(--primary)
+}
+
+.navbar-brand.active ,.navbar-brand:hover {
+    color: var(--primary-active)
+}
+
+.nav-link {
+    color: var(--white);
+}
+
+.nav-link.active,
+.nav-link:hover {
+    color: var(--secondry) !important;
+}
+
+.btn {
+    align-items: center;
+    display: flex;
+    transition: 0.2s all ease-in-out;
+}
+
+.form-control {
+    background: var(--dark);
+    transition: 0.2s all ease-in-out;
+    color: var(--white-active);
+}
+
+.form-control:hover {
+    box-shadow: 0px 0px 1px 0.03rem #eee;
+}
+
+.form-control:focus {
+    background: var(--dark);
+    border-color: var(--white);
+    box-shadow: 0px 0px 1px 0.03rem #eee;
+    color: var(--white-active);
+}
+
+/*carsoul*/
+.home .carousel-image {
     width: fit-content;
+    margin: auto;
 }
-.carousel-container{
-    background: #000!important;
+
+.home .carousel-container {
+    background: var(--dark) !important;
 }
-.active, .dot:hover {
-    background-color:inherit;
+
+.home .prev,
+.home .next {
+    display: none;
 }
-body{
-    background-color: #000;
-    
+
+.home .thumbnails {
+    max-width: 96.6vw !important;
+    margin: auto;
+    margin-top: -12%;
+    z-index: 2222;
+    position: relative;
+}
+
+.home .thumbnail {
+    margin: 14px;
+    transition: 0.2s all ease-out;
+}
+
+.home .active-thumbnail {
+    border: #476ff1 solid 3px;
+    transform: scale(1.2);
+}
+
+@media (max-width:1024px) {
+    .home .thumbnails {
+        margin-top: -18%;
+    }
+}
+
+@media (max-width:768px) {
+    .home .thumbnails {
+        margin-top: -23%;
+    }
 }
