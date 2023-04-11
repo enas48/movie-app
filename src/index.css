@@ -1,3 +1,4 @@
+/*general*/
 :root {
     --primary: #f00000;
     --primary-active: #e80d0d;
@@ -21,31 +22,6 @@ body {
 
 a {
     text-decoration: none;
-}
-.navbar-toggler:focus{
-    box-shadow: 0px 0px 1px 0.03rem #eee;
-}
-/*header*/
-.navbar {
-    background-color: var(--dark-active) !important;
-    z-index: 22;
-}
-
-.navbar-brand {
-    color: var(--primary)
-}
-
-.navbar-brand.active ,.navbar-brand:hover {
-    color: var(--primary-active)
-}
-
-.nav-link {
-    color: var(--white);
-}
-
-.nav-link.active,
-.nav-link:hover {
-    color: var(--secondry) !important;
 }
 
 .btn {
@@ -71,9 +47,49 @@ a {
     color: var(--white-active);
 }
 
+
+
+/*header navbar*/
+.navbar-toggler,.navbar-toggler:hover,.navbar-toggler.active,
+.btn,.btn:hover,.btn.active{
+border: none;
+
+outline: 0;
+}
+.navbar-toggler:focus,.btn:focus{
+    box-shadow: none;
+}
+.navbar {
+    background-color: var(--dark-active) !important;
+    z-index: 22;
+}
+
+.nav-link {
+    color: var(--white);
+}
+
+.nav-link.active,
+.nav-link:hover {
+    color: var(--secondry) !important;
+}
+
+.navbar-brand {
+    color: var(--primary);
+    font-size: 1.25rem;
+}
+
+.navbar-brand.active ,.navbar-brand:hover {
+    color: var(--primary-active)!important
+}
+.navbar .container{
+    align-items: center;
+}
+
+
+
 /*carsoul*/
 .home .carousel-image {
-    width: fit-content;
+    /* width: fit-content; */
     margin: auto;
 }
 
@@ -115,3 +131,35 @@ a {
         margin-top: -23%;
     }
 }
+
+::-webkit-scrollbar {
+    width: 0.5vw;
+    height: 2vh;
+    z-index: 23;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: transparent;
+    border-top: 60px solid  var(--secondry);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: transparent;
+    border-top: 60px solid  var(--secondry-active);
+}
+.movie-icon {
+    color: var(--primary);
+    vertical-align: bottom;
+    font-size: 2rem;
+    margin-right: 0.6rem;
+}
+

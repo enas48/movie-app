@@ -1,0 +1,78 @@
+/*side bar style*/
+.content-container{
+    display: flex;
+    flex-direction: row;
+}
+.content{
+    left: 230px;
+    position: relative;
+    padding: 1.5rem;
+
+}
+.left-sidebar {
+    height: 100%;
+    width: 230px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: var(--dark-active);
+    overflow-x: hidden;
+}
+
+.mob-nav{
+    display: none!important;
+}
+
+.navbar-brand.sidebar {
+    position: fixed;
+    background: var(--dark-active);
+    top: 0;
+    width: 220px;
+    padding: 1.5rem 0.5rem 0.4rem;
+    
+}
+
+
+@media (max-width:768px) {
+    .content-container{
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    .navbar-brand.sidebar{
+        display: none;
+    }
+    .left-sidebar {
+        height: 0%;
+        width: 100%;
+        position: fixed;
+        top: 0px;
+        left: 0;
+        padding: 0;
+        transition: 0.5s height ease-in-out;
+        margin-top: 65px;
+
+    }
+    .left-sidebar.active{
+        height: 100%;
+    }
+    .content{
+        left: 0px;
+    
+    }
+    .mob-nav{
+        display: flex!important;
+        background: var(--dark-active);
+        width: 100%;
+        margin-top: 0!important;
+        padding-top: 1rem;
+        box-shadow: 3px 0px 5px #57525a;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+}
+.toggler-icon{
+    font-size: 1.7rem;
+    margin-right: 0.4rem;
+    color: #eee;
+}

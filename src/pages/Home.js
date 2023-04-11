@@ -21,7 +21,7 @@ function Home(props) {
                 const response = await fetch(`https://image.tmdb.org/t/p/w500/${data.backdrop_path}`)
                 const image = await response
                 if(image?.url){
-                    if(data?.id !== 615 && data?.id !== 1023313 && data?.id !== 943822  && data?.id !== 677179){
+                    if(data?.id !== 615 && data?.id !== 1023313 && data?.id !== 943822  && data?.id !== 677179 &&data?.id!==758323){
                 imageArr.push({ id: data.id, image: image.url, caption: data.original_title })
                     }
                  } }
