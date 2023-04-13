@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from "react";
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import MessageModal from "../uiElements/messageModel";
 import * as MovieApi from '../api/MovieApi';
 import Header from "../components/Header";
 import { Carousel } from 'react-carousel-minimal';
+import Loading from "../uiElements/preloading";
 function Home(props) {
+    const [isLoading, setIsLoading] = useState(false);
+    const[error, setError]=useState(null);
+
     const [images, setImages] = useState([]);
     let imageArr = [];
     const captionStyle = {
         fontSize: '2em',
         fontWeight: 'bold',
     }
-/*615 1023313*/
+ 
     useEffect(() => {
         let preloadImages = async (results) => {
-            console.log(results);
+            setIsLoading(true);
             for (let data of results) {
                 if(data?.backdrop_path && data.backdrop_path!==null){
                 const response = await fetch(`https://image.tmdb.org/t/p/w500/${data.backdrop_path}`)
@@ -26,8 +28,9 @@ function Home(props) {
                     }
                  } }
                 }
-                console.log(imageArr)
+                setError('g')
             setImages(imageArr)
+            setIsLoading(false);
         }
         MovieApi.popularMovies().then(movie => {
             preloadImages(movie.results)
@@ -35,6 +38,10 @@ function Home(props) {
 
     }, [])
     return (
+        <>
+             {error && <MessageModal text={error} success={false} />}
+              {isLoading && <Loading />}
+   
         <div className="home">
             <Header />
           
@@ -70,6 +77,7 @@ function Home(props) {
 
         
         </div>
+        </>
     );
 }
 

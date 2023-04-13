@@ -17,7 +17,7 @@ body {
 
 .active,
 .dot:hover {
-    background-color: inherit;
+    background-color: inherit!important;
 }
 
 a {
@@ -162,4 +162,44 @@ outline: 0;
     font-size: 2rem;
     margin-right: 0.6rem;
 }
-
+.loading{
+    background: #0d0d0f;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    /* color: #fff; */
+    z-index: 33333333333333333;
+    position: fixed;
+    left: 0;
+}
+.spinner{
+    -webkit-animation: lds-ripple 1s infinite ease-in-out;
+    animation: lds-ripple 1s infinite ease-in-out;
+    background-color: #f00000;
+    border-radius: 100%;
+    height: 4.5rem;
+    width: 4.5rem;
+   }
+  @keyframes lds-ripple {
+    0% {
+     -webkit-transform: scale(0);
+     transform: scale(0);
+     opacity: 0;
+    }
+    100% {
+      -webkit-transform: scale(1);
+      opacity: 0.5;
+     transform: scale(1);
+     opacity: 0.7;
+    }
+  }
+.alert-container{
+    position: fixed;
+    z-index: 100;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 1%;
+}
