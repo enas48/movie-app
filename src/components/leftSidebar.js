@@ -9,7 +9,7 @@ function LeftSidebar(props) {
         <div className={props.active ? 'active left-sidebar' : 'left-sidebar'}>
 
             <Nav
-                className="me-auto my-2 my-lg-0 d-flex flex-column"
+                className="me-auto my-lg-0 d-flex flex-column"
 
                 navbarScroll
             >
