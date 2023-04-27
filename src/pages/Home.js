@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useMemo} from "react";
 import MessageModal from "../uiElements/messageModel";
 import * as MovieApi from '../api/MovieApi';
 import Header from "../components/Header";
@@ -9,7 +9,7 @@ function Home(props) {
     // const[error, setError]=useState(null);
 
     const [images, setImages] = useState([]);
-    let imageArr = [];
+    let imageArr = useMemo(() => [], []);
     const captionStyle = {
         fontSize: '2em',
         fontWeight: 'bold',
@@ -37,7 +37,7 @@ function Home(props) {
             preloadImages(movie.results)
         })
 
-    }, [])
+    }, [imageArr])
     return (
         <>
              {/* {error && <MessageModal text={error} success={false} />} */}
