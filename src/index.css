@@ -89,7 +89,7 @@ outline: 0;
 
 /*carsoul*/
 .home .carousel-image {
-    /* width: fit-content; */
+    width: fit-content;
     margin: auto;
 }
 
@@ -105,7 +105,7 @@ outline: 0;
 .home .thumbnails {
     max-width: 96.6vw !important;
     margin: auto;
-    margin-top: -12%;
+    margin-top: -30vh;
     z-index: 2222;
     position: relative;
 }
@@ -113,22 +113,33 @@ outline: 0;
 .home .thumbnail {
     margin: 14px;
     transition: 0.2s all ease-out;
+    max-width: 150px;
 }
 
 .home .active-thumbnail {
-    border: #476ff1 solid 3px;
+    border: none;
     transform: scale(1.2);
 }
 
 @media (max-width:1024px) {
     .home .thumbnails {
-        margin-top: -18%;
+        margin-top: -38vh;
     }
 }
 
 @media (max-width:768px) {
     .home .thumbnails {
-        margin-top: -23%;
+        margin-top: -30vh;
+    }
+}
+@media (max-width:678px) {
+    .home .thumbnails {
+       display: none;
+    }
+    .home .carousel-container{
+        height: 86vh!important;
+        max-height: 100vh!important;
+        overflow: hidden;
     }
 }
 

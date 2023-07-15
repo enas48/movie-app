@@ -18,6 +18,7 @@
     left: 0;
     background-color: var(--dark-active);
     overflow-x: hidden;
+    
 }
 
 .mob-nav{
@@ -46,15 +47,18 @@
         height: 0%;
         width: 100%;
         position: fixed;
+        flex-direction: column;
         top: 0px;
         left: 0;
         padding: 0;
-        transition: 0.5s height ease-in-out;
+        transition:  height 0.5s  ease;
         margin-top: 65px;
+        background: var(--dark-active);
 
     }
     .left-sidebar.active{
         height: 100%;
+   
     }
     .content{
         left: 0px;
@@ -75,4 +79,9 @@
     font-size: 1.7rem;
     margin-right: 0.4rem;
     color: #eee;
+}
+.nav{
+    background: var(--dark-active);
+    height: 100%;
+    flex-wrap: nowrap;
 }
