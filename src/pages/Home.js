@@ -28,7 +28,7 @@ function Home(props) {
                     }
                  } }
                 }
-                setError('g')
+                // setError('g')
             setImages(imageArr)
             setIsLoading(false);
         }
