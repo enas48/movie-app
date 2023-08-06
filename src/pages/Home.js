@@ -29,7 +29,7 @@ function Home(props) {
                     }
                  } }
                 }
-         
+        
             setImages(imageArr)
             await new Promise(r => setTimeout(r, 800))
             // Toggle loading state
