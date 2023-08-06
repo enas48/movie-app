@@ -31,8 +31,12 @@ function Home(props) {
                 }
          
             setImages(imageArr)
-            setIsLoading(false);
+            await new Promise(r => setTimeout(r, 800))
+            // Toggle loading state
+            setIsLoading(loading => !loading)
+            // setIsLoading(false);
         }
+        
         MovieApi.popularMovies().then(movie => {
             preloadImages(movie.results)
         })

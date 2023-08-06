@@ -2,7 +2,7 @@ import { useState } from "react";
 import Home from "./pages/Home";
 import './index.css';
 import Series from "./pages/Series";
-import Upcoming from "./pages/Upcoming";
+import Bookmark from "./pages/Bookmark";
 import Movies from "./pages/Movies";
 import { Routes, Route } from "react-router-dom";
 
@@ -19,7 +19,7 @@ function App() {
         
             <Route path="/series" element={ <Series/> } />
          
-            <Route path="/upcoming" element={ <Upcoming/> } />
+            <Route path="/bookmark" element={ <Bookmark/> } />
          
             </Routes>
   

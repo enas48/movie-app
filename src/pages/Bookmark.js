@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Loading from '../uiElements/preloading'
 import Search from '../components/search'
 
-function Series(props) {
+function Bookmark(props) {
     const [loading, setLoading] = useState(true)
     useEffect(() => {
       // Loading function to load data or
@@ -24,11 +24,11 @@ function Series(props) {
     return ( 
         <>
            <SidebarLayout>
-           <Search label="Search for Series"/>
-            Series
+           <Search label="Search for Bookmark"/>
+           Bookmark
             </SidebarLayout>
  </>
     )};
 }
 
-export default Series;
+export default Bookmark;

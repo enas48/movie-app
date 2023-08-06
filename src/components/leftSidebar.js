@@ -1,40 +1,95 @@
-import React, { useEffect } from "react";
-import Nav from 'react-bootstrap/Nav';
-import { LinkContainer } from 'react-router-bootstrap';
+import React, { useEffect } from 'react'
+import Nav from 'react-bootstrap/Nav'
+import { LinkContainer } from 'react-router-bootstrap'
 import { RiMovie2Fill } from 'react-icons/ri'
-function LeftSidebar(props) {
+import { MdLocalMovies,MdPersonAddAlt1 } from 'react-icons/md'
+import { PiTelevisionBold, PiBookmarkSimpleFill } from 'react-icons/pi'
+import { AiFillHome } from 'react-icons/ai'
+import {BiLogIn} from 'react-icons/bi'
+import { useState } from 'react'
 
-    return (
+function LeftSidebar (props) {
+  const [auth, setAuth] = useState(false)
+  return (
+    <div className='left-sidebar'>
+        <LinkContainer to='/'>
+          <Nav.Link className='navbar-brand sidebar  mb-3'>
+            <RiMovie2Fill className='movie-icon' />
+            <span className='icon-text'>Movie</span>
+          </Nav.Link>
+        </LinkContainer>
 
-        <div className={props.active ? 'active left-sidebar' : 'left-sidebar'}>
+      <Nav
+        className='m-auto m-lg-0 me-lg-auto my-lg-0 d-flex flex-row flex-lg-column align-items-baseline'
+        navbarScroll
+      >
 
-            <Nav
-                className="me-auto my-lg-0 d-flex flex-column"
-
-                navbarScroll
-            >
-                <LinkContainer to="/">
-                    <Nav.Link className="navbar-brand sidebar  mb-3"><RiMovie2Fill className="movie-icon" />Movie</Nav.Link>
-                </LinkContainer>
-                <LinkContainer to="/" className="mt-lg-5 pt-lg-4">
-                    <Nav.Link>Home</Nav.Link>
-                </LinkContainer>
-                <LinkContainer to="/movies">
-                    <Nav.Link>Movies</Nav.Link>
-                </LinkContainer>
-                <LinkContainer to="/series">
-                    <Nav.Link>Series</Nav.Link>
-                </LinkContainer>
-                <LinkContainer to="/upcoming">
-                    <Nav.Link>Upcoming</Nav.Link>
-                </LinkContainer>
-
-
-            </Nav>
-
-
-        </div>
-    );
+        <LinkContainer to='/' className='mt-lg-5 pt-lg-4'>
+          <Nav.Link>
+            <span className='d-flex align-items-center gap-2'>
+              <AiFillHome />
+              <span className='icon-text'>Home</span>
+            </span>
+          </Nav.Link>
+        </LinkContainer>
+        <LinkContainer to='/movies'>
+          <Nav.Link>
+            <span className='d-flex align-items-center gap-2'>
+              <MdLocalMovies />
+              <span className='icon-text'>Movies</span>
+            </span>
+          </Nav.Link>
+        </LinkContainer>
+        <LinkContainer to='/series'>
+          <Nav.Link>
+            <span className='d-flex align-items-center gap-2'>
+              <PiTelevisionBold />
+              <span className='icon-text'>Series</span>
+            </span>
+          </Nav.Link>
+        </LinkContainer>
+        <LinkContainer to='/bookmark'>
+          <Nav.Link>
+            <span className='d-flex align-items-center gap-2'>
+              <PiBookmarkSimpleFill />
+              <span className='icon-text'>Bookmark</span>
+            </span>
+          </Nav.Link>
+        </LinkContainer>
+      </Nav>
+      <Nav>
+      {auth ? (
+          <LinkContainer to='/profile'>
+            <Nav.Link>
+              <img
+                src={process.env.PUBLIC_URL + './4.png'}
+                className='avater'
+                alt=''
+              />
+            </Nav.Link>
+          </LinkContainer>
+        ) : (
+          <span className='d-flex align-items-center'>
+            <LinkContainer to='/login'>
+              <Nav.Link>            
+              <span className='d-flex align-items-center gap-2'>
+                 <BiLogIn/>
+              <span className='icon-text'>Login</span>
+              </span>
+               </Nav.Link>
+            </LinkContainer>
+            <span>|</span>
+            <LinkContainer to='/signup'>
+              <Nav.Link>        <span className='d-flex align-items-center gap-2'>
+                 <MdPersonAddAlt1/>
+              <span className='icon-text'>Signup</span>
+              </span> </Nav.Link>
+            </LinkContainer>
+          </span>
+        )}
+      </Nav>
+    </div>
+  )
 }
 
-export default LeftSidebar;
+export default LeftSidebar
