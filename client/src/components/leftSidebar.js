@@ -79,7 +79,7 @@ function LeftSidebar (props) {
                </Nav.Link>
             </LinkContainer>
             <span>|</span>
-            <LinkContainer to='/signup'>
+            <LinkContainer to='/register'>
               <Nav.Link>        <span className='d-flex align-items-center gap-2'>
                  <MdPersonAddAlt1/>
               <span className='icon-text'>Signup</span>
