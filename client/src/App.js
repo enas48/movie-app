@@ -1,33 +1,33 @@
 import { useState, useEffect } from 'react'
-import Home from './pages/Home'
 import './index.css'
+import Home from './pages/Home'
 import Series from './pages/Series'
 import Bookmark from './pages/Bookmark'
 import Movies from './pages/Movies'
-import { Routes, Route } from 'react-router-dom'
 import Register from './pages/Register'
 import Login from './pages/Login'
+import Profile from './pages/Profile'
+import { Notfound } from './pages/Notfound'
+import { Routes, Route } from 'react-router-dom'
 import ProtectedRoute from './helpers/protectedRoute'
 import { setAuthToken } from './helpers/setAuthToken'
+import AuthContext from './helpers/authContext'
 
 function App () {
   const [token, setToken] = useState(localStorage.getItem('token'))
-
+  const [userId, setUserid] = useState(localStorage.getItem('id'))
   const [expireVal, setExpireVal] = useState(
     parseInt(localStorage.getItem('expireVal'))
   )
 
   useEffect(() => {
     let today = new Date()
-      let expired =
-        new Date(new Date().setDate(today.getDate() + expireVal)).getTime() - 10
-  
-      if (expired < Date.now()) {
-        // localStorage.removeItem('expireVal');
-        logout()
-      }
-   
- 
+    let expired =
+      new Date(new Date().setDate(today.getDate() + expireVal)).getTime() - 10
+
+    if (expired < Date.now()) {
+      logout()
+    }
   }, [expireVal])
 
   const login = data => {
@@ -35,8 +35,10 @@ function App () {
     data = data.data
     if (data.token) {
       localStorage.setItem('token', data.token)
-      setToken(data.token)
+      localStorage.setItem('id', data._id)
       localStorage.setItem('expireVal', data.expire)
+      setToken(data.token)
+      setUserid(localStorage.getItem('id'))
       setExpireVal(data.expire)
     }
   }
@@ -47,32 +49,50 @@ function App () {
 
   const logout = () => {
     setToken(null)
+    setUserid(null)
     setAuthToken(null)
-    localStorage.removeItem('token')
-    localStorage.removeItem('expireVal')
+    localStorage.clear()
   }
   return (
-    <>
-      <Routes>
-        <Route path='/' logOut={logout} element={<Home />} />
+    <AuthContext.Provider
+      value={{
+        loggedIn: !!token,
+        token: token,
+        userId: userId,
+        login: login,
+        logout: logout
+      }}
+    >
+      <>
+        <Routes>
+          <Route path='/' element={<Home onLogout={logout} />} />
+          <Route path='/movies' element={<Movies onLogout={logout} />} />
+          <Route path='/series' element={<Series onLogout={logout} />} />
+          <Route
+            path='/profile'
+            element={
+              <ProtectedRoute isAllowed={!!token}>
+                <Profile onLogout={logout} />{' '}
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/bookmark'
+            element={
+              <ProtectedRoute isAllowed={!!token}>
+                <Bookmark onLogout={logout} />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route path='/movies' logOut={logout} element={<Movies />} />
+          <Route path='/login' element={<Login onLogin={login} />} />
 
-        <Route path='/series' logOut={logout} element={<Series />} />
-        <Route
-          path='/bookmark'
-          element={
-            <ProtectedRoute isAllowed={!!token}>
-              <Bookmark logOut={logout} />
-            </ProtectedRoute>
-          }
-        />
+          <Route path='/register' element={<Register />} />
 
-        <Route path='/login' element={<Login onLogin={login} />} />
-
-        <Route path='/register' element={<Register />} />
-      </Routes>
-    </>
+          <Route path='*' element={<Notfound />} />
+        </Routes>
+      </>
+    </AuthContext.Provider>
   )
 }
 

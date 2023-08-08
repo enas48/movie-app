@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react'
+import axios from 'axios'
 import Loading from '../uiElements/preloading'
 import MessageModal from '../uiElements/messageModel'
-import { Link as LinkRouter } from 'react-router-dom'
+import Header from '../components/Header'
+import { Link as LinkRouter,useNavigate} from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import Header from '../components/Header'
 import { MdOutlineEmail } from 'react-icons/md'
+import { RiLockPasswordFill } from 'react-icons/ri'
+import {BsArrowRight} from 'react-icons/bs';
+
 const schema = yup.object().shape({
   email: yup
     .string()
@@ -47,14 +49,16 @@ export default function Login ({ onLogin }) {
   const onSubmit = data => {
     console.log(data)
     axios
-      .post('http://localhost:8000/users/login', data)
+      .post(`${process.env.REACT_APP_APP_URL}/users/login`, data)
       .then(response => {
         console.log(response.data.status)
         if (response.data.status === 200) {
           onLogin(response.data)
           console.log(response.data.message)
-          setMessage({ text: response.data.message, error: false })
-          return navigate('/', { replace: true })
+          // setMessage({ text: response.data.message, success: true })
+          setTimeout(function(){
+            return navigate('/', { replace: true })
+          },1000)
         }
       })
       .catch(err => {
@@ -91,7 +95,6 @@ export default function Login ({ onLogin }) {
             <div className='circle2'></div>
             <Form onSubmit={handleSubmit(onSubmit)}>
               <Form.Group className='mb-4' controlId='formBasicEmail'>
-                {/* <Form.Label>Email address</Form.Label> */}
                 <div className='icon-container'>
                   <span className='icon'>
                     <MdOutlineEmail />
@@ -109,8 +112,11 @@ export default function Login ({ onLogin }) {
                 </Form.Text>
               </Form.Group>
 
-              <Form.Group className='mb-5' controlId='formBasicPassword'>
-                {/* <Form.Label>Password</Form.Label> */}
+              <Form.Group className='mb-4' controlId='formBasicPassword'>
+              <div className='icon-container'>
+                  <span className='icon'>
+                  <RiLockPasswordFill />
+                  </span>
                 <Form.Control
                   {...register('password')}
                   name='password'
@@ -118,6 +124,7 @@ export default function Login ({ onLogin }) {
                   autoComplete='current-password'
                   placeholder='Password'
                 />
+                </div>
                 <Form.Text className='text-danger'>
                   {errors.password?.message}
                 </Form.Text>
@@ -125,10 +132,13 @@ export default function Login ({ onLogin }) {
 
               <Button
                 variant='primary'
-                className='mb-4 custom-btn'
+                className='mb-4 custom-btn d-flex align-items-center gap-2'
                 type='submit'
-              >
-                Login
+              >   
+                <span>Login</span>
+                <span className='icon'>
+                  <BsArrowRight />
+                </span>
               </Button>
               <p>
                 Don't have an account?

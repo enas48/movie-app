@@ -1,80 +1,95 @@
-
 import { useState, useEffect } from 'react'
+import axios from 'axios'
 import Loading from '../uiElements/preloading'
-import MessageModal from "../uiElements/messageModel";
-import { Link as LinkRouter } from "react-router-dom";
-import { useForm  } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import axios from "axios";
+import MessageModal from '../uiElements/messageModel'
+import Header from '../components/Header'
+import { Link as LinkRouter,useNavigate} from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import Header from '../components/Header'
+import { MdOutlineEmail, MdPerson } from 'react-icons/md'
+import { RiLockPasswordFill } from 'react-icons/ri'
+import {BsArrowRight} from 'react-icons/bs';
+
 
 const schema = yup.object().shape({
-  username: yup.string().min(4).max(32).required(),
-  email: yup.string().email().required(),
-  password: yup.string().min(4).max(32).required(),
-});
+  username: yup
+    .string()
+    .min(4)
+    .max(32)
+    .required(),
+  email: yup
+    .string()
+    .email()
+    .required(),
+  password:yup.string()
+  .required('Password is mendatory')
+  .min(4, 'Password must be at 4 char long'),
+    confirmPassword: yup.string()
+    .required('Password is mendatory')
+    .oneOf([yup.ref('password')], 'Passwords does not match'),
+})
 
+export default function Register () {
+  const [loading, setLoading] = useState(true)
+  const [message, setMessage] = useState({ text: null, success: false })
+  let navigate = useNavigate()
+  const {
+    register,
+    handleSubmit,
+    formState,
+    reset
+  } = useForm({ resolver: yupResolver(schema) })
+  const { errors } = formState
+  useEffect(() => {
+    // Loading function to load data or
+    // fake it using setTimeout;
+    const loadData = async () => {
+      // Wait for two second
+      await new Promise(r => setTimeout(r, 1000))
+      // Toggle loading state
+      setLoading(loading => !loading)
+    }
+    loadData()
+  }, [])
 
-export default function Register() {
-    const [loading, setLoading] = useState(true);
-    const [message, setMessage] = useState({ text: null, success: false });
-    const { register, handleSubmit, formState: { errors },reset } = useForm({ resolver: yupResolver(schema),});
-    
-    useEffect(() => {
-      // Loading function to load data or
-      // fake it using setTimeout;
-      const loadData = async () => {
-        // Wait for two second
-        await new Promise(r => setTimeout(r, 1000))
-        // Toggle loading state
-        setLoading(loading => !loading)
-      }
-      loadData()
-    }, [])
+  const onSubmit = data => {
+    console.log(data)
 
-
-  const onSubmit= data => {
-    console.log(data);
-  
     axios
-      .post('http://localhost:8000/users', data)
+      .post(`${process.env.REACT_APP_APP_URL}/users`, data)
       .then(response => {
         console.log(response.data)
-        if (response.data.status===200) {
-     
-            console.log(response.data.message)
-               setMessage({ text: response.data.message,error:false });
-          
-            reset();
-          }
-     
-       
-      })
-      .catch(
-        err => {
-            console.log(err)
-            if(err.response.data.message){
-                setMessage({
-                    text: err.response.data.message || "something want wrong",
-                    success: false,
-                  })    
-            }else{
+        if (response.data.status === 200) {
+          console.log(response.data.message)
+          setMessage({ text: response.data.message, success: true })
+          setTimeout(function(){
+            return navigate('/login', { replace: true })
+          },2500)
 
-                setMessage({
-                  text: err.message || "something want wrong",
-                  success: false,
-                })
-            }
+          reset()
         }
-      )
-
+      })
+      .catch(err => {
+        console.log(err)
+        if (err.response.data?.message) {
+          setMessage({
+            text: err.response.data.message || 'something want wrong',
+            success: false
+          })
+        } else {
+          setMessage({
+            text: err.message || 'something want wrong',
+            success: false
+          })
+        }
+      })
   }
   const handleClear = () => {
-    setMessage({ text: null, error: false });
-  };
+    setMessage({ text: null, success: false })
+  }
   if (loading) {
     return <Loading />
   } else {
@@ -90,60 +105,93 @@ export default function Register() {
             <div className='circle1'></div>
             <div className='circle2'></div>
             <Form onSubmit={handleSubmit(onSubmit)}>
-            <Form.Group className='mb-4' controlId='formBasicEmail'>
-                {/* <Form.Label>Name</Form.Label> */}
-                <Form.Control
-                  {...register('username')}
-                  name='username'
-                  type='text'
-                  autoComplete='username'
-                  placeholder='Enter your name'
-                />
+              <Form.Group className='mb-4' controlId='formBasicname'>
+                <div className='icon-container'>
+                  <span className='icon'>
+                    <MdPerson />
+                  </span>
+                  <Form.Control
+                    {...register('username')}
+                    name='username'
+                    type='text'
+                    autoComplete='username'
+                    placeholder='Enter your name'
+                  />
+                </div>
                 <Form.Text className='text-danger'>
                   {errors.username?.message}
                 </Form.Text>
               </Form.Group>
 
               <Form.Group className='mb-4' controlId='formBasicEmail'>
-                {/* <Form.Label>Email address</Form.Label> */}
-                <Form.Control
-                  {...register('email')}
-                  name='email'
-                  type='email'
-                  autoComplete='email'
-                  placeholder='Enter email'
-                />
+                <div className='icon-container'>
+                  <span className='icon'>
+                    <MdOutlineEmail />
+                  </span>
+                  <Form.Control
+                    {...register('email')}
+                    name='email'
+                    type='email'
+                    autoComplete='email'
+                    placeholder='Enter email'
+                  />
+                </div>
                 <Form.Text className='text-danger'>
                   {errors.email?.message}
                 </Form.Text>
               </Form.Group>
 
-              <Form.Group className='mb-5' controlId='formBasicPassword'>
-                {/* <Form.Label>Password</Form.Label> */}
-                <Form.Control
-                  {...register('password')}
-                  name='password'
-                  type='password'
-                  autoComplete='current-password'
-                  placeholder='Password'
-                />
+              <Form.Group className='mb-4' controlId='formBasicPassword'>
+                <div className='icon-container'>
+                  <span className='icon'>
+                    <RiLockPasswordFill />
+                  </span>
+                  <Form.Control
+                    {...register('password')}
+                    name='password'
+                    type='password'
+                    autoComplete='current-password'
+                    placeholder='Password'
+                  />
+                </div>
                 <Form.Text className='text-danger'>
                   {errors.password?.message}
                 </Form.Text>
               </Form.Group>
 
+              <Form.Group className='mb-4' controlId='formBasicCPassword'>
+                <div className='icon-container'>
+                  <span className='icon'>
+                    <RiLockPasswordFill />
+                  </span>
+                  <Form.Control
+                    {...register('confirmPassword')}
+                    name='confirmPassword'
+                    type='password'
+                    autoComplete='current-Cpassword'
+                    placeholder='Confirm Password'
+                  />
+                </div>
+                <Form.Text className='text-danger'>
+                  {errors.confirmPassword?.message}
+                </Form.Text>
+              </Form.Group>
+
               <Button
                 variant='primary'
-                className='mb-4 custom-btn'
+                className='mb-4 custom-btn d-flex align-items-center gap-2'
                 type='submit'
               >
-                Sign up
+                <span>Sign up</span>
+                <span className='icon'>
+                  <BsArrowRight />
+                </span>
               </Button>
               <p>
                 Already have an account?
                 <LinkRouter to='/login'>
                   <span> Login</span>
-                </LinkRouter>{' '}
+                </LinkRouter>
               </p>
             </Form>
           </div>
@@ -151,6 +199,4 @@ export default function Register() {
       </>
     )
   }
-   
-    
-  }
+}

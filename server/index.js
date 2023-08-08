@@ -1,8 +1,7 @@
 const express = require("express");
 const dotenv = require('dotenv').config();
 const connectDB = require('./config/db');
-
-
+const cors = require('cors');
 const port = process.env.PORT || 8000;
 
 connectDB();
@@ -10,8 +9,8 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
-
-const projectRouter = require('./routes/projectRoutes');
+app.use(cors({origin:"*"}))
+const bookmarkRouter = require('./routes/bookmarkRoutes');
 const userRouter = require('./routes/userRoutes');
 const profileRouter = require('./routes/porfileRoutes');
 
@@ -31,9 +30,9 @@ app.use((req, res, next) => {
 });
 
 
-app.use('/projects',projectRouter );
+app.use('/bookmarks',bookmarkRouter );
 app.use('/users',userRouter );
-app.use('/profiles',profileRouter );
+app.use('/profile',profileRouter );
 
 //handling errors on routers
 app.use((error, req, res, next)=>{ 
