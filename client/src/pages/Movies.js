@@ -14,7 +14,6 @@ import {
 function Movies (props) {
   const [isLoading, setIsLoading] = useState(false)
   const [trendMovies, setTrendMovies] = useState([])
-  const [genre, setGenre] = useState([])
   const [bookmarkedIds, setBookMarkedId] = useState([])
 
   let imageArr = useMemo(() => [], [])

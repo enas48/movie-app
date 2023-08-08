@@ -4,7 +4,7 @@ exports.getAllProfiles = async () => {
   return await Profile.find().select('-user');
 };
 exports.getProfileByUserId = async (userId) => {
-    return await Profile.findOne({userId:userId}).select('-user');
+    return await Profile.findOne({userId:userId}).populate({path:'user',select:'-password'});
   };
 
 exports.createProfile = async (profile) => {

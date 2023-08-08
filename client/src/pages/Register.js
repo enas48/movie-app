@@ -34,7 +34,7 @@ const schema = yup.object().shape({
 
 export default function Register () {
   const [loading, setLoading] = useState(true)
-  const [message, setMessage] = useState({ text: null, success: false })
+  const [message, setMessage] = useState({ text: null,  state:'error' })
   let navigate = useNavigate()
   const {
     register,
@@ -64,7 +64,7 @@ export default function Register () {
         console.log(response.data)
         if (response.data.status === 200) {
           console.log(response.data.message)
-          setMessage({ text: response.data.message, success: true })
+          setMessage({ text: response.data.message, state:'success' })
           setTimeout(function(){
             return navigate('/login', { replace: true })
           },2500)
@@ -77,18 +77,18 @@ export default function Register () {
         if (err.response.data?.message) {
           setMessage({
             text: err.response.data.message || 'something want wrong',
-            success: false
+            state:'error' 
           })
         } else {
           setMessage({
             text: err.message || 'something want wrong',
-            success: false
+            state:'error' 
           })
         }
       })
   }
   const handleClear = () => {
-    setMessage({ text: null, success: false })
+    setMessage({ text: null, state:'error' })
   }
   if (loading) {
     return <Loading />

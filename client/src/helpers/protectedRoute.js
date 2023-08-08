@@ -1,12 +1,17 @@
 
-import { Navigate, Outlet } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate, Outlet,useLocation } from "react-router-dom";
 
 const ProtectedRoute = ({ isAllowed, children }) => {
-  
-  if (!isAllowed) {
-    return <Navigate to="/login" replace />;
-  }
-
-  return children ? children : <Outlet />;
+  let location =useLocation()
+  let navigate=useNavigate();
+  useEffect(() => {
+    if (!isAllowed) {
+      navigate('/login',{state: { prevPath: location.pathname }});
+     }
+   
+    }, []);
+    return children ? children : <Outlet />;
+ 
 };
 export default ProtectedRoute;

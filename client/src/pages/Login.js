@@ -3,7 +3,7 @@ import axios from 'axios'
 import Loading from '../uiElements/preloading'
 import MessageModal from '../uiElements/messageModel'
 import Header from '../components/Header'
-import { Link as LinkRouter,useNavigate} from 'react-router-dom'
+import { Link as LinkRouter,useNavigate ,useLocation} from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -24,10 +24,11 @@ const schema = yup.object().shape({
     .min(4)
 })
 
-export default function Login ({ onLogin }) {
+export default function Login ({onLogin }) {
+let location=useLocation();
   const [loading, setLoading] = useState(true)
   let navigate = useNavigate()
-  const [message, setMessage] = useState({ text: null, success: false })
+  const [message, setMessage] = useState({ text: null, state:'error'  })
   const {
     register,
     handleSubmit,
@@ -35,16 +36,21 @@ export default function Login ({ onLogin }) {
   } = useForm({ resolver: yupResolver(schema) })
 
   useEffect(() => {
-    // Loading function to load data or
-    // fake it using setTimeout;
     const loadData = async () => {
-      // Wait for two second
       await new Promise(r => setTimeout(r, 1000))
-      // Toggle loading state
       setLoading(loading => !loading)
     }
     loadData()
-  }, [])
+    setTimeout(()=>{
+      if(['/profile','/bookmark'].includes(location.state?.prevPath)){
+        setMessage({
+          text:  'You Need To Login First!',
+         state:'warning'
+        })
+      }
+    },1300)
+   
+  }, [location])
 
   const onSubmit = data => {
     console.log(data)
@@ -54,8 +60,6 @@ export default function Login ({ onLogin }) {
         console.log(response.data.status)
         if (response.data.status === 200) {
           onLogin(response.data)
-          console.log(response.data.message)
-          // setMessage({ text: response.data.message, success: true })
           setTimeout(function(){
             return navigate('/', { replace: true })
           },1000)
@@ -66,24 +70,23 @@ export default function Login ({ onLogin }) {
         if (err.response.data.message) {
           setMessage({
             text: err.response.data.message || 'something want wrong',
-            success: false
+            state:'error'
           })
         } else {
           setMessage({
             text: err.message || 'something want wrong',
-            success: false
+            state:'error'
           })
         }
       })
   }
   const handleClear = () => {
-    setMessage({ text: null, success: false })
+    setMessage({ text: null, state:'error' })
   }
-  if (loading) {
-    return <Loading />
-  } else {
+
     return (
       <>
+     {loading && <Loading/>}
         {message.text && (
           <MessageModal message={message} onClear={handleClear} />
         )}
@@ -151,5 +154,5 @@ export default function Login ({ onLogin }) {
         </div>
       </>
     )
-  }
+  
 }

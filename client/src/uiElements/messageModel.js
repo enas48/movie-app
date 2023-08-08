@@ -21,11 +21,16 @@ const MessageModal = (props) => {
       <Container className='alert-container'>
         <Row>
           <Col>
-            {props.message.success ?
+            {props.message.state==="success" &&
               <Alert variant="success" onClose={() => setShow(false)} dismissible>
                 {props.message.text}
               </Alert> 
-              : <Alert variant="danger" onClose={() => setShow(false)} dismissible>
+             }
+             {props.message.state==="error" && <Alert variant="danger" onClose={() => setShow(false)} dismissible>
+                {props.message.text}
+              </Alert>
+              }
+                {props.message.state==="warning" && <Alert variant="warning" onClose={() => setShow(false)} dismissible>
                 {props.message.text}
               </Alert>
               }

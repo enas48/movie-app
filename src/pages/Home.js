@@ -1,4 +1,5 @@
 import React, { useEffect, useState ,useMemo} from "react";
+import MessageModal from "../uiElements/messageModel";
 import * as MovieApi from '../api/MovieApi';
 import Header from "../components/Header";
 import { Carousel } from 'react-carousel-minimal';
@@ -6,8 +7,8 @@ import Loading from "../uiElements/preloading";
 function Home(props) {
     const [isLoading, setIsLoading] = useState(false);
     // const[error, setError]=useState(null);
+
     const [images, setImages] = useState([]);
-    
     let imageArr = useMemo(() => [], []);
     const captionStyle = {
         fontSize: '2em',
@@ -30,12 +31,8 @@ function Home(props) {
                 }
         
             setImages(imageArr)
-            await new Promise(r => setTimeout(r, 800))
-            // Toggle loading state
-            setIsLoading(loading => !loading)
-            // setIsLoading(false);
+            setIsLoading(false);
         }
-        
         MovieApi.popularMovies().then(movie => {
             preloadImages(movie.results)
         })
@@ -56,7 +53,7 @@ function Home(props) {
             data={images}
             time={2100}
             width="100vw"
-            height="calc(100vh - 100px)"
+            height="92.5vh"
             captionStyle={captionStyle}
             slideNumber={false}
             captionPosition="center"
@@ -71,7 +68,7 @@ function Home(props) {
             style={{
               textAlign: "center",
               maxWidth: "100vw",
-              maxHeight: "calc(100vh - 100px)",
+              maxHeight: "92.5vh",
               margin: "0px auto",
             }}
           />

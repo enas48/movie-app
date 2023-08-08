@@ -12,15 +12,40 @@ import { Routes, Route } from 'react-router-dom'
 import ProtectedRoute from './helpers/protectedRoute'
 import { setAuthToken } from './helpers/setAuthToken'
 import AuthContext from './helpers/authContext'
+import axios from 'axios'
 
 function App () {
   const [token, setToken] = useState(localStorage.getItem('token'))
   const [userId, setUserid] = useState(localStorage.getItem('id'))
+  const[profile,setProfile]=useState({})
   const [expireVal, setExpireVal] = useState(
     parseInt(localStorage.getItem('expireVal'))
   )
-
+  const fetchUser = async () => {
+    try {
+      const result = await axios(
+        `${process.env.REACT_APP_APP_URL}/profile/users/${userId}`,
+        {
+          headers: {
+            Accept: 'application/json'
+          }
+        }
+      )
+      //get user
+      console.log(result.data)
+      if (result.data.profile) {
+   
+        setProfile(result.data.profile)
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
   useEffect(() => {
+    if (userId) {
+      fetchUser()
+    }
+
     let today = new Date()
     let expired =
       new Date(new Date().setDate(today.getDate() + expireVal)).getTime() - 10
@@ -72,7 +97,7 @@ function App () {
             path='/profile'
             element={
               <ProtectedRoute isAllowed={!!token}>
-                <Profile onLogout={logout} />{' '}
+                <Profile onLogout={logout} profile={profile.profile} />{' '}
               </ProtectedRoute>
             }
           />
