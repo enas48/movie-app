@@ -65,6 +65,7 @@
     overflow: hidden;
     background: #393939;
     box-shadow: 2px 2px 2px #932e2e;
+    display: inline-block;
 }
 @media (max-width:992px) {
     .content-container{

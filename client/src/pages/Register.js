@@ -65,9 +65,9 @@ export default function Register () {
         if (response.data.status === 200) {
           console.log(response.data.message)
           setMessage({ text: response.data.message, state:'success' })
-          setTimeout(function(){
+
             return navigate('/login', { replace: true })
-          },2500)
+     
 
           reset()
         }

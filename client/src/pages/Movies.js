@@ -68,13 +68,13 @@ function Movies (props) {
       {isLoading && <Loading />}
       <SidebarLayout>
         <Search label='Search for Movie' />
-        <h3 className='px-4'>Trending</h3>
+        <h3 className='px-md-4'>Trending</h3>
         <div className='col-12'>
           <Carousel cols={3} rows={1} gap={10} loop autoplay={6000}>
             {trendMovies.length !== 0 &&
               trendMovies.map((item, i) => {
                 return (
-                  <Carousel.Item key={i} style={'margin:10px'}>
+                  <Carousel.Item key={i} >
                     <LinkContainer to='/'>
                       <div className='card trending d-flex flex-column justify-content-between'>
                         <img src={item.image} alt={item.title} />

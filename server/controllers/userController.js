@@ -104,6 +104,8 @@ const getUser = async (req, res, next) => {
   }
 }
 
+
+
 //generate jwt
 const generateToken = id => {
   return jwt.sign({ id }, `${process.env.JWT_SECRET}`, {

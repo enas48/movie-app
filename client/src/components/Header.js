@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom'
 function Header () {
   const { userId ,logout} = useContext(AuthContext)
   const [image, setImage] = useState(process.env.PUBLIC_URL + './person.png')
+  const [name, setName] = useState('');
   let navigate = useNavigate()
   const handleLogout = () => {
     logout()
@@ -34,6 +35,7 @@ function Header () {
       if (result.data.profile.image !== '') {
         setImage(result.data.profile.image)
       }
+      setName(result.data.profile.user.username)
     } catch (err) {
       console.log(err)
     }
@@ -78,6 +80,7 @@ function Header () {
                    <div className='avater'>
                      <img src={image} className='img-fluid' alt='' />
                    </div>
+                     <span>{name}</span>
                  </Nav.Link>
                </LinkContainer>
                <button

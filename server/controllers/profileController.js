@@ -71,16 +71,22 @@ const updatedProfile = async (req, res, next) => {
         return next(error)
       }
       //make sure user is logged in match profile user
-      if (profile.user.toString() !== user.id) {
+      // console.log(user)
+      // console.log(profile)
+      if (profile.user._id.toString() !== user._id.toString()) {
         const error = new HttpError('user not authorized', 401)
         return next(error)
       }
-
+      console.log(req.file)
       if (req.file) {
         imageurl = req.file.path
+       
       } else {
         imageurl = profile.image
       }
+      await profileService.updateUser(userId, {
+        username: req.body.username
+      })
       const updatedProfile = await profileService.updateProfile(req.params.id, {
         image: imageurl
       })
