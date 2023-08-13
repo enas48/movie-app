@@ -9,11 +9,12 @@ import { MdPersonAddAlt1 } from 'react-icons/md'
 import AuthContext from '../helpers/authContext'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import Dropdown from 'react-bootstrap/Dropdown'
 
 function Header () {
-  const { userId ,logout} = useContext(AuthContext)
+  const { userId, logout } = useContext(AuthContext)
   const [image, setImage] = useState(process.env.PUBLIC_URL + './person.png')
-  const [name, setName] = useState('');
+  const [name, setName] = useState('')
   let navigate = useNavigate()
   const handleLogout = () => {
     logout()
@@ -74,23 +75,36 @@ function Header () {
           </Nav>
           <Nav className='ms-auto my-2 my-lg-0' navbarScroll>
             {userId ? (
-               <div className='d-flex'>
-               <LinkContainer to='/profile'>
-                 <Nav.Link>
-                   <div className='avater'>
-                     <img src={image} className='img-fluid' alt='' />
-                   </div>
-                     <span>{name}</span>
-                 </Nav.Link>
-               </LinkContainer>
-               <button
-                 onClick={handleLogout}
-                 className='btn-outline d-flex align-items-center gap-2 text-danger'
-               >
-                 <span className='icon-text'>Logout</span>
-                 <BiLogIn className='icon'  />
-               </button>
-             </div>
+              <>
+                <Dropdown>
+                  <Dropdown.Toggle variant='success' id='dropdown-basic'>
+                    <div className='d-flex align-items-center me-1 gap-2'>
+                    <div className='avater'>
+                      <img src={image} className='img-fluid' alt='' />
+                    </div>
+                    <span>{name}</span>
+                    </div>
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item>
+                      <LinkContainer to='/profile'>
+                        <Nav.Link>profile</Nav.Link>
+                      </LinkContainer>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                      <button
+                        onClick={handleLogout}
+                        className='btn-outline d-flex align-items-center gap-2 text-danger'
+                      >
+                        <span className='icon-text'>Logout</span>
+                        <BiLogIn className='icon' />
+                      </button>
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+        
+              </>
             ) : (
               <span className='d-flex align-items-center'>
                 <LinkContainer to='/login'>

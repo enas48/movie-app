@@ -79,6 +79,9 @@ input:-webkit-autofill:focus {
 
 .nav-link {
   color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .nav-link.active,
@@ -100,10 +103,10 @@ input:-webkit-autofill:focus {
 }
 
 /*carsoul*/
-.home .carousel-image {
+/* .home .carousel-image {
   width: fit-content;
   margin: auto;
-}
+} */
 
 .home .carousel-container {
   background: var(--dark) !important;
@@ -111,13 +114,14 @@ input:-webkit-autofill:focus {
 
 .home .prev,
 .home .next {
-  display: none;
+  padding: 6px;
+    margin: 0 8px;
 }
 
 .home .thumbnails {
   max-width: 96.6vw !important;
   margin: auto;
-  margin-top: -30vh;
+  margin-top: -20vh;
   z-index: 2222;
   position: relative;
 }
@@ -125,7 +129,7 @@ input:-webkit-autofill:focus {
 .home .thumbnail {
   margin: 14px;
   transition: 0.2s all ease-out;
-  max-width: 150px;
+  max-width: 200px;
 }
 
 .home .active-thumbnail {
@@ -135,13 +139,19 @@ input:-webkit-autofill:focus {
 
 @media (max-width: 1024px) {
   .home .thumbnails {
-    margin-top: -38vh;
+    margin-top: -24vh;
   }
 }
 
 @media (max-width: 768px) {
   .home .thumbnails {
-    margin-top: -30vh;
+    margin-top: -18vh;
+  }
+  .carousel-image{
+    object-fit: contain!important;
+  }
+  .home .carousel-container{
+    height: 82vh!important;
   }
 }
 @media (max-width: 678px) {
@@ -149,10 +159,12 @@ input:-webkit-autofill:focus {
     display: none;
   }
   .home .carousel-container {
-    height: 86vh !important;
+    height:min-content !important;
     max-height: 100vh !important;
     overflow: hidden;
   }
+
+
 }
 
 ::-webkit-scrollbar {
@@ -432,4 +444,14 @@ input[type="file"]{
   opacity: 0;
   cursor: pointer;
   z-index: 3;
+}
+.dropdown-menu {
+  background: var(--dark-active);
+  margin-top: 1rem!important;
+}
+.dropdown button{
+  background: transparent!important;
+}
+.dropdown-item:focus, .dropdown-item:hover{
+  background: #25212b;
 }

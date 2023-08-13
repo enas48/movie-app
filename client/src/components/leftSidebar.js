@@ -42,7 +42,7 @@ function LeftSidebar (props) {
     if (userId) {
       fetchUser()
     }
-  }, [])
+  }, [userId])
   return (
     <div className='left-sidebar'>
       <LinkContainer to='/'>

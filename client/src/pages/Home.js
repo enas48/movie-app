@@ -17,16 +17,25 @@ function Home(props) {
     useEffect(() => {
         let preloadImages = async (results) => {
             setIsLoading(true);
-            console.log(results)
+         
             for (let data of results) {
-                if(data?.poster_path && data.poster_path!==null){
-                const response = await fetch(`https://image.tmdb.org/t/p/w500/${data.poster_path}`)
-                const image = await response
-                if(image?.url){
-                    if(data?.id !== 615 && data?.id !== 1023313 && data?.id !== 943822  && data?.id !== 677179 &&data?.id!==758323){
-                imageArr.push({ id: data.id, image: image.url, caption: data.original_title })
-                    }
-                 } }
+                let poster=''
+                MovieApi.getImage(data.id).then(movie=>{
+               
+                    if(movie?.backdrops[0] &&movie?.backdrops[0]!==null){
+                    poster= `http://image.tmdb.org/t/p/original${movie.backdrops[0].file_path}`;
+                  
+                    imageArr.push({ id: data.id, image: poster, caption: data.original_title })
+                       }
+                })
+                // if(data?.poster_path && data.poster_path!==null){
+                // const response = await fetch(`https://image.tmdb.org/t/p/w500/${data.poster_path}`)
+                // const image = await response
+                // if(image?.url){
+                //     if(data?.id !== 615 && data?.id !== 1023313 && data?.id !== 943822  && data?.id !== 677179 &&data?.id!==758323){
+                // imageArr.push({ id: data.id, image: image.url, caption: data.original_title })
+                //     }
+                //  } }
                 }
         
             setImages(imageArr)
@@ -54,9 +63,9 @@ function Home(props) {
             {images.length!==0&&
           <Carousel
             data={images}
-            time={2100}
+            time={2000}
             width="100vw"
-            height="calc(100vh - 100px)"
+            height="calc(100vh - 64px)"
             captionStyle={captionStyle}
             slideNumber={false}
             captionPosition="center"
@@ -67,11 +76,11 @@ function Home(props) {
             slideBackgroundColor="darkgrey"
             slideImageFit="cover"
             thumbnails={true}
-            thumbnailWidth="185px"
+            thumbnailWidth="200px"
             style={{
               textAlign: "center",
               maxWidth: "100vw",
-              maxHeight: "calc(100vh - 100px)",
+              maxHeight: "calc(100vh - 64px)",
               margin: "0px auto",
             }}
           />
