@@ -2,8 +2,8 @@
 :root {
   --primary: #e21515;
   --primary-active:#f51b1b;
-  --secondry: #f7bb0e;
-  --secondry-active: #eab414;
+  --secondry: #eab414;
+  --secondry-active: #f7bb0e;
   --white: #fbfbfb;
   --white-active: #f9f9f9;
   --dark: #0d0d0f;
@@ -13,6 +13,9 @@
 body {
   background: var(--dark);
   color: var(--white);
+}
+.text-secondry{
+  color: var(--secondry);
 }
 
 .active,
@@ -123,7 +126,7 @@ input:-webkit-autofill:focus {
 .home .thumbnails {
   max-width: 96.6vw !important;
   margin: auto;
-  margin-top: -20vh;
+  margin-top: -22vh;
   z-index: 2222;
   position: relative;
 }
@@ -410,8 +413,10 @@ z-index: 3;
   right: 0;
   bottom: 0;
   background-color: rgba(0,0,0,0.2); 
-  /* border-radius: 50%; */
   /* z-index: 2;  */
+}
+.profile-container .overlay{
+  border-radius: 50%;
 }
 .bookmark-btn{
   width: fit-content;
@@ -470,4 +475,50 @@ input[type="file"]{
 .details-bg{
   background-size: cover;
   min-height: 100vh;
+  background-size: cover;
+    min-height: 100vh;
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-position: center;
+}
+.details-container{
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+}
+.details-container .overlay{
+  z-index: 2;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.4);
+}
+.details-content{
+  position: relative;
+  z-index: 5;
+  backdrop-filter: blur(2px);
+}
+button.icon-container{
+  background: var(--primary);
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    color: white
+}
+button.icon-container.bookmark{
+  background: var(--secondry);
+}
+button.icon-container:hover,
+button.icon-container.active {
+  background: var(--primary-active);
+}
+button.icon-container.bookmark:hover,
+button.icon-container.bookmark.active {
+  background: var(--secondry-active);
 }

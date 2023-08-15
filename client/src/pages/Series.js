@@ -24,8 +24,10 @@ function Series(props) {
     return ( 
         <>
            <SidebarLayout>
+           <div className="p-3">
            <Search label="Search for Series"/>
             Series
+            </div>
             </SidebarLayout>
  </>
     )};

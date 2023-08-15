@@ -14,7 +14,7 @@
     height: 100%;
     min-width: 230px;
     position: fixed;
-    z-index: 1;
+    z-index: 4;
     top: 0;
     left: 0;
     background-color: var(--dark-active);
@@ -64,6 +64,8 @@
     border-radius: 50%;
     overflow: hidden;
     background: #393939;
+    background: url('../../public/person.png');
+    background-size: cover;
     box-shadow: 2px 2px 2px #932e2e;
     display: inline-block;
 }
