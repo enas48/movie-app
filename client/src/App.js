@@ -200,7 +200,10 @@ function App() {
             path="/bookmark"
             element={
               <ProtectedRoute isAllowed={!!token}>
-                <Bookmark onLogout={logout} />
+                <Bookmark   
+                bookmarkedIds={bookmarkedIds}
+                addBookMark={handleBookmark}
+                onLogout={logout} />
               </ProtectedRoute>
             }
           />
