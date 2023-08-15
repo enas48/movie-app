@@ -6,7 +6,7 @@
 .content{
     left: 230px;
     position: relative;
-    padding: 1.5rem;
+    /* padding: 1.5rem; */
     width: calc(100% - 230px);
 
 }
@@ -82,7 +82,7 @@
     .left-sidebar{
         flex-direction: row;
         position: relative;
-        margin: 0 2rem;
+        margin: 0 1rem;
         margin-top: 1rem;
         border-radius: 0.5rem;
         width: 100%;

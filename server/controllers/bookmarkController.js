@@ -7,12 +7,8 @@ const HttpError = require('../middleware/errorMiddleware')
 //@access private
 const createBookmark = async (req, res, next) => {
   try {
-    const { title, year, image, type, bookmark_id, userId } = req.body
+    const {  bookmark_id, userId } = req.body
     const bookmark = await bookmarkService.createBookmark({
-      title,
-      year,
-      image,
-      type,
       bookmark_id,
       userId
     })
@@ -56,12 +52,12 @@ const getBookmarksByUserId = async (req, res, next) => {
 //@access private
 const deleteBookmark = async (req, res, next) => {
   try {
-    const bookmark = await bookmarkService.getBookmarkById(req.params.id)
+    const bookmark = await bookmarkService.getBookmarkById(req.params.id, req.params.userId)
     if (!bookmark) {
       const error = new HttpError('bookmark not found', 400)
       return next(error)
     } else {
-      await bookmarkService.deleteBookmark(req.params.id)
+      await bookmarkService.deleteBookmark(req.params.id, req.params.userId)
       res.status(200).json({ message: `bookmark deleted successfully` ,status: 200})
     }
   } catch (err) {

@@ -8,11 +8,8 @@ const bookmarkSchema = new Schema(
       required: true,
       ref: "User",
     },
-    title: String,
     bookmark_id:String,
-    year: String,
-    type: String,
-    image: String,
+ 
   },
   {
     timestamps: true,

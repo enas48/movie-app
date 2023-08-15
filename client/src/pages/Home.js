@@ -3,6 +3,7 @@ import * as MovieApi from '../api/MovieApi';
 import Header from "../components/Header";
 import { Carousel } from 'react-carousel-minimal';
 import Loading from "../uiElements/preloading";
+
 function Home(props) {
     const [isLoading, setIsLoading] = useState(false);
     // const[error, setError]=useState(null);

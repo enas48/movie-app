@@ -25,7 +25,9 @@ body {
 a {
   text-decoration: none;
 }
-
+h3{
+  font-size: 1.5rem;
+}
 .btn {
   align-items: center;
   display: flex;
@@ -366,9 +368,12 @@ a:focus-visible {
   background: transparent;
   cursor: pointer;
   padding: 10px 14px;
-  max-width: 450px;
+  /* max-width: 450px; */
   margin: auto;
   color: var(--white);
+}
+.card.trending.pc{
+  min-height: 350px; 
 }
 .card.trending > *{
 z-index: 3;
@@ -377,10 +382,16 @@ z-index: 3;
   position: absolute;
   width: 100%;
   height: 100%;
+  object-fit: cover;
   border-radius: 10px;
   z-index: 2;
   left: 0;
   top: 0;
+}
+@media (max-width:1200px) {
+  .card.trending.pc{
+    min-height: 200px; 
+  }
 }
 @media (max-width:668px) {
   .card.trending {
@@ -399,7 +410,7 @@ z-index: 3;
   right: 0;
   bottom: 0;
   background-color: rgba(0,0,0,0.2); 
-  border-radius: 50%;
+  /* border-radius: 50%; */
   /* z-index: 2;  */
 }
 .bookmark-btn{
@@ -454,4 +465,9 @@ input[type="file"]{
 }
 .dropdown-item:focus, .dropdown-item:hover{
   background: #25212b;
+}
+/*details page*/
+.details-bg{
+  background-size: cover;
+  min-height: 100vh;
 }

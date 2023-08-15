@@ -7,6 +7,6 @@ const {protect} = require('../middleware/authMiddleware');
 
 router.route('/').post(protect, createBookmark);
 router.route('/:userid').get(protect, getBookmarksByUserId);
-router.route('/:id').delete(protect, deleteBookmark);
+router.route('/:userId/:id').delete(protect, deleteBookmark);
 
 module.exports = router;
