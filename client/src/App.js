@@ -30,6 +30,7 @@ function App() {
     id = id.toString();
     if (bookmarkedIds.includes(id)) {
       let filteredBookmarks = bookmarkedIds.filter((item) => {
+        console.log(item)
         return item !== id;
       });
       setBookMarkedId(filteredBookmarks);

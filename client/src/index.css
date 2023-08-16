@@ -488,6 +488,7 @@ input[type='file'] {
   width: 100%;
   background-position: center;
 }
+
 .details-container {
   position: relative;
   width: 100%;
@@ -495,6 +496,10 @@ input[type='file'] {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: 1rem;
+}
+.details-container h3{
+  z-index: 3;
 }
 .details-container > .overlay {
   z-index: 2;
@@ -504,14 +509,12 @@ input[type='file'] {
 .details-content {
   position: relative;
   z-index: 5;
-  /* backdrop-filter: blur(2px); */
 }
 button.icon-container {
   background: var(--primary);
-  border-radius: 50%;
-  width: 3rem;
-  height: 3rem;
+  border-radius: 8px;
   text-align: center;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -529,4 +532,13 @@ button.icon-container.disabled {
 button.icon-container.bookmark:hover,
 button.icon-container.bookmark.active {
   background: var(--secondry-active);
+}
+.card{
+  animation-name: cardAnimation;
+  animation-duration: 1s;
+  transition:all1s ease-in;
+}
+@keyframes cardAnimation {
+  from { transform: scale(0.2);}
+  to { transform: scale(1);}
 }
