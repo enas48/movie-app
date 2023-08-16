@@ -67,3 +67,17 @@ export const getSeriesVideo = (series_id) =>
   )
     .then((res) => res.json())
     .then((data) => data);
+
+    export const similarMovie = (movie_id) =>
+  fetch(
+    `https://api.themoviedb.org/3/movie/${movie_id}/similar?api_key=${process.env.REACT_APP_API_KEY}`
+  )
+    .then((res) => res.json())
+    .then((data) => data);
+    
+    export const similarSeries = (series_id) =>
+  fetch(
+    `https://api.themoviedb.org/3/tv/${series_id}/similar?api_key=${process.env.REACT_APP_API_KEY}`
+  )
+    .then((res) => res.json())
+    .then((data) => data);
