@@ -76,7 +76,7 @@ function LeftSidebar (props) {
           <Nav.Link>
             <span className='d-flex align-items-center gap-2'>
               <PiTelevisionBold />
-              <span className='icon-text'>Series</span>
+              <span className='icon-text'>Tv Series</span>
             </span>
           </Nav.Link>
         </LinkContainer>

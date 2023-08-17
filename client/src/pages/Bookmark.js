@@ -11,7 +11,7 @@ import {
   MdOutlineBookmark,
   MdStar,
 } from "react-icons/md";
-import * as MovieList from "../helpers/fetchImages";
+import * as Movie from "../helpers/fetchmovies";
 import axios from "axios";
 import AuthContext from "../helpers/authContext";
 function Bookmark(props) {
@@ -62,7 +62,7 @@ function Bookmark(props) {
       movieArr.push(movie);
     }
 
-    MovieList.list(movieArr).then((data) => {
+    Movie.list(movieArr).then((data) => {
       setBookmarks(data);
     });
   };
@@ -114,7 +114,7 @@ function Bookmark(props) {
                             <div className="d-flex gap-2">
                               <span>{item.year}</span>
                               <span>
-                                <MdLocalMovies /> {item.type}
+                                <MdLocalMovies /> 
                               </span>
                             </div>
                             <h5>

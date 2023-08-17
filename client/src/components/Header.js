@@ -67,7 +67,7 @@ function Header () {
               <Nav.Link>Movies</Nav.Link>
             </LinkContainer>
             <LinkContainer to='/series'>
-              <Nav.Link>Series</Nav.Link>
+              <Nav.Link>Tv Series</Nav.Link>
             </LinkContainer>
             <LinkContainer to='/bookmark'>
               <Nav.Link>Bookmark</Nav.Link>

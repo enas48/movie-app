@@ -14,7 +14,8 @@ import { setAuthToken } from "./helpers/setAuthToken";
 import AuthContext from "./helpers/authContext";
 import axios from "axios";
 import MessageModal from "./uiElements/messageModel";
-import Details from "./pages/Details";
+import MovieDetails from "./pages/MovieDetails";
+import TvDetails from "./pages/TvDetails";
 
 function App() {
   const [message, setMessage] = useState({ text: null, state: "error" });
@@ -188,7 +189,10 @@ function App() {
               />
             }
           />
-          <Route path="/series" element={<Series onLogout={logout} />} />
+          <Route path="/series" element={<Series 
+              bookmarkedIds={bookmarkedIds}
+              addBookMark={handleBookmark}
+              onLogout={logout} />} />
           <Route
             path="/profile"
             element={
@@ -209,9 +213,18 @@ function App() {
             }
           />
           <Route
-            path="details/:type/:id"
+            path="details/movies/:id"
             element={
-              <Details
+              <MovieDetails
+                bookmarkedIds={bookmarkedIds}
+                addBookMark={handleBookmark}
+              />
+            }
+          />
+               <Route
+            path="details/series/:id"
+            element={
+              <TvDetails
                 bookmarkedIds={bookmarkedIds}
                 addBookMark={handleBookmark}
               />

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import SidebarLayout from "../components/sidebarLayout";
 import Loading from "../uiElements/preloading";
 import Search from "../components/search";
-import MovieListKind from "../components/MovieListKind";
+import MovieList from "../components/MovieList";
 
 function Movies(props) {
   const [isLoading, setIsLoading] = useState(true);
@@ -25,17 +25,17 @@ function Movies(props) {
       <SidebarLayout>
         <div className="p-3">
           <Search label="Search for Movie" />
-          <MovieListKind
+          <MovieList
             bookmarkedIds={props.bookmarkedIds}
             addBookMark={props.addBookMark}
             kind="trending"
           />
-          <MovieListKind
+          <MovieList
             bookmarkedIds={props.bookmarkedIds}
             addBookMark={props.addBookMark}
             kind="topRated"
           />
-          <MovieListKind
+          <MovieList
             bookmarkedIds={props.bookmarkedIds}
             addBookMark={props.addBookMark}
             kind="upcoming"

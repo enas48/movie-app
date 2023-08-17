@@ -3,6 +3,7 @@ import SidebarLayout from "../components/sidebarLayout";
 import { useState, useEffect } from 'react'
 import Loading from '../uiElements/preloading'
 import Search from '../components/search'
+import TvList from "../components/TVList";
 
 function Series(props) {
     const [loading, setIsLoading] = useState(true)
@@ -25,9 +26,23 @@ function Series(props) {
         <>
            <SidebarLayout>
            <div className="p-3">
-           <Search label="Search for Series"/>
-            Series
-            </div>
+          <Search label="Search for Movie" />
+          <TvList
+            bookmarkedIds={props.bookmarkedIds}
+            addBookMark={props.addBookMark}
+            kind="onair"
+          />
+          <TvList
+            bookmarkedIds={props.bookmarkedIds}
+            addBookMark={props.addBookMark}
+            kind="topRated"
+          />
+          <TvList
+            bookmarkedIds={props.bookmarkedIds}
+            addBookMark={props.addBookMark}
+            kind="popular"
+          />
+        </div>
             </SidebarLayout>
  </>
     )};
