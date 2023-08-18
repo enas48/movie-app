@@ -17,8 +17,30 @@ export const list = async(series) =>{
                 image: image.url,
               });
             }
-          }
-        }
+          //   else{
+             
+          //       imageArr.push({
+          //         id: data.id,
+          //         name: data.name,
+          //         year: new Date(data.release_date).getFullYear(),
+          //         rate: data.vote_average.toFixed(1),
+          //         image: ''
+          //       })
+              
+          //   }
+          // }else{
+          //   if(data.id){
+          //     imageArr.push({
+          //       id: data.id,
+          //       name: data.name,
+          //       year: new Date(data.release_date).getFullYear(),
+          //       rate: data.vote_average.toFixed(1),
+          //       image: ''
+          //     })
+          //   }
+          // }
+        //}
+          }}
         return imageArr
       }
   

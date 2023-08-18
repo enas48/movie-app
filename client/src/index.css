@@ -17,7 +17,15 @@ body {
 .text-secondry {
   color: var(--secondry);
 }
-
+.primary{
+  color: var(--primary);
+}
+.primary:hover{
+    color: var(--primary-active);
+ }
+.cursor-pointer{
+    cursor: pointer;
+}
 .active,
 .dot:hover {
   background-color: inherit !important;
@@ -35,6 +43,7 @@ h3 {
   align-items: center;
   display: flex;
   transition: 0.2s all ease-in-out;
+  background: transparent;
 }
 
 .form-control {
@@ -121,7 +130,7 @@ input:-webkit-autofill:focus {
   max-width: 96.6vw !important;
   margin: auto;
   margin-top: -22vh;
-  z-index: 2222;
+  z-index: 4;
   position: relative;
 }
 
@@ -143,6 +152,9 @@ input:-webkit-autofill:focus {
 }
 
 @media (max-width: 768px) {
+  h5{
+    font-size: 1rem;
+  }
   .home .thumbnails {
     margin-top: -18vh;
   }
@@ -353,41 +365,51 @@ a:focus-visible {
   padding: 0.2em 2em;
   border-radius: 0.7em;
 }
-
+.card-container{
+  animation-name: cardAnimation;
+  animation-duration: 1s;
+  transition:all 1s ease-in;
+  cursor: pointer;
+}
+@keyframes cardAnimation {
+  from { transform: scale(0.2);}
+  to { transform: scale(1);}
+}
 .card.trending {
   border-radius: 10px;
-  min-height: 200px;
   position: relative;
   overflow: hidden;
   border: 0;
   background: transparent;
   cursor: pointer;
-  padding: 10px 14px;
-  /* max-width: 450px; */
   margin: auto;
   color: var(--white);
 }
-.card.trending.pc {
-  min-height: 350px;
-}
+
 .card.trending > * {
   z-index: 3;
 }
-.card.trending img {
+
+.card-content{
   position: absolute;
-  width: 100%;
+  justify-content: space-between;
+  z-index: 5333;
+  top: 0;
+  bottom: 0;
+  padding:10px 14px;
+  left: 0;
+  right: 0;
   height: 100%;
-  object-fit: cover;
+}
+.card.trending img {
+  width: 100%;
+  height: auto;
   border-radius: 10px;
   z-index: 2;
   left: 0;
   top: 0;
 }
-@media (max-width: 1200px) {
-  .card.trending.pc {
-    min-height: 200px;
-  }
-}
+
 @media (max-width: 668px) {
   .card.trending {
     max-width: 100%;
@@ -405,8 +427,8 @@ a:focus-visible {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.35);
-  /* z-index: 2;  */
 }
+
 .profile-container .overlay {
   border-radius: 50%;
 }
@@ -474,7 +496,7 @@ input[type='file'] {
   background-size: cover;
   width: 100%;
   background-position: top center;
-  min-height: 60vh;
+  min-height: 100vh;
   height: 100%;
   justify-content: center;
 }
@@ -497,7 +519,6 @@ input[type='file'] {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* gap: 1rem; */
 }
 
 .details-container  * {
@@ -528,21 +549,11 @@ button.icon-container.bookmark:hover,
 button.icon-container.bookmark.active {
   background: var(--secondry-active);
 }
-.card{
-  animation-name: cardAnimation;
-  animation-duration: 1s;
-  transition:all1s ease-in;
-}
-@keyframes cardAnimation {
-  from { transform: scale(0.2);}
-  to { transform: scale(1);}
-}
+
 .seasons-list{
   z-index: 5;
 }
-.seasons-list .card{
-  min-height: 300px;
-}
+
 .details-related-content{
   z-index: 3;
   padding: 2rem;
@@ -553,4 +564,36 @@ button.icon-container.bookmark.active {
   .details-related-content,.details-content{
   padding: 1rem;
   }
+}
+
+.onair{
+  background: #17e917;
+}
+.end{
+  background: rgb(55, 55, 255);
+}
+.custom-modal .modal-content{
+  width: fit-content;
+  margin: auto;
+}
+.custom-modal .form-container{
+  min-height: auto;
+  margin: 0;
+}
+.custom-modal .modal-body{
+  padding: 0;
+}
+.custom-modal .modal-header{
+  position: absolute;
+  top: 0;
+  z-index: 4;
+  width: 100%;
+  border: none;
+}
+.custom-modal .modal-header button {
+  background-color: #fff;
+  opacity: 1;
+  width: 0.7rem;
+  border-radius: 50%;
+  height: 0.7rem;
 }

@@ -22,13 +22,16 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [userId, setUserid] = useState(localStorage.getItem("id"));
   const [profile, setProfile] = useState({});
+  const [show, setShow] = useState(false);
   const [expireVal, setExpireVal] = useState(
     parseInt(localStorage.getItem("expireVal"))
   );
   const [bookmarkedIds, setBookMarkedId] = useState([]);
 
-  const handleBookmark = (id) => {
+  const handleBookmark = (id,type) => {
     id = id.toString();
+    console.log(type)
+    if(userId){
     if (bookmarkedIds.includes(id)) {
       let filteredBookmarks = bookmarkedIds.filter((item) => {
         console.log(item)
@@ -40,9 +43,13 @@ function App() {
     } else {
       setBookMarkedId([...bookmarkedIds, id]);
       //backend
-      addBookmark({ bookmark_id: id, userId: userId });
+      addBookmark({ bookmark_id: id, userId: userId ,type:type});
       // fetchBookmarks()
     }
+  }else{
+    console.log('you should login first')
+    setShow(true)
+  }
   };
   const addBookmark = async (data) => {
     axios
@@ -87,7 +94,9 @@ function App() {
   const handleClear = () => {
     setMessage({ text: null, state: "error" });
   };
-
+  const handleClose= ()=>{
+    setShow(false);
+  }
   const fetchUser = async () => {
     try {
       const result = await axios(
@@ -128,6 +137,27 @@ function App() {
       console.log(err);
     }
   };
+  
+  const login = (data) => {
+    data = data.data;
+    if (data.token) {
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("id", data._id);
+      localStorage.setItem("expireVal", data.expire);
+      setToken(data.token);
+      setUserid(localStorage.getItem("id"));
+      setExpireVal(data.expire);
+      setShow(false)
+    }
+  };
+  
+  const logout = () => {
+    setToken(null);
+    setUserid(null);
+    setAuthToken(null);
+    localStorage.clear();
+  };
+
   useEffect(() => {
     if (userId) {
       fetchUser();
@@ -141,30 +171,12 @@ function App() {
     if (expired < Date.now()) {
       logout();
     }
-  }, [expireVal, userId]);
-
-  const login = (data) => {
-    data = data.data;
-    if (data.token) {
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("id", data._id);
-      localStorage.setItem("expireVal", data.expire);
-      setToken(data.token);
-      setUserid(localStorage.getItem("id"));
-      setExpireVal(data.expire);
-    }
-  };
+  }, [expireVal, userId,show]);
 
   if (token) {
     setAuthToken(token);
   }
 
-  const logout = () => {
-    setToken(null);
-    setUserid(null);
-    setAuthToken(null);
-    localStorage.clear();
-  };
   return (
     <AuthContext.Provider
       value={{
@@ -176,6 +188,7 @@ function App() {
       }}
     >
       {message.text && <MessageModal message={message} onClear={handleClear} />}
+   
       <>
         <Routes>
           <Route path="/" element={<Home onLogout={logout} />} />
@@ -186,13 +199,20 @@ function App() {
                 bookmarkedIds={bookmarkedIds}
                 addBookMark={handleBookmark}
                 onLogout={logout}
+                show={show}
+                handleClose={handleClose}
+                onLogin={login}
               />
             }
           />
           <Route path="/series" element={<Series 
               bookmarkedIds={bookmarkedIds}
               addBookMark={handleBookmark}
-              onLogout={logout} />} />
+              onLogout={logout}
+              show={show}
+              handleClose={handleClose}
+              onLogin={login}
+               />} />
           <Route
             path="/profile"
             element={
@@ -218,6 +238,9 @@ function App() {
               <MovieDetails
                 bookmarkedIds={bookmarkedIds}
                 addBookMark={handleBookmark}
+                show={show}
+                handleClose={handleClose}
+                onLogin={login}
               />
             }
           />
@@ -227,6 +250,9 @@ function App() {
               <TvDetails
                 bookmarkedIds={bookmarkedIds}
                 addBookMark={handleBookmark}
+                show={show}
+                handleClose={handleClose}
+                onLogin={login}
               />
             }
           />

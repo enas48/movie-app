@@ -51,3 +51,11 @@ export const getSeriesVideo = (series_id) =>
   )
     .then((res) => res.json())
     .then((data) => data);
+
+    export const seasonDetails= (series_id,season_number) =>
+    fetch(
+      `https://api.themoviedb.org/3/tv/${series_id}/season/${season_number}?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
+    )
+      .then((res) => res.json())
+      .then((data) => data);
+  

@@ -7,10 +7,11 @@ const HttpError = require('../middleware/errorMiddleware')
 //@access private
 const createBookmark = async (req, res, next) => {
   try {
-    const {  bookmark_id, userId } = req.body
+    const {  bookmark_id, userId,type} = req.body
     const bookmark = await bookmarkService.createBookmark({
       bookmark_id,
-      userId
+      userId,
+      type
     })
     res
       .status(200)

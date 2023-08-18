@@ -9,6 +9,7 @@ const bookmarkSchema = new Schema(
       ref: "User",
     },
     bookmark_id:String,
+    type:String
  
   },
   {

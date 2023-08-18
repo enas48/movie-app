@@ -80,6 +80,7 @@ function LeftSidebar (props) {
             </span>
           </Nav.Link>
         </LinkContainer>
+        {userId && 
         <LinkContainer to='/bookmark'>
           <Nav.Link>
             <span className='d-flex align-items-center gap-2'>
@@ -88,6 +89,7 @@ function LeftSidebar (props) {
             </span>
           </Nav.Link>
         </LinkContainer>
+}
       </Nav>
       <Nav>
         {userId ? (

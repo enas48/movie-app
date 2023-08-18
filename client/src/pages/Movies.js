@@ -3,6 +3,7 @@ import SidebarLayout from "../components/sidebarLayout";
 import Loading from "../uiElements/preloading";
 import Search from "../components/search";
 import MovieList from "../components/MovieList";
+import RegisterModal from "../uiElements/RegisterModal";
 
 function Movies(props) {
   const [isLoading, setIsLoading] = useState(true);
@@ -23,6 +24,7 @@ function Movies(props) {
     <>
       {isLoading && <Loading />}
       <SidebarLayout>
+      <RegisterModal show={props.show} onLogin={props.onLogin} handleCloseModal={props.handleClose}/>  
         <div className="p-3">
           <Search label="Search for Movie" />
           <MovieList

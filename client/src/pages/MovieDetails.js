@@ -12,6 +12,7 @@ import {
   MdLanguage
 } from 'react-icons/md'
 import { BiTimeFive } from 'react-icons/bi'
+import RegisterModal from '../uiElements/RegisterModal'
 
 function MovieDetails (props) {
   const [isLoading, setIsLoading] = useState(true)
@@ -21,9 +22,9 @@ function MovieDetails (props) {
   const [video, setvideo] = useState('')
   const [disabled, setDisabled] = useState(false)
 
-  const handleBookmark = (e, id) => {
+  const handleBookmark = (e, id,type) => {
     e.stopPropagation()
-    props.addBookMark(id)
+    props.addBookMark(id,type)
   }
 
   const fetchMovieVideo = async id => {
@@ -86,6 +87,8 @@ function MovieDetails (props) {
     <>
       {isLoading && <Loading />}
       <SidebarLayout>
+      <RegisterModal show={props.show} onLogin={props.onLogin} handleCloseModal={props.handleClose}/>  
+      {details?.id &&
         <div className='details-container'>
           <div
             style={{ backgroundImage: `url(${image})` }}
@@ -152,7 +155,7 @@ function MovieDetails (props) {
                 <FaPlay />
               </button>
               <button
-                onClick={e => handleBookmark(e, details.id)}
+                onClick={e => handleBookmark(e, details.id,'movie')}
                 className=' btn icon-container bookmark'
               >
                 Add to Bookmark&nbsp;
@@ -175,6 +178,7 @@ function MovieDetails (props) {
             />
           </div>
         </div>
+}
       </SidebarLayout>
     </>
   )

@@ -69,9 +69,11 @@ function Header () {
             <LinkContainer to='/series'>
               <Nav.Link>Tv Series</Nav.Link>
             </LinkContainer>
-            <LinkContainer to='/bookmark'>
+            {userId&&  
+             <LinkContainer to='/bookmark'>
               <Nav.Link>Bookmark</Nav.Link>
-            </LinkContainer>
+            </LinkContainer>}
+          
           </Nav>
           <Nav className='ms-auto my-2 my-lg-0' navbarScroll>
             {userId ? (
