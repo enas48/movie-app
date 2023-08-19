@@ -76,7 +76,7 @@ export const list = async series => {
   return imageArr
 }
 
-export const   seasonList = async results => {
+export const  seasonList = async results => {
   let seasonArr = []
   for (let data of results) {
     if (data?.poster_path && data.poster_path !== null) {

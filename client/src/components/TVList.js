@@ -73,7 +73,7 @@ function TvList (props) {
                   return (
                     <CarouselItem
                       key={i}
-                      link='/details/series'
+                      link={`/details/series/${item.id}`}
                       type='movie'
                       item={item}
                       addBookMark={addBookMark}

@@ -72,7 +72,7 @@ function MovieList (props) {
                   return (
                     <CarouselItem
                       key={i}
-                      link='/details/movies'
+                      link={`/details/movies/${item.id}`}
                       type='movie'
                       item={item}
                       addBookMark={addBookMark}

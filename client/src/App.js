@@ -14,6 +14,7 @@ import Profile from './pages/Profile'
 import { Notfound } from './pages/Notfound'
 import MovieDetails from './pages/movie/MovieDetails'
 import TvDetails from './pages/series/TvDetails'
+import SeasonDetails from './pages/series/seasonDetails'
 
 import ProtectedRoute from './helpers/protectedRoute'
 import { setAuthToken } from './helpers/setAuthToken'
@@ -253,6 +254,18 @@ function App () {
             path='details/series/:id'
             element={
               <TvDetails
+                bookmarkedIds={bookmarkedIds}
+                addBookMark={handleBookmark}
+                show={show}
+                handleClose={handleClose}
+                onLogin={login}
+              />
+            }
+          />
+           <Route
+            path='season/:id/:seasonNum'
+            element={
+              <SeasonDetails
                 bookmarkedIds={bookmarkedIds}
                 addBookMark={handleBookmark}
                 show={show}

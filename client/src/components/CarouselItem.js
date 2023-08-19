@@ -19,8 +19,8 @@ function CarouselItem ({ link, item, type, addBookMark, bookmarkedIds }) {
   return (
     <Carousel.Item>
       <LinkContainer
-        to={`${link}/${item.id}`}
-        onClick={() => (window.location.href = `${link}/${item.id}`)}
+        to={`${link}`}
+        onClick={() => (window.location.href = `${link}`)}
       >
         <div className='position-relative card-container'>
           <div

@@ -28,7 +28,7 @@ function SeasonList ({ seasons }) {
                   return (
                     <CarouselItem
                       key={i}
-                      link='/details/series'
+                      link={`/season/${item.id}/${item.season_number}`}
                       type='season'
                       item={item}
                     />
