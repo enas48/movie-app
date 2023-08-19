@@ -1,21 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react'
 
-import Loading from "../uiElements/preloading";
+import Header from '../components/Header'
+import Loading from '../uiElements/preloading'
+import LoginModal from '../uiElements/loginModal'
 
-import Header from "../components/Header";
-
-import LoginModal from "../uiElements/loginModal";
-
-export default function Login({ onLogin }) {
-  const [loading, setLoading] = useState(true);
+export default function Login ({ onLogin }) {
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const loadData = async () => {
-      await new Promise((r) => setTimeout(r, 1000));
-      setLoading((loading) => !loading);
-    };
-    loadData();
-  }, []);
+      await new Promise(r => setTimeout(r, 1000))
+      setLoading(loading => !loading)
+    }
+    loadData()
+  }, [])
 
   return (
     <>
@@ -23,5 +21,5 @@ export default function Login({ onLogin }) {
       <Header />
       <LoginModal onLogin={onLogin} page={true} />
     </>
-  );
+  )
 }

@@ -1,21 +1,25 @@
 import React, { useState, useContext, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+
 import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
+import Dropdown from 'react-bootstrap/Dropdown'
 import { LinkContainer } from 'react-router-bootstrap'
+
 import { RiMovie2Fill } from 'react-icons/ri'
 import { BiLogIn } from 'react-icons/bi'
 import { MdPersonAddAlt1 } from 'react-icons/md'
+
 import AuthContext from '../helpers/authContext'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
-import Dropdown from 'react-bootstrap/Dropdown'
 
 function Header () {
   const { userId, logout } = useContext(AuthContext)
   const [image, setImage] = useState(process.env.PUBLIC_URL + './person.png')
   const [name, setName] = useState('')
   let navigate = useNavigate()
+
   const handleLogout = () => {
     logout()
     navigate('/login', { replace: true })
@@ -31,8 +35,6 @@ function Header () {
           }
         }
       )
-      //get user
-      console.log(result.data)
       if (result.data.profile.image !== '') {
         setImage(result.data.profile.image)
       }
@@ -46,7 +48,7 @@ function Header () {
     if (userId) {
       fetchUser()
     }
-  }, [])
+  }, [userId])
 
   return (
     <Navbar bg='dark' variant='dark' expand='lg'>
@@ -69,11 +71,11 @@ function Header () {
             <LinkContainer to='/series'>
               <Nav.Link>Tv Series</Nav.Link>
             </LinkContainer>
-            {userId&&  
-             <LinkContainer to='/bookmark'>
-              <Nav.Link>Bookmark</Nav.Link>
-            </LinkContainer>}
-          
+            {userId && (
+              <LinkContainer to='/bookmark'>
+                <Nav.Link>Bookmark</Nav.Link>
+              </LinkContainer>
+            )}
           </Nav>
           <Nav className='ms-auto my-2 my-lg-0' navbarScroll>
             {userId ? (
@@ -81,10 +83,10 @@ function Header () {
                 <Dropdown>
                   <Dropdown.Toggle variant='success' id='dropdown-basic'>
                     <div className='d-flex align-items-center me-1 gap-2'>
-                    <div className='avater'>
-                      <img src={image} className='img-fluid' alt='' />
-                    </div>
-                    <span>{name}</span>
+                      <div className='avater'>
+                        <img src={image} className='img-fluid' alt='' />
+                      </div>
+                      <span>{name}</span>
                     </div>
                   </Dropdown.Toggle>
 
@@ -105,7 +107,6 @@ function Header () {
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
-        
               </>
             ) : (
               <span className='d-flex align-items-center'>
@@ -120,11 +121,10 @@ function Header () {
                 <span>|</span>
                 <LinkContainer to='/register'>
                   <Nav.Link>
-                    {' '}
                     <span className='d-flex align-items-center gap-2'>
                       <MdPersonAddAlt1 />
                       <span className='icon-text'>Signup</span>
-                    </span>{' '}
+                    </span>
                   </Nav.Link>
                 </LinkContainer>
               </span>

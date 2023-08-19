@@ -1,24 +1,23 @@
-import React from "react";
-import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs";
+import React from 'react'
+import { BsStarFill, BsStarHalf, BsStar } from 'react-icons/bs'
 
-function StarRating(props) {
-  let stars = [];
-  let rate = props.rate / 2;
+function StarRating (props) {
+  let stars = []
+  let rate = props.rate / 2
 
   for (let i = 0; i < 5; i++) {
-    let el;
+    let el
     if (rate - i > 0 && rate - i < 1) {
-      el = <BsStarHalf key={i} className="text-warning" />;
+      el = <BsStarHalf key={i} className='text-warning' />
     } else if (i < rate) {
-      el = <BsStarFill key={i} className="text-warning" />;
+      el = <BsStarFill key={i} className='text-warning' />
     } else {
-      el = <BsStar key={i}/>;
+      el = <BsStar key={i} />
     }
-
-    stars.push(el);
+    stars.push(el)
   }
 
-  return <div>{stars}</div>;
+  return <div>{stars}</div>
 }
 
-export default StarRating;
+export default StarRating

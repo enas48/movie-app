@@ -1,24 +1,28 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+
 import Nav from 'react-bootstrap/Nav'
 import { LinkContainer } from 'react-router-bootstrap'
+
 import { RiMovie2Fill } from 'react-icons/ri'
 import { MdLocalMovies, MdPersonAddAlt1 } from 'react-icons/md'
 import { PiTelevisionBold, PiBookmarkSimpleFill } from 'react-icons/pi'
 import { AiFillHome } from 'react-icons/ai'
 import { BiLogIn } from 'react-icons/bi'
-import { useState } from 'react'
-import AuthContext from '../helpers/authContext'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
 
-function LeftSidebar (props) {
+import AuthContext from '../helpers/authContext'
+
+function LeftSidebar () {
   const { userId, logout } = useContext(AuthContext)
   const [image, setImage] = useState(process.env.PUBLIC_URL + './person.png')
   let navigate = useNavigate()
+
   const handleLogout = () => {
     logout()
     navigate('/login', { replace: true })
   }
+
   const fetchUser = async () => {
     try {
       const result = await axios(
@@ -29,8 +33,6 @@ function LeftSidebar (props) {
           }
         }
       )
-      //get user
-      console.log(result.data)
       if (result.data.profile.image !== '') {
         setImage(result.data.profile.image)
       }
@@ -38,11 +40,13 @@ function LeftSidebar (props) {
       console.log(err)
     }
   }
+
   useEffect(() => {
     if (userId) {
       fetchUser()
     }
   }, [userId])
+
   return (
     <div className='left-sidebar'>
       <LinkContainer to='/'>
@@ -51,7 +55,6 @@ function LeftSidebar (props) {
           <span className='icon-text'>Movie</span>
         </Nav.Link>
       </LinkContainer>
-
       <Nav
         className='m-auto m-lg-0 me-lg-auto my-lg-0 d-flex flex-row flex-lg-column align-items-baseline'
         navbarScroll
@@ -80,16 +83,16 @@ function LeftSidebar (props) {
             </span>
           </Nav.Link>
         </LinkContainer>
-        {userId && 
-        <LinkContainer to='/bookmark'>
-          <Nav.Link>
-            <span className='d-flex align-items-center gap-2'>
-              <PiBookmarkSimpleFill />
-              <span className='icon-text'>Bookmark</span>
-            </span>
-          </Nav.Link>
-        </LinkContainer>
-}
+        {userId && (
+          <LinkContainer to='/bookmark'>
+            <Nav.Link>
+              <span className='d-flex align-items-center gap-2'>
+                <PiBookmarkSimpleFill />
+                <span className='icon-text'>Bookmark</span>
+              </span>
+            </Nav.Link>
+          </LinkContainer>
+        )}
       </Nav>
       <Nav>
         {userId ? (
@@ -122,11 +125,10 @@ function LeftSidebar (props) {
             <span>|</span>
             <LinkContainer to='/register'>
               <Nav.Link>
-                {' '}
                 <span className='d-flex align-items-center gap-2'>
                   <MdPersonAddAlt1 />
                   <span className='icon-text'>Signup</span>
-                </span>{' '}
+                </span>
               </Nav.Link>
             </LinkContainer>
           </span>

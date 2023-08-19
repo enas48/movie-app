@@ -2,60 +2,111 @@ export const onAir = () =>
   fetch(
     `https://api.themoviedb.org/3/tv/on_the_air?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
   )
-    .then((res) => res.json())
-    .then((data) => data);
+    .then(res => res.json())
+    .then(data => data)
 
 export const popularSeries = () =>
   fetch(
     `https://api.themoviedb.org/3/tv/popular?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=1`
   )
-    .then((res) => res.json())
-    .then((data) => data);
-
+    .then(res => res.json())
+    .then(data => data)
 
 export const topRatedSeries = () =>
   fetch(
     `https://api.themoviedb.org/3/tv/top_rated?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
   )
-    .then((res) => res.json())
-    .then((data) => data);
+    .then(res => res.json())
+    .then(data => data)
 
-
-export const getImage = (series_id) =>
+export const getImage = series_id =>
   fetch(
     `https://api.themoviedb.org/3/tv/${series_id}/images?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
   )
-    .then((res) => res.json())
-    .then((data) => data);
+    .then(res => res.json())
+    .then(data => data)
 
-
-export const getSeriesDetails = (series_id) =>
+export const getSeriesDetails = series_id =>
   fetch(
     `https://api.themoviedb.org/3/tv/${series_id}?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
   )
-    .then((res) => res.json())
-    .then((data) => data);
+    .then(res => res.json())
+    .then(data => data)
 
-
-
-export const getSeriesVideo = (series_id) =>
+export const getSeriesVideo = series_id =>
   fetch(
     `https://api.themoviedb.org/3/tv/${series_id}/video?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
   )
-    .then((res) => res.json())
-    .then((data) => data);
+    .then(res => res.json())
+    .then(data => data)
 
-    export const similarSeries = (series_id) =>
+export const similarSeries = series_id =>
   fetch(
     `https://api.themoviedb.org/3/tv/${series_id}/similar?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
   )
-    .then((res) => res.json())
-    .then((data) => data);
+    .then(res => res.json())
+    .then(data => data)
 
-    export const seasonDetails= (series_id,season_number) =>
-    fetch(
-      `https://api.themoviedb.org/3/tv/${series_id}/season/${season_number}?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
-    )
-      .then((res) => res.json())
-      .then((data) => data);
-  
+export const seasonDetails = (series_id, season_number) =>
+  fetch(
+    `https://api.themoviedb.org/3/tv/${series_id}/season/${season_number}?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
+  )
+    .then(res => res.json())
+    .then(data => data)
+
+export const list = async series => {
+  let imageArr = []
+  for (let data of series) {
+    if (data?.backdrop_path && data.backdrop_path !== null) {
+      const response = await fetch(
+        `https://image.tmdb.org/t/p/original/${data.backdrop_path}`
+      )
+      const image = await response
+      if (image?.url) {
+        imageArr.push({
+          id: data.id,
+          title: data.name,
+          year: new Date(data.first_air_date).getFullYear(),
+          rate: data.vote_average.toFixed(1),
+          image: image.url
+        })
+      }
+    }
+  }
+  return imageArr
+}
+
+export const   seasonList = async results => {
+  let seasonArr = []
+  for (let data of results) {
+    if (data?.poster_path && data.poster_path !== null) {
+      const response = await fetch(
+        `https://image.tmdb.org/t/p/original/${data.poster_path}`
+      )
+      const image = await response
+      if (image?.url) {
+        seasonArr.push({
+          id: data.id,
+          title: data?.name &data.name,
+          year: new Date(data?.air_date && data.air_date).getFullYear(),
+          season_number: data?.season_number &&data.season_number,
+          rate: data?.vote_average && data.vote_average.toFixed(1),
+          image: image.url
+        })
+      }
+    } else {
+      if (data.id) {
+        seasonArr.push({
+          id: data.id,
+          title: data?.name &data.name,
+          year: new Date(data?.air_date && data.air_date).getFullYear(),
+          season_number: data?.season_number &&data.season_number,
+          rate: data?.vote_average && data.vote_average.toFixed(1),
+          image: ''
+        })
+      }
+    }
+  }
+
+  return seasonArr
+}
