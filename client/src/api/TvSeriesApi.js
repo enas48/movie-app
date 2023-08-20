@@ -53,12 +53,13 @@ export const seasonDetails = (series_id, season_number) =>
   )
     .then(res => res.json())
     .then(data => data)
-export const cast = (series_id) =>
-fetch(
-  `https://api.themoviedb.org/3/tv/${series_id}/credits?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
-)
-  .then(res => res.json())
-  .then(data => data)
+    
+export const cast = series_id =>
+  fetch(
+    `https://api.themoviedb.org/3/tv/${series_id}/credits?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
+  )
+    .then(res => res.json())
+    .then(data => data)
 
 export const list = async series => {
   let imageArr = []
@@ -72,8 +73,8 @@ export const list = async series => {
         imageArr.push({
           id: data.id,
           title: data.name,
-          year: new Date(data.first_air_date).getFullYear(),
-          rate: data.vote_average.toFixed(1),
+          year: data?.first_air_date && new Date(data.first_air_date).getFullYear(),
+          rate: data?.vote_average && data.vote_average.toFixed(1),
           image: image.url
         })
       }
@@ -82,7 +83,7 @@ export const list = async series => {
   return imageArr
 }
 
-export const  seasonList = async results => {
+export const seasonList = async results => {
   let seasonArr = []
   for (let data of results) {
     if (data?.poster_path && data.poster_path !== null) {
@@ -93,9 +94,9 @@ export const  seasonList = async results => {
       if (image?.url) {
         seasonArr.push({
           id: data.id,
-          title: data?.name &data.name,
-          year: new Date(data?.air_date && data.air_date).getFullYear(),
-          season_number: data?.season_number &&data.season_number,
+          title:  data.name,
+          year: data?.air_date && new Date( data.air_date).getFullYear(),
+          season_number: data?.season_number && data.season_number,
           rate: data?.vote_average && data.vote_average.toFixed(1),
           image: image.url
         })
@@ -104,9 +105,9 @@ export const  seasonList = async results => {
       if (data.id) {
         seasonArr.push({
           id: data.id,
-          title: data?.name &data.name,
-          year: new Date(data?.air_date && data.air_date).getFullYear(),
-          season_number: data?.season_number &&data.season_number,
+          title: data.name,
+          year: data?.air_date && new Date( data.air_date).getFullYear(),
+          season_number: data?.season_number && data.season_number,
           rate: data?.vote_average && data.vote_average.toFixed(1),
           image: ''
         })
@@ -117,7 +118,7 @@ export const  seasonList = async results => {
   return seasonArr
 }
 
-export const  crewList = async results => {
+export const crewList = async results => {
   let crewArr = []
   for (let data of results) {
     if (data?.profile_path && data.profile_path !== null) {
@@ -132,7 +133,7 @@ export const  crewList = async results => {
           name: data?.name && data.name,
           image: image.url
         })
-      }else {
+      } else {
         if (data.id) {
           crewArr.push({
             id: data.id,

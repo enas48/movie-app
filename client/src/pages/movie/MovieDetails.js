@@ -6,9 +6,9 @@ import * as MovieApi from '../../api/MovieApi'
 import SidebarLayout from '../../components/sidebarLayout'
 import StarRating from '../../components/StarRating'
 import MovieList from '../../components/MovieList'
+import Crew from '../../components/Crew'
 import Loading from '../../uiElements/preloading'
 import RegisterModal from '../../uiElements/RegisterModal'
-
 import { FaPlay } from 'react-icons/fa'
 import {
   MdOutlineBookmarkBorder,
@@ -175,6 +175,8 @@ function MovieDetails (props) {
                 </button>
               </div>
             </div>
+
+            <Crew id={id} type='movie' />
             <div className='details-related-content'>
               <MovieList
                 bookmarkedIds={props.bookmarkedIds}

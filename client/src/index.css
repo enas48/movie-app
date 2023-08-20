@@ -17,6 +17,7 @@ body {
 .text-secondry {
   color: var(--secondry);
 }
+
 .primary {
   color: var(--primary);
 }
@@ -30,6 +31,7 @@ body {
 .dot:hover {
   background-color: inherit !important;
 }
+
 .dots {
   z-index: 10000;
 }
@@ -658,7 +660,7 @@ button.icon-container.bookmark.active {
   box-shadow: 0px 1px 5px #000000;
   max-width: 160px;
   text-align: center;
-  margin: 1rem;
+  margin: 1rem 0;
   overflow: hidden;
   padding: 0;
 }
@@ -675,3 +677,32 @@ button.icon-container.bookmark.active {
   bottom: 0;
   right: 0;
 }
+.eposide{
+  box-shadow:0px 1px 5px #000000
+}
+@media (max-width: 668px) {
+  .eposide{
+    width: 60%;
+  }
+}
+@media (max-width: 480px) {
+  .card.crew {
+    max-width:45%;
+  }
+ 
+}
+.episode-container{
+ max-width: 30%;
+ position: relative;
+ overflow: hidden;
+ min-height: 150px;
+ background: var(--dark-active);
+}
+.episode-container img{
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+ }

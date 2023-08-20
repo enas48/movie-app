@@ -38,18 +38,19 @@ function TvDetails (props) {
   }
 
   const fetchSeries = async id => {
-    setIsLoading(true)
+ 
     try {
       TvSeriesApi.getSeriesDetails(id).then(series => {
         preloadImages(series)
         setDetails(series)
       })
-      setIsLoading(false)
+    
     } catch (err) {
       console.log(err)
-      setIsLoading(false)
+
     }
   }
+
 
   useEffect(() => {
     const loadData = async () => {
