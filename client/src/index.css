@@ -692,7 +692,7 @@ button.icon-container.bookmark.active {
  
 }
 .episode-container{
- max-width: 30%;
+  max-width: 250px;
  position: relative;
  overflow: hidden;
  min-height: 150px;
