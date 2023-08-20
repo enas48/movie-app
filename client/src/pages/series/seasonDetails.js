@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useFetcher, useParams } from 'react-router-dom'
 
 import * as TvSeriesApi from '../../api/TvSeriesApi'
 
@@ -10,7 +10,7 @@ import SeasonList from '../../components/SeasonList'
 import RegisterModal from '../../uiElements/RegisterModal'
 import Loading from '../../uiElements/preloading'
 
-import { MdLanguage } from 'react-icons/md'
+import { MdLanguage, MdSystemSecurityUpdateWarning } from 'react-icons/md'
 
 function SeasonDetails (props) {
   const [isLoading, setIsLoading] = useState(true)
@@ -18,11 +18,12 @@ function SeasonDetails (props) {
   const [details, setDetails] = useState({})
   const [image, setImage] = useState(null)
   const [season, setSeason] = useState({})
+  const [crew, setCrew] = useState([])
 
-  const preloadImages = async series => {
-    if (series?.poster_path && series.poster_path !== null) {
+  const preloadImages = async data => {
+    if (data?.poster_path && data.poster_path !== null) {
       const response = await fetch(
-        `https://image.tmdb.org/t/p/original/${series.poster_path}`
+        `https://image.tmdb.org/t/p/original/${data.poster_path}`
       )
       const image = await response
       if (image.url) setImage(image.url)
@@ -30,36 +31,45 @@ function SeasonDetails (props) {
   }
 
   const fetchSeries = async id => {
-    setIsLoading(true)
     try {
       TvSeriesApi.getSeriesDetails(id).then(series => {
-        preloadImages(series)
         setDetails(series)
       })
-      setIsLoading(false)
     } catch (err) {
       console.log(err)
-      setIsLoading(false)
     }
   }
   const fetchSeason = async (id, seasonNum) => {
-    setIsLoading(true)
     try {
       TvSeriesApi.seasonDetails(id, seasonNum).then(season => {
         console.log(season)
+        preloadImages(season, 'series')
         setSeason(season)
       })
-      setIsLoading(false)
     } catch (err) {
       console.log(err)
-      setIsLoading(false)
     }
   }
 
+  const fetchCrew = async id => {
+    try {
+      TvSeriesApi.cast(id).then(crew => {
+        TvSeriesApi.crewList(crew.cast).then(data => {
+          console.log(data)
+          setCrew(data)
+        })
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
   useEffect(() => {
     if (id && seasonNum) {
+      setIsLoading(true)
       fetchSeries(id)
       fetchSeason(id, seasonNum)
+      fetchCrew(id)
+      setIsLoading(false)
     }
   }, [id])
 
@@ -101,7 +111,7 @@ function SeasonDetails (props) {
               <p className='col-md-8 col-lg-6'>{season?.overview}</p>
               <div className='d-flex gap-4 mb-4 flex-wrap'>
                 <span>
-                  Episodes:
+                  Episodes:&nbsp;
                   {season?.episodes && season.episodes.length}
                 </span>
                 <span className='d-flex gap-2 align-items-center'>
@@ -113,22 +123,44 @@ function SeasonDetails (props) {
                 </span>
               </div>
             </div>
- 
-            <h3>crew</h3>
-            {season.episodes.length !== 0 &&
-              season.episodes[0].guest_stars.length !== 0 &&
-              season.episodes[0].guest_stars.map(item => {
-                return (
-                  <div key={item.id} className='d-flex flex-column'>
-                    <span>character {item.character} </span>
-                    <span>name {item.name}</span>
-                    <span>character {item.character} </span>
-                    <span>original_name {item.original_name}</span>
-                  </div>
-                )
-              })}
+<div className='details-related-content'>
+  
 
-            {season.episodes.length !== 0 &&
+            {crew.length !== 0 && (
+              <>
+                <h3>Cast</h3>
+                <div className='row m-0 p-3 d-flex'>
+                  {crew.map(item => {
+                    return (
+                      <div
+                        key={item.id}
+                        className='d-flex flex-column crew card'
+                      >
+                        <div className='img-container'>
+                          {item.image !== '' && (
+                            <img src={item.image} alt={item.name} />
+                          )}
+                          {item.image === '' && (
+                            <img
+                              src={process.env.PUBLIC_URL + '../../noimage.png'}
+                              alt=''
+                            />
+                          )}
+                        </div>
+                        <div className='card-body'>
+                          <span className='text-secondry'> {item.name}</span>
+                          <br />
+                          <span> {item.character} </span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </>
+            )}
+
+            {season?.episodes &&
+              season.episodes.length !== 0 &&
               season.episodes.map(item => {
                 return (
                   <div key={item.id} className='d-flex flex-column'>
@@ -137,13 +169,14 @@ function SeasonDetails (props) {
                   </div>
                 )
               })}
-
+</div>
             <div className='details-related-content'>
               {details?.seasons && details.seasons.length !== 0 && (
                 <SeasonList
                   bookmarkedIds={props.bookmarkedIds}
                   addBookMark={props.addBookMark}
                   seasons={details.seasons}
+                  seriesId={id}
                 />
               )}
             </div>

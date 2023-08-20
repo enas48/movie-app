@@ -70,14 +70,15 @@ function MovieList (props) {
               {movies.length !== 0 &&
                 movies.map((item, i) => {
                   return (
-                    <CarouselItem
-                      key={i}
-                      link={`/details/movies/${item.id}`}
-                      type='movie'
-                      item={item}
-                      addBookMark={addBookMark}
-                      bookmarkedIds={bookmarkedIds}
-                    />
+                    <Carousel.Item key={i}>
+                      <CarouselItem
+                        link={`/details/movies/${item.id}`}
+                        type='movie'
+                        item={item}
+                        addBookMark={addBookMark}
+                        bookmarkedIds={bookmarkedIds}
+                      />
+                    </Carousel.Item>
                   )
                 })}
             </Carousel>

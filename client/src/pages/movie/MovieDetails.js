@@ -32,7 +32,7 @@ function MovieDetails (props) {
 
   const handlePlay = id => {
     fetchMovieVideo(id)
-    window.location.replace(video)
+    window.open(video, '_blank')
   }
 
   const fetchMovieVideo = async id => {

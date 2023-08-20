@@ -52,6 +52,11 @@ function TvDetails (props) {
   }
 
   useEffect(() => {
+    const loadData = async () => {
+      await new Promise(r => setTimeout(r, 1000))
+      setIsLoading( false)
+    }
+    loadData()
     if (id) {
       fetchSeries(id)
     }
@@ -165,6 +170,7 @@ function TvDetails (props) {
                   bookmarkedIds={props.bookmarkedIds}
                   addBookMark={props.addBookMark}
                   seasons={details.seasons}
+                  seriesId={details.id}
                 />
               )}
 

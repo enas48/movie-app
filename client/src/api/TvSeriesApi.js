@@ -53,6 +53,12 @@ export const seasonDetails = (series_id, season_number) =>
   )
     .then(res => res.json())
     .then(data => data)
+export const cast = (series_id) =>
+fetch(
+  `https://api.themoviedb.org/3/tv/${series_id}/credits?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
+)
+  .then(res => res.json())
+  .then(data => data)
 
 export const list = async series => {
   let imageArr = []
@@ -109,4 +115,44 @@ export const  seasonList = async results => {
   }
 
   return seasonArr
+}
+
+export const  crewList = async results => {
+  let crewArr = []
+  for (let data of results) {
+    if (data?.profile_path && data.profile_path !== null) {
+      const response = await fetch(
+        `https://image.tmdb.org/t/p/original${data.profile_path}`
+      )
+      const image = await response
+      if (image?.url) {
+        crewArr.push({
+          id: data.id,
+          character: data?.character && data.character,
+          name: data?.name && data.name,
+          image: image.url
+        })
+      }else {
+        if (data.id) {
+          crewArr.push({
+            id: data.id,
+            character: data?.character && data.character,
+            name: data?.name && data.name,
+            image: ''
+          })
+        }
+      }
+    } else {
+      if (data.id) {
+        crewArr.push({
+          id: data.id,
+          character: data?.character && data.character,
+          name: data?.name && data.name,
+          image: ''
+        })
+      }
+    }
+  }
+
+  return crewArr
 }

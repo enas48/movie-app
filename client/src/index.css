@@ -648,3 +648,30 @@ button.icon-container.bookmark.active {
   border-radius: 50%;
   height: 0.7rem;
 }
+
+/*------------------------crew page----------------*/
+.card.crew{
+  background: var(--dark-active);
+  cursor: pointer;
+  margin: auto;
+  color: var(--white);
+  box-shadow: 0px 1px 5px #000000;
+  max-width: 160px;
+  text-align: center;
+  margin: 1rem;
+  overflow: hidden;
+  padding: 0;
+}
+.card.crew .img-container{
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+.card.crew .img-container img{
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}

@@ -17,7 +17,6 @@ function CarouselItem ({ link, item, type, addBookMark, bookmarkedIds }) {
   }
 
   return (
-    <Carousel.Item>
       <LinkContainer
         to={`${link}`}
         onClick={() => (window.location.href = `${link}`)}
@@ -64,7 +63,7 @@ function CarouselItem ({ link, item, type, addBookMark, bookmarkedIds }) {
           </div>
         </div>
       </LinkContainer>
-    </Carousel.Item>
+
   )
 }
 

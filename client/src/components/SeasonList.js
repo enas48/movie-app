@@ -5,15 +5,13 @@ import * as TvSeriesApi from '../api/TvSeriesApi'
 
 import CarouselItem from './CarouselItem'
 
-function SeasonList ({ seasons }) {
+function SeasonList ({ seasons ,seriesId}) {
   const [series, setSeries] = useState([])
 
   useEffect(() => {
-    console.log(seasons)
     TvSeriesApi.seasonList(seasons).then(data => {
       setSeries(data)
     })
-    console.log(series)
   }, [seasons])
 
   return (
@@ -22,16 +20,17 @@ function SeasonList ({ seasons }) {
         <div className='seasons-list'>
           <h3 className='px-md-4 mb-4'>Seasons</h3>
           <div className='col-12 mb-5 movieList'>
-            <Carousel cols={4} rows={1} gap={10} loop autoplay={6000}>
+            <Carousel cols={5} rows={1} gap={10} loop autoplay={6000}>
               {series.length !== 0 &&
                 series.map((item, i) => {
                   return (
+                    <Carousel.Item key={i}>
                     <CarouselItem
-                      key={i}
-                      link={`/season/${item.id}/${item.season_number}`}
+                      link={`/season/${seriesId}/${item.season_number}`}
                       type='season'
                       item={item}
                     />
+                    </Carousel.Item>
                   )
                 })}
             </Carousel>

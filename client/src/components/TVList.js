@@ -41,7 +41,6 @@ function TvList (props) {
     }
     if (kind === 'similar') {
       TvSeriesApi.similarSeries(id).then(series => {
-        console.log(series.results)
         TvSeriesApi.list(series.results).then(data => {
           setSeries(data.slice(0, 18))
         })
@@ -71,14 +70,15 @@ function TvList (props) {
               {series.length !== 0 &&
                 series.map((item, i) => {
                   return (
+                    <Carousel.Item key={i}>
                     <CarouselItem
-                      key={i}
                       link={`/details/series/${item.id}`}
                       type='movie'
                       item={item}
                       addBookMark={addBookMark}
                       bookmarkedIds={bookmarkedIds}
                     />
+                    </Carousel.Item>
                   )
                 })}
             </Carousel>
