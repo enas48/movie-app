@@ -33,9 +33,9 @@ export const getSeriesDetails = series_id =>
     .then(res => res.json())
     .then(data => data)
 
-export const getSeriesVideo = series_id =>
+export const getSeriesVideo = (series_id,season_number,episode_number) =>
   fetch(
-    `https://api.themoviedb.org/3/tv/${series_id}/video?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
+    `https://api.themoviedb.org/3/tv/${series_id}/season/${season_number}/episode/${episode_number}/videos?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
   )
     .then(res => res.json())
     .then(data => data)

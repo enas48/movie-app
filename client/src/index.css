@@ -691,41 +691,67 @@ button.icon-container.bookmark.active {
     max-width: 45%;
   }
 }
+.eposides{
+  z-index: 4;
+}
 .episode-container {
   max-width: 250px;
   position: relative;
   overflow: hidden;
   min-height: 120px;
   background: var(--dark-active);
+  padding: 0;
+  cursor: default;
+  transition: all ease-in 0.3s;
+  transform: scale(1);
+  box-shadow: 0px 1px 5px #000000;
 }
-
+.episode-container .img-container{
+  overflow: hidden;
+  min-height: 140px;
+}
 .episode-container img {
+  max-width: 100%;
+border-top-left-radius: calc(0.375rem - 1px);
+border-top-right-radius: calc(0.375rem - 1px);
+  height: max-content;
+  object-fit: contain;
+}
+.episode-container .card-body{
   position: absolute;
-  width: 100%;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+    align-items: flex-start;
+    height: 100%;
+    width: 100%;
 }
 .episode-content {
   display: none;
 }
-.episode-container .card-body {
-  z-index: 2;
+.episode-container .text-secondry,
+.episode-container  .episode-num
+ {
+  z-index: 1;
+  position: relative;
+}
+.episode-container:hover {
+  overflow: initial;
+  transform: scale(1.2);
+  z-index: 27;
+  min-height: 100%;
 }
 .episode-container:hover > * .episode-content {
   display: block;
   position: absolute;
-  top: 120px;
+  top: 140px;
+  left: 0;
   background: var(--dark);
   z-index: 27;
+  padding: 1rem;
+  box-shadow: 0px 1px 5px #000000;
 }
-.episode-container .episode-content {
-  position: absolute;
-  top: 120px;
-  background: var(--dark);
-  z-index: 27;
-}
+
 .episode-bg {
   height: 100%;
   position: absolute;
@@ -744,6 +770,9 @@ button.icon-container.bookmark.active {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+  }
+  .episode-container:hover > * .episode-content {
+    display: none;
   }
 }
 .iframe{
