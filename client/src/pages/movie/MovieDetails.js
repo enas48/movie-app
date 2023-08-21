@@ -24,6 +24,7 @@ function MovieDetails (props) {
   const [image, setImage] = useState(null)
   const [video, setvideo] = useState('')
   const [disabled, setDisabled] = useState(false)
+  const [key, setKey] = useState(null)
 
   const handleBookmark = (e, id, type) => {
     e.stopPropagation()
@@ -54,6 +55,22 @@ function MovieDetails (props) {
     }
   }
 
+  const fetchTrailer = async id => {
+    try {
+      MovieApi.Trailer(id).then(data => {
+        console.log(data.results)
+        let youtubeVideos = data.results.filter(d => d.site === 'YouTube')
+        console.log(youtubeVideos)
+        if (youtubeVideos[0]?.key) {
+          setKey(youtubeVideos[0].key)
+        }
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+
   let preloadImages = async movie => {
     if (movie?.backdrop_path && movie.backdrop_path !== null) {
       const response = await fetch(
@@ -83,6 +100,7 @@ function MovieDetails (props) {
     if (id) {
       fetchMovie(id)
       fetchMovieVideo(id)
+      fetchTrailer(id)
     }
   }, [id])
 
@@ -177,6 +195,22 @@ function MovieDetails (props) {
             </div>
 
             <Crew id={id} type='movie' />
+
+            {key && (
+              <div className='details-related-content'>
+                <h3 className='mb-4'>Trailer</h3>
+                <div className='text-center'>
+                <iframe
+                  src={`https://www.youtube.com/embed/${key}`}
+                  height='480'
+                  width='100%'
+                  className='iframe'
+                  title='Iframe Example'
+                ></iframe>
+                </div>
+              </div>
+            )}
+
             <div className='details-related-content'>
               <MovieList
                 bookmarkedIds={props.bookmarkedIds}

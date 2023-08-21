@@ -21,6 +21,7 @@ function TvDetails (props) {
   const { id } = useParams()
   const [details, setDetails] = useState({})
   const [image, setImage] = useState(null)
+  const [key, setKey] = useState(null)
 
   const handleBookmark = (e, id, type) => {
     e.stopPropagation()
@@ -38,28 +39,41 @@ function TvDetails (props) {
   }
 
   const fetchSeries = async id => {
- 
     try {
       TvSeriesApi.getSeriesDetails(id).then(series => {
+        console.log(series)
         preloadImages(series)
         setDetails(series)
       })
-    
     } catch (err) {
       console.log(err)
-
     }
   }
 
+  const fetchTrailer = async id => {
+    try {
+      TvSeriesApi.Trailer(id).then(data => {
+        console.log(data.results)
+        let youtubeVideos = data.results.filter(d => d.site === 'YouTube')
+        console.log(youtubeVideos)
+        if (youtubeVideos[0]?.key) {
+          setKey(youtubeVideos[0].key)
+        }
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   useEffect(() => {
     const loadData = async () => {
       await new Promise(r => setTimeout(r, 1000))
-      setIsLoading( false)
+      setIsLoading(false)
     }
     loadData()
     if (id) {
       fetchSeries(id)
+      fetchTrailer(id)
     }
   }, [id])
 
@@ -138,16 +152,17 @@ function TvDetails (props) {
               <p className='col-md-8 col-lg-6'>{details?.overview}</p>
               <div className='d-flex gap-4 mb-4 flex-wrap'>
                 <span>
-                  Episodes:
+                  Episodes:&nbsp;
                   {details?.number_of_episodes && details.number_of_episodes}
                 </span>
-                <span className='d-flex gap-2 align-items-center'>
-                  <MdLanguage />
-                  <span>
-                    {details?.spoken_languages &&
-                      details.spoken_languages[0].english_name}
-                  </span>
-                </span>
+                {details?.spoken_languages && 
+                details?.spoken_languages.length!==0 &&
+                  details.spoken_languages[0]?.english_name && (
+                    <span className='d-flex gap-2 align-items-center'>
+                      <MdLanguage />
+                      <span>{details.spoken_languages[0].english_name}</span>
+                    </span>
+                  )}
               </div>
               <div className='d-flex gap-2'>
                 <button
@@ -165,6 +180,20 @@ function TvDetails (props) {
                 </button>
               </div>
             </div>
+            {key && (
+              <div className='details-related-content'>
+                <h3 className='mb-4'>Trailer</h3>
+                <div className='text-center'>
+                <iframe
+                  src={`https://www.youtube.com/embed/${key}`}
+                  height='480'
+                  width='100%'
+                  className='iframe'
+                  title='Iframe Example'
+                ></iframe>
+                </div>
+              </div>
+            )}
             <div className='details-related-content'>
               {details?.seasons && details.seasons.length !== 0 && (
                 <SeasonList

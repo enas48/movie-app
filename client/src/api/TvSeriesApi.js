@@ -157,3 +157,10 @@ export const crewList = async results => {
 
   return crewArr
 }
+
+export const Trailer = (series_id) =>
+  fetch(
+    `https://api.themoviedb.org/3/tv/${series_id}/videos?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
+  )
+    .then(res => res.json())
+    .then(data => data)

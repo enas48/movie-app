@@ -554,6 +554,7 @@ input[type='file'] {
 }
 .details-content {
   padding: 2rem;
+  position: relative;
 }
 .details-bg::before {
   position: absolute;
@@ -573,7 +574,7 @@ input[type='file'] {
   justify-content: center;
 }
 
-.details-container * {
+.details-container .details-content * {
   z-index: 3;
 }
 
@@ -652,7 +653,7 @@ button.icon-container.bookmark.active {
 }
 
 /*------------------------crew page----------------*/
-.card.crew{
+.card.crew {
   background: var(--dark-active);
   cursor: pointer;
   margin: auto;
@@ -664,12 +665,12 @@ button.icon-container.bookmark.active {
   overflow: hidden;
   padding: 0;
 }
-.card.crew .img-container{
+.card.crew .img-container {
   height: 200px;
   overflow: hidden;
   position: relative;
 }
-.card.crew .img-container img{
+.card.crew .img-container img {
   position: absolute;
   width: 100%;
   left: 0;
@@ -677,32 +678,75 @@ button.icon-container.bookmark.active {
   bottom: 0;
   right: 0;
 }
-.eposide{
-  box-shadow:0px 1px 5px #000000
+.eposide {
+  box-shadow: 0px 1px 5px #000000;
 }
 @media (max-width: 668px) {
-  .eposide{
+  .eposide {
     width: 60%;
   }
 }
 @media (max-width: 480px) {
   .card.crew {
-    max-width:45%;
+    max-width: 45%;
   }
- 
 }
-.episode-container{
+.episode-container {
   max-width: 250px;
- position: relative;
- overflow: hidden;
- min-height: 150px;
- background: var(--dark-active);
+  position: relative;
+  overflow: hidden;
+  min-height: 120px;
+  background: var(--dark-active);
 }
-.episode-container img{
+
+.episode-container img {
   position: absolute;
   width: 100%;
   left: 0;
   top: 0;
   right: 0;
   bottom: 0;
- }
+}
+.episode-content {
+  display: none;
+}
+.episode-container .card-body {
+  z-index: 2;
+}
+.episode-container:hover > * .episode-content {
+  display: block;
+  position: absolute;
+  top: 120px;
+  background: var(--dark);
+  z-index: 27;
+}
+.episode-container .episode-content {
+  position: absolute;
+  top: 120px;
+  background: var(--dark);
+  z-index: 27;
+}
+.episode-bg {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  filter: blur(2px);
+  right: 0;
+  background-size: contain;
+}
+.eposide-overlay{
+  background-color: rgba(0, 0, 0, 0.65);
+}
+@media (max-width: 680px) {
+  .episode-bg {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+.iframe{
+  max-width:900px;
+  margin: auto;
+}

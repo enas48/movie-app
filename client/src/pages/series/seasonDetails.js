@@ -18,6 +18,7 @@ function SeasonDetails (props) {
   const { id, seasonNum } = useParams()
   const [details, setDetails] = useState({})
   const [image, setImage] = useState(null)
+  const [bg, setBg] = useState(null)
   const [season, setSeason] = useState({})
   var month = [
     'January',
@@ -34,13 +35,24 @@ function SeasonDetails (props) {
     'December'
   ]
 
-  const preloadImages = async data => {
-    if (data?.poster_path && data.poster_path !== null) {
-      const response = await fetch(
-        `https://image.tmdb.org/t/p/original/${data.poster_path}`
-      )
-      const image = await response
-      if (image.url) setImage(image.url)
+  const preloadImages = async (data, type) => {
+    if (type === 'img') {
+      if (data?.poster_path && data.poster_path !== null) {
+        const response = await fetch(
+          `https://image.tmdb.org/t/p/original/${data.poster_path}`
+        )
+        const image = await response
+        if (image.url) setImage(image.url)
+      }
+    }
+    if (type === 'bg') {
+      if (data?.backdrop_path && data.backdrop_path !== null) {
+        const response = await fetch(
+          `https://image.tmdb.org/t/p/original/${data.backdrop_path}`
+        )
+        const image = await response
+        if (image.url) setBg(image.url)
+      }
     }
   }
 
@@ -48,7 +60,8 @@ function SeasonDetails (props) {
     try {
       TvSeriesApi.getSeriesDetails(id).then(series => {
         console.log(series)
-        preloadImages(series, 'series')
+
+        preloadImages(series, 'bg')
         setDetails(series)
       })
     } catch (err) {
@@ -59,7 +72,7 @@ function SeasonDetails (props) {
     try {
       TvSeriesApi.seasonDetails(id, seasonNum).then(season => {
         console.log(season)
-        // preloadImages(season, 'series')
+        preloadImages(season, 'img')
         setSeason(season)
       })
     } catch (err) {
@@ -90,6 +103,11 @@ function SeasonDetails (props) {
         {details?.id && (
           <div className='details-container '>
             <div className=' details-content row m-auto d-flex justify-content-center'>
+              <div
+                style={{ backgroundImage: `url(${bg})` }}
+                className='episode-bg'
+              ></div>
+              <div className='overlay eposide-overlay'></div>
               <div className='col-md-5 col-lg-3 order-md-2 text-center mb-3'>
                 <img src={image} className='img-fluid rounded eposide ' />
               </div>
@@ -157,7 +175,7 @@ function SeasonDetails (props) {
                       <span className='text-secondry'>Genres: </span>
                       {details.genres.map((item, i) => {
                         return (
-                          <span className='d-flex gap-1' key={item.id}>
+                          <span className='flex-shrink' key={item.id}>
                             {item.name}
                             {(i === 0 && details.length === 1) ||
                             i === details.genres.length - 1
@@ -187,9 +205,9 @@ function SeasonDetails (props) {
             </div>
 
             <Crew id={id} type='tv' />
-
-            <Episode episode={season.episodes} />
-
+            {season?.episodes && (
+              <Episode episode={season?.episodes && season.episodes} />
+            )}
             <div className='details-related-content'>
               {details?.seasons && details.seasons.length !== 0 && (
                 <SeasonList

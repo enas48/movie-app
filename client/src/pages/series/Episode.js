@@ -14,6 +14,8 @@ function Episode ({ episode }) {
   let tvArr = useMemo(() => [], [])
 
   const loadEpisode = async episode => {
+    console.log(episode)
+    if(episode.length !== 0 ){
     for (let data of episode) {
       
       if (data?.still_path && data.still_path !== null) {
@@ -55,9 +57,9 @@ function Episode ({ episode }) {
     }
     setEpisodes(tvArr);
   }
+  }
   useEffect(() => {
     loadEpisode(episode)
-    console.log(episodes)
   }, [])
 
   return (
@@ -81,12 +83,13 @@ function Episode ({ episode }) {
                           alt=''
                         />
                       )}
+                               <div className='overlay'></div>
                     </div>
                     <div className='card-body'>
-                      <span className='text-secondry'> {item.name}</span>
-                      <br />
                       <span>Eposide {item.episode_number}</span>
-                      {/* <span> {item.overview} </span> */}
+                      <br />
+                      <span className='text-secondry'> {item.name}</span>
+                      <span className='episode-content'> {item.overview} </span>
                     </div>
                   </div>
                 )
