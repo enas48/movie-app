@@ -28,7 +28,7 @@ function Series (props) {
         />
 
         <div className='p-3'>
-          <Search label='Search for Tv series' />
+          <Search label='Search for Tv series'  />
           <TvList
             bookmarkedIds={props.bookmarkedIds}
             addBookMark={props.addBookMark}

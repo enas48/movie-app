@@ -20,14 +20,15 @@ function Movies (props) {
   return (
     <>
       {isLoading && <Loading />}
-      <SidebarLayout>
+      <SidebarLayout handleSearch={props.handleSearch}>
         <RegisterModal
           show={props.show}
           onLogin={props.onLogin}
           handleCloseModal={props.handleClose}
         />
         <div className='p-3'>
-          <Search label='Search for Movie' />
+          <Search label='Search for Movie' handleSearch={props.handleSearch} searchList={props.searchList}/>
+
           <MovieList
             bookmarkedIds={props.bookmarkedIds}
             addBookMark={props.addBookMark}

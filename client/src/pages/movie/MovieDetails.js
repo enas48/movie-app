@@ -13,7 +13,8 @@ import { FaPlay } from 'react-icons/fa'
 import {
   MdOutlineBookmarkBorder,
   MdOutlineBookmark,
-  MdLanguage
+  MdLanguage,
+  MdLocalMovies,
 } from 'react-icons/md'
 import { BiTimeFive } from 'react-icons/bi'
 
@@ -69,7 +70,6 @@ function MovieDetails (props) {
       console.log(err)
     }
   }
-
 
   let preloadImages = async movie => {
     if (movie?.backdrop_path && movie.backdrop_path !== null) {
@@ -165,8 +165,12 @@ function MovieDetails (props) {
                   <MdLanguage />
                   <span>
                     {details?.spoken_languages &&
+                      details.spoken_languages[0]?.english_name &&
                       details.spoken_languages[0].english_name}
                   </span>
+                </span>
+                <span className='d-flex gap-2 align-items-center'>
+                  <MdLocalMovies/> movie
                 </span>
               </div>
               <div className='d-flex gap-2'>
@@ -182,7 +186,7 @@ function MovieDetails (props) {
                   onClick={e => handleBookmark(e, details.id, 'movie')}
                   className=' btn icon-container bookmark'
                 >
-                  Add to Bookmark&nbsp;
+                  Add to Wishlist&nbsp;
                   {props.bookmarkedIds.includes(
                     details.id && details.id.toString()
                   ) ? (
@@ -200,13 +204,13 @@ function MovieDetails (props) {
               <div className='details-related-content'>
                 <h3 className='mb-4'>Trailer</h3>
                 <div className='text-center'>
-                <iframe
-                  src={`https://www.youtube.com/embed/${key}`}
-                  height='480'
-                  width='100%'
-                  className='iframe'
-                  title='Iframe Example'
-                ></iframe>
+                  <iframe
+                    src={`https://www.youtube.com/embed/${key}`}
+                    height='480'
+                    width='100%'
+                    className='iframe'
+                    title='Iframe Example'
+                  ></iframe>
                 </div>
               </div>
             )}

@@ -97,3 +97,10 @@ export const cast = movie_id =>
     .then(res => res.json())
     .then(data => data)
 
+    export const Search = query =>
+    fetch(
+      `https://api.themoviedb.org/3//search/multi?query=${query}&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
+    )
+      .then(res => res.json())
+      .then(data => data)
+  

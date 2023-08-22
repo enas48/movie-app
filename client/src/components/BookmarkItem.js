@@ -1,5 +1,8 @@
 import React from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
+import Tooltip from 'react-bootstrap/Tooltip'
+import Button from 'react-bootstrap/Button'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 import {
   MdLocalMovies,
@@ -27,16 +30,37 @@ function BookmarkItem ({ link, item, type, handleBookmark, bookmarkedIds }) {
             <div className='d-flex flex-column card-content'>
               <div className='d-flex align-items-center gap-1'>
                 <MdStar className='text-warning' /> {item.rate}
-                <button
-                  onClick={e => handleBookmark(e, item.id, type)}
-                  className='btn-outline bookmark-btn text-white d-flex justify-content-end gap-2 '
-                >
-                  {bookmarkedIds.includes(item.id.toString()) ? (
-                    <MdOutlineBookmark className='bookmark_icon' />
-                  ) : (
-                    <MdOutlineBookmarkBorder className='bookmark_icon' />
-                  )}
-                </button>
+                {bookmarkedIds.includes(item.id.toString()) ? (
+                  <OverlayTrigger
+                    delay={{ hide: 450, show: 300 }}
+                    overlay={props => (
+                      <Tooltip {...props}>Remove From Wishlist</Tooltip>
+                    )}
+                    placement='bottom'
+                  >
+                    <Button
+                      onClick={e => handleBookmark(e, item.id, type)}
+                      className='btn-outline bookmark-btn text-white d-flex justify-content-end gap-2 '
+                    >
+                      <MdOutlineBookmark className='bookmark_icon' />
+                    </Button>
+                  </OverlayTrigger>
+                ) : (
+                  <OverlayTrigger
+                    delay={{ hide: 450, show: 300 }}
+                    overlay={props => (
+                      <Tooltip {...props}>Add to Wishlist</Tooltip>
+                    )}
+                    placement='bottom'
+                  >
+                    <Button
+                      onClick={e => handleBookmark(e, item.id, type)}
+                      className='btn-outline bookmark-btn text-white d-flex justify-content-end gap-2 '
+                    >
+                      <MdOutlineBookmarkBorder className='bookmark_icon' />
+                    </Button>
+                  </OverlayTrigger>
+                )}
               </div>
               <div className='d-flex   flex-column '>
                 <div className='d-flex gap-2'>

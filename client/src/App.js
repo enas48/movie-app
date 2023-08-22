@@ -21,6 +21,9 @@ import { setAuthToken } from './helpers/setAuthToken'
 import AuthContext from './helpers/authContext'
 
 import MessageModal from './uiElements/messageModel'
+import Person from './pages/Person'
+import SearchItem from './pages/SearchItem'
+import * as MovieApi from './api/MovieApi'
 
 function App () {
   const [message, setMessage] = useState({ text: null, state: 'error' })
@@ -32,6 +35,15 @@ function App () {
     parseInt(localStorage.getItem('expireVal'))
   )
   const [bookmarkedIds, setBookMarkedId] = useState([])
+  const [searchList, setSearchList] = useState([])
+
+  const handleSearch = async query => {
+    MovieApi.Search(query).then(data=>{
+      console.log(data)
+      setSearchList(data.results)
+    })
+  
+  }
 
   const handleBookmark = (id, type) => {
     id = id.toString()
@@ -172,7 +184,7 @@ function App () {
     if (expired < Date.now()) {
       logout()
     }
-  }, [expireVal, userId, show])
+  }, [expireVal, userId, show,searchList])
 
   if (token) {
     setAuthToken(token)
@@ -201,7 +213,9 @@ function App () {
                 onLogout={logout}
                 show={show}
                 handleClose={handleClose}
+                handleSearch={handleSearch}
                 onLogin={login}
+                searchList={searchList}
               />
             }
           />
@@ -247,6 +261,7 @@ function App () {
                 show={show}
                 handleClose={handleClose}
                 onLogin={login}
+                onLogout={logout}
               />
             }
           />
@@ -259,10 +274,11 @@ function App () {
                 show={show}
                 handleClose={handleClose}
                 onLogin={login}
+                onLogout={logout}
               />
             }
           />
-           <Route
+          <Route
             path='season/:id/:seasonNum'
             element={
               <SeasonDetails
@@ -271,6 +287,34 @@ function App () {
                 show={show}
                 handleClose={handleClose}
                 onLogin={login}
+                onLogout={logout}
+              />
+            }
+          />
+          <Route
+            path='person/:id'
+            element={
+              <Person
+                bookmarkedIds={bookmarkedIds}
+                addBookMark={handleBookmark}
+                show={show}
+                handleClose={handleClose}
+                onLogin={login}
+                onLogout={logout}
+              />
+            }
+          />
+          <Route
+            path='/search/:id'
+            element={
+              <SearchItem
+                searchList={searchList}
+                bookmarkedIds={bookmarkedIds}
+                addBookMark={handleBookmark}
+                show={show}
+                handleClose={handleClose}
+                onLogin={login}
+                onLogout={logout}
               />
             }
           />

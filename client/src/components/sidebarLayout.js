@@ -10,7 +10,9 @@ function SidebarLayout (props) {
         <div className='d-flex'>
           <LeftSidebar />
         </div>
-        <div className='content d-flex flex-column gap-2'>{props.children}</div>
+        <div className='content d-flex flex-column gap-2'>
+          
+          {props.children}</div>
       </div>
     </>
   )

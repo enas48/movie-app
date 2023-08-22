@@ -73,7 +73,7 @@ function Header () {
             </LinkContainer>
             {userId && (
               <LinkContainer to='/bookmark'>
-                <Nav.Link>Bookmark</Nav.Link>
+                <Nav.Link>Wishlist</Nav.Link>
               </LinkContainer>
             )}
           </Nav>

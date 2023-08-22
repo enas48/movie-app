@@ -9,7 +9,7 @@ import TvList from '../../components/TVList'
 import SeasonList from '../../components/SeasonList'
 import RegisterModal from '../../uiElements/RegisterModal'
 import Loading from '../../uiElements/preloading'
-
+import { PiTelevisionBold } from 'react-icons/pi'
 import {
   MdOutlineBookmarkBorder,
   MdOutlineBookmark,
@@ -163,13 +163,16 @@ function TvDetails (props) {
                       <span>{details.spoken_languages[0].english_name}</span>
                     </span>
                   )}
+                    <span className='d-flex gap-2 align-items-center'>
+                  <PiTelevisionBold/> Tv Series
+                </span>
               </div>
               <div className='d-flex gap-2'>
                 <button
                   onClick={e => handleBookmark(e, details.id, 'tv')}
                   className=' btn icon-container bookmark'
                 >
-                  Add to Bookmark&nbsp;
+                  Add to Wishlist&nbsp;
                   {props.bookmarkedIds.includes(
                     details.id && details.id.toString()
                   ) ? (

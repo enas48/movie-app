@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,useLocation } from 'react-router-dom'
 import axios from 'axios'
 
 import Nav from 'react-bootstrap/Nav'
@@ -14,6 +14,7 @@ import { BiLogIn } from 'react-icons/bi'
 import AuthContext from '../helpers/authContext'
 
 function LeftSidebar () {
+  const location = useLocation();
   const { userId, logout } = useContext(AuthContext)
   const [image, setImage] = useState(process.env.PUBLIC_URL + './person.png')
   let navigate = useNavigate()
@@ -60,7 +61,7 @@ function LeftSidebar () {
         navbarScroll
       >
         <LinkContainer to='/' className='mt-lg-5 pt-lg-4'>
-          <Nav.Link>
+          <Nav.Link className={location.pathname.includes('home')?'active':''}>
             <span className='d-flex align-items-center gap-2'>
               <AiFillHome />
               <span className='icon-text'>Home</span>
@@ -68,7 +69,7 @@ function LeftSidebar () {
           </Nav.Link>
         </LinkContainer>
         <LinkContainer to='/movies'>
-          <Nav.Link>
+          <Nav.Link className={location.pathname.includes('movies')?'active':''}>
             <span className='d-flex align-items-center gap-2'>
               <MdLocalMovies />
               <span className='icon-text'>Movies</span>
@@ -76,7 +77,7 @@ function LeftSidebar () {
           </Nav.Link>
         </LinkContainer>
         <LinkContainer to='/series'>
-          <Nav.Link>
+          <Nav.Link className={location.pathname.includes('series') ||location.pathname.includes('season')?'active':''}>
             <span className='d-flex align-items-center gap-2'>
               <PiTelevisionBold />
               <span className='icon-text'>Tv Series</span>
@@ -85,10 +86,10 @@ function LeftSidebar () {
         </LinkContainer>
         {userId && (
           <LinkContainer to='/bookmark'>
-            <Nav.Link>
+            <Nav.Link className={location.pathname.includes('bookmarks')?'active':''}>
               <span className='d-flex align-items-center gap-2'>
                 <PiBookmarkSimpleFill />
-                <span className='icon-text'>Bookmark</span>
+                <span className='icon-text'>Wishlist</span>
               </span>
             </Nav.Link>
           </LinkContainer>

@@ -33,9 +33,20 @@ export const getSeriesDetails = series_id =>
     .then(res => res.json())
     .then(data => data)
 
-export const getSeriesVideo = (series_id,season_number,episode_number) =>
+export const getSeriesVideoYoutube = (
+  series_id,
+  season_number,
+  episode_number
+) =>
   fetch(
     `https://api.themoviedb.org/3/tv/${series_id}/season/${season_number}/episode/${episode_number}/videos?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
+  )
+    .then(res => res.json())
+    .then(data => data)
+
+export const getSeriesVideo = series_id =>
+  fetch(
+    `https://api.themoviedb.org/3/tv/${series_id}/watch/providers?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
   )
     .then(res => res.json())
     .then(data => data)
@@ -53,7 +64,7 @@ export const seasonDetails = (series_id, season_number) =>
   )
     .then(res => res.json())
     .then(data => data)
-    
+
 export const cast = series_id =>
   fetch(
     `https://api.themoviedb.org/3/tv/${series_id}/credits?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
@@ -73,7 +84,8 @@ export const list = async series => {
         imageArr.push({
           id: data.id,
           title: data.name,
-          year: data?.first_air_date && new Date(data.first_air_date).getFullYear(),
+          year:
+            data?.first_air_date && new Date(data.first_air_date).getFullYear(),
           rate: data?.vote_average && data.vote_average.toFixed(1),
           image: image.url
         })
@@ -94,8 +106,8 @@ export const seasonList = async results => {
       if (image?.url) {
         seasonArr.push({
           id: data.id,
-          title:  data.name,
-          year: data?.air_date && new Date( data.air_date).getFullYear(),
+          title: data.name,
+          year: data?.air_date && new Date(data.air_date).getFullYear(),
           season_number: data?.season_number && data.season_number,
           rate: data?.vote_average && data.vote_average.toFixed(1),
           image: image.url
@@ -106,7 +118,7 @@ export const seasonList = async results => {
         seasonArr.push({
           id: data.id,
           title: data.name,
-          year: data?.air_date && new Date( data.air_date).getFullYear(),
+          year: data?.air_date && new Date(data.air_date).getFullYear(),
           season_number: data?.season_number && data.season_number,
           rate: data?.vote_average && data.vote_average.toFixed(1),
           image: ''
@@ -158,7 +170,7 @@ export const crewList = async results => {
   return crewArr
 }
 
-export const Trailer = (series_id) =>
+export const Trailer = series_id =>
   fetch(
     `https://api.themoviedb.org/3/tv/${series_id}/videos?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
   )

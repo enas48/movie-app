@@ -59,7 +59,7 @@ function MovieList (props) {
       {isLoading && <Loading />}
       {movies.length !== 0 && (
         <>
-          <h3 className='px-md-4'>
+          <h3 className='px-md-4 mb-4'>
             {kind === 'trending' && 'Trending movies'}
             {kind === 'topRated' && 'Top rated'}
             {kind === 'upcoming' && 'Upcoming'}
