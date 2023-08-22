@@ -72,7 +72,7 @@ function Header () {
               <Nav.Link>Tv Series</Nav.Link>
             </LinkContainer>
             {userId && (
-              <LinkContainer to='/bookmark'>
+              <LinkContainer to='/wishlist'>
                 <Nav.Link>Wishlist</Nav.Link>
               </LinkContainer>
             )}

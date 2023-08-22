@@ -7,6 +7,7 @@ import SidebarLayout from '../../components/sidebarLayout'
 import StarRating from '../../components/StarRating'
 import TvList from '../../components/TVList'
 import SeasonList from '../../components/SeasonList'
+import Search from '../../components/search'
 import RegisterModal from '../../uiElements/RegisterModal'
 import Loading from '../../uiElements/preloading'
 import { PiTelevisionBold } from 'react-icons/pi'
@@ -81,17 +82,19 @@ function TvDetails (props) {
     <>
       {isLoading && <Loading />}
       <SidebarLayout>
+      <Search />
         <RegisterModal
           show={props.show}
           onLogin={props.onLogin}
           handleCloseModal={props.handleClose}
         />
         {details?.id && (
-          <div className='details-container'>
+          <div className='details-container mt-lg-5'>
             <div
               style={{ backgroundImage: `url(${image})` }}
               className=' details-bg details-content d-flex flex-column gap-2'
             >
+        
               <div className='d-flex gap-3 align-items-center'>
                 <span>
                   &bull;&nbsp;
@@ -212,6 +215,7 @@ function TvDetails (props) {
                 addBookMark={props.addBookMark}
                 kind='similar'
                 id={id}
+                cols={4}
               />
             </div>
           </div>

@@ -27,22 +27,25 @@ function Series (props) {
           handleCloseModal={props.handleClose}
         />
 
-        <div className='p-3'>
-          <Search label='Search for Tv series'  />
+          <Search  />
+        <div className='p-3 mt-lg-5'>
           <TvList
             bookmarkedIds={props.bookmarkedIds}
             addBookMark={props.addBookMark}
             kind='onair'
+            cols={2}
           />
           <TvList
             bookmarkedIds={props.bookmarkedIds}
             addBookMark={props.addBookMark}
             kind='topRated'
+            cols={3}
           />
           <TvList
             bookmarkedIds={props.bookmarkedIds}
             addBookMark={props.addBookMark}
             kind='popular'
+            cols={4}
           />
         </div>
       </SidebarLayout>

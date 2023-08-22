@@ -5,12 +5,12 @@ import Button from 'react-bootstrap/Button'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 import {
-  MdLocalMovies,
   MdOutlineBookmarkBorder,
   MdOutlineBookmark,
   MdStar
 } from 'react-icons/md'
 import { PiTelevisionBold } from 'react-icons/pi'
+import { BiCameraMovie } from 'react-icons/bi'
 
 function CarouselItem ({ link, item, type, addBookMark, bookmarkedIds }) {
   const handleBookmark = (e, id, type) => {
@@ -73,12 +73,12 @@ function CarouselItem ({ link, item, type, addBookMark, bookmarkedIds }) {
             <div className='d-flex gap-2'>
               <span>{item.year}</span>
               <span>
-                {type === 'movie' ? <MdLocalMovies /> : <PiTelevisionBold />}
+                {type === 'movie' ? <BiCameraMovie /> : <PiTelevisionBold />}
               </span>
             </div>
-            <h5>
+            <h5 className='text-nowrap'>
               {item?.title && item.title.length > 20
-                ? item.title.slice(0, 30 - 1) + '…'
+                ? item.title.slice(0, 20 - 1) + '…'
                 : item.title}
             </h5>
           </div>

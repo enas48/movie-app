@@ -7,6 +7,7 @@ import SidebarLayout from '../../components/sidebarLayout'
 import SeasonList from '../../components/SeasonList'
 import Crew from '../../components/Crew'
 import TvList from '../../components/TVList'
+import Search from '../../components/search'
 import RegisterModal from '../../uiElements/RegisterModal'
 import Loading from '../../uiElements/preloading'
 import Episodes from './Episodes'
@@ -93,19 +94,21 @@ const month = [
     <>
       {isLoading && <Loading />}
       <SidebarLayout>
+        <Search />
         <RegisterModal
           show={props.show}
           onLogin={props.onLogin}
           handleCloseModal={props.handleClose}
         />
         {details?.id && (
-          <div className='details-container '>
+          <div className='details-container mt-lg-5'>
             <div className=' details-content row m-auto d-flex justify-content-center'>
               <div
                 style={{ backgroundImage: `url(${bg})` }}
                 className='episode-bg'
               ></div>
               <div className='overlay eposide-overlay'></div>
+        
               <div className='col-md-5 col-lg-3 order-md-2 text-center mb-3'>
                 <img
                   src={image}
@@ -229,6 +232,7 @@ const month = [
                 addBookMark={props.addBookMark}
                 kind='similar'
                 id={id}
+                cols={4}
               />
             </div>
           </div>

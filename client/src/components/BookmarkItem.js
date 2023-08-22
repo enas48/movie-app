@@ -5,12 +5,13 @@ import Button from 'react-bootstrap/Button'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 import {
-  MdLocalMovies,
+  
   MdOutlineBookmarkBorder,
   MdOutlineBookmark,
   MdStar
 } from 'react-icons/md'
 import { PiTelevisionBold } from 'react-icons/pi'
+import { BiCameraMovie } from 'react-icons/bi'
 
 function BookmarkItem ({ link, item, type, handleBookmark, bookmarkedIds }) {
   return (
@@ -67,7 +68,7 @@ function BookmarkItem ({ link, item, type, handleBookmark, bookmarkedIds }) {
                   <span>{item.year}</span>
                   <span>
                     {type === 'movie' ? (
-                      <MdLocalMovies />
+                      <BiCameraMovie />
                     ) : (
                       <PiTelevisionBold />
                     )}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
 
-import { MdLocalMovies } from 'react-icons/md'
+
 import { PiTelevisionBold } from 'react-icons/pi'
 import { useParams, useLocation } from 'react-router-dom'
 import Loading from '../uiElements/preloading'
@@ -10,12 +10,10 @@ import TvDetails from './series/TvDetails'
 import Person from './Person'
 
 function SearchItem (props) {
-  const { id } = useParams()
   const location = useLocation()
   const [isLoading, setIsLoading] = useState(true)
   const { data } = location.state
-  console.log(data)
-  console.log(id)
+
   const [type, setType] = useState('')
   useEffect(() => {
     setIsLoading(true)

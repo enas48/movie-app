@@ -7,15 +7,10 @@ import Loading from '../uiElements/preloading'
 import CarouselItem from './CarouselItem'
 
 function TvList (props) {
-  let { kind, id, addBookMark, bookmarkedIds } = props
+  let { kind, id, addBookMark, bookmarkedIds,cols } = props
   const [isLoading, setIsLoading] = useState(true)
   const [series, setSeries] = useState([])
 
-  function cols () {
-    if (kind === 'onair') return 2
-    else if (kind === 'topRated') return 3
-    else return 4
-  }
 
   const loadData = async () => {
     if (kind === 'onair') {
@@ -61,12 +56,12 @@ function TvList (props) {
         <>
           <h3 className='px-md-4 mb-4'>
             {kind === 'popular' && 'Popular Tv Series'}
-            {kind === 'topRated' && 'Top rated'}
+            {kind === 'topRated' && 'Top rated Tv Series'}
             {kind === 'onair' && 'On The Air'}
             {kind === 'similar' && 'Related Tv Series'}
           </h3>
           <div className='col-12 mb-5 movieList'>
-            <Carousel cols={cols()} rows={1} gap={10} loop autoplay={6000}>
+            <Carousel cols={cols} rows={1} gap={10} loop autoplay={6000}>
               {series.length !== 0 &&
                 series.map((item, i) => {
                   return (

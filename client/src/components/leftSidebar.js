@@ -6,10 +6,10 @@ import Nav from 'react-bootstrap/Nav'
 import { LinkContainer } from 'react-router-bootstrap'
 
 import { RiMovie2Fill } from 'react-icons/ri'
-import { MdLocalMovies, MdPersonAddAlt1 } from 'react-icons/md'
+import {  MdPersonAddAlt1 } from 'react-icons/md'
 import { PiTelevisionBold, PiBookmarkSimpleFill } from 'react-icons/pi'
 import { AiFillHome } from 'react-icons/ai'
-import { BiLogIn } from 'react-icons/bi'
+import { BiLogIn ,BiCameraMovie} from 'react-icons/bi'
 
 import AuthContext from '../helpers/authContext'
 
@@ -71,7 +71,7 @@ function LeftSidebar () {
         <LinkContainer to='/movies'>
           <Nav.Link className={location.pathname.includes('movies')?'active':''}>
             <span className='d-flex align-items-center gap-2'>
-              <MdLocalMovies />
+              <BiCameraMovie />
               <span className='icon-text'>Movies</span>
             </span>
           </Nav.Link>
@@ -85,7 +85,7 @@ function LeftSidebar () {
           </Nav.Link>
         </LinkContainer>
         {userId && (
-          <LinkContainer to='/bookmark'>
+          <LinkContainer to='/wishlist'>
             <Nav.Link className={location.pathname.includes('bookmarks')?'active':''}>
               <span className='d-flex align-items-center gap-2'>
                 <PiBookmarkSimpleFill />
