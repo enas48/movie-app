@@ -8,7 +8,6 @@
   "dependencies": {
     "cors": "^2.8.5",
     "react-carousel-minimal": "^1.4.1",
-    "react-lazy-load-image-component": "^1.6.0",
-    "react-tinder-card": "^1.6.2"
+    "react-lazy-load-image-component": "^1.6.0"
   }
 }
