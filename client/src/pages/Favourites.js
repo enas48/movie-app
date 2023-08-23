@@ -8,33 +8,33 @@ import Loading from "../uiElements/preloading";
 
 import * as MovieApi from "../api/MovieApi";
 import * as TvSeriesApi from "../api/TvSeriesApi";
-import BookmarkItem from "../components/BookmarkItem";
+import FavouriteItem from "../components/FavouriteItem";
 
-function Bookmark(props) {
+function Favourite(props) {
   const { addBookMark, bookmarkedIds, favouriteIds, addFavourite } = props;
   const [isLoading, setIsLoading] = useState(false);
-  const [movieBookmarks, setMovieBookmarks] = useState([]);
-  const [tvBookmarks, setTvBookmarks] = useState([]);
+  const [movieFavourites, setMovieFavourites] = useState([]);
+  const [tvFavourites, setTvFavourites] = useState([]);
   const { userId } = useContext(AuthContext);
 
   let movieArr = useMemo(() => [], []);
   let tvArr = useMemo(() => [], []);
 
-  const handleBookmark = (e, id, type) => {
+  const handleFavourite = (e, id, type) => {
     e.stopPropagation();
-    addBookMark(id, type);
+    addFavourite(id, type);
 
     if (type === "movie") {
-      let filteredBookmarks = movieBookmarks.filter((item) => {
+      let filteredFavourites = movieFavourites.filter((item) => {
         return item.id !== id;
       });
-      setMovieBookmarks(filteredBookmarks);
+      setMovieFavourites(filteredFavourites);
     }
     if (type === "tv") {
-      let filteredBookmarks = tvBookmarks.filter((item) => {
+      let filteredFavourites = tvFavourites.filter((item) => {
         return item.id !== id;
       });
-      setTvBookmarks(filteredBookmarks);
+      setTvFavourites(filteredFavourites);
     }
   };
 
@@ -47,7 +47,7 @@ function Bookmark(props) {
       movieArr.push(movie);
     }
     MovieApi.list(movieArr).then((data) => {
-      setMovieBookmarks(data);
+      setMovieFavourites(data);
     });
   };
 
@@ -61,32 +61,32 @@ function Bookmark(props) {
       tvArr.push(tv);
     }
     TvSeriesApi.list(tvArr).then((data) => {
-      setTvBookmarks(data);
+      setTvFavourites(data);
     });
   };
 
-  const fetchBookmarks = async () => {
+  const fetchFavourites = async () => {
     try {
       setIsLoading(true);
       const result = await axios(
-        `${process.env.REACT_APP_APP_URL}/bookmarks/${userId}`,
+        `${process.env.REACT_APP_APP_URL}/favourites/${userId}`,
         {
           headers: {
             Accept: "application/json",
           },
         }
       );
-      if (result.data.bookmark) {
-        let movieBookMarkedIds = result.data.bookmark
+      if (result.data.favourite) {
+        let movieFavouritesIds = result.data.favourite
           .filter((item) => item.type === "movie")
-          .map((item) => item.bookmark_id);
+          .map((item) => item.favourite_id);
 
-        let tvBookMarkedIds = result.data.bookmark
+        let tvFavouriteIds = result.data.favourite
           .filter((item) => item.type === "tv")
-          .map((item) => item.bookmark_id);
+          .map((item) => item.favourite_id);
 
-        loadMovieData(movieBookMarkedIds);
-        loadTvData(tvBookMarkedIds);
+        loadMovieData(movieFavouritesIds);
+        loadTvData(tvFavouriteIds);
       }
       setIsLoading(false);
     } catch (err) {
@@ -96,7 +96,7 @@ function Bookmark(props) {
   };
 
   useEffect(() => {
-    fetchBookmarks();
+    fetchFavourites();
   }, []);
 
   return (
@@ -107,37 +107,37 @@ function Bookmark(props) {
           <Search label="Search for Bookmark" />
           <div className="col-12 mb-4 movieList bookmarks mt-lg-5">
             <div className="row">
-              {movieBookmarks.length !== 0 && <h3 className="mb-3">Movies</h3>}
-              {movieBookmarks.length !== 0 &&
-                movieBookmarks.map((item, i) => {
+              {movieFavourites.length !== 0 && <h3 className="mb-3">Movies</h3>}
+              {movieFavourites.length !== 0 &&
+                movieFavourites.map((item, i) => {
                   return (
-                    <BookmarkItem
+                    <FavouriteItem
                       key={i}
                       link="/details/movies"
                       item={item}
                       type="movie"
-                      addBookMark={handleBookmark}
+                      addBookMark={addBookMark}
                       bookmarkedIds={bookmarkedIds}
                       favouriteIds={favouriteIds}
-                      addFavourite={addFavourite}
+                      addFavourite={handleFavourite}
                     />
                   );
                 })}
             </div>
             <div className="row">
-              {tvBookmarks.length !== 0 && <h3 className="mb-3">Tv Series</h3>}
-              {tvBookmarks.length !== 0 &&
-                tvBookmarks.map((item, i) => {
+              {tvFavourites.length !== 0 && <h3 className="mb-3">Tv Series</h3>}
+              {tvFavourites.length !== 0 &&
+                tvFavourites.map((item, i) => {
                   return (
-                    <BookmarkItem
+                    <FavouriteItem
                       key={i}
                       link="/details/series"
                       item={item}
                       type="tv"
-                      addBookMark={handleBookmark}
+                      addBookMark={addBookMark}
                       bookmarkedIds={bookmarkedIds}
                       favouriteIds={favouriteIds}
-                      addFavourite={addFavourite}
+                      addFavourite={handleFavourite}
                     />
                   );
                 })}
@@ -149,4 +149,4 @@ function Bookmark(props) {
   );
 }
 
-export default Bookmark;
+export default Favourite;

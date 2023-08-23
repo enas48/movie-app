@@ -7,7 +7,7 @@ import Loading from '../uiElements/preloading'
 import CarouselItem from './CarouselItem'
 
 function MovieList (props) {
-  let { kind, id, addBookMark, bookmarkedIds ,cols} = props
+  let { kind, id, addBookMark, bookmarkedIds ,favouriteIds,addFavourite,cols} = props
   const [isLoading, setIsLoading] = useState(true)
   const [movies, setMovies] = useState([])
 
@@ -71,6 +71,8 @@ function MovieList (props) {
                         item={item}
                         addBookMark={addBookMark}
                         bookmarkedIds={bookmarkedIds}
+                        favouriteIds={favouriteIds}
+                        addFavourite={addFavourite}
                       />
                     </Carousel.Item>
                   )

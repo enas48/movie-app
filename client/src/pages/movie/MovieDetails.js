@@ -112,7 +112,7 @@ function MovieDetails(props) {
         <Search />
         <RegisterModal
           show={props.show}
-          onLogin={props.onLogin}
+       
           handleCloseModal={props.handleClose}
         />
         {details?.id && (
@@ -221,6 +221,8 @@ function MovieDetails(props) {
               <MovieList
                 bookmarkedIds={props.bookmarkedIds}
                 addBookMark={props.addBookMark}
+                favouriteIds={props.favouriteIds}
+                addFavourite={props.addFavourite}
                 kind="similar"
                 cols={4}
                 id={id}

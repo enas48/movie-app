@@ -24,6 +24,7 @@ import MessageModal from "./uiElements/messageModel";
 import Person from "./pages/Person";
 import SearchItem from "./pages/SearchItem";
 import * as MovieApi from "./api/MovieApi";
+import Favourite from "./pages/Favourites";
 
 function App() {
   const [message, setMessage] = useState({ text: null, state: "error" });
@@ -35,6 +36,7 @@ function App() {
     parseInt(localStorage.getItem("expireVal"))
   );
   const [bookmarkedIds, setBookMarkedId] = useState([]);
+  const [favouritedIds, setFavouriteId] = useState([]);
   const [searchList, setSearchList] = useState([]);
 
   const handleSearch = async (query) => {
@@ -53,21 +55,41 @@ function App() {
         });
         setBookMarkedId(filteredBookmarks);
         //backend
-        deleteBookmark(id);
+        deleteItem(id, "bookmarks");
       } else {
         setBookMarkedId([...bookmarkedIds, id]);
         //backend
-        addBookmark({ bookmark_id: id, userId: userId, type: type });
+        addItem({ bookmark_id: id, userId: userId, type: type }, "bookmarks");
       }
     } else {
       //show login modal
       setShow(true);
     }
   };
-
-  const addBookmark = async (data) => {
+  const handleFavourite = (id, type) => {
+    id = id.toString();
+    if (userId) {
+      if (favouritedIds.includes(id)) {
+        let filteredFavourites = favouritedIds.filter((item) => {
+          return item !== id;
+        });
+        setFavouriteId(filteredFavourites);
+        //backend
+        deleteItem(id, "favourites");
+      } else {
+        setFavouriteId([...favouritedIds, id]);
+        //backend
+        addItem({ favourite_id: id, userId: userId, type: type }, "favourites");
+      }
+    } else {
+      //show login modal
+      setShow(true);
+    }
+  };
+  //add bookmark or favourite to backend
+  const addItem = async (data, type) => {
     axios
-      .post(`${process.env.REACT_APP_APP_URL}/bookmarks`, data)
+      .post(`${process.env.REACT_APP_APP_URL}/${type}`, data)
       .then((response) => {
         // console.log(response.data)
       })
@@ -85,9 +107,10 @@ function App() {
         }
       });
   };
-  const deleteBookmark = async (id) => {
+  //delete bookmark or favourite to backend
+  const deleteItem = async (id, type) => {
     axios
-      .delete(`${process.env.REACT_APP_APP_URL}/bookmarks/${userId}/${id}`)
+      .delete(`${process.env.REACT_APP_APP_URL}/${type}/${userId}/${id}`)
       .then((response) => {
         // console.log(response.data)
       })
@@ -104,6 +127,34 @@ function App() {
           });
         }
       });
+  };
+
+  //fetch bookmarks and favourites
+  const fetchItems = async (type) => {
+    try {
+      const result = await axios(
+        `${process.env.REACT_APP_APP_URL}/${type}/${userId}`,
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
+      if (type === "bookmarks" && result.data.bookmark) {
+        let bookMarkedIds = result.data.bookmark.map(
+          (item) => item.bookmark_id
+        );
+        setBookMarkedId(bookMarkedIds);
+      }
+      if (type === "favourites" && result.data.favourite) {
+        let favouriteIds = result.data.favourite.map(
+          (item) => item.favourite_id
+        );
+        setFavouriteId(favouriteIds);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const fetchUser = async () => {
@@ -118,27 +169,6 @@ function App() {
       );
       if (result.data.profile) {
         setProfile(result.data.profile);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const fetchBookmarks = async () => {
-    try {
-      const result = await axios(
-        `${process.env.REACT_APP_APP_URL}/bookmarks/${userId}`,
-        {
-          headers: {
-            Accept: "application/json",
-          },
-        }
-      );
-      if (result.data.bookmark) {
-        let bookMarkedIds = result.data.bookmark.map(
-          (item) => item.bookmark_id
-        );
-        setBookMarkedId(bookMarkedIds);
       }
     } catch (err) {
       console.log(err);
@@ -170,13 +200,16 @@ function App() {
     setToken(null);
     setUserid(null);
     setAuthToken(null);
+    setBookMarkedId([]);
+    setFavouriteId([]);
     localStorage.clear();
   };
 
   useEffect(() => {
     if (userId) {
       fetchUser();
-      fetchBookmarks();
+      fetchItems("bookmarks");
+      fetchItems("favourites");
     }
     //handle expired token
     let today = new Date();
@@ -210,7 +243,11 @@ function App() {
               <Home
                 bookmarkedIds={bookmarkedIds}
                 addBookMark={handleBookmark}
-                onLogout={logout}
+                favouriteIds={favouritedIds}
+                addFavourite={handleFavourite}
+                show={show}
+                handleClose={handleClose}
+          
               />
             }
           />
@@ -220,11 +257,12 @@ function App() {
               <Movies
                 bookmarkedIds={bookmarkedIds}
                 addBookMark={handleBookmark}
-                onLogout={logout}
+                favouriteIds={favouritedIds}
+                addFavourite={handleFavourite}
                 show={show}
                 handleClose={handleClose}
                 handleSearch={handleSearch}
-                onLogin={login}
+             
                 searchList={searchList}
               />
             }
@@ -235,10 +273,11 @@ function App() {
               <Series
                 bookmarkedIds={bookmarkedIds}
                 addBookMark={handleBookmark}
-                onLogout={logout}
+                favouriteIds={favouritedIds}
+                addFavourite={handleFavourite}
                 show={show}
                 handleClose={handleClose}
-                onLogin={login}
+            
               />
             }
           />
@@ -257,7 +296,21 @@ function App() {
                 <Bookmark
                   bookmarkedIds={bookmarkedIds}
                   addBookMark={handleBookmark}
-                  onLogout={logout}
+                  favouriteIds={favouritedIds}
+                  addFavourite={handleFavourite}
+                />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/favourite"
+            element={
+              <ProtectedRoute isAllowed={!!token}>
+                <Favourite
+                  bookmarkedIds={bookmarkedIds}
+                  addBookMark={handleBookmark}
+                  favouriteIds={favouritedIds}
+                  addFavourite={handleFavourite}
                 />
               </ProtectedRoute>
             }
@@ -268,10 +321,11 @@ function App() {
               <MovieDetails
                 bookmarkedIds={bookmarkedIds}
                 addBookMark={handleBookmark}
+                favouriteIds={favouritedIds}
+                addFavourite={handleFavourite}
                 show={show}
                 handleClose={handleClose}
-                onLogin={login}
-                onLogout={logout}
+          
               />
             }
           />
@@ -281,10 +335,11 @@ function App() {
               <TvDetails
                 bookmarkedIds={bookmarkedIds}
                 addBookMark={handleBookmark}
+                favouriteIds={favouritedIds}
+                addFavourite={handleFavourite}
                 show={show}
                 handleClose={handleClose}
-                onLogin={login}
-                onLogout={logout}
+         
               />
             }
           />
@@ -294,10 +349,11 @@ function App() {
               <SeasonDetails
                 bookmarkedIds={bookmarkedIds}
                 addBookMark={handleBookmark}
+                favouriteIds={favouritedIds}
+                addFavourite={handleFavourite}
                 show={show}
                 handleClose={handleClose}
-                onLogin={login}
-                onLogout={logout}
+        
               />
             }
           />
@@ -307,10 +363,11 @@ function App() {
               <Person
                 bookmarkedIds={bookmarkedIds}
                 addBookMark={handleBookmark}
+                favouriteIds={favouritedIds}
+                addFavourite={handleFavourite}
                 show={show}
                 handleClose={handleClose}
-                onLogin={login}
-                onLogout={logout}
+          
               />
             }
           />
@@ -321,14 +378,15 @@ function App() {
                 searchList={searchList}
                 bookmarkedIds={bookmarkedIds}
                 addBookMark={handleBookmark}
+                favouriteIds={favouritedIds}
+                addFavourite={handleFavourite}
                 show={show}
                 handleClose={handleClose}
-                onLogin={login}
-                onLogout={logout}
+         
               />
             }
           />
-          <Route path="/login" element={<Login onLogin={login} />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<Notfound />} />
         </Routes>

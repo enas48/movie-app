@@ -23,7 +23,7 @@ function Movies (props) {
       <SidebarLayout >
         <RegisterModal
           show={props.show}
-          onLogin={props.onLogin}
+    
           handleCloseModal={props.handleClose}
         />
     
@@ -32,18 +32,24 @@ function Movies (props) {
           <MovieList
             bookmarkedIds={props.bookmarkedIds}
             addBookMark={props.addBookMark}
+            favouriteIds={props.favouriteIds}
+            addFavourite={props.addFavourite}
             kind='trending'
             cols={2}
           />
           <MovieList
             bookmarkedIds={props.bookmarkedIds}
             addBookMark={props.addBookMark}
+            favouriteIds={props.favouriteIds}
+            addFavourite={props.addFavourite}
             kind='topRated'
             cols={3}
           />
           <MovieList
             bookmarkedIds={props.bookmarkedIds}
             addBookMark={props.addBookMark}
+            favouriteIds={props.favouriteIds}
+            addFavourite={props.addFavourite}
             kind='upcoming'
             cols={4}
           />

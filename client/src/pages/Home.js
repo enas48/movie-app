@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo,useContext } from "react";
 import { Carousel } from "react-carousel-minimal";
 import { Link as LinkRouter } from "react-router-dom";
 import * as MovieApi from "../api/MovieApi";
@@ -7,10 +7,14 @@ import TvList from "../components/TVList";
 import Header from "../components/Header";
 import Loading from "../uiElements/preloading";
 import {PiTelevision} from 'react-icons/pi'
+import RegisterModal from '../uiElements/RegisterModal'
+import AuthContext from '../helpers/authContext'
 
 function Home(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState([]);
+  const { userId } = useContext(AuthContext)
+  console.log(userId)
   let imageArr = useMemo(() => [], []);
   const captionStyle = {
     fontSize: "2em",
@@ -47,8 +51,14 @@ function Home(props) {
   return (
     <>
       {isLoading && <Loading />}
+          <RegisterModal
+          show={props.show}
+      
+          handleCloseModal={props.handleClose}
+        />
+    
       <div className="home">
-        <Header />
+        <Header  />
         <div className="p-0 mb-5">
           {images.length !== 0 && (
             <Carousel
@@ -81,6 +91,8 @@ function Home(props) {
           <MovieList
             bookmarkedIds={props.bookmarkedIds}
             addBookMark={props.addBookMark}
+            favouriteIds={props.favouriteIds}
+            addFavourite={props.addFavourite}
             kind="trending"
             cols={4}
           />
@@ -88,10 +100,13 @@ function Home(props) {
           <MovieList
             bookmarkedIds={props.bookmarkedIds}
             addBookMark={props.addBookMark}
+            favouriteIds={props.favouriteIds}
+            addFavourite={props.addFavourite}
             kind="topRated"
             cols={4}
           />
         </div>
+        {!userId &&
         <div className="create-account">
           <div className="row align-items-center">
             <div className="col-md-6 text-center">
@@ -107,17 +122,22 @@ function Home(props) {
             </div>
           </div>
         </div>
+}
           <div className="container py-5">
         
             <TvList
               bookmarkedIds={props.bookmarkedIds}
               addBookMark={props.addBookMark}
+              favouriteIds={props.favouriteIds}
+              addFavourite={props.addFavourite}
               kind='topRated'
               cols={4}
             />
           <TvList
             bookmarkedIds={props.bookmarkedIds}
             addBookMark={props.addBookMark}
+            favouriteIds={props.favouriteIds}
+            addFavourite={props.addFavourite}
             kind='onair'
             cols={4}
           />

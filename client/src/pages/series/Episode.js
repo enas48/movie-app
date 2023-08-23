@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { FaPlay } from 'react-icons/fa'
 import * as TvSeriesApi from '../../api/TvSeriesApi'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 function Episode ({ episode }) {
   const [disabled, setDisabled] = useState(false)
@@ -61,9 +62,10 @@ function Episode ({ episode }) {
 
   return (
     <div className='d-flex flex-column episode-container card card-container'>
-      {episode.image !== '' && <img src={episode.image} alt={episode.name} />}
+      {episode.image !== '' &&   <LazyLoadImage
+              PlaceholderSrc={process.env.PUBLIC_URL + "../../noimage.png"} src={episode.image} alt={episode.name} />}
       {episode.image === '' && (
-        <img src={process.env.PUBLIC_URL + '../../noimg2.jpg'} alt='' />
+        <img  loading="lazy" src={process.env.PUBLIC_URL + '../../noimg2.jpg'} alt='' />
       )}
       <div className='overlay'></div>
 

@@ -14,7 +14,7 @@ import {
 import { PiTelevisionBold } from "react-icons/pi";
 import { BiCameraMovie } from "react-icons/bi";
 
-function BookmarkItem({
+function FavouriteItem({
   link,
   item,
   type,
@@ -23,9 +23,9 @@ function BookmarkItem({
   favouriteIds,
   addFavourite,
 }) {
-  const handleFavourite = (e, id, type) => {
+  const handleBookmark = (e, id, type) => {
     e.stopPropagation();
-    addFavourite(id, type);
+    addBookMark(id, type);
   };
 
   return (
@@ -39,9 +39,9 @@ function BookmarkItem({
             <div
               className={`card trending  d-flex flex-column justify-content-between`}
             >
-            <LazyLoadImage
+               <LazyLoadImage
               PlaceholderSrc={process.env.PUBLIC_URL + "../../noimage.png"}
-              src={item.image} alt={item.title} />
+               src={item.image} alt={item.title} />
               <div className="overlay"></div>
             </div>
             <div className="d-flex flex-column card-content">
@@ -56,7 +56,7 @@ function BookmarkItem({
                     placement="bottom"
                   >
                     <Button
-                      onClick={(e) => addBookMark(e, item.id, type)}
+                      onClick={(e) => handleBookmark(e, item.id, type)}
                       className="btn-outline bookmark-btn text-white d-flex justify-content-end gap-2 "
                     >
                       <MdOutlineBookmark className="bookmark_icon" />
@@ -71,7 +71,7 @@ function BookmarkItem({
                     placement="bottom"
                   >
                     <Button
-                      onClick={(e) => addBookMark(e, item.id, type)}
+                      onClick={(e) => handleBookmark(e, item.id, type)}
                       className="btn-outline bookmark-btn text-white d-flex justify-content-end gap-2 "
                     >
                       <MdOutlineBookmarkBorder className="bookmark_icon" />
@@ -87,7 +87,7 @@ function BookmarkItem({
                     placement="bottom"
                   >
                     <Button
-                      onClick={(e) => handleFavourite(e, item.id, type)}
+                      onClick={(e) => addFavourite(e, item.id, type)}
                       className="btn-outline bookmark-btn text-white d-flex justify-content-end gap-2 ms-0"
                     >
                       <MdOutlineFavorite className="bookmark_icon text-danger" />
@@ -102,7 +102,7 @@ function BookmarkItem({
                     placement="bottom"
                   >
                     <Button
-                      onClick={(e) => handleFavourite(e, item.id, type)}
+                      onClick={(e) => addFavourite(e, item.id, type)}
                       className="btn-outline bookmark-btn text-white d-flex justify-content-end gap-2 ms-0"
                     >
                       <MdOutlineFavoriteBorder className="bookmark_icon" />
@@ -135,4 +135,4 @@ function BookmarkItem({
   );
 }
 
-export default BookmarkItem;
+export default FavouriteItem;

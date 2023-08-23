@@ -11,6 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(cors({origin:"*"}))
 const bookmarkRouter = require('./routes/bookmarkRoutes');
+const favouriteRouter=require('./routes/favouriteRoutes');
 const userRouter = require('./routes/userRoutes');
 const profileRouter = require('./routes/porfileRoutes');
 
@@ -31,6 +32,7 @@ app.use((req, res, next) => {
 
 
 app.use('/bookmarks',bookmarkRouter );
+app.use('/favourites',favouriteRouter );
 app.use('/users',userRouter );
 app.use('/profile',profileRouter );
 

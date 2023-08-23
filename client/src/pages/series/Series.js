@@ -23,7 +23,7 @@ function Series (props) {
       <SidebarLayout>
         <RegisterModal
           show={props.show}
-          onLogin={props.onLogin}
+     
           handleCloseModal={props.handleClose}
         />
 
@@ -32,18 +32,24 @@ function Series (props) {
           <TvList
             bookmarkedIds={props.bookmarkedIds}
             addBookMark={props.addBookMark}
+            favouriteIds={props.favouriteIds}
+            addFavourite={props.addFavourite}
             kind='onair'
             cols={2}
           />
           <TvList
             bookmarkedIds={props.bookmarkedIds}
             addBookMark={props.addBookMark}
+            favouriteIds={props.favouriteIds}
+            addFavourite={props.addFavourite}
             kind='topRated'
             cols={3}
           />
           <TvList
             bookmarkedIds={props.bookmarkedIds}
             addBookMark={props.addBookMark}
+            favouriteIds={props.favouriteIds}
+            addFavourite={props.addFavourite}
             kind='popular'
             cols={4}
           />

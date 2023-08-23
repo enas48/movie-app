@@ -11,6 +11,7 @@ import Search from '../../components/search'
 import RegisterModal from '../../uiElements/RegisterModal'
 import Loading from '../../uiElements/preloading'
 import Episodes from './Episodes'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 function SeasonDetails (props) {
   const [isLoading, setIsLoading] = useState(true)
@@ -97,7 +98,7 @@ const month = [
         <Search />
         <RegisterModal
           show={props.show}
-          onLogin={props.onLogin}
+   
           handleCloseModal={props.handleClose}
         />
         {details?.id && (
@@ -110,7 +111,8 @@ const month = [
               <div className='overlay eposide-overlay'></div>
         
               <div className='col-md-5 col-lg-3 order-md-2 text-center mb-3'>
-                <img
+              <LazyLoadImage
+              PlaceholderSrc={process.env.PUBLIC_URL + "../../noimage.png"}
                   src={image}
                   className='img-fluid rounded eposide '
                   alt=''
@@ -222,6 +224,8 @@ const month = [
                 <SeasonList
                   bookmarkedIds={props.bookmarkedIds}
                   addBookMark={props.addBookMark}
+                  favouriteIds={props.favouriteIds}
+                  addFavourite={props.addFavourite}
                   seasons={details.seasons}
                   seriesId={id}
                 />
@@ -230,6 +234,8 @@ const month = [
               <TvList
                 bookmarkedIds={props.bookmarkedIds}
                 addBookMark={props.addBookMark}
+                favouriteIds={props.favouriteIds}
+                addFavourite={props.addFavourite}
                 kind='similar'
                 id={id}
                 cols={4}

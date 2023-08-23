@@ -6,7 +6,7 @@ import Nav from 'react-bootstrap/Nav'
 import { LinkContainer } from 'react-router-bootstrap'
 
 import { RiMovie2Fill } from 'react-icons/ri'
-import {  MdPersonAddAlt1 } from 'react-icons/md'
+import {  MdPersonAddAlt1 ,MdOutlineFavorite} from 'react-icons/md'
 import { PiTelevisionBold, PiBookmarkSimpleFill } from 'react-icons/pi'
 import { AiFillHome } from 'react-icons/ai'
 import { BiLogIn ,BiCameraMovie} from 'react-icons/bi'
@@ -85,6 +85,7 @@ function LeftSidebar () {
           </Nav.Link>
         </LinkContainer>
         {userId && (
+          <>
           <LinkContainer to='/wishlist'>
             <Nav.Link className={location.pathname.includes('bookmarks')?'active':''}>
               <span className='d-flex align-items-center gap-2'>
@@ -93,6 +94,15 @@ function LeftSidebar () {
               </span>
             </Nav.Link>
           </LinkContainer>
+          <LinkContainer to='/favourite'>
+            <Nav.Link className={location.pathname.includes('favourite')?'active':''}>
+              <span className='d-flex align-items-center gap-2'>
+                <MdOutlineFavorite />
+                <span className='icon-text'>Favourite</span>
+              </span>
+            </Nav.Link>
+          </LinkContainer>
+          </>
         )}
       </Nav>
       <Nav>
@@ -101,7 +111,7 @@ function LeftSidebar () {
             <LinkContainer to='/profile'>
               <Nav.Link>
                 <div className='avater'>
-                  <img src={image} className='img-fluid' alt='' />
+                  <img  loading="lazy" src={image} className='img-fluid' alt='' />
                 </div>
               </Nav.Link>
             </LinkContainer>

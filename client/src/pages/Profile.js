@@ -159,6 +159,7 @@ function Profile (props) {
                     <div className='profile-image'>
                       {!fileDataURL && (
                         <img
+                      
                           src={
                             image === ''
                               ? process.env.PUBLIC_URL + './person.png'

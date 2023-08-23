@@ -85,7 +85,7 @@ function TvDetails (props) {
       <Search />
         <RegisterModal
           show={props.show}
-          onLogin={props.onLogin}
+     
           handleCloseModal={props.handleClose}
         />
         {details?.id && (
@@ -205,6 +205,8 @@ function TvDetails (props) {
                 <SeasonList
                   bookmarkedIds={props.bookmarkedIds}
                   addBookMark={props.addBookMark}
+                  favouriteIds={props.favouriteIds}
+                  addFavourite={props.addFavourite}
                   seasons={details.seasons}
                   seriesId={details.id}
                 />
@@ -213,6 +215,8 @@ function TvDetails (props) {
               <TvList
                 bookmarkedIds={props.bookmarkedIds}
                 addBookMark={props.addBookMark}
+                favouriteIds={props.favouriteIds}
+                addFavourite={props.addFavourite}
                 kind='similar'
                 id={id}
                 cols={4}

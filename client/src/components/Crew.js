@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
-
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import * as TvSeriesApi from '../api/TvSeriesApi'
 import * as MovieApi from '../api/MovieApi'
 
@@ -59,10 +59,13 @@ function Crew ({ id, type }) {
                     <div className='d-flex flex-column crew card card-container'>
                       <div className='img-container'>
                         {item.image !== '' && (
-                          <img src={item.image} alt={item.name} />
+                          <LazyLoadImage
+                          PlaceholderSrc={process.env.PUBLIC_URL + "../../noimage.png"}
+                           src={item.image} alt={item.name} />
                         )}
                         {item.image === '' && (
-                          <img
+                            <LazyLoadImage
+                            PlaceholderSrc={process.env.PUBLIC_URL + "../../noimage.png"}
                             src={process.env.PUBLIC_URL + '../../noimage.png'}
                             alt=''
                           />
