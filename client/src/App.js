@@ -292,8 +292,8 @@ function App () {
               />
             }
           />
-             <Route
-            path='/movies/all'
+          <Route
+            path='allmovies'
             element={
               <AllMovies
                 bookmarkedIds={bookmarkedIds}
@@ -306,22 +306,38 @@ function App () {
                 searchList={searchList}
               />
             }
-          />
-             <Route
-            path='/movies/:movietype'
-            element={
-              <Movie
-                bookmarkedIds={bookmarkedIds}
-                addBookMark={handleBookmark}
-                favouriteIds={favouritedIds}
-                addFavourite={handleFavourite}
-                show={show}
-                handleClose={handleClose}
-                handleSearch={handleSearch}
-                searchList={searchList}
-              />
-            }
-          />
+          >
+            <Route
+              path=':movietype'
+              element={
+                <Movie
+                  bookmarkedIds={bookmarkedIds}
+                  addBookMark={handleBookmark}
+                  favouriteIds={favouritedIds}
+                  addFavourite={handleFavourite}
+                  show={show}
+                  handleClose={handleClose}
+                  handleSearch={handleSearch}
+                  searchList={searchList}
+                />
+              }
+            />
+            <Route
+             index
+              element={
+                <Movie
+                  bookmarkedIds={bookmarkedIds}
+                  addBookMark={handleBookmark}
+                  favouriteIds={favouritedIds}
+                  addFavourite={handleFavourite}
+                  show={show}
+                  handleClose={handleClose}
+                  handleSearch={handleSearch}
+                  searchList={searchList}
+                />
+              }
+            />
+          </Route>
           <Route
             path='/series'
             element={

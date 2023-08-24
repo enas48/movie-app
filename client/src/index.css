@@ -16,12 +16,13 @@ body {
   overflow-x: hidden;
   font-family: 'Nunito', sans-serif;
   font-family: 'Cabin', sans-serif;
-
 }
 .text-secondry {
   color: var(--secondry);
 }
-h2,h3,h4{
+h2,
+h3,
+h4 {
   text-transform: capitalize;
   line-height: inherit;
 }
@@ -150,9 +151,9 @@ h3 {
 /*------------------------form style---------------------*/
 .input-group-text {
   padding: 0.375rem;
-  background-color:  var(--dark-active);
+  background-color: var(--dark-active);
   border: none;
-  box-shadow: 1px 1px 2px  #000;
+  box-shadow: 1px 1px 2px #000;
   border-radius: 0;
 }
 
@@ -160,7 +161,13 @@ h3 {
   /* box-shadow: 0px 1px 5px #000000; */
   max-width: 400px;
 }
-.input-group .btn:hover, .btn:active, .btn-check:checked + .btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check) + .btn:active{
+.input-group .btn:hover,
+.btn:active,
+.btn-check:checked + .btn,
+.btn.active,
+.btn.show,
+.btn:first-child:active,
+:not(.btn-check) + .btn:active {
   background: transparent;
 }
 .form-control:hover {
@@ -174,7 +181,7 @@ h3 {
 }
 
 .form-control {
-  background: var(--dark-active);;
+  background: var(--dark-active);
   transition: 0.2s all ease-in-out;
   color: var(--white-active);
   border: 0;
@@ -182,7 +189,6 @@ h3 {
   border-radius: 0;
   box-shadow: none;
   transition: all ease-in 0.3s;
-
 }
 
 .form-control:hover {
@@ -190,7 +196,7 @@ h3 {
 }
 
 .form-control:focus {
-  background:  var(--dark-active);;
+  background: var(--dark-active);
   border-color: var(--white);
   box-shadow: none;
   color: var(--white-active);
@@ -252,6 +258,7 @@ input:-webkit-autofill:focus {
 }
 .custom-btn:hover,
 .custom-btn:active,
+.custom-btn.active,
 .custom-btn:focus-visible {
   opacity: 1;
   box-shadow: none;
@@ -291,7 +298,7 @@ a:focus-visible {
 .icon {
   font-size: 20px;
 }
-.search-icon{
+.search-icon {
   font-size: 24px;
 }
 
@@ -359,7 +366,7 @@ a:focus-visible {
 }
 
 /*----------------------home page----------------------------*/
-.create-account{
+.create-account {
   background: var(--dark-active);
   padding: 5rem 1rem;
 }
@@ -403,7 +410,6 @@ a:focus-visible {
 }
 
 @media (max-width: 768px) {
-
   .home .thumbnails {
     margin-top: -18vh;
   }
@@ -806,12 +812,12 @@ button.icon-container.bookmark.active {
 }
 
 /*-------------------------person style------------------*/
-.person-container{
+.person-container {
   min-height: auto;
 }
 
 /*----------------search--------------------*/
-.search-container{
+.search-container {
   position: fixed;
   top: 0;
   z-index: 500;
@@ -819,16 +825,15 @@ button.icon-container.bookmark.active {
   padding: 0;
   width: calc(100vw - 230px);
 }
-.search-container .input-group{
-
-  max-width:100%;
+.search-container .input-group {
+  max-width: 100%;
 }
-.search-container input{
+.search-container input {
   padding: 0.7rem 0.3rem;
 }
-.search-results{
+.search-results {
   position: absolute;
-  z-index: 68!important;
+  z-index: 68 !important;
   background: var(--dark);
   margin-top: 0rem;
   /* max-width: 400px; */
@@ -839,20 +844,42 @@ button.icon-container.bookmark.active {
   box-shadow: 0px 1px 5px #000000;
   border-radius: 0px 0px 5px 5px;
 }
-@media screen and (max-width:992px) {
- .search-container{
-  position: sticky;
-  top: 0;
-  z-index:500;
-  left: 0;
+@media screen and (max-width: 992px) {
+  .search-container {
+    position: sticky;
+    top: 0;
+    z-index: 500;
+    left: 0;
+    padding: 0;
+    width: 96%;
+    margin: 1rem;
+  }
+}
+.search-results .search-item {
+  padding: 0.6rem 1rem;
+}
+.search-results .search-item:hover {
+  background: var(--dark-active);
+}
+
+/*-------All movies-----------------*/
+.movies-list {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  width: fit-content;
   padding: 0;
-  width: 96%;
-  margin: 1rem;
- } 
+  border-radius: 15px;
 }
-.search-results .search-item{
-  padding: 0.6rem 1rem ;
+.movies-list a {
+  color: #eee;
+  padding: 0.4rem 0.7rem;
+  transition: all ease-in-out 0.3s;
+  border-radius: 7px;
 }
-.search-results .search-item:hover{
- background: var(--dark-active);
+.movies-list a.active {
+  background-color: var(--secondry) !important;
+}
+.movies-list a:hover {
+  background-color: var(--secondry) !important;
 }

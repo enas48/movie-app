@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Carousel from 'react-grid-carousel'
+import { LinkContainer } from 'react-router-bootstrap'
 
 import * as MovieApi from '../api/MovieApi'
 
@@ -53,12 +54,20 @@ function MovieList (props) {
       {isLoading && <Loading />}
       {movies.length !== 0 && (
         <>
+        <div className='d-flex justify-content-between align-items-start'>
+
           <h3 className='px-md-4 mb-4'>
             {kind === 'trending' && 'Trending movies'}
             {kind === 'topRated' && 'Top rated movies'}
             {kind === 'upcoming' && 'Upcoming movies'}
             {kind === 'similar' && 'Related Movies'}
           </h3>
+        <LinkContainer to={'/allmovies'} >
+          <button className='custom-btn btn'>
+          Show more
+          </button>
+          </LinkContainer>
+        </div>
           <div className='col-12 mb-4 movieList'>
             <Carousel cols={cols} rows={1} gap={10} loop autoplay={6000}>
               {movies.length !== 0 &&

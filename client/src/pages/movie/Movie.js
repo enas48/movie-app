@@ -5,10 +5,12 @@ import Search from '../../components/search'
 import MovieList from '../../components/MovieList'
 import RegisterModal from '../../uiElements/RegisterModal'
 import Loading from '../../uiElements/preloading'
+import { useParams } from 'react-router-dom'
 
 function Movie (props) {
   const [isLoading, setIsLoading] = useState(true)
-
+  const { movietype } = useParams()
+  console.log(movietype)
   useEffect(() => {
     const loadData = async () => {
       await new Promise(r => setTimeout(r, 1000))
@@ -19,42 +21,7 @@ function Movie (props) {
 
   return (
     <>
-      {isLoading && <Loading />}
-      <SidebarLayout >
-        <RegisterModal
-          show={props.show}
-    
-          handleCloseModal={props.handleClose}
-        />
-    
-          <Search />
-          <div className='p-3 mt-lg-5'>
-          <MovieList
-            bookmarkedIds={props.bookmarkedIds}
-            addBookMark={props.addBookMark}
-            favouriteIds={props.favouriteIds}
-            addFavourite={props.addFavourite}
-            kind='trending'
-            cols={2}
-          />
-          <MovieList
-            bookmarkedIds={props.bookmarkedIds}
-            addBookMark={props.addBookMark}
-            favouriteIds={props.favouriteIds}
-            addFavourite={props.addFavourite}
-            kind='topRated'
-            cols={3}
-          />
-          <MovieList
-            bookmarkedIds={props.bookmarkedIds}
-            addBookMark={props.addBookMark}
-            favouriteIds={props.favouriteIds}
-            addFavourite={props.addFavourite}
-            kind='upcoming'
-            cols={4}
-          />
-        </div>
-      </SidebarLayout>
+      <div>{movietype} movie</div>
     </>
   )
 }

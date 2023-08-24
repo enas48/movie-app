@@ -5,10 +5,13 @@ import Search from '../../components/search'
 import MovieList from '../../components/MovieList'
 import RegisterModal from '../../uiElements/RegisterModal'
 import Loading from '../../uiElements/preloading'
+import Movie from './Movie'
+import { Outlet, Link,useLocation } from 'react-router-dom'
 
 function AllMovies (props) {
   const [isLoading, setIsLoading] = useState(true)
-
+  const location = useLocation();
+  console.log(location)
   useEffect(() => {
     const loadData = async () => {
       await new Promise(r => setTimeout(r, 1000))
@@ -20,39 +23,23 @@ function AllMovies (props) {
   return (
     <>
       {isLoading && <Loading />}
-      <SidebarLayout >
-        <RegisterModal
-          show={props.show}
-    
-          handleCloseModal={props.handleClose}
-        />
-    
-          <Search />
-          <div className='p-3 mt-lg-5'>
-          <MovieList
-            bookmarkedIds={props.bookmarkedIds}
-            addBookMark={props.addBookMark}
-            favouriteIds={props.favouriteIds}
-            addFavourite={props.addFavourite}
-            kind='trending'
-            cols={2}
-          />
-          <MovieList
-            bookmarkedIds={props.bookmarkedIds}
-            addBookMark={props.addBookMark}
-            favouriteIds={props.favouriteIds}
-            addFavourite={props.addFavourite}
-            kind='topRated'
-            cols={3}
-          />
-          <MovieList
-            bookmarkedIds={props.bookmarkedIds}
-            addBookMark={props.addBookMark}
-            favouriteIds={props.favouriteIds}
-            addFavourite={props.addFavourite}
-            kind='upcoming'
-            cols={4}
-          />
+      <SidebarLayout>
+        <RegisterModal show={props.show} handleCloseModal={props.handleClose} />
+
+        <Search />
+        <div className='p-3 mt-lg-5'>
+          <ul className='movies-list'>
+            <li>
+              <Link to='trending' className={location.pathname.includes('trending') ||location.pathname.includes('/')?'active':''}>Trending</Link>
+            </li>
+            <li>
+              <Link to='toprated' className={location.pathname.includes('toprated')?'active':''}>Top Rated</Link>
+            </li>
+            <li>
+              <Link to='upcoming' className={location.pathname.includes('upcoming')?'active':''}>Upcoming</Link>
+            </li>
+          </ul>
+          <Outlet />
         </div>
       </SidebarLayout>
     </>
