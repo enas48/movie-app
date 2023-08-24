@@ -65,10 +65,10 @@ h3 {
   background-color: rgba(0, 0, 0, 0.5);
   border-color: transparent;
 }
-
+/*---------------message modal-------------------------*/
 .alert-container {
   position: fixed;
-  z-index: 100;
+  z-index: 600;
   left: 50%;
   transform: translateX(-50%);
   top: 1%;

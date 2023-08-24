@@ -112,7 +112,7 @@ const month = [
         
               <div className='col-md-5 col-lg-3 order-md-2 text-center mb-3'>
               <LazyLoadImage
-              PlaceholderSrc={process.env.PUBLIC_URL + "../../noimage.png"}
+   
                   src={image}
                   className='img-fluid rounded eposide '
                   alt=''
