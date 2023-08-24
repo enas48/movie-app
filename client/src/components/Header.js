@@ -91,9 +91,7 @@ function Header() {
                     <div className="d-flex align-items-center me-1 gap-2">
                       <div className="avater">
                         <LazyLoadImage
-                          PlaceholderSrc={
-                            process.env.PUBLIC_URL + "../../noimage.png"
-                          }
+                      
                           src={image}
                           className="img-fluid"
                           alt=""

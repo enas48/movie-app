@@ -25,6 +25,8 @@ import Person from "./pages/Person";
 import SearchItem from "./pages/SearchItem";
 import * as MovieApi from "./api/MovieApi";
 import Favourite from "./pages/Favourites";
+import AllSeries from "./pages/series/AllSeries";
+import TvSeries from "./pages/series/tvSeries";
 
 function App() {
   const [message, setMessage] = useState({ text: null, state: "error" });
@@ -247,7 +249,6 @@ function App() {
                 addFavourite={handleFavourite}
                 show={show}
                 handleClose={handleClose}
-          
               />
             }
           />
@@ -262,7 +263,6 @@ function App() {
                 show={show}
                 handleClose={handleClose}
                 handleSearch={handleSearch}
-             
                 searchList={searchList}
               />
             }
@@ -277,10 +277,49 @@ function App() {
                 addFavourite={handleFavourite}
                 show={show}
                 handleClose={handleClose}
-            
               />
             }
           />
+          <Route
+            path="allSeries"
+            element={
+              <AllSeries
+                bookmarkedIds={bookmarkedIds}
+                addBookMark={handleBookmark}
+                favouriteIds={favouritedIds}
+                addFavourite={handleFavourite}
+                show={show}
+                handleClose={handleClose}
+              />
+            }
+          >
+            <Route
+              index
+              element={
+                <TvSeries
+                  bookmarkedIds={bookmarkedIds}
+                  addBookMark={handleBookmark}
+                  favouriteIds={favouritedIds}
+                  addFavourite={handleFavourite}
+                  show={show}
+                  handleClose={handleClose}
+                />
+              }
+            />
+            <Route
+              path=":seriesType"
+              element={
+                <TvSeries
+                  bookmarkedIds={bookmarkedIds}
+                  addBookMark={handleBookmark}
+                  favouriteIds={favouritedIds}
+                  addFavourite={handleFavourite}
+                  show={show}
+                  handleClose={handleClose}
+                />
+              }
+            />
+          </Route>
           <Route
             path="/profile"
             element={
@@ -325,7 +364,6 @@ function App() {
                 addFavourite={handleFavourite}
                 show={show}
                 handleClose={handleClose}
-          
               />
             }
           />
@@ -339,7 +377,6 @@ function App() {
                 addFavourite={handleFavourite}
                 show={show}
                 handleClose={handleClose}
-         
               />
             }
           />
@@ -353,7 +390,6 @@ function App() {
                 addFavourite={handleFavourite}
                 show={show}
                 handleClose={handleClose}
-        
               />
             }
           />
@@ -367,7 +403,6 @@ function App() {
                 addFavourite={handleFavourite}
                 show={show}
                 handleClose={handleClose}
-          
               />
             }
           />
@@ -382,7 +417,6 @@ function App() {
                 addFavourite={handleFavourite}
                 show={show}
                 handleClose={handleClose}
-         
               />
             }
           />

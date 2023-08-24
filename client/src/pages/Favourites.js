@@ -52,17 +52,18 @@ function Favourite(props) {
   };
 
   const loadTvData = async (ids) => {
+    setIsLoading(true);
     for (let data of ids) {
       const response = await TvSeriesApi.getSeriesDetails(data).then((tv) => {
         return tv;
       });
       const tv = await response;
-      console.log(tv);
       tvArr.push(tv);
     }
     TvSeriesApi.list(tvArr).then((data) => {
       setTvFavourites(data);
     });
+    setIsLoading(false);
   };
 
   const fetchFavourites = async () => {
@@ -87,8 +88,8 @@ function Favourite(props) {
 
         loadMovieData(movieFavouritesIds);
         loadTvData(tvFavouriteIds);
+        setIsLoading(false);
       }
-      setIsLoading(false);
     } catch (err) {
       console.log(err);
       setIsLoading(false);

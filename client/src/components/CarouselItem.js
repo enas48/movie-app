@@ -44,15 +44,15 @@ function CarouselItem({
         >
           {item.image !== "" && (
             <LazyLoadImage
-              PlaceholderSrc={process.env.PUBLIC_URL + "../../noimage.png"}
+         
               src={item.image}
               alt={item.name}
             />
           )}
           {item.image === "" && (
             <LazyLoadImage
-              PlaceholderSrc={process.env.PUBLIC_URL + "../../noimage.png"}
-              effect="blur"
+        
+            
               src={process.env.PUBLIC_URL + "../../noimage.png"}
               alt=""
             />

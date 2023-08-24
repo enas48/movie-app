@@ -1,20 +1,20 @@
-export const onAir = () =>
+export const onAir = (page=1) =>
   fetch(
-    `https://api.themoviedb.org/3/tv/on_the_air?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
+    `https://api.themoviedb.org/3/tv/on_the_air?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=${page}`
   )
     .then(res => res.json())
     .then(data => data)
 
-export const popularSeries = () =>
+export const popularSeries = (page=1) =>
   fetch(
-    `https://api.themoviedb.org/3/tv/popular?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=1`
+    `https://api.themoviedb.org/3/tv/popular?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=${page}`
   )
     .then(res => res.json())
     .then(data => data)
 
-export const topRatedSeries = () =>
+export const topRatedSeries = (page=1) =>
   fetch(
-    `https://api.themoviedb.org/3/tv/top_rated?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
+    `https://api.themoviedb.org/3/tv/top_rated?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=${page}`
   )
     .then(res => res.json())
     .then(data => data)

@@ -40,7 +40,7 @@ function BookmarkItem({
               className={`card trending  d-flex flex-column justify-content-between`}
             >
             <LazyLoadImage
-              PlaceholderSrc={process.env.PUBLIC_URL + "../../noimage.png"}
+           
               src={item.image} alt={item.title} />
               <div className="overlay"></div>
             </div>

@@ -7,7 +7,10 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "react": "^16.14.0",
     "react-carousel-minimal": "^1.4.1",
-    "react-lazy-load-image-component": "^1.6.0"
+    "react-dom": "^16.14.0",
+    "react-lazy-load-image-component": "^1.6.0",
+    "react-multi-carousel": "^2.8.4"
   }
 }
