@@ -6,11 +6,11 @@ import MovieList from '../../components/MovieList'
 import RegisterModal from '../../uiElements/RegisterModal'
 import Loading from '../../uiElements/preloading'
 import Movie from './Movie'
-import { Outlet, Link,useLocation } from 'react-router-dom'
+import { Outlet, Link, useLocation } from 'react-router-dom'
 
 function AllMovies (props) {
   const [isLoading, setIsLoading] = useState(true)
-  const location = useLocation();
+  const location = useLocation()
   console.log(location)
   useEffect(() => {
     const loadData = async () => {
@@ -30,13 +30,39 @@ function AllMovies (props) {
         <div className='p-3 mt-lg-5'>
           <ul className='movies-list'>
             <li>
-              <Link to='trending' className={location.pathname.includes('trending') ||location.pathname.includes('/')?'active':''}>Trending</Link>
+              <Link
+                to='trending'
+                className={
+                 (location.pathname.includes('trending') ||
+                  location.pathname.includes('allmovies')) &&
+                  !location.pathname.includes('toprated') &&
+                  !location.pathname.includes('upcoming')
+                    ? 'active'
+                    : ''
+                }
+              >
+                Trending
+              </Link>
             </li>
             <li>
-              <Link to='toprated' className={location.pathname.includes('toprated')?'active':''}>Top Rated</Link>
+              <Link
+                to='toprated'
+                className={
+                  location.pathname.includes('toprated') ? 'active' : ''
+                }
+              >
+                Top Rated
+              </Link>
             </li>
             <li>
-              <Link to='upcoming' className={location.pathname.includes('upcoming')?'active':''}>Upcoming</Link>
+              <Link
+                to='upcoming'
+                className={
+                  location.pathname.includes('upcoming') ? 'active' : ''
+                }
+              >
+                Upcoming
+              </Link>
             </li>
           </ul>
           <Outlet />

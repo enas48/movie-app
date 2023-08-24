@@ -324,6 +324,7 @@ function App () {
             />
             <Route
              index
+         
               element={
                 <Movie
                   bookmarkedIds={bookmarkedIds}
