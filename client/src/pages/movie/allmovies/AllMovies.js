@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 
-import SidebarLayout from "../../components/sidebarLayout";
-import Search from "../../components/search";
+import SidebarLayout from "../../../components/sidebarLayout";
+import Search from "../../../components/search";
 
-import Loading from "../../uiElements/preloading";
-import RegisterModal from "../../uiElements/RegisterModal";
+import Loading from "../../../uiElements/preloading";
+import RegisterModal from "../../../uiElements/RegisterModal";
 import { Outlet, useLocation } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { Nav } from "react-bootstrap";
 
-function AllSeries(props) {
+function AllMovies(props) {
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
 
@@ -29,19 +29,22 @@ function AllSeries(props) {
 
         <Search />
         <div className="p-3 mt-lg-5">
-          <Nav className="tv-list">
-            <LinkContainer to="onair">
+          <Nav className="tv-list ">
+            <LinkContainer
+              to="trending"
+           
+            >
               <Nav.Link
                 className={
-                  location.pathname.includes("onair") ||
-                  (location.pathname.includes("allseries") &&
+                  location.pathname.includes("trending") ||
+                  (location.pathname.includes("allmovies") &&
                     !location.pathname.includes("topRated") &&
-                    !location.pathname.includes("popular"))
+                    !location.pathname.includes("upcoming"))
                     ? "active"
                     : ""
                 }
               >
-                onAir
+              Trending
               </Nav.Link>
             </LinkContainer>
 
@@ -55,13 +58,13 @@ function AllSeries(props) {
               </Nav.Link>
             </LinkContainer>
 
-            <LinkContainer to="popular">
+            <LinkContainer to="upcoming">
               <Nav.Link
                 className={
-                  location.pathname.includes("popular") ? "active" : ""
+                  location.pathname.includes("upcoming") ? "active" : ""
                 }
               >
-                popular
+                Upcoming
               </Nav.Link>
             </LinkContainer>
           </Nav>
@@ -72,4 +75,4 @@ function AllSeries(props) {
   );
 }
 
-export default AllSeries;
+export default AllMovies;

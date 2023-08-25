@@ -35,6 +35,8 @@ function CarouselItem({
 
   return (
     <LinkContainer
+    className="bg-container"
+    
       to={`${link}`}
       onClick={() => (window.location.href = `${link}`)}
     >

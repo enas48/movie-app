@@ -133,6 +133,12 @@ h3 {
   height: 4.5rem;
   width: 4.5rem;
 }
+.loading-content{
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 @keyframes lds-ripple {
   0% {
     -webkit-transform: scale(0);
@@ -483,7 +489,10 @@ a:focus-visible {
 .card.trending > * {
   z-index: 3;
 }
-
+.bg-container{
+  background: var(--dark-active);
+  border-radius: 10px;
+}
 .card-content {
   position: absolute;
   justify-content: space-between;
@@ -502,6 +511,8 @@ a:focus-visible {
   z-index: 2;
   left: 0;
   top: 0;
+  min-height: 168px;
+  object-fit: cover;
 }
 
 @media (max-width: 668px) {
@@ -857,7 +868,9 @@ button.icon-container.bookmark.active {
 .search-results .search-item:hover{
  background: var(--dark-active);
 }
-
+.tv-list{
+  gap: 0.8rem;
+}
 .tv-list a{
   color: #a8a8a8!important;
   border-bottom: 2px solid transparent;
@@ -870,25 +883,6 @@ button.icon-container.bookmark.active {
   border-bottom: 2px solid var(--secondry);
 }
 
-/* .pagination {
-  display: flex;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  flex-wrap: wrap;
-}
-
-.pagination li {
-  cursor: pointer;
-  padding: 8px;
-  border: 1px solid #ccc;
-  margin-right: 4px;
-}
-
-.pagination li.active {
-  background-color: #ccc!important;
-  color: #fff;
-} */
 
 .active>.page-link, .page-link.active,.page-link:focus {
   z-index: 3;
@@ -902,6 +896,7 @@ button.icon-container.bookmark.active {
   color: var(--secondry);
   background-color: var(--dark-active);
   border-color: var(--dark);
+
 }
 .page-link:hover {
   z-index: 2;
@@ -909,4 +904,15 @@ button.icon-container.bookmark.active {
   background-color: #ffedb733;
   border-color: #403f3e;
 }
-
+.disabled>.page-link, .page-link.disabled {
+  color: var(--bs-pagination-disabled-color);
+  pointer-events: none;
+  background-color: var(--dark-active);
+  opacity: 0.6;
+  border-color: var(--dark);
+}
+@media screen and (max-width:480px) {
+  .page-link{
+    font-size: 12px;
+  }
+}

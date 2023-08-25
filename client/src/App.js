@@ -25,8 +25,14 @@ import Person from "./pages/Person";
 import SearchItem from "./pages/SearchItem";
 import * as MovieApi from "./api/MovieApi";
 import Favourite from "./pages/Favourites";
-import AllSeries from "./pages/series/AllSeries";
-import TvSeries from "./pages/series/tvSeries";
+import AllSeries from "./pages/series/allseries/AllSeries";
+import PopularTv from "./pages/series/allseries/popularTv";
+import TopRatedTv from "./pages/series/allseries/TopRatedTv";
+import OnAir from "./pages/series/allseries/OnAir";
+import AllMovies from "./pages/movie/allmovies/AllMovies";
+import TrendingMovies from "./pages/movie/allmovies/TrendingMovies";
+import TopRatedMovies from "./pages/movie/allmovies/TopRatedMovies";
+import UpcomingMovies from "./pages/movie/allmovies/UpcomingMovies";
 
 function App() {
   const [message, setMessage] = useState({ text: null, state: "error" });
@@ -268,6 +274,72 @@ function App() {
             }
           />
           <Route
+            path="allmovies"
+            element={
+              <AllMovies
+                bookmarkedIds={bookmarkedIds}
+                addBookMark={handleBookmark}
+                favouriteIds={favouritedIds}
+                addFavourite={handleFavourite}
+                show={show}
+                handleClose={handleClose}
+              />
+            }
+          >
+            <Route
+              index
+              element={
+                <TrendingMovies
+                  bookmarkedIds={bookmarkedIds}
+                  addBookMark={handleBookmark}
+                  favouriteIds={favouritedIds}
+                  addFavourite={handleFavourite}
+                  show={show}
+                  handleClose={handleClose}
+                />
+              }
+            />
+            <Route
+              path="trending"
+              element={
+                <TrendingMovies
+                  bookmarkedIds={bookmarkedIds}
+                  addBookMark={handleBookmark}
+                  favouriteIds={favouritedIds}
+                  addFavourite={handleFavourite}
+                  show={show}
+                  handleClose={handleClose}
+                />
+              }
+            />
+            <Route
+              path="upcoming"
+              element={
+                <UpcomingMovies
+                  bookmarkedIds={bookmarkedIds}
+                  addBookMark={handleBookmark}
+                  favouriteIds={favouritedIds}
+                  addFavourite={handleFavourite}
+                  show={show}
+                  handleClose={handleClose}
+                />
+              }
+            />
+            <Route
+              path="topRated"
+              element={
+                <TopRatedMovies
+                  bookmarkedIds={bookmarkedIds}
+                  addBookMark={handleBookmark}
+                  favouriteIds={favouritedIds}
+                  addFavourite={handleFavourite}
+                  show={show}
+                  handleClose={handleClose}
+                />
+              }
+            />
+          </Route>
+          <Route
             path="/series"
             element={
               <Series
@@ -296,7 +368,7 @@ function App() {
             <Route
               index
               element={
-                <TvSeries
+                <OnAir
                   bookmarkedIds={bookmarkedIds}
                   addBookMark={handleBookmark}
                   favouriteIds={favouritedIds}
@@ -307,9 +379,35 @@ function App() {
               }
             />
             <Route
-              path=":seriesType"
+              path="onair"
               element={
-                <TvSeries
+                <OnAir
+                  bookmarkedIds={bookmarkedIds}
+                  addBookMark={handleBookmark}
+                  favouriteIds={favouritedIds}
+                  addFavourite={handleFavourite}
+                  show={show}
+                  handleClose={handleClose}
+                />
+              }
+            />
+            <Route
+              path="popular"
+              element={
+                <PopularTv
+                  bookmarkedIds={bookmarkedIds}
+                  addBookMark={handleBookmark}
+                  favouriteIds={favouritedIds}
+                  addFavourite={handleFavourite}
+                  show={show}
+                  handleClose={handleClose}
+                />
+              }
+            />
+            <Route
+              path="topRated"
+              element={
+                <TopRatedTv
                   bookmarkedIds={bookmarkedIds}
                   addBookMark={handleBookmark}
                   favouriteIds={favouritedIds}

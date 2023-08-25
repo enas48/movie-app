@@ -103,7 +103,7 @@ const month = [
         />
         {details?.id && (
           <div className='details-container mt-lg-5'>
-            <div className=' details-content row m-auto d-flex justify-content-center'>
+            <div className=' details-content row m-0 d-flex justify-content-center'>
               <div
                 style={{ backgroundImage: `url(${bg})` }}
                 className='episode-bg'
