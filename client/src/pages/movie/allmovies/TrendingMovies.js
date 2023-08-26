@@ -52,7 +52,7 @@ function TrendingMovies(props) {
         });
       });
     }
-    if(date='oldest'){
+    if(date==='oldest'){
       MovieApi.SortByDate(currentPage,'asc').then((movie) => {
         console.log(movie)
         if (movie.total_pages >= 500) {
