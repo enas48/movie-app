@@ -3,9 +3,12 @@ import * as MovieApi from "../../../api/MovieApi";
 import CarouselItem from "../../../components/CarouselItem";
 import Paginations from "../../../components/Pagination ";
 import Loading from "../../../uiElements/preloading";
+import { useOutletContext } from "react-router-dom";
 
 function TrendingMovies(props) {
   let { addBookMark, bookmarkedIds, favouriteIds, addFavourite } = props;
+ let [date]=useOutletContext();
+
   const [movies, setMovies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -19,6 +22,7 @@ function TrendingMovies(props) {
   const loadData = async (currentPage) => {
     setIsLoading(true);
     MovieApi.trendingMovies(currentPage).then((movie) => {
+      console.log(movie)
       if (movie.total_pages >= 500) {
         setTotalPages(500);
       } else {
@@ -32,8 +36,40 @@ function TrendingMovies(props) {
 
   };
   useEffect(() => {
-    loadData(currentPage);
-  }, [currentPage]);
+    //  loadData(currentPage);
+    console.log(date)
+    if(date==='latest'){
+      MovieApi.SortByDate(currentPage,'desc').then((movie) => {
+        console.log(movie)
+        if (movie.total_pages >= 500) {
+          setTotalPages(500);
+        } else {
+          setTotalPages(movie.total_pages);
+        }
+        MovieApi.list(movie.results).then((data) => {
+          setMovies(data.slice(0, 20));
+          setIsLoading(false);
+        });
+      });
+    }
+    if(date='oldest'){
+      MovieApi.SortByDate(currentPage,'asc').then((movie) => {
+        console.log(movie)
+        if (movie.total_pages >= 500) {
+          setTotalPages(500);
+        } else {
+          setTotalPages(movie.total_pages);
+        }
+        MovieApi.list(movie.results).then((data) => {
+          setMovies(data.slice(0, 20));
+          setIsLoading(false);
+        });
+      });
+    }
+    else{
+      loadData(currentPage); 
+    }
+  }, [currentPage,date]);
 
   return (
     <div className="d-flex flex-column justify-content-between">

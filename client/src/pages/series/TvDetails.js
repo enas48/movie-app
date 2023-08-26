@@ -10,12 +10,17 @@ import SeasonList from "../../components/SeasonList";
 import Search from "../../components/search";
 import RegisterModal from "../../uiElements/RegisterModal";
 import Loading from "../../uiElements/preloading";
+import Dropdown from 'react-bootstrap/Dropdown'
 import { PiTelevisionBold } from "react-icons/pi";
 import {
   MdOutlineBookmarkBorder,
   MdOutlineBookmark,
   MdLanguage,
+  MdOutlineFavoriteBorder,
+  MdOutlineFavorite
 } from "react-icons/md";
+
+import { BiPlus } from 'react-icons/bi'
 
 function TvDetails(props) {
   const [isLoading, setIsLoading] = useState(true);
@@ -28,7 +33,10 @@ function TvDetails(props) {
     e.stopPropagation();
     props.addBookMark(id, type);
   };
-
+  const handleFavourite = (e, id, type) => {
+    e.stopPropagation()
+    props.addFavourite(id, type)
+  }
   const preloadImages = async (series) => {
     if (series?.backdrop_path && series.backdrop_path !== null) {
       const response = await fetch(
@@ -165,20 +173,56 @@ function TvDetails(props) {
                   <PiTelevisionBold /> Tv Series
                 </span>
               </div>
+           
               <div className="d-flex gap-2">
-                <button
-                  onClick={(e) => handleBookmark(e, details.id, "tv")}
-                  className=" btn icon-container bookmark"
-                >
-                  Add to Wishlist&nbsp;
-                  {props.bookmarkedIds.includes(
-                    details.id && details.id.toString()
-                  ) ? (
-                    <MdOutlineBookmark className="bookmark_icon" />
-                  ) : (
-                    <MdOutlineBookmarkBorder className="bookmark_icon" />
-                  )}
-                </button>
+              <Dropdown className='list-dropdown'>
+                  <Dropdown.Toggle variant='success' id='dropdown-basic'>
+                    <BiPlus className='icon' /> &nbsp;Add List
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item>
+                      <button
+                        onClick={e => handleBookmark(e, details.id, 'tv')}
+                        className=' btn icon-container bookmark'
+                      >
+                        {props.bookmarkedIds.includes(
+                          details.id && details.id.toString()
+                        ) ? (
+                          <>
+                            Remove from WishList&nbsp;
+                            <MdOutlineBookmark className='bookmark_icon text-secondry' />
+                          </>
+                        ) : (
+                          <>
+                            Add to WishList&nbsp;
+                            <MdOutlineBookmarkBorder className='bookmark_icon' />
+                          </>
+                        )}
+                      </button>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                      <button
+                        onClick={e => handleFavourite(e, details.id, 'tv')}
+                        className=' btn icon-container bookmark'
+                      >
+                        {props.favouriteIds.includes(
+                          details.id && details.id.toString()
+                        ) ? (
+                          <>
+                            Remove from Favourites&nbsp;
+                            <MdOutlineFavorite className='bookmark_icon text-danger' />
+                          </>
+                        ) : (
+                          <>
+                            Add to Favourites&nbsp;
+                            <MdOutlineFavoriteBorder className='bookmark_icon' />
+                          </>
+                        )}
+                      </button>
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </div>
             </div>
             {key && (

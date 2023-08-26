@@ -1,25 +1,25 @@
-export const popularMovies = (page=1) =>
+export const popularMovies = (page = 1) =>
   fetch(
     `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`
   )
     .then(res => res.json())
     .then(data => data)
 
-export const trendingMovies = (page=1) =>
+export const trendingMovies = (page = 1) =>
   fetch(
     `https://api.themoviedb.org/3/trending/movie/day?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=${page}`
   )
     .then(res => res.json())
     .then(data => data)
 
-export const topRatedMovies = (page=1) =>
+export const topRatedMovies = (page = 1) =>
   fetch(
     `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=${page}`
   )
     .then(res => res.json())
     .then(data => data)
 
-export const upcomingMovies =(page=1) =>
+export const upcomingMovies = (page = 1) =>
   fetch(
     `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=${page}`
   )
@@ -90,17 +90,23 @@ export const cast = movie_id =>
     .then(res => res.json())
     .then(data => data)
 
-    export const Trailer = (movie_id) =>
+export const Trailer = movie_id =>
   fetch(
     `https://api.themoviedb.org/3/movie/${movie_id}/videos?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
   )
     .then(res => res.json())
     .then(data => data)
 
-    export const Search = query =>
-    fetch(
-      `https://api.themoviedb.org/3//search/multi?query=${query}&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
-    )
-      .then(res => res.json())
-      .then(data => data)
-  
+export const Search = query =>
+  fetch(
+    `https://api.themoviedb.org/3//search/multi?query=${query}&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
+  )
+    .then(res => res.json())
+    .then(data => data)
+
+export const SortByDate = (page,order) =>
+  fetch(
+    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=primary_release_date.${order}`
+  )
+    .then(res => res.json())
+    .then(data => data)
