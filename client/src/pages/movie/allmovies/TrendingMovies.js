@@ -7,7 +7,7 @@ import { useOutletContext } from "react-router-dom";
 
 function TrendingMovies(props) {
   let { addBookMark, bookmarkedIds, favouriteIds, addFavourite } = props;
- let [date]=useOutletContext();
+  let [date] = useOutletContext();
 
   const [movies, setMovies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -16,95 +16,102 @@ function TrendingMovies(props) {
 
   const handlePageChange = async (pageNumber) => {
     setCurrentPage(pageNumber);
-    loadData(pageNumber);
+    console.log(date);
+    if (date === "latest") {
+   
+      loadByDate(pageNumber, "desc");
+    }
+    else if (date === "oldest") {
+  
+      loadByDate(pageNumber, "asc");
+    } else {
+      loadData(pageNumber);
+    }
   };
-
-  const loadData = async (currentPage) => {
+  const loadByDate = async (currentPage, order) => {
     setIsLoading(true);
-    MovieApi.trendingMovies(currentPage).then((movie) => {
-      console.log(movie)
+    let year=new Date().toISOString().split('T')[0]
+    MovieApi.SortByDate(currentPage, order,year).then((movie) => {
+      console.log(movie);
       if (movie.total_pages >= 500) {
         setTotalPages(500);
       } else {
         setTotalPages(movie.total_pages);
       }
       MovieApi.list(movie.results).then((data) => {
+
+        console.log(data)
         setMovies(data.slice(0, 20));
         setIsLoading(false);
       });
     });
-
   };
+  const loadData = async (currentPage) => {
+    setIsLoading(true);
+    MovieApi.trendingMovies(currentPage).then((movie) => {
+      console.log(movie);
+      if (movie.total_pages >= 500) {
+        setTotalPages(500);
+      } else {
+        setTotalPages(movie.total_pages);
+      }
+      MovieApi.list(movie.results).then((data) => {
+  
+        setMovies(data.slice(0, 20));
+        setIsLoading(false);
+      });
+    });
+  };
+
+
   useEffect(() => {
     //  loadData(currentPage);
-    console.log(date)
-    if(date==='latest'){
-      MovieApi.SortByDate(currentPage,'desc').then((movie) => {
-        console.log(movie)
-        if (movie.total_pages >= 500) {
-          setTotalPages(500);
-        } else {
-          setTotalPages(movie.total_pages);
-        }
-        MovieApi.list(movie.results).then((data) => {
-          setMovies(data.slice(0, 20));
-          setIsLoading(false);
-        });
-      });
+    console.log(date);
+    if (date === "latest") {
+      loadByDate(currentPage, "desc");
     }
-    if(date==='oldest'){
-      MovieApi.SortByDate(currentPage,'asc').then((movie) => {
-        console.log(movie)
-        if (movie.total_pages >= 500) {
-          setTotalPages(500);
-        } else {
-          setTotalPages(movie.total_pages);
-        }
-        MovieApi.list(movie.results).then((data) => {
-          setMovies(data.slice(0, 20));
-          setIsLoading(false);
-        });
-      });
+    else if (date === "oldest") {
+      loadByDate(currentPage, "asc");
+    } else {
+      loadData(currentPage);
     }
-    else{
-      loadData(currentPage); 
-    }
+
   }, [currentPage,date]);
 
   return (
     <div className="d-flex flex-column justify-content-between">
-    {isLoading ? (
-      <Loading content={true} />
-    ) : movies.length !== 0 ? (
-      <div className="col-12 mb-4 movieList bookmarks mt-4 h-100">
-        <div className="row">
-          {movies.length !== 0 &&
-            movies.map((item, i) => {
-              return (
-                <div key={i} className="col-sm-6 col-md-4 col-lg-3 mb-4">
-                  <CarouselItem
-                    link={`/details/movies/${item.id}`}
-                    type="movie"
-                    item={item}
-                    addBookMark={addBookMark}
-                    bookmarkedIds={bookmarkedIds}
-                    favouriteIds={favouriteIds}
-                    addFavourite={addFavourite}
-                  />
-                </div>
-              );
-            })}
+      {isLoading ? (
+        <Loading content={true} />
+      ) : movies.length !== 0 ? (
+        <div className="col-12 mb-4 movieList bookmarks mt-4 h-100">
+          <div className="row">
+            {movies.length !== 0 &&
+              movies.map((item, i) => {
+                return (
+                  <div key={i} className="col-sm-6 col-md-4 col-lg-3 mb-4">
+                    <CarouselItem
+                      link={`/details/movies/${item.id}`}
+                      type="movie"
+                      item={item}
+                      addBookMark={addBookMark}
+                      bookmarkedIds={bookmarkedIds}
+                      favouriteIds={favouriteIds}
+                      addFavourite={addFavourite}
+                    />
+                  </div>
+                );
+              })}
+          </div>
         </div>
-      </div>
-    ) : (
-      <p className="text-center p-2">No data</p>
-    )}
-    <Paginations
-      currentPage={currentPage}
-      totalPages={totalPages}
-      onPageChange={handlePageChange}
-    />
-  </div>
+      ) : (
+        <p className="text-center p-2">No data</p>
+      )}
+      <Paginations
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
+    </div>
   );
 }
 

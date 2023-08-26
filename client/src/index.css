@@ -966,6 +966,6 @@ button.icon-container.bookmark.active {
     font-size: 12px;
   }
 }
-.filter-dropdown .dropdown-item{
-color: var(--white);
+.filter-dropdown  button,.filter-dropdown .dropdown-item{
+color: var(--white)!important;
 }

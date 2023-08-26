@@ -72,6 +72,7 @@ export const list = async movies => {
       if (image?.url) {
         imageArr.push({
           id: data.id,
+          genre_ids:data?.genre_ids && data.genre_ids,
           title: data?.title && data.title,
           year: data?.release_date && new Date(data.release_date).getFullYear(),
           rate: data?.vote_average && data.vote_average.toFixed(1),
@@ -104,9 +105,9 @@ export const Search = query =>
     .then(res => res.json())
     .then(data => data)
 
-export const SortByDate = (page,order) =>
+export const SortByDate = (page,order,year) =>
   fetch(
-    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=primary_release_date.${order}`
+    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&include_video=false&language=en-US&page=${page}&release_date.lte=${year}&release_date.gte=2023&sort_by=primary_release_date.${order}`
   )
     .then(res => res.json())
     .then(data => data)
