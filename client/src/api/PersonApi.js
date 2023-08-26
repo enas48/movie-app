@@ -62,3 +62,10 @@ export const Movies = person_id =>
   )
     .then(res => res.json())
     .then(data => data)
+
+    export const Social = person_id =>
+    fetch(
+      `https://api.themoviedb.org/3/person/${person_id}/external_ids?api_key=${process.env.REACT_APP_API_KEY}`
+    )
+      .then(res => res.json())
+      .then(data => data)

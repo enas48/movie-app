@@ -63,7 +63,7 @@ function Episode ({ episode }) {
   return (
     <div className='d-flex flex-column episode-container card card-container'>
       {episode.image !== '' &&   <LazyLoadImage
-        src={episode.image} alt={episode.name} />}
+          src={episode.image} alt={episode.name} />}
       {episode.image === '' && (
         <img  loading="lazy" src={process.env.PUBLIC_URL + '../../noimg2.jpg'} alt='' />
       )}

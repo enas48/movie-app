@@ -35,6 +35,8 @@ function CarouselItem({
 
   return (
     <LinkContainer
+    className="bg-container"
+    
       to={`${link}`}
       onClick={() => (window.location.href = `${link}`)}
     >
@@ -44,15 +46,15 @@ function CarouselItem({
         >
           {item.image !== "" && (
             <LazyLoadImage
-          
+         
               src={item.image}
               alt={item.name}
             />
           )}
           {item.image === "" && (
             <LazyLoadImage
-           
-              effect="blur"
+        
+            
               src={process.env.PUBLIC_URL + "../../noimage.png"}
               alt=""
             />

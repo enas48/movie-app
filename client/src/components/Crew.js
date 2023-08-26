@@ -65,7 +65,7 @@ function Crew ({ id, type }) {
                         )}
                         {item.image === '' && (
                             <LazyLoadImage
-                        
+                           
                             src={process.env.PUBLIC_URL + '../../noimage.png'}
                             alt=''
                           />

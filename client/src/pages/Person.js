@@ -97,7 +97,7 @@ function Person(props) {
             <div className="col-md-5 col-lg-3 order-md-2 text-center mb-3">
               {person?.image !== "" && (
               <LazyLoadImage
-          
+           
                   className="img-fluid rounded eposide "
                   src={person?.image}
                   alt={person?.name}
@@ -105,7 +105,7 @@ function Person(props) {
               )}
               {person?.image === "" && (
                  <LazyLoadImage
-       
+            
                   className="img-fluid rounded eposide "
                   src={process.env.PUBLIC_URL + "../../noimage.png"}
                   alt=""

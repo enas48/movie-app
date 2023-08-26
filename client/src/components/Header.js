@@ -91,7 +91,7 @@ function Header() {
                     <div className="d-flex align-items-center me-1 gap-2">
                       <div className="avater">
                         <LazyLoadImage
-                    
+                      
                           src={image}
                           className="img-fluid"
                           alt=""

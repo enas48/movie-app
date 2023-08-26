@@ -1,27 +1,27 @@
-export const popularMovies = () =>
+export const popularMovies = (page=1) =>
   fetch(
-    `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&page=1`
+    `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`
   )
     .then(res => res.json())
     .then(data => data)
 
-export const trendingMovies = () =>
+export const trendingMovies = (page=1) =>
   fetch(
-    `https://api.themoviedb.org/3/trending/movie/day?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
+    `https://api.themoviedb.org/3/trending/movie/day?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=${page}`
   )
     .then(res => res.json())
     .then(data => data)
 
-export const topRatedMovies = () =>
+export const topRatedMovies = (page=1) =>
   fetch(
-    `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
+    `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=${page}`
   )
     .then(res => res.json())
     .then(data => data)
 
-export const upcomingMovies = () =>
+export const upcomingMovies =(page=1) =>
   fetch(
-    `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
+    `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=${page}`
   )
     .then(res => res.json())
     .then(data => data)

@@ -20,13 +20,19 @@ import ProtectedRoute from './helpers/protectedRoute'
 import { setAuthToken } from './helpers/setAuthToken'
 import AuthContext from './helpers/authContext'
 
-import MessageModal from './uiElements/messageModel'
-import Person from './pages/Person'
-import SearchItem from './pages/SearchItem'
-import * as MovieApi from './api/MovieApi'
-import Favourite from './pages/Favourites'
-import AllMovies from './pages/movie/AllMovies'
-import Movie from './pages/movie/Movie'
+import MessageModal from "./uiElements/messageModel";
+import Person from "./pages/Person";
+import SearchItem from "./pages/SearchItem";
+import * as MovieApi from "./api/MovieApi";
+import Favourite from "./pages/Favourites";
+import AllSeries from "./pages/series/allseries/AllSeries";
+import PopularTv from "./pages/series/allseries/popularTv";
+import TopRatedTv from "./pages/series/allseries/TopRatedTv";
+import OnAir from "./pages/series/allseries/OnAir";
+import AllMovies from "./pages/movie/allmovies/AllMovies";
+import TrendingMovies from "./pages/movie/allmovies/TrendingMovies";
+import TopRatedMovies from "./pages/movie/allmovies/TopRatedMovies";
+import UpcomingMovies from "./pages/movie/allmovies/UpcomingMovies";
 
 function App () {
   const [message, setMessage] = useState({ text: null, state: 'error' })
@@ -293,7 +299,7 @@ function App () {
             }
           />
           <Route
-            path='allmovies'
+            path="allmovies"
             element={
               <AllMovies
                 bookmarkedIds={bookmarkedIds}
@@ -302,45 +308,64 @@ function App () {
                 addFavourite={handleFavourite}
                 show={show}
                 handleClose={handleClose}
-                handleSearch={handleSearch}
-                searchList={searchList}
               />
             }
           >
             <Route
-              path=':movietype'
+              index
               element={
-                <Movie
+                <TrendingMovies
                   bookmarkedIds={bookmarkedIds}
                   addBookMark={handleBookmark}
                   favouriteIds={favouritedIds}
                   addFavourite={handleFavourite}
                   show={show}
                   handleClose={handleClose}
-                  handleSearch={handleSearch}
-                  searchList={searchList}
                 />
               }
             />
             <Route
-             index
-         
+              path="trending"
               element={
-                <Movie
+                <TrendingMovies
                   bookmarkedIds={bookmarkedIds}
                   addBookMark={handleBookmark}
                   favouriteIds={favouritedIds}
                   addFavourite={handleFavourite}
                   show={show}
                   handleClose={handleClose}
-                  handleSearch={handleSearch}
-                  searchList={searchList}
+                />
+              }
+            />
+            <Route
+              path="upcoming"
+              element={
+                <UpcomingMovies
+                  bookmarkedIds={bookmarkedIds}
+                  addBookMark={handleBookmark}
+                  favouriteIds={favouritedIds}
+                  addFavourite={handleFavourite}
+                  show={show}
+                  handleClose={handleClose}
+                />
+              }
+            />
+            <Route
+              path="topRated"
+              element={
+                <TopRatedMovies
+                  bookmarkedIds={bookmarkedIds}
+                  addBookMark={handleBookmark}
+                  favouriteIds={favouritedIds}
+                  addFavourite={handleFavourite}
+                  show={show}
+                  handleClose={handleClose}
                 />
               }
             />
           </Route>
           <Route
-            path='/series'
+            path="/series"
             element={
               <Series
                 bookmarkedIds={bookmarkedIds}
@@ -353,7 +378,73 @@ function App () {
             }
           />
           <Route
-            path='/profile'
+            path="allSeries"
+            element={
+              <AllSeries
+                bookmarkedIds={bookmarkedIds}
+                addBookMark={handleBookmark}
+                favouriteIds={favouritedIds}
+                addFavourite={handleFavourite}
+                show={show}
+                handleClose={handleClose}
+              />
+            }
+          >
+            <Route
+              index
+              element={
+                <OnAir
+                  bookmarkedIds={bookmarkedIds}
+                  addBookMark={handleBookmark}
+                  favouriteIds={favouritedIds}
+                  addFavourite={handleFavourite}
+                  show={show}
+                  handleClose={handleClose}
+                />
+              }
+            />
+            <Route
+              path="onair"
+              element={
+                <OnAir
+                  bookmarkedIds={bookmarkedIds}
+                  addBookMark={handleBookmark}
+                  favouriteIds={favouritedIds}
+                  addFavourite={handleFavourite}
+                  show={show}
+                  handleClose={handleClose}
+                />
+              }
+            />
+            <Route
+              path="popular"
+              element={
+                <PopularTv
+                  bookmarkedIds={bookmarkedIds}
+                  addBookMark={handleBookmark}
+                  favouriteIds={favouritedIds}
+                  addFavourite={handleFavourite}
+                  show={show}
+                  handleClose={handleClose}
+                />
+              }
+            />
+            <Route
+              path="topRated"
+              element={
+                <TopRatedTv
+                  bookmarkedIds={bookmarkedIds}
+                  addBookMark={handleBookmark}
+                  favouriteIds={favouritedIds}
+                  addFavourite={handleFavourite}
+                  show={show}
+                  handleClose={handleClose}
+                />
+              }
+            />
+          </Route>
+          <Route
+            path="/profile"
             element={
               <ProtectedRoute isAllowed={!!token}>
                 <Profile onLogout={logout} profile={profile.profile} />{' '}
