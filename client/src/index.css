@@ -134,7 +134,7 @@ h3 {
   height: 4.5rem;
   width: 4.5rem;
 }
-.loading-content{
+.loading-content {
   min-height: 80vh;
   display: flex;
   align-items: center;
@@ -356,13 +356,23 @@ a:focus-visible {
 .dropdown-menu {
   background: var(--dark-active);
   margin-top: 1rem !important;
+  padding: 0;
 }
 .dropdown button {
   background: transparent !important;
 }
+.dropdown-item {
+  border-bottom: 1px solid var(--dark);
+}
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
 .dropdown-item:focus,
-.dropdown-item:hover {
-  background: #25212b;
+.dropdown-item:hover,
+.dropdown-item:active,
+.dropdown-item.active {
+  background-color: #25212b !important;
 }
 .movie-icon {
   color: var(--primary);
@@ -494,7 +504,7 @@ a:focus-visible {
 .card.trending > * {
   z-index: 3;
 }
-.bg-container{
+.bg-container {
   background: var(--dark-active);
   border-radius: 10px;
 }
@@ -576,31 +586,36 @@ input[type='file'] {
 .bookmark_icon {
   font-size: 24px;
 }
-.bookmark-btn {
+.bookmark-btn,
+.fav-btn {
   width: fit-content;
   margin-left: auto;
   background: rgba(0, 0, 0, 0.5);
 }
-
+.bookmark-btn:hover .bookmark_icon {
+  color: var(--secondry-active);
+}
+.fav-btn:hover .bookmark_icon {
+  color: #d82e3f !important;
+}
 /*-----------------------details page--------------------------------*/
-.list-dropdown{
+.list-dropdown {
   background: var(--dark-active);
   padding: 0.1rem 0.75rem;
   border-radius: 5px;
 }
-.list-dropdown .btn{
+.list-dropdown .btn {
   padding: 0;
   line-height: 2rem;
 }
-.list-dropdown .dropdown-toggle::after{
+.list-dropdown .dropdown-toggle::after {
   display: none;
 }
-.list-dropdown .dropdown-menu{
-  transform: translate(0, 25px)!important;
+.list-dropdown .dropdown-menu {
+  transform: translate(0, 25px) !important;
   margin-top: 0;
- 
 }
-.list-dropdown .drop-item{
+.list-dropdown .drop-item {
   padding: 0.1rem 0.75rem;
 }
 .details-bg {
@@ -915,26 +930,29 @@ button.icon-container.bookmark.active {
 .movies-list a:hover {
   background-color: var(--secondry) !important;
 }
-.search-results .search-item:hover{
- background: var(--dark-active);
+.search-results .search-item:hover {
+  background: var(--dark-active);
 }
-.tv-list{
+.tv-list {
   gap: 0.8rem;
 }
-.tv-list a{
-  color: #a8a8a8!important;
+.tv-list a {
+  color: #a8a8a8 !important;
   border-bottom: 2px solid transparent;
   padding: 0.2rem 0.5rem;
   transition: all ease-in 0.2s;
 }
-.tv-list a:active,.tv-list a.active,.tv-list a:hover{
+.tv-list a:active,
+.tv-list a.active,
+.tv-list a:hover {
   cursor: pointer;
-  color: var(--white)!important;
+  color: var(--white) !important;
   border-bottom: 2px solid var(--secondry);
 }
 
-
-.active>.page-link, .page-link.active,.page-link:focus {
+.active > .page-link,
+.page-link.active,
+.page-link:focus {
   z-index: 3;
   color: var(--secondry);
   background-color: var(--secondry-active);
@@ -942,11 +960,10 @@ button.icon-container.bookmark.active {
   color: var(--white);
   box-shadow: none;
 }
-.page-link{
+.page-link {
   color: var(--secondry);
   background-color: var(--dark-active);
   border-color: var(--dark);
-
 }
 .page-link:hover {
   z-index: 2;
@@ -954,18 +971,31 @@ button.icon-container.bookmark.active {
   background-color: #ffedb733;
   border-color: #403f3e;
 }
-.disabled>.page-link, .page-link.disabled {
+.disabled > .page-link,
+.page-link.disabled {
   color: var(--bs-pagination-disabled-color);
   pointer-events: none;
   background-color: var(--dark-active);
   opacity: 0.6;
   border-color: var(--dark);
 }
-@media screen and (max-width:480px) {
-  .page-link{
+@media screen and (max-width: 480px) {
+  .page-link {
     font-size: 12px;
   }
 }
-.filter-dropdown  button,.filter-dropdown .dropdown-item{
-color: var(--white)!important;
+.filter-dropdown button,
+.filter-dropdown .dropdown-item {
+  color: var(--white) !important;
+}
+.filter-dropdown .genre {
+  max-width: 280px;
+  display: flex;
+  width: 280px;
+  flex-direction: row;
+  transform: translate(-9rem, 38px);
+  flex-wrap: wrap;
+}
+.filter-dropdown .genre .dropdown-item {
+  width: 50%;
 }

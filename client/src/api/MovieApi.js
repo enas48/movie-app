@@ -107,7 +107,15 @@ export const Search = query =>
 
 export const SortByDate = (page,order,year) =>
   fetch(
-    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&include_video=false&language=en-US&page=${page}&release_date.lte=${year}&release_date.gte=2023&sort_by=primary_release_date.${order}`
+    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=primary_release_date.${order}&primary_release_date.gte=2022-11-25&primary_release_date.lte=${year}`
+  )
+    .then(res => res.json())
+    .then(data => data)
+
+
+    export const SortByGenre= (genre) =>
+  fetch(
+    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&with_genres=${genre}`
   )
     .then(res => res.json())
     .then(data => data)

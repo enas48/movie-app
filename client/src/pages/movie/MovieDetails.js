@@ -10,19 +10,20 @@ import Crew from '../../components/Crew'
 import Search from '../../components/search'
 import Loading from '../../uiElements/preloading'
 import RegisterModal from '../../uiElements/RegisterModal'
-import Dropdown from 'react-bootstrap/Dropdown'
+import BookmarkFavBtn from '../../components/BookmarkFavBtn'
+
 import { FaPlay } from 'react-icons/fa'
-import {
-  MdOutlineBookmarkBorder,
-  MdOutlineBookmark,
-  MdLanguage,
-  MdOutlineFavoriteBorder,
-  MdOutlineFavorite
-} from 'react-icons/md'
+import { MdLanguage } from 'react-icons/md'
+import { BiTimeFive, BiCameraMovie } from 'react-icons/bi'
 
-import { BiTimeFive, BiCameraMovie, BiPlus } from 'react-icons/bi'
-
-function MovieDetails (props) {
+function MovieDetails ({
+  addBookMark,
+  bookmarkedIds,
+  favouriteIds,
+  addFavourite,
+  handleClose,
+  show
+}) {
   const [isLoading, setIsLoading] = useState(true)
   const { id } = useParams()
   const [details, setDetails] = useState({})
@@ -33,11 +34,11 @@ function MovieDetails (props) {
 
   const handleBookmark = (e, id, type) => {
     e.stopPropagation()
-    props.addBookMark(id, type)
+    addBookMark(id, type)
   }
   const handleFavourite = (e, id, type) => {
     e.stopPropagation()
-    props.addFavourite(id, type)
+    addFavourite(id, type)
   }
   const handlePlay = id => {
     fetchMovieVideo(id)
@@ -116,7 +117,7 @@ function MovieDetails (props) {
       {isLoading && <Loading />}
       <SidebarLayout>
         <Search />
-        <RegisterModal show={props.show} handleCloseModal={props.handleClose} />
+        <RegisterModal show={show} handleCloseModal={handleClose} />
         {details?.id && (
           <div className='details-container mt-lg-5'>
             <div
@@ -186,55 +187,15 @@ function MovieDetails (props) {
                   Watch Now&nbsp;
                   <FaPlay />
                 </button>
-
-                <Dropdown className='list-dropdown'>
-                  <Dropdown.Toggle variant='success' id='dropdown-basic'>
-                    <BiPlus className='icon' /> &nbsp;Add List
-                  </Dropdown.Toggle>
-
-                  <Dropdown.Menu>
-                    <Dropdown.Item>
-                      <button
-                        onClick={e => handleBookmark(e, details.id, 'movie')}
-                        className=' btn icon-container bookmark'
-                      >
-                        {props.bookmarkedIds.includes(
-                          details.id && details.id.toString()
-                        ) ? (
-                          <>
-                            Remove from WishList&nbsp;
-                            <MdOutlineBookmark className='bookmark_icon text-secondry' />
-                          </>
-                        ) : (
-                          <>
-                            Add to WishList&nbsp;
-                            <MdOutlineBookmarkBorder className='bookmark_icon' />
-                          </>
-                        )}
-                      </button>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                      <button
-                        onClick={e => handleFavourite(e, details.id, 'movie')}
-                        className=' btn icon-container bookmark'
-                      >
-                        {props.favouriteIds.includes(
-                          details.id && details.id.toString()
-                        ) ? (
-                          <>
-                            Remove from Favourites&nbsp;
-                            <MdOutlineFavorite className='bookmark_icon text-danger' />
-                          </>
-                        ) : (
-                          <>
-                            Add to Favourites&nbsp;
-                            <MdOutlineFavoriteBorder className='bookmark_icon' />
-                          </>
-                        )}
-                      </button>
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                <BookmarkFavBtn
+                  bookmarkedIds={bookmarkedIds}
+                  favouriteIds={favouriteIds}
+                  addBookMark={handleBookmark}
+                  addFavourite={handleFavourite}
+                  kind='dropdown'
+                  type='movie'
+                  item={details}
+                />
               </div>
             </div>
 
@@ -257,10 +218,10 @@ function MovieDetails (props) {
 
             <div className='details-related-content'>
               <MovieList
-                bookmarkedIds={props.bookmarkedIds}
-                addBookMark={props.addBookMark}
-                favouriteIds={props.favouriteIds}
-                addFavourite={props.addFavourite}
+                bookmarkedIds={bookmarkedIds}
+                addBookMark={addBookMark}
+                favouriteIds={favouriteIds}
+                addFavourite={addFavourite}
                 kind='similar'
                 cols={4}
                 id={id}

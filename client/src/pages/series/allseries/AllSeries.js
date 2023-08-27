@@ -1,25 +1,61 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react'
 
-import SidebarLayout from "../../../components/sidebarLayout";
-import Search from "../../../components/search";
+import SidebarLayout from '../../../components/sidebarLayout'
+import Search from '../../../components/search'
+import * as TvSeriesApi from '../../../api/TvSeriesApi'
+import Loading from '../../../uiElements/preloading'
+import RegisterModal from '../../../uiElements/RegisterModal'
+import { Outlet, useLocation } from 'react-router-dom'
+import { LinkContainer } from 'react-router-bootstrap'
+import { Nav } from 'react-bootstrap'
+import Dropdown from 'react-bootstrap/Dropdown'
+import { BiFilterAlt } from 'react-icons/bi'
 
-import Loading from "../../../uiElements/preloading";
-import RegisterModal from "../../../uiElements/RegisterModal";
-import { Outlet, useLocation } from "react-router-dom";
-import { LinkContainer } from "react-router-bootstrap";
-import { Nav } from "react-bootstrap";
+function AllSeries (props) {
+  const [isLoading, setIsLoading] = useState(true)
+  const location = useLocation()
+  const [date, setDate] = useState('all')
+  const [genre, setGenre] = useState([])
+  const [filteredGenre, setFilteredGenre] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
 
-function AllSeries(props) {
-  const [isLoading, setIsLoading] = useState(true);
-  const location = useLocation();
+  const handleChange = page => {
+    setCurrentPage(page)
+  }
+
+  const handleClick = e => {
+    setDate(e.target.value)
+    setCurrentPage(1)
+  }
+
+  const handleGenre = e => {
+    let id = e.target.vlaue
+    if (filteredGenre.includes(id)) {
+      let filtered = filteredGenre.filter(item => {
+        return item !== id
+      })
+      setFilteredGenre(filtered)
+    } else {
+      setFilteredGenre([...filteredGenre, id])
+    }
+    setCurrentPage(1)
+  }
+
+  const loadGenre = async () => {
+    TvSeriesApi.getGenre().then(data => {
+      console.log(data)
+      setGenre(data)
+    })
+  }
 
   useEffect(() => {
     const loadData = async () => {
-      await new Promise((r) => setTimeout(r, 800));
-      setIsLoading(false);
-    };
-    loadData();
-  }, []);
+      await new Promise(r => setTimeout(r, 800))
+      setIsLoading(false)
+    }
+    loadGenre()
+    loadData()
+  }, [date, filteredGenre])
 
   return (
     <>
@@ -28,51 +64,120 @@ function AllSeries(props) {
         <RegisterModal show={props.show} handleCloseModal={props.handleClose} />
 
         <Search />
-        <div className="p-3 mt-lg-5">
-          <Nav className="tv-list ">
-            <LinkContainer
-              to="onair"
-           
-            >
+        <div className='p-3 mt-lg-5'>
+          <Nav className='tv-list '>
+            <LinkContainer to='onair'>
               <Nav.Link
                 className={
-                  location.pathname.includes("onair") ||
-                  (location.pathname.includes("allseries") &&
-                    !location.pathname.includes("topRated") &&
-                    !location.pathname.includes("popular"))
-                    ? "active"
-                    : ""
+                  location.pathname.includes('onair') ||
+                  (location.pathname.includes('allseries') &&
+                    !location.pathname.includes('topRated') &&
+                    !location.pathname.includes('popular'))
+                    ? 'active'
+                    : ''
                 }
+                onClick={() => {
+                  setCurrentPage(1)
+                  setDate('all')
+                }}
               >
                 onAir
               </Nav.Link>
             </LinkContainer>
 
-            <LinkContainer to="topRated">
+            <LinkContainer to='topRated'>
               <Nav.Link
                 className={
-                  location.pathname.includes("topRated") ? "active" : ""
+                  location.pathname.includes('topRated') ? 'active' : ''
                 }
+                onClick={() => {
+                  setCurrentPage(1)
+                  setDate('all')
+                }}
               >
                 Top Rated
               </Nav.Link>
             </LinkContainer>
 
-            <LinkContainer to="popular">
+            <LinkContainer to='popular'>
               <Nav.Link
                 className={
-                  location.pathname.includes("popular") ? "active" : ""
+                  location.pathname.includes('popular') ? 'active' : ''
                 }
+                onClick={() => {
+                  setCurrentPage(1)
+                  setDate('all')
+                }}
               >
                 popular
               </Nav.Link>
             </LinkContainer>
           </Nav>
-          <Outlet />
+          <div className='filter-container d-flex gap-2 align-items-center'>
+            <BiFilterAlt className='icon' />
+
+            <Dropdown className='filter-dropdown'>
+              <Dropdown.Toggle variant='success' id='dropdown-basic'>
+                By Date
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item className={date === 'all' ? 'active' : ''}>
+                  <button
+                    className='btn'
+                    value='all'
+                    onClick={e => handleClick(e)}
+                  >
+                    All
+                  </button>
+                </Dropdown.Item>
+                <Dropdown.Item className={date === 'latest' ? 'active' : ''}>
+                  <button
+                    className='btn'
+                    value='latest'
+                    onClick={e => handleClick(e)}
+                  >
+                    Latest
+                  </button>
+                </Dropdown.Item>
+                <Dropdown.Item className={date === 'oldest' ? 'active' : ''}>
+                  <button
+                    className='btn'
+                    value='oldest'
+                    onClick={e => handleClick(e)}
+                  >
+                    Oldest
+                  </button>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+            <Dropdown className='filter-dropdown'>
+              <Dropdown.Toggle variant='success' id='dropdown-basic'>
+                By Genere
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                {genre.length !== 0 &&
+                  genre.map(item => {
+                    return (
+                      <Dropdown.Item key={item.id}>
+                        <button
+                          className='btn'
+                          value={item.id}
+                          onClick={e => handleGenre(e)}
+                        >
+                          {item.name}
+                        </button>
+                      </Dropdown.Item>
+                    )
+                  })}
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+          <Outlet context={[date, handleChange, currentPage, filteredGenre]} />
         </div>
       </SidebarLayout>
     </>
-  );
+  )
 }
 
-export default AllSeries;
+export default AllSeries

@@ -1,18 +1,18 @@
-export const onAir = (page=1) =>
+export const onAir = (page = 1) =>
   fetch(
     `https://api.themoviedb.org/3/tv/on_the_air?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=${page}`
   )
     .then(res => res.json())
     .then(data => data)
 
-export const popularSeries = (page=1) =>
+export const popularSeries = (page = 1) =>
   fetch(
     `https://api.themoviedb.org/3/tv/popular?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=${page}`
   )
     .then(res => res.json())
     .then(data => data)
 
-export const topRatedSeries = (page=1) =>
+export const topRatedSeries = (page = 1) =>
   fetch(
     `https://api.themoviedb.org/3/tv/top_rated?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=${page}`
   )
@@ -173,6 +173,29 @@ export const crewList = async results => {
 export const Trailer = series_id =>
   fetch(
     `https://api.themoviedb.org/3/tv/${series_id}/videos?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
+  )
+    .then(res => res.json())
+    .then(data => data)
+
+export const SortByDate = (page, order, year) =>
+  fetch(
+    `https://api.themoviedb.org/3/discover/tv?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=primary_release_date.${order}&primary_release_date.gte=2022-11-25&primary_release_date.lte=${year}`
+  )
+    .then(res => res.json())
+    .then(data => data)
+
+
+    export const getGenre = () =>
+  fetch(
+    `https://api.themoviedb.org/3/genre/tv/list?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
+  )
+    .then(res => res.json())
+    .then(data => data)
+
+
+export const SortByGenre = genre =>
+  fetch(
+    `https://api.themoviedb.org/3/discover/tv?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&with_genres=${genre}`
   )
     .then(res => res.json())
     .then(data => data)
