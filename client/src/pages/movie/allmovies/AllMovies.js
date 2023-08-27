@@ -10,7 +10,8 @@ import { Outlet, useLocation } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Nav } from 'react-bootstrap'
 import Dropdown from 'react-bootstrap/Dropdown'
-import { BiFilterAlt } from 'react-icons/bi'
+import { BiFilterAlt, BiPlus } from 'react-icons/bi'
+import { MdDone } from 'react-icons/md'
 
 function AllMovies (props) {
   const [isLoading, setIsLoading] = useState(true)
@@ -19,7 +20,7 @@ function AllMovies (props) {
   const [genre, setGenre] = useState([])
   const [filteredGenre, setFilteredGenre] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
-
+  const [show, setShow] = useState(false)
   const handleChange = page => {
     setCurrentPage(page)
   }
@@ -29,10 +30,7 @@ function AllMovies (props) {
     setCurrentPage(1)
   }
 
-  const handleGenre = e => {
-    let id = e.target.vlaue
-    console.log(filteredGenre)
-    console.log(id)
+  const handleGenre = (e, id) => {
     if (filteredGenre.includes(id)) {
       let filtered = filteredGenre.filter(item => {
         return item !== id
@@ -41,7 +39,8 @@ function AllMovies (props) {
     } else {
       setFilteredGenre([...filteredGenre, id])
     }
-    setCurrentPage(1)
+
+    // setCurrentPage(1)
   }
 
   const loadGenre = async () => {
@@ -58,6 +57,7 @@ function AllMovies (props) {
     }
     loadGenre()
     loadData()
+    console.log(filteredGenre)
   }, [date, filteredGenre])
 
   return (
@@ -155,8 +155,12 @@ function AllMovies (props) {
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-              <Dropdown className='filter-dropdown'>
-                <Dropdown.Toggle variant='success' id='dropdown-basic'>
+              <Dropdown className='filter-dropdown' show={show}>
+                <Dropdown.Toggle
+                  variant='success'
+                  id='dropdown-basic'
+                  onClick={() => setShow(!show)}
+                >
                   Select Genres
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
@@ -164,13 +168,24 @@ function AllMovies (props) {
                     {genre.length !== 0 &&
                       genre.map(item => {
                         return (
-                          <Dropdown.Item key={item.id}>
+                          <Dropdown.Item
+                            key={item.id}
+                            className={
+                              filteredGenre.includes(item.id) ? 'active' : ''
+                            }
+                          >
+                            {filteredGenre.includes(item.id)}
                             <button
                               className='btn'
-                              value={item.id}
-                              onClick={e => handleGenre(e)}
+                              onClick={e => handleGenre(e, item.id)}
                             >
-                              {item.name}
+                              {filteredGenre.includes(item.id)}
+                              {item.name}&nbsp;
+                              {filteredGenre.includes(item.id) ? (
+                                <MdDone className='icon primary' />
+                              ) : (
+                                <BiPlus className='icon ' />
+                              )}
                             </button>
                           </Dropdown.Item>
                         )

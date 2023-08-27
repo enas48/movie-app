@@ -989,13 +989,22 @@ button.icon-container.bookmark.active {
   color: var(--white) !important;
 }
 .filter-dropdown .genre {
-  max-width: 280px;
+  max-width: 300px;
   display: flex;
-  width: 280px;
+  width: 300px;
   flex-direction: row;
-  transform: translate(-9rem, 38px);
   flex-wrap: wrap;
 }
 .filter-dropdown .genre .dropdown-item {
   width: 50%;
+  padding: 0;
+
+}
+.filter-dropdown .genre .dropdown-item:nth-child(odd) {
+
+ border-right: 1px solid var(--dark);
+
+}
+.filter-dropdown .genre button{
+  width: 100%;
 }

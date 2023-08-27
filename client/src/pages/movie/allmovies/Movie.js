@@ -13,9 +13,10 @@ function Movie (props) {
   const [isLoading, setIsLoading] = useState(true)
 
   let { type } = useParams()
-  console.log(type)
+
 
   const handlePageChange = async pageNumber => {
+    console.log(filteredGenre)
     handleChange(pageNumber)
     if (filteredGenre.length > 0) {
       loadByGenre(filteredGenre)
@@ -121,7 +122,8 @@ function Movie (props) {
     } else {
       loadData(currentPage)
     }
-  }, [currentPage, date, type])
+    console.log(filteredGenre)
+  }, [currentPage, date, type,filteredGenre])
 
   return (
     <div className='d-flex flex-column justify-content-between'>
