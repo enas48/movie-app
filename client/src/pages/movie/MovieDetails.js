@@ -13,6 +13,7 @@ import RegisterModal from '../../uiElements/RegisterModal'
 import BookmarkFavBtn from '../../components/BookmarkFavBtn'
 
 import { FaPlay } from 'react-icons/fa'
+
 import { MdLanguage } from 'react-icons/md'
 import { BiTimeFive, BiCameraMovie } from 'react-icons/bi'
 

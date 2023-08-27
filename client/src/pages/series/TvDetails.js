@@ -1,90 +1,96 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
-import * as TvSeriesApi from '../../api/TvSeriesApi'
+import * as TvSeriesApi from "../../api/TvSeriesApi";
 
-import SidebarLayout from '../../components/sidebarLayout'
-import StarRating from '../../components/StarRating'
-import TvList from '../../components/TVList'
-import SeasonList from '../../components/SeasonList'
-import Search from '../../components/search'
-import RegisterModal from '../../uiElements/RegisterModal'
-import Loading from '../../uiElements/preloading'
-import BookmarkFavBtn from '../../components/BookmarkFavBtn'
+import SidebarLayout from "../../components/sidebarLayout";
+import StarRating from "../../components/StarRating";
+import TvList from "../../components/TVList";
+import SeasonList from "../../components/SeasonList";
+import Search from "../../components/search";
+import RegisterModal from "../../uiElements/RegisterModal";
+import Loading from "../../uiElements/preloading";
+import BookmarkFavBtn from "../../components/BookmarkFavBtn";
 
-import { PiTelevisionBold } from 'react-icons/pi'
-import { MdLanguage } from 'react-icons/md'
+import { PiTelevisionBold } from "react-icons/pi";
+import { MdLanguage } from "react-icons/md";
 
-function TvDetails ({
+function TvDetails({
   addBookMark,
   bookmarkedIds,
   favouriteIds,
   addFavourite,
   handleClose,
-  show
+  show,
 }) {
-  const [isLoading, setIsLoading] = useState(true)
-  const { id } = useParams()
-  const [details, setDetails] = useState({})
-  const [image, setImage] = useState(null)
-  const [key, setKey] = useState(null)
+  const [isLoading, setIsLoading] = useState(true);
+  const { id } = useParams();
+  const [details, setDetails] = useState({});
+  const [image, setImage] = useState(null);
+  const [key, setKey] = useState(null);
+  const [video, setVideos] = useState([]);
 
   const handleBookmark = (e, id, type) => {
-    e.stopPropagation()
-    addBookMark(id, type)
-  }
+    e.stopPropagation();
+    addBookMark(id, type);
+  };
   const handleFavourite = (e, id, type) => {
-    e.stopPropagation()
-    addFavourite(id, type)
-  }
-  const preloadImages = async series => {
+    e.stopPropagation();
+    addFavourite(id, type);
+  };
+  const preloadImages = async (series) => {
     if (series?.backdrop_path && series.backdrop_path !== null) {
       const response = await fetch(
         `https://image.tmdb.org/t/p/original/${series.backdrop_path}`
-      )
-      const image = await response
-      if (image.url) setImage(image.url)
+      );
+      const image = await response;
+      if (image.url) setImage(image.url);
     }
-  }
+  };
 
-  const fetchSeries = async id => {
+  const fetchSeries = async (id) => {
     try {
-      TvSeriesApi.getSeriesDetails(id).then(series => {
-        console.log(series)
-        preloadImages(series)
-        setDetails(series)
-      })
+      TvSeriesApi.getSeriesDetails(id).then((series) => {
+        console.log(series);
+        preloadImages(series);
+        setDetails(series);
+      });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
-  const fetchTrailer = async id => {
+  const fetchTrailer = async (id) => {
     try {
-      TvSeriesApi.Trailer(id).then(data => {
-        console.log(data.results)
-        let youtubeVideos = data.results.filter(d => d.site === 'YouTube')
-        console.log(youtubeVideos)
-        if (youtubeVideos[0]?.key) {
-          setKey(youtubeVideos[0].key)
-        }
-      })
+      TvSeriesApi.Trailer(id).then((data) => {
+        console.log(data.results);
+        let youtubeVideos = data.results.filter((d) => d.site === "YouTube");
+        console.log(youtubeVideos);
+        setVideos(youtubeVideos);
+      
+        // if (youtubeVideos[0]?.key) {
+        //   setKey(youtubeVideos[0].key);
+        // }
+      });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
-
+  };
+const playVideo=async(key)=>{
+  console.log(key)
+  setKey(key)
+}
   useEffect(() => {
     const loadData = async () => {
-      await new Promise(r => setTimeout(r, 1000))
-      setIsLoading(false)
-    }
-    loadData()
+      await new Promise((r) => setTimeout(r, 1000));
+      setIsLoading(false);
+    };
+    loadData();
     if (id) {
-      fetchSeries(id)
-      fetchTrailer(id)
+      fetchSeries(id);
+      fetchTrailer(id);
     }
-  }, [id])
+  }, [id,key]);
 
   return (
     <>
@@ -93,12 +99,12 @@ function TvDetails ({
         <Search />
         <RegisterModal show={show} handleCloseModal={handleClose} />
         {details?.id && (
-          <div className='details-container mt-lg-5'>
+          <div className="details-container mt-lg-5">
             <div
               style={{ backgroundImage: `url(${image})` }}
-              className=' details-bg details-content d-flex flex-column gap-2'
+              className=" details-bg details-content d-flex flex-column gap-2"
             >
-              <div className='d-flex gap-3 align-items-center'>
+              <div className="d-flex gap-3 align-items-center">
                 <span>
                   &bull;&nbsp;
                   {details?.first_air_date &&
@@ -110,24 +116,24 @@ function TvDetails ({
                     <span>
                       {details.number_of_seasons > 1
                         ? `${details.number_of_seasons} Seasons`
-                        : `${details.number_of_seasons} Season`}{' '}
+                        : `${details.number_of_seasons} Season`}{" "}
                     </span>
                   )}
                 </span>
                 <span
                   className={
-                    details?.status && details.status === 'Ended'
-                      ? 'end px-1 rounded'
-                      : 'onair px-1 rounded'
+                    details?.status && details.status === "Ended"
+                      ? "end px-1 rounded"
+                      : "onair px-1 rounded"
                   }
                 >
-                  {details?.status && details.status === 'Ended'
-                    ? 'complete'
-                    : 'on air'}
+                  {details?.status && details.status === "Ended"
+                    ? "complete"
+                    : "on air"}
                 </span>
               </div>
               <h1>{details?.name}</h1>
-              <div className='d-flex gap-1 flex-wrap'>
+              <div className="d-flex gap-1 flex-wrap">
                 {details?.genres &&
                   details.genres.length !== 0 &&
                   details.genres.map((item, i) => {
@@ -136,16 +142,16 @@ function TvDetails ({
                         key={item.id}
                         className={
                           i === details.genres.length - 1
-                            ? 'pe-2'
-                            : 'border-end pe-2'
+                            ? "pe-2"
+                            : "border-end pe-2"
                         }
                       >
                         {item.name}
                       </span>
-                    )
+                    );
                   })}
               </div>
-              <div className='d-flex gap-2 align-items-center mb-1'>
+              <div className="d-flex gap-2 align-items-center mb-1">
                 <StarRating
                   rate={
                     details?.vote_average && details.vote_average.toFixed(1)
@@ -155,8 +161,8 @@ function TvDetails ({
                   {details?.vote_average && details.vote_average.toFixed(1)}/10
                 </span>
               </div>
-              <p className='col-md-8 col-lg-6'>{details?.overview}</p>
-              <div className='d-flex gap-4 mb-4 flex-wrap'>
+              <p className="col-md-8 col-lg-6">{details?.overview}</p>
+              <div className="d-flex gap-4 mb-4 flex-wrap">
                 <span>
                   Episodes:&nbsp;
                   {details?.number_of_episodes && details.number_of_episodes}
@@ -164,43 +170,66 @@ function TvDetails ({
                 {details?.spoken_languages &&
                   details?.spoken_languages.length !== 0 &&
                   details.spoken_languages[0]?.english_name && (
-                    <span className='d-flex gap-2 align-items-center'>
+                    <span className="d-flex gap-2 align-items-center">
                       <MdLanguage />
                       <span>{details.spoken_languages[0].english_name}</span>
                     </span>
                   )}
-                <span className='d-flex gap-2 align-items-center'>
+                <span className="d-flex gap-2 align-items-center">
                   <PiTelevisionBold /> Tv Series
                 </span>
               </div>
 
-              <div className='d-flex gap-2'>
+              <div className="d-flex gap-2">
                 <BookmarkFavBtn
                   bookmarkedIds={bookmarkedIds}
                   favouriteIds={favouriteIds}
                   addBookMark={handleBookmark}
                   addFavourite={handleFavourite}
-                  kind='dropdown'
-                  type='tv'
+                  kind="dropdown"
+                  type="tv"
                   item={details}
                 />
               </div>
             </div>
-            {key && (
-              <div className='details-related-content'>
-                <h3 className='mb-4'>Trailer</h3>
-                <div className='text-center'>
-                  <iframe
-                    src={`https://www.youtube.com/embed/${key}`}
-                    height='480'
-                    width='100%'
-                    className='iframe'
-                    title='Iframe Example'
-                  ></iframe>
+            {video.length!==0 && (
+              <div className="details-related-content">
+                {key}
+                <h3 className="mb-4">Trailer</h3>
+                <div className="row">
+                  <div className="col-lg-8 text-center">
+                    <iframe
+                      src={`https://www.youtube.com/embed/${key}`}
+                      height="480"
+                      width="100%"
+                      className="iframe"
+                      title="Iframe Example"
+                    ></iframe>
+                  </div>
+                  {video.length !== 0 && (
+                    <div className="col-lg-4">
+                      <div className="video-container d-flex flex-column gap-3" >
+                        {video.map((item) => (
+                          <div className="card card-container" key={item.id} onClick={()=>playVideo(item.id)}>
+                            <div className="card-body row">
+                              <div className="col-8">{item?.name}</div>
+                              <div className="col-4 ">
+                                <img
+                                  src={`https://i.ytimg.com/vi/${item.key}/maxresdefault.jpg`}
+                                  className="img-fluid rounded"
+                                  alt=""
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
-            <div className='details-related-content'>
+            <div className="details-related-content">
               {details?.seasons && details.seasons.length !== 0 && (
                 <SeasonList
                   bookmarkedIds={bookmarkedIds}
@@ -217,7 +246,7 @@ function TvDetails ({
                 addBookMark={addBookMark}
                 favouriteIds={favouriteIds}
                 addFavourite={addFavourite}
-                kind='similar'
+                kind="similar"
                 id={id}
                 cols={4}
               />
@@ -226,7 +255,7 @@ function TvDetails ({
         )}
       </SidebarLayout>
     </>
-  )
+  );
 }
 
-export default TvDetails
+export default TvDetails;

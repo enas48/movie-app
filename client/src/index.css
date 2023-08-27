@@ -83,7 +83,7 @@ h3 {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.35);
+  background-color: rgba(0, 0, 0, 0.25);
 }
 
 /*-----------------scroll style----------------*/
@@ -732,29 +732,39 @@ button.icon-container.bookmark.active {
 .card.crew {
   background: var(--dark-active);
   cursor: pointer;
-  margin: auto;
+  max-width: max-content;
   color: var(--white);
   box-shadow: 0px 1px 5px #000000;
-  max-width: 160px;
+  transition: all ease-in-out 0.3s;
   text-align: center;
   margin: 1rem 0;
   overflow: hidden;
-  padding: 0;
+  padding: 6px;
 }
-.card.crew .img-container {
-  height: 200px;
-  overflow: hidden;
+.card.crew:hover{
+  transform: scale(1.1);
+}
+.card.crew .img-container{
   position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  height: 65px;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 58px;
+  margin: 0 0.5em;
 }
 .card.crew .img-container img {
+  display: block;
+  border-radius: 3px;
   position: absolute;
-  width: 100%;
-  left: 0;
   top: 0;
-  bottom: 0;
-  right: 0;
+  max-width: 100%;
+  height: auto;
 }
-
+.card.crew .img-container .no-img{
+  top: -11px;
+}
 .eposide {
   box-shadow: 0px 1px 5px #000000;
 }
@@ -800,7 +810,7 @@ button.icon-container.bookmark.active {
   position: absolute;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  padding: 0;
   align-items: flex-start;
   height: 100%;
   width: 100%;
@@ -812,6 +822,22 @@ button.icon-container.bookmark.active {
 .episode-container .episode-num {
   z-index: 1;
   position: relative;
+}
+.episode-container .episode-num{
+  background: rgba(0,0,0,0.5);
+  width: 100%;
+  margin-top: auto;
+  padding:0.2rem 0.5rem;
+  justify-self: end;
+}
+.episode-container button.icon-container{
+  background-color: transparent;
+  position: absolute;
+  top: 23%;
+  left: 40%;
+}
+.episode-container .play-icon{
+  font-size: 3rem;
 }
 .episode-container:hover {
   overflow: initial;
@@ -852,10 +878,14 @@ button.icon-container.bookmark.active {
   .episode-container:hover > * .episode-content {
     display: none;
   }
+  .iframe{
+    height: 300px;
+  }
 }
 .iframe {
   max-width: 900px;
   margin: auto;
+  border-radius: 10px;
 }
 
 /*-------------------------person style------------------*/
@@ -1007,4 +1037,22 @@ button.icon-container.bookmark.active {
 }
 .filter-dropdown .genre button{
   width: 100%;
+}
+.video-container{
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 1rem;
+  overflow: auto;
+  max-height: 480px;
+  height: 100%;
+  
+}
+.video-container .card {
+  width: 100%;
+  border-radius: 10px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  color: var(--white);
+  box-shadow: 0px 1px 5px #000000;
 }

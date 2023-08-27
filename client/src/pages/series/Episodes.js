@@ -25,6 +25,7 @@ function Episodes ({ episodes }) {
               id: data.id,
               overview: data?.overview && data.overview,
               name: data?.name && data.name,
+              runtime: data?.runtime && data.runtime,
               episode_number: data?.episode_number && data.episode_number,
               image: image.url
             })
@@ -34,6 +35,7 @@ function Episodes ({ episodes }) {
                 id: data.id,
                 overview: data?.overview && data.overview,
                 name: data?.name && data.name,
+                runtime: data?.runtime && data.runtime,
                 episode_number: data?.episode_number && data.episode_number,
                 image: ''
               })
@@ -45,6 +47,7 @@ function Episodes ({ episodes }) {
               id: data.id,
               overview: data?.overview && data.overview,
               name: data?.name && data.name,
+              runtime: data?.runtime && data.runtime,
               episode_number: data?.episode_number && data.episode_number,
               image: ''
             })
