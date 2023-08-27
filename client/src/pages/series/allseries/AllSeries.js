@@ -9,7 +9,8 @@ import { Outlet, useLocation } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Nav } from 'react-bootstrap'
 import Dropdown from 'react-bootstrap/Dropdown'
-import { BiFilterAlt } from 'react-icons/bi'
+import { BiFilterAlt, BiPlus } from 'react-icons/bi'
+import { MdDone } from 'react-icons/md'
 
 function AllSeries (props) {
   const [isLoading, setIsLoading] = useState(true)
@@ -28,8 +29,7 @@ function AllSeries (props) {
     setCurrentPage(1)
   }
 
-  const handleGenre = e => {
-    let id = e.target.vlaue
+  const handleGenre = (e, id) => {
     if (filteredGenre.includes(id)) {
       let filtered = filteredGenre.filter(item => {
         return item !== id
@@ -38,13 +38,14 @@ function AllSeries (props) {
     } else {
       setFilteredGenre([...filteredGenre, id])
     }
-    setCurrentPage(1)
+
+     setCurrentPage(1)
   }
 
   const loadGenre = async () => {
     TvSeriesApi.getGenre().then(data => {
       console.log(data)
-      setGenre(data)
+      setGenre(data.genres)
     })
   }
 
@@ -65,7 +66,8 @@ function AllSeries (props) {
 
         <Search />
         <div className='p-3 mt-lg-5'>
-          <Nav className='tv-list '>
+        <div className='d-flex justify-content-between flex-wrap gap-1'>
+          <Nav className='tv-list flex-nowrap flex-shrink-0 '>
             <LinkContainer to='onair'>
               <Nav.Link
                 className={
@@ -114,65 +116,83 @@ function AllSeries (props) {
             </LinkContainer>
           </Nav>
           <div className='filter-container d-flex gap-2 align-items-center'>
-            <BiFilterAlt className='icon' />
+              <BiFilterAlt className='icon' />
 
-            <Dropdown className='filter-dropdown'>
-              <Dropdown.Toggle variant='success' id='dropdown-basic'>
-                By Date
-              </Dropdown.Toggle>
+              <Dropdown className='filter-dropdown'>
+                <Dropdown.Toggle variant='success' id='dropdown-basic'>
+                  Select Date
+                </Dropdown.Toggle>
 
-              <Dropdown.Menu>
-                <Dropdown.Item className={date === 'all' ? 'active' : ''}>
-                  <button
-                    className='btn'
-                    value='all'
-                    onClick={e => handleClick(e)}
-                  >
-                    All
-                  </button>
-                </Dropdown.Item>
-                <Dropdown.Item className={date === 'latest' ? 'active' : ''}>
-                  <button
-                    className='btn'
-                    value='latest'
-                    onClick={e => handleClick(e)}
-                  >
-                    Latest
-                  </button>
-                </Dropdown.Item>
-                <Dropdown.Item className={date === 'oldest' ? 'active' : ''}>
-                  <button
-                    className='btn'
-                    value='oldest'
-                    onClick={e => handleClick(e)}
-                  >
-                    Oldest
-                  </button>
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-            <Dropdown className='filter-dropdown'>
-              <Dropdown.Toggle variant='success' id='dropdown-basic'>
-                By Genere
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                {genre.length !== 0 &&
-                  genre.map(item => {
-                    return (
-                      <Dropdown.Item key={item.id}>
-                        <button
-                          className='btn'
-                          value={item.id}
-                          onClick={e => handleGenre(e)}
-                        >
-                          {item.name}
-                        </button>
-                      </Dropdown.Item>
-                    )
-                  })}
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
+                <Dropdown.Menu>
+                  <Dropdown.Item className={date === 'all' ? 'active' : ''}>
+                    <button
+                      className='btn'
+                      value='all'
+                      onClick={e => handleClick(e)}
+                    >
+                      All
+                    </button>
+                  </Dropdown.Item>
+                  <Dropdown.Item className={date === 'latest' ? 'active' : ''}>
+                    <button
+                      className='btn'
+                      value='latest'
+                      onClick={e => handleClick(e)}
+                    >
+                      Latest
+                    </button>
+                  </Dropdown.Item>
+                  <Dropdown.Item className={date === 'oldest' ? 'active' : ''}>
+                    <button
+                      className='btn'
+                      value='oldest'
+                      onClick={e => handleClick(e)}
+                    >
+                      Oldest
+                    </button>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+              <Dropdown className='filter-dropdown'>
+                <Dropdown.Toggle
+                  variant='success'
+                  id='dropdown-basic'
+             
+                >
+                  Select Genres
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <div className='genre'>
+                    {genre.length !== 0 &&
+                      genre.map(item => {
+                        return (
+                          <Dropdown.Item
+                            key={item.id}
+                            className={
+                              filteredGenre.includes(item.id) ? 'active' : ''
+                            }
+                          >
+                            {filteredGenre.includes(item.id)}
+                            <button
+                              className='btn'
+                              onClick={e => handleGenre(e, item.id)}
+                            >
+                              {filteredGenre.includes(item.id)}
+                              {item.name}&nbsp;
+                              {filteredGenre.includes(item.id) ? (
+                                <MdDone className='icon primary' />
+                              ) : (
+                                <BiPlus className='icon ' />
+                              )}
+                            </button>
+                          </Dropdown.Item>
+                        )
+                      })}
+                  </div>
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+            </div>
           <Outlet context={[date, handleChange, currentPage, filteredGenre]} />
         </div>
       </SidebarLayout>

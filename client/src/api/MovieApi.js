@@ -113,9 +113,9 @@ export const SortByDate = (page,order,year) =>
     .then(data => data)
 
 
-    export const SortByGenre= (genre) =>
+    export const SortByGenre= (page,genre) =>
   fetch(
-    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&with_genres=${genre}`
+    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=${page}&with_genres=${genre}`
   )
     .then(res => res.json())
     .then(data => data)

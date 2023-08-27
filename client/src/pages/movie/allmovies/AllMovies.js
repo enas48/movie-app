@@ -40,7 +40,7 @@ function AllMovies (props) {
       setFilteredGenre([...filteredGenre, id])
     }
 
-    // setCurrentPage(1)
+     setCurrentPage(1)
   }
 
   const loadGenre = async () => {

@@ -19,7 +19,7 @@ function Movie (props) {
     console.log(filteredGenre)
     handleChange(pageNumber)
     if (filteredGenre.length > 0) {
-      loadByGenre(filteredGenre)
+      loadByGenre(pageNumber, filteredGenre)
     } else if (date === 'latest') {
       loadByDate(pageNumber, 'desc')
     } else if (date === 'oldest') {
@@ -46,10 +46,10 @@ function Movie (props) {
     })
   }
 
-  const loadByGenre = async genre => {
+  const loadByGenre = async (currentPage,genre) => {
     setIsLoading(true)
     let genres = genre.length > 1 ? genre.join(', ') : genre.toString()
-    MovieApi.SortByGenre(genres).then(movie => {
+    MovieApi.SortByGenre(currentPage,genres).then(movie => {
       console.log(movie)
       if (movie.total_pages >= 500) {
         setTotalPages(500)
@@ -114,7 +114,7 @@ function Movie (props) {
   useEffect(() => {
     //  loadData(currentPage);
     if (filteredGenre.length > 0) {
-      loadByGenre(filteredGenre)
+      loadByGenre(currentPage,filteredGenre)
     } else if (date === 'latest') {
       loadByDate(currentPage, 'desc')
     } else if (date === 'oldest') {

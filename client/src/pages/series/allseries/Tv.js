@@ -18,7 +18,7 @@ function Tv (props) {
   const handlePageChange = async pageNumber => {
     handleChange(pageNumber)
     if (filteredGenre.length > 0) {
-      loadByGenre(filteredGenre)
+        loadByGenre(pageNumber, filteredGenre)
     } else if (date === 'latest') {
       loadByDate(pageNumber, 'desc')
     } else if (date === 'oldest') {
@@ -45,10 +45,10 @@ function Tv (props) {
     })
   }
 
-  const loadByGenre = async genre => {
+  const loadByGenre = async (currentPage,genre) => {
     setIsLoading(true)
     let genres = genre.length > 1 ? genre.join(', ') : genre.toString()
-    TvSeriesApi.SortByGenre(genres).then(series => {
+    TvSeriesApi.SortByGenre(currentPage,genres).then(series => {
       console.log(series)
       if (series.total_pages >= 500) {
         setTotalPages(500)
@@ -113,7 +113,7 @@ function Tv (props) {
   useEffect(() => {
     //  loadData(currentPage);
     if (filteredGenre.length > 0) {
-      loadByGenre(filteredGenre)
+      loadByGenre(currentPage,filteredGenre)
     } else if (date === 'latest') {
       loadByDate(currentPage, 'desc')
     } else if (date === 'oldest') {
@@ -121,7 +121,7 @@ function Tv (props) {
     } else {
       loadData(currentPage)
     }
-  }, [currentPage, date, type])
+  }, [currentPage, date, type,filteredGenre])
 
   return (
     <div className='d-flex flex-column justify-content-between'>
