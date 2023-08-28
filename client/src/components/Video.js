@@ -32,7 +32,7 @@ function Video({ keyVideo, playVideo }) {
           <h3 className="mb-4">Trailer</h3>
           <div className="row">
             <div className="col-lg-8 text-center my-2">
-            <ReactPlayer className='w-100' url={`https://www.youtube.com/embed/${keyVideo}?showinfo=0&enablejsapi=1&origin=http://localhost:3000'`} />
+            <ReactPlayer className='w-100' url={`https://www.youtube-nocookie.com/embed/${keyVideo}?showinfo=0&enablejsapi=1&origin=http://localhost:3000'`} />
               {/* <iframe
                 src={`https://www.youtube.com/embed/${key}`}
                 height="480"
