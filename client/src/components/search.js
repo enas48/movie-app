@@ -59,7 +59,7 @@ function Search() {
               item?.media_type && (
                 <LinkContainer
                   key={i}
-                  to={`/search/${item.id}`}
+                  to={`/search/${item.media_type}/${item.id}`}
                   state={{ data: item }}
                 >
                   <div className="cursor-pointer d-flex align-items-center gap-1 search-item">

@@ -11,7 +11,7 @@ import Search from "../../components/search";
 import RegisterModal from "../../uiElements/RegisterModal";
 import Loading from "../../uiElements/preloading";
 import BookmarkFavBtn from "../../components/BookmarkFavBtn";
-
+import Video from "../../components/Video";
 import { PiTelevisionBold } from "react-icons/pi";
 import { MdLanguage } from "react-icons/md";
 
@@ -28,7 +28,7 @@ function TvDetails({
   const [details, setDetails] = useState({});
   const [image, setImage] = useState(null);
   const [key, setKey] = useState(null);
-  const [video, setVideos] = useState([]);
+  // const [video, setVideos] = useState([]);
 
   const handleBookmark = (e, id, type) => {
     e.stopPropagation();
@@ -66,17 +66,17 @@ function TvDetails({
         console.log(data.results);
         let youtubeVideos = data.results.filter((d) => d.site === "YouTube");
         console.log(youtubeVideos);
-        setVideos(youtubeVideos);
+        // setVideos(youtubeVideos);
       
-        // if (youtubeVideos[0]?.key) {
-        //   setKey(youtubeVideos[0].key);
-        // }
+        if (youtubeVideos[0]?.key) {
+          setKey(youtubeVideos[0].key);
+        }
       });
     } catch (err) {
       console.log(err);
     }
   };
-const playVideo=async(key)=>{
+const playVideo=(key)=>{
   console.log(key)
   setKey(key)
 }
@@ -89,8 +89,9 @@ const playVideo=async(key)=>{
     if (id) {
       fetchSeries(id);
       fetchTrailer(id);
+      console.log(key)
     }
-  }, [id,key]);
+  }, [id]);
 
   return (
     <>
@@ -192,43 +193,8 @@ const playVideo=async(key)=>{
                 />
               </div>
             </div>
-            {video.length!==0 && (
-              <div className="details-related-content">
-                {key}
-                <h3 className="mb-4">Trailer</h3>
-                <div className="row">
-                  <div className="col-lg-8 text-center">
-                    <iframe
-                      src={`https://www.youtube.com/embed/${key}`}
-                      height="480"
-                      width="100%"
-                      className="iframe"
-                      title="Iframe Example"
-                    ></iframe>
-                  </div>
-                  {video.length !== 0 && (
-                    <div className="col-lg-4">
-                      <div className="video-container d-flex flex-column gap-3" >
-                        {video.map((item) => (
-                          <div className="card card-container" key={item.id} onClick={()=>playVideo(item.id)}>
-                            <div className="card-body row">
-                              <div className="col-8">{item?.name}</div>
-                              <div className="col-4 ">
-                                <img
-                                  src={`https://i.ytimg.com/vi/${item.key}/maxresdefault.jpg`}
-                                  className="img-fluid rounded"
-                                  alt=""
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
+            <Video keyVideo={key} playVideo={playVideo}/>
+         
             <div className="details-related-content">
               {details?.seasons && details.seasons.length !== 0 && (
                 <SeasonList

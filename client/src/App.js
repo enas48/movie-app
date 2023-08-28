@@ -474,7 +474,7 @@ function App () {
             }
           />
           <Route
-            path='/search/:id'
+            path='/search/:media_type/:id'
             element={
               <SearchItem
                 searchList={searchList}
@@ -484,6 +484,7 @@ function App () {
                 addFavourite={handleFavourite}
                 show={show}
                 handleClose={handleClose}
+               
               />
             }
           />

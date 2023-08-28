@@ -3,15 +3,14 @@ import * as MovieApi from '../../../api/MovieApi'
 
 import SidebarLayout from '../../../components/sidebarLayout'
 import Search from '../../../components/search'
-import Carousel from 'react-grid-carousel'
 import Loading from '../../../uiElements/preloading'
 import RegisterModal from '../../../uiElements/RegisterModal'
 import { Outlet, useLocation } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Nav } from 'react-bootstrap'
 import Dropdown from 'react-bootstrap/Dropdown'
-import { BiFilterAlt, BiPlus } from 'react-icons/bi'
-import { MdDone } from 'react-icons/md'
+import { BiFilterAlt } from 'react-icons/bi'
+
 
 function AllMovies (props) {
   const [isLoading, setIsLoading] = useState(true)

@@ -25,6 +25,7 @@ h3,
 h4 {
   text-transform: capitalize;
   line-height: inherit;
+  
 }
 .primary {
   color: var(--primary);
@@ -185,7 +186,16 @@ h3 {
   border: none;
   outline: none;
 }
-
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #a8a8a8!important;
+  opacity: 1; /* Firefox */
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #a8a8a8!important;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: #a8a8a8!important;
+}
 .form-control {
   background: var(--dark-active);
   transition: 0.2s all ease-in-out;
@@ -521,6 +531,8 @@ a:focus-visible {
 .bg-container {
   background: var(--dark-active);
   border-radius: 10px;
+  margin: 6px;
+
 }
 .card-content {
   position: absolute;
@@ -844,12 +856,14 @@ button.icon-container.bookmark.active {
   margin-top: auto;
   padding:0.2rem 0.5rem;
   justify-self: end;
+  color: var(--white);
 }
 .episode-container button.icon-container{
   background-color: transparent;
   position: absolute;
   top: 23%;
   left: 40%;
+  z-index: 400;
 }
 .episode-container .play-icon{
   font-size: 3rem;
@@ -861,6 +875,7 @@ button.icon-container.bookmark.active {
   min-height: 100%;
 }
 .episode-container:hover > * .episode-content {
+  color: var(--white);
   display: block;
   position: absolute;
   top: 140px;
@@ -915,6 +930,7 @@ button.icon-container.bookmark.active {
     z-index: 27;
     padding: 1rem;
     box-shadow: 0px 1px 5px #000000;
+    color: var(--white);
   }
   .episode-container:hover{
     transform: scale(1); 
@@ -1045,6 +1061,9 @@ button.icon-container.bookmark.active {
   color: var(--secondry);
   background-color: var(--dark-active);
   border-color: var(--dark);
+}
+.page-item.disabled .page-link{
+  color: #c6bfd1;
 }
 .page-link:hover {
   z-index: 2;

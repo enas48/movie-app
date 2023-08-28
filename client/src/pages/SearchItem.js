@@ -9,16 +9,17 @@ import TvDetails from "./series/TvDetails";
 import Person from "./Person";
 
 function SearchItem(props) {
-  const location = useLocation();
+  const {media_type} = useParams();
   const [isLoading, setIsLoading] = useState(true);
-  const { data } = location.state;
+console.log(media_type)
+
 
   const [type, setType] = useState("");
   useEffect(() => {
     setIsLoading(true);
-    setType(data.media_type);
+    setType(media_type);
     setIsLoading(false);
-  }, [data]);
+  }, []);
 
   return (
     <>

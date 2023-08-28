@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Carousel from "react-grid-carousel";
-
+// import Carousel from "react-grid-carousel";
+import Slider from "react-slick";
 import * as MovieApi from "../api/MovieApi";
 
 import Loading from "../uiElements/preloading";
@@ -19,6 +19,43 @@ function MovieList(props) {
   } = props;
   const [isLoading, setIsLoading] = useState(true);
   const [movies, setMovies] = useState([]);
+
+  var settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: cols,
+    slidesToScroll: cols,
+    initialSlide: 0,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: cols,
+          slidesToScroll: cols,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
 
   const loadData = async () => {
     if (kind === "trending") {
@@ -75,25 +112,28 @@ function MovieList(props) {
               </LinkContainer>
             )}
           </div>
-          <div className="col-12 mb-4 movieList">
-            <Carousel cols={cols} rows={1} gap={10} loop autoplay={6000}>
+          <div className="col-11 mx-auto mb-4 movieList">
+            {/* <Carousel cols={cols} rows={1} gap={10} loop autoplay={6000}> */}
+            <Slider {...settings}>
               {movies.length !== 0 &&
                 movies.map((item, i) => {
                   return (
-                    <Carousel.Item key={i}>
-                      <CarouselItem
-                        link={`/details/movies/${item.id}`}
-                        type="movie"
-                        item={item}
-                        addBookMark={addBookMark}
-                        bookmarkedIds={bookmarkedIds}
-                        favouriteIds={favouriteIds}
-                        addFavourite={addFavourite}
-                      />
-                    </Carousel.Item>
+                    // <Carousel.Item>
+                    <CarouselItem
+                      key={i}
+                      link={`/details/movies/${item.id}`}
+                      type="movie"
+                      item={item}
+                      addBookMark={addBookMark}
+                      bookmarkedIds={bookmarkedIds}
+                      favouriteIds={favouriteIds}
+                      addFavourite={addFavourite}
+                    />
+                    // </Carousel.Item>
                   );
                 })}
-            </Carousel>
+            </Slider>
+            {/* </Carousel> */}
           </div>
         </>
       )}
