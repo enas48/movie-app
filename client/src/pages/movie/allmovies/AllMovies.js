@@ -3,7 +3,7 @@ import * as MovieApi from '../../../api/MovieApi'
 
 import SidebarLayout from '../../../components/sidebarLayout'
 import Search from '../../../components/search'
-
+import Carousel from 'react-grid-carousel'
 import Loading from '../../../uiElements/preloading'
 import RegisterModal from '../../../uiElements/RegisterModal'
 import { Outlet, useLocation } from 'react-router-dom'
@@ -20,7 +20,7 @@ function AllMovies (props) {
   const [genre, setGenre] = useState([])
   const [filteredGenre, setFilteredGenre] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
-  const [show, setShow] = useState(false)
+
   const handleChange = page => {
     setCurrentPage(page)
   }
@@ -40,7 +40,7 @@ function AllMovies (props) {
       setFilteredGenre([...filteredGenre, id])
     }
 
-     setCurrentPage(1)
+    setCurrentPage(1)
   }
 
   const loadGenre = async () => {
@@ -122,7 +122,7 @@ function AllMovies (props) {
 
               <Dropdown className='filter-dropdown'>
                 <Dropdown.Toggle variant='success' id='dropdown-basic'>
-                  Select Date
+                  Order
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
@@ -132,7 +132,7 @@ function AllMovies (props) {
                       value='all'
                       onClick={e => handleClick(e)}
                     >
-                      All
+                      Order
                     </button>
                   </Dropdown.Item>
                   <Dropdown.Item className={date === 'latest' ? 'active' : ''}>
@@ -155,12 +155,8 @@ function AllMovies (props) {
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-              <Dropdown className='filter-dropdown' show={show}>
-                <Dropdown.Toggle
-                  variant='success'
-                  id='dropdown-basic'
-                  onClick={() => setShow(!show)}
-                >
+              {/* <Dropdown className='filter-dropdown'>
+                <Dropdown.Toggle variant='success'>
                   Select Genres
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
@@ -192,9 +188,32 @@ function AllMovies (props) {
                       })}
                   </div>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
             </div>
           </div>
+
+          <div className='d-flex justify-content-center gap-3 flex-wrap mt-4'>
+            {genre.length !== 0 &&
+              genre.map((item, i) => {
+                return (
+                  <div key={item.id}>
+                    {filteredGenre.includes(item.id)}
+                    <button
+                      className={
+                        filteredGenre.includes(item.id)
+                          ? 'm-auto btn active text-nowrap filter-btn'
+                          : ' btn m-auto text-nowrap filter-btn'
+                      }
+                      onClick={e => handleGenre(e, item.id)}
+                    >
+                      {filteredGenre.includes(item.id)}
+                      {item.name}
+                    </button>
+                  </div>
+                )
+              })}
+          </div>
+
           <Outlet context={[date, handleChange, currentPage, filteredGenre]} />
         </div>
       </SidebarLayout>

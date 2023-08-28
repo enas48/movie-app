@@ -247,7 +247,8 @@ input:-webkit-autofill:focus {
   background-repeat: no-repeat;
 }
 .custom-btn,
-.btn-outline {
+.btn-outline,
+.filter-btn {
   background-color: var(--primary);
   transition: all ease-in-out 0.3s;
   color: var(--white);
@@ -269,6 +270,19 @@ input:-webkit-autofill:focus {
   opacity: 1;
   box-shadow: none;
   background-color: var(--primary-active) !important;
+}
+.filter-btn{
+  background-color: var(--dark-active);
+  color: var(--white);
+}
+.filter-btn:hover,
+.filter-btn:active,
+.filter-btn.active,
+.filter-btn:focus-visible {
+  opacity: 1;
+  box-shadow: none;
+  background-color: var(--white)!important;
+  color: var(--dark);
 }
 .btn-outline:hover,
 .btn-outline:active,
@@ -732,7 +746,7 @@ button.icon-container.bookmark.active {
 .card.crew {
   background: var(--dark-active);
   cursor: pointer;
-  max-width: max-content;
+  max-width: 280px;
   color: var(--white);
   box-shadow: 0px 1px 5px #000000;
   transition: all ease-in-out 0.3s;
@@ -753,6 +767,7 @@ button.icon-container.bookmark.active {
   overflow: hidden;
   width: 58px;
   margin: 0 0.5em;
+  flex-shrink: 0;
 }
 .card.crew .img-container img {
   display: block;
@@ -868,6 +883,42 @@ button.icon-container.bookmark.active {
 }
 .eposide-overlay {
   background-color: rgba(0, 0, 0, 0.65);
+}
+@media (max-width:768px) {
+  .episode-container {
+    overflow: initial;
+    min-height: auto;
+  }
+  .episode-container .card-body{
+    position: relative;
+  }
+  .episode-content{
+    display: block;
+  }
+  .episode-container .episode-num{
+    margin-top: -38px;
+  }
+  .episode-container button.icon-container{
+    top: 5%;
+  }
+  .episode-container img {
+    height: 120px;
+    object-fit: cover;
+  }
+  .episode-container > * .episode-content, .episode-container:hover > * .episode-content {
+    display: block;
+    height: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+    background: var(--dark);
+    z-index: 27;
+    padding: 1rem;
+    box-shadow: 0px 1px 5px #000000;
+  }
+  .episode-container:hover{
+    transform: scale(1); 
+  }
 }
 @media (max-width: 680px) {
   .episode-bg {

@@ -39,7 +39,13 @@ function CarouselItem ({
           {item.image !== '' && (
             <LazyLoadImage src={item.image} alt={item.name} />
           )}
-          {item.image === '' && (
+          {item.image === '' && type!=='season'&&(
+            <LazyLoadImage
+              src={process.env.PUBLIC_URL + '../../noimg2.jpg'}
+              alt=''
+            />
+          )}
+             {item.image === '' && type==='season'&&(
             <LazyLoadImage
               src={process.env.PUBLIC_URL + '../../noimage.png'}
               alt=''
@@ -67,7 +73,7 @@ function CarouselItem ({
                 {type === 'movie' ? <BiCameraMovie /> : <PiTelevisionBold />}
               </span>
             </div>
-            <h5 className='text-nowrap'>
+            <h5 className=''>
               {item?.title && item.title.length > 20
                 ? item.title.slice(0, 20 - 1) + '…'
                 : item.title}

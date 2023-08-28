@@ -114,7 +114,7 @@ export const seasonList = async results => {
         })
       }
     } else {
-      if (data.id) {
+      if (data?.id) {
         seasonArr.push({
           id: data.id,
           title: data.name,
@@ -179,7 +179,7 @@ export const Trailer = series_id =>
 
 export const SortByDate = (page, order, year) =>
   fetch(
-    `https://api.themoviedb.org/3/discover/tv?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=primary_release_date.${order}&primary_release_date.gte=2022-11-25&primary_release_date.lte=${year}`
+    `https://api.themoviedb.org/3/discover/tv?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=primary_release_date.${order}&air_date.gte=2010-11-25&air_date.lte=${year}`
   )
     .then(res => res.json())
     .then(data => data)
@@ -199,3 +199,11 @@ export const SortByGenre = (page,genre) =>
   )
     .then(res => res.json())
     .then(data => data)
+
+    export const SortByGenreAndDate = (page, order, genre, year) =>
+  fetch(
+    `https://api.themoviedb.org/3/discover/tv?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=${page}&sort_by=primary_release_date.${order}&first_air_date.gte=2010-11-25&first_air_date.lte=${year}&with_genres=${genre}`
+  )
+    .then(res => res.json())
+    .then(data => data)
+

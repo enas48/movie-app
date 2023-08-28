@@ -14,24 +14,27 @@ function Movie (props) {
 
   let { type } = useParams()
 
-
   const handlePageChange = async pageNumber => {
-    console.log(filteredGenre)
     handleChange(pageNumber)
-    if (filteredGenre.length > 0) {
+    if (filteredGenre.length > 0 && date === 'all') {
       loadByGenre(pageNumber, filteredGenre)
+    } else if (date === 'latest' && filteredGenre.length > 0) {
+      loadByDateAndGenere(pageNumber, 'desc', filteredGenre)
     } else if (date === 'latest') {
-      loadByDate(pageNumber, 'desc')
+      loadByDateAndGenere(pageNumber, 'desc')
+    } else if (date === 'oldest' && filteredGenre.length > 0) {
+      loadByDateAndGenere(pageNumber, 'asc', filteredGenre)
     } else if (date === 'oldest') {
-      loadByDate(pageNumber, 'asc')
+      loadByDateAndGenere(pageNumber, 'asc')
     } else {
       loadData(pageNumber)
     }
   }
-  const loadByDate = async (currentPage, order) => {
+
+  const loadByDateAndGenere = async (currentPage, order, genre) => {
     setIsLoading(true)
     let year = new Date().toISOString().split('T')[0]
-    MovieApi.SortByDate(currentPage, order, year).then(movie => {
+    MovieApi.SortByGenreAndDate(currentPage, order, genre, year).then(movie => {
       console.log(movie)
       if (movie.total_pages >= 500) {
         setTotalPages(500)
@@ -46,10 +49,10 @@ function Movie (props) {
     })
   }
 
-  const loadByGenre = async (currentPage,genre) => {
+  const loadByGenre = async (currentPage, genre) => {
     setIsLoading(true)
     let genres = genre.length > 1 ? genre.join(', ') : genre.toString()
-    MovieApi.SortByGenre(currentPage,genres).then(movie => {
+    MovieApi.SortByGenre(currentPage, genres).then(movie => {
       console.log(movie)
       if (movie.total_pages >= 500) {
         setTotalPages(500)
@@ -112,18 +115,21 @@ function Movie (props) {
   }
 
   useEffect(() => {
-    //  loadData(currentPage);
-    if (filteredGenre.length > 0) {
-      loadByGenre(currentPage,filteredGenre)
+    if (filteredGenre.length > 0 && date === 'all') {
+      loadByGenre(currentPage, filteredGenre)
+    } else if (date === 'latest' && filteredGenre.length > 0) {
+      loadByDateAndGenere(currentPage, 'desc', filteredGenre)
     } else if (date === 'latest') {
-      loadByDate(currentPage, 'desc')
+      loadByDateAndGenere(currentPage, 'desc')
+    } else if (date === 'oldest' && filteredGenre.length > 0) {
+      loadByDateAndGenere(currentPage, 'asc', filteredGenre)
     } else if (date === 'oldest') {
-      loadByDate(currentPage, 'asc')
+      loadByDateAndGenere(currentPage, 'asc')
     } else {
       loadData(currentPage)
     }
     console.log(filteredGenre)
-  }, [currentPage, date, type,filteredGenre])
+  }, [currentPage, date, type, filteredGenre])
 
   return (
     <div className='d-flex flex-column justify-content-between'>

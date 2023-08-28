@@ -72,11 +72,34 @@ export const list = async movies => {
       if (image?.url) {
         imageArr.push({
           id: data.id,
-          genre_ids:data?.genre_ids && data.genre_ids,
+          genre_ids: data?.genre_ids && data.genre_ids,
           title: data?.title && data.title,
           year: data?.release_date && new Date(data.release_date).getFullYear(),
           rate: data?.vote_average && data.vote_average.toFixed(1),
           image: image.url
+        })
+      } else {
+        if (data?.id) {
+          imageArr.push({
+            id: data.id,
+            genre_ids: data?.genre_ids && data.genre_ids,
+            title: data?.title && data.title,
+            year:
+              data?.release_date && new Date(data.release_date).getFullYear(),
+            rate: data?.vote_average && data.vote_average.toFixed(1),
+            image: ''
+          })
+        }
+      }
+    } else {
+      if (data?.id) {
+        imageArr.push({
+          id: data.id,
+          genre_ids: data?.genre_ids && data.genre_ids,
+          title: data?.title && data.title,
+          year: data?.release_date && new Date(data.release_date).getFullYear(),
+          rate: data?.vote_average && data.vote_average.toFixed(1),
+          image: ''
         })
       }
     }
@@ -105,17 +128,23 @@ export const Search = query =>
     .then(res => res.json())
     .then(data => data)
 
-export const SortByDate = (page,order,year) =>
+export const SortByDate = (page, order, year) =>
   fetch(
-    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=primary_release_date.${order}&primary_release_date.gte=2022-11-25&primary_release_date.lte=${year}`
+    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=primary_release_date.${order}&primary_release_date.gte=2010-11-25&primary_release_date.lte=${year}`
   )
     .then(res => res.json())
     .then(data => data)
 
-
-    export const SortByGenre= (page,genre) =>
+export const SortByGenre = (page, genre) =>
   fetch(
     `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=${page}&with_genres=${genre}`
+  )
+    .then(res => res.json())
+    .then(data => data)
+
+export const SortByGenreAndDate = (page, order, genre, year) =>
+  fetch(
+    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=${page}&sort_by=primary_release_date.${order}&primary_release_date.gte=2010-11-25&primary_release_date.lte=${year}&with_genres=${genre}`
   )
     .then(res => res.json())
     .then(data => data)
