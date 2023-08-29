@@ -4,7 +4,7 @@
   "description": "portfolio backend",
   "main": "server.js",
   "engines": {
-    "node": "18.x"
+    "node": ">=16.0.0"
   },
   "scripts": {
     "Build": "node index.js",
