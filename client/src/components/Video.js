@@ -32,12 +32,12 @@ function Video ({ video, keyVideo, playVideo }) {
                 <div className='video-container d-flex flex-column gap-3'>
                   {video.map(item => (
                     <div
-                      className='card card-container'
+                      className={ item.key === keyVideo ?'card card-container active':'card card-container'}
                       key={item.id}
                       onClick={() => playVideo(item.key)}
                     >
                       <div className='card-body row'>
-                        <div className='col-4 '>
+                        <div className='col-4 d-flex'>
                         {item.key === keyVideo && (<FaPlay className='icon'/>)}
                           <img
                             src={`https://i.ytimg.com/vi/${item.key}/maxresdefault.jpg`}

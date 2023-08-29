@@ -1129,6 +1129,6 @@ button.icon-container.bookmark.active {
   margin-bottom: 0;
   /* box-shadow: 0px 1px 5px #000000; */
 }
-.video-container .card:hover {
+.video-container .card:hover ,.video-container .card.active{
 background-color: var(--dark-active);
 }
