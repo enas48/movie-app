@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "description": "portfolio backend",
   "main": "server.js",
+  "builds": [
+    {
+      "src": "package.json", 
+      "use": "vercel-sapper"
+    }
+  ],
   "engines": {
     "node": "18.x"
   },

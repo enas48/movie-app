@@ -11,6 +11,7 @@ import Search from '../../components/search'
 import Loading from '../../uiElements/preloading'
 import RegisterModal from '../../uiElements/RegisterModal'
 import BookmarkFavBtn from '../../components/BookmarkFavBtn'
+import Video from '../../components/Video'
 
 import { FaPlay } from 'react-icons/fa'
 
@@ -29,9 +30,10 @@ function MovieDetails ({
   const { id } = useParams()
   const [details, setDetails] = useState({})
   const [image, setImage] = useState(null)
-  const [video, setvideo] = useState('')
   const [disabled, setDisabled] = useState(false)
   const [key, setKey] = useState(null)
+  const [video, setvideo] = useState('')
+  const [trailerVideo, setTrailervideo] = useState('')
 
   const handleBookmark = (e, id, type) => {
     e.stopPropagation()
@@ -70,8 +72,8 @@ function MovieDetails ({
       MovieApi.Trailer(id).then(data => {
         console.log(data.results)
         let youtubeVideos = data.results.filter(d => d.site === 'YouTube')
-        console.log(youtubeVideos)
-        if (youtubeVideos[0]?.key) {
+        setTrailervideo(youtubeVideos)
+        if (youtubeVideos[0]?.key && key === null) {
           setKey(youtubeVideos[0].key)
         }
       })
@@ -79,7 +81,9 @@ function MovieDetails ({
       console.log(err)
     }
   }
-
+  const playVideo = key => {
+    setKey(key)
+  }
   let preloadImages = async movie => {
     if (movie?.backdrop_path && movie.backdrop_path !== null) {
       const response = await fetch(
@@ -111,7 +115,7 @@ function MovieDetails ({
       fetchMovieVideo(id)
       fetchTrailer(id)
     }
-  }, [id])
+  }, [id,key])
 
   return (
     <>
@@ -202,20 +206,8 @@ function MovieDetails ({
 
             <Crew id={id} type='movie' />
 
-            {key && (
-              <div className='details-related-content'>
-                <h3 className='mb-4'>Trailer</h3>
-                <div className='text-center'>
-                  <iframe
-                    src={`https://www.youtube.com/embed/${key}`}
-                    height='480'
-                    width='100%'
-                    className='iframe'
-                    title='Iframe Example'
-                  ></iframe>
-                </div>
-              </div>
-            )}
+            <Video keyVideo={key} playVideo={playVideo} video={trailerVideo} />
+
 
             <div className='details-related-content'>
               <MovieList

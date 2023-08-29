@@ -204,7 +204,7 @@ h3 {
   border-bottom: 1px solid var(--primary);
   border-radius: 0;
   box-shadow: none;
-  transition: all ease-in 0.3s;
+  transition: all ease-in 0.2s;
 }
 
 .form-control:hover {
@@ -260,7 +260,7 @@ input:-webkit-autofill:focus {
 .btn-outline,
 .filter-btn {
   background-color: var(--primary);
-  transition: all ease-in-out 0.3s;
+  transition: all ease-in-out 0.2s;
   color: var(--white);
   outline: none;
   border-radius: 23px;
@@ -1111,7 +1111,7 @@ button.icon-container.bookmark.active {
 .video-container{
   /* border: 1px solid white; */
   /* border-radius: 10px; */
-  /* padding: 1rem; */
+  padding:0 0 1rem;
   
   overflow: auto;
   overflow-x: hidden;
@@ -1126,9 +1126,18 @@ button.icon-container.bookmark.active {
   background: transparent;
   cursor: pointer;
   color: var(--white);
-  margin-bottom: 0;
+  border-bottom: 1px solid #403f3e;
+  transition: all 0.2s ease-in;
   /* box-shadow: 0px 1px 5px #000000; */
 }
 .video-container .card:hover ,.video-container .card.active{
-background-color: var(--dark-active);
+background-color: var(--dark-active)!important;
+}
+@media screen and (min-width: 1048px) {
+  .w-md-40{
+    width: 39%!important;
+  }
+  .w-md-60{
+    width: 59%!important;
+  }
 }
