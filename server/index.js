@@ -10,10 +10,10 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
-const bookmarkRouter = require('./routes/bookmarkRoutes');
-const favouriteRouter=require('./routes/favouriteRoutes');
-const userRouter = require('./routes/userRoutes');
-const profileRouter = require('./routes/porfileRoutes');
+const bookmarkRouter = app.use(require('./routes/bookmarkRoutes'));
+const favouriteRouter=app.use(require('./routes/favouriteRoutes'));
+const userRouter = app.use(require('./routes/userRoutes'));
+const profileRouter = app.use(require('./routes/porfileRoutes'));
 
 app.get('/', (req, res)=>{
     res.send('hi');
