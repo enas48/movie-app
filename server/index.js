@@ -1,7 +1,7 @@
 const express = require("express");
 const dotenv = require('dotenv').config();
 const connectDB = require('./config/db');
-const cors = require('cors');
+
 const port = process.env.PORT || 8000;
 
 connectDB();
@@ -9,7 +9,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
-app.use(cors({origin:"*"}))
+
 const bookmarkRouter = require('./routes/bookmarkRoutes');
 const favouriteRouter=require('./routes/favouriteRoutes');
 const userRouter = require('./routes/userRoutes');
