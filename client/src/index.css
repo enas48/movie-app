@@ -1109,20 +1109,26 @@ button.icon-container.bookmark.active {
   width: 100%;
 }
 .video-container{
-  border: 1px solid white;
-  border-radius: 10px;
-  padding: 1rem;
+  /* border: 1px solid white; */
+  /* border-radius: 10px; */
+  /* padding: 1rem; */
+  
   overflow: auto;
-  max-height: 480px;
+  overflow-x: hidden;
+  max-height: 360px;
   height: 100%;
   
 }
 .video-container .card {
   width: 100%;
-  border-radius: 10px;
+  border-radius: 0px;
   border: 0;
   background: transparent;
   cursor: pointer;
   color: var(--white);
-  box-shadow: 0px 1px 5px #000000;
+  margin-bottom: 0;
+  /* box-shadow: 0px 1px 5px #000000; */
+}
+.video-container .card:hover {
+background-color: var(--dark-active);
 }

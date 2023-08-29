@@ -21,7 +21,7 @@ function TvList(props) {
   const [series, setSeries] = useState([]);
 
   var settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: cols,
@@ -36,7 +36,7 @@ function TvList(props) {
           slidesToShow: cols,
           slidesToScroll: cols,
           infinite: true,
-          dots: true,
+          dots: false,
         },
       },
       {

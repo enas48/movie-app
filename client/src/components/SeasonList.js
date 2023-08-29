@@ -8,11 +8,11 @@ import CarouselItem from "./CarouselItem";
 function SeasonList({ seasons, seriesId }) {
   const [series, setSeries] = useState([]);
   var settings = {
-    dots: true,
+    dots: false,
     infinite: false,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 6,
+    slidesToScroll: 6,
     initialSlide: 0,
    
     responsive: [
@@ -22,7 +22,7 @@ function SeasonList({ seasons, seriesId }) {
           slidesToShow: 4,
           slidesToScroll: 4,
           infinite: true,
-          dots: true,
+          dots: false,
         },
       },
       {

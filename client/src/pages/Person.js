@@ -33,7 +33,7 @@ function Person(props) {
     "December",
   ];
   var settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 4,
@@ -49,7 +49,7 @@ function Person(props) {
           slidesToShow: 4,
           slidesToScroll: 4,
           infinite: true,
-          dots: true,
+          dots: false,
         },
       },
       {
