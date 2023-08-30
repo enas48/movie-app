@@ -35,8 +35,8 @@ export default function LoginModal({ page, openSignup }) {
   } = useForm({ resolver: yupResolver(schema) });
 
   const onSubmit = (data) => {
-    setLoading(true);
     console.log(process.env.REACT_APP_APP_URL)
+    setLoading(true);
     axios
       .post(`${process.env.REACT_APP_APP_URL}/users/login`, data)
       .then((response) => {
