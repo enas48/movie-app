@@ -9,11 +9,8 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
-app.use(cors({
-  origin:'https://movie-p99c.onrender.com/', //or whatever port your frontend is using
-  credentials:true,            
-  optionSuccessStatus:200
-}))
+app.use(cors({origin:"*"}))
+
 const bookmarkRouter = require('./routes/BookmarkRoutes');
 const favouriteRouter=require('./routes/favouriteRoutes');
 const userRouter = require('./routes/userRoutes');
