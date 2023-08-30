@@ -2,12 +2,12 @@
   "name": "portfolio-backend",
   "version": "1.0.0",
   "description": "portfolio backend",
-  "main": "server.js",
+  "main": "index.js",
   "engines": {
     "node": "18.x"
   },
   "scripts": {
-    "Build": "node index.js",
+
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
