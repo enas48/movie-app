@@ -8,12 +8,12 @@ connectDB();
 const app = express();
 
 app.use(express.json());
-app.use(express.urlencoded({extended:false}));
+app.use(express.urlencoded({extended:true}));
 
-const bookmarkRouter = require('routes/bookmarkRoutes');
-const favouriteRouter=require('routes/favouriteRoutes');
-const userRouter = require('routes/userRoutes');
-const profileRouter = require('routes/porfileRoutes');
+const bookmarkRouter = require('./routes/bookmarkRoutes');
+const favouriteRouter=require('./routes/favouriteRoutes');
+const userRouter = require('./routes/userRoutes');
+const profileRouter = require('./routes/porfileRoutes');
 
 app.get('/', (req, res)=>{
     res.send('hi');
