@@ -100,7 +100,7 @@ export const seasonList = async results => {
   for (let data of results) {
     if (data?.poster_path && data.poster_path !== null) {
       const response = await fetch(
-        `https://image.tmdb.org/t/p/original/${data.poster_path}`
+        `https://image.tmdb.org/t/p/w780/${data.poster_path}`
       )
       const image = await response
       if (image?.url) {
