@@ -128,6 +128,7 @@ function Tv (props) {
     } else {
       loadData(currentPage)
     }
+    window.scrollTo(0, 150)
   }, [currentPage, date, type, filteredGenre])
 
   return (

@@ -100,7 +100,7 @@ export const seasonList = async results => {
   for (let data of results) {
     if (data?.poster_path && data.poster_path !== null) {
       const response = await fetch(
-        `https://image.tmdb.org/t/p/original/${data.poster_path}`
+        `https://image.tmdb.org/t/p/original/${data.poster_path}?api_key=${process.env.REACT_APP_API_KEY}`
       )
       const image = await response
       if (image?.url) {
@@ -135,7 +135,7 @@ export const crewList = async results => {
   for (let data of results) {
     if (data?.profile_path && data.profile_path !== null) {
       const response = await fetch(
-        `https://image.tmdb.org/t/p/original${data.profile_path}`
+        `https://image.tmdb.org/t/p/original${data.profile_path}?api_key=${process.env.REACT_APP_API_KEY}`
       )
       const image = await response
       if (image?.url) {

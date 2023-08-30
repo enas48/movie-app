@@ -128,7 +128,7 @@ function Movie (props) {
     } else {
       loadData(currentPage)
     }
-    console.log(filteredGenre)
+    window.scrollTo(0, 150)
   }, [currentPage, date, type, filteredGenre])
 
   return (

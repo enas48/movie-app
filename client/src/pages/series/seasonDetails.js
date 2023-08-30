@@ -177,11 +177,11 @@ const month = [
                       </span>
                     )}
                   {details?.genres && details.genres.length !== 0 && (
-                    <span className='d-flex gap-1'>
+                    <span className='d-flex gap-1 flex-wrap'>
                       <span className='text-secondry fw-bold'>Genres: </span>
                       {details.genres.map((item, i) => {
                         return (
-                          <span className='flex-shrink' key={item.id}>
+                          <span className='flex-shrink-0' key={item.id}>
                             {item.name}
                             {(i === 0 && details.length === 1) ||
                             i === details.genres.length - 1
