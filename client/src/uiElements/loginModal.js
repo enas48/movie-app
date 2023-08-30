@@ -61,6 +61,7 @@ export default function LoginModal({ page, openSignup }) {
             state: "error",
           });
         }
+        setLoading(false);
       });
   };
 

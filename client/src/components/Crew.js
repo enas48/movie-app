@@ -32,6 +32,7 @@ function Crew({ id, type }) {
       });
     } catch (err) {
       console.log(err);
+      
     }
   };
   useEffect(() => {
