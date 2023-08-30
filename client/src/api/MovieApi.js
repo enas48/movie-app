@@ -1,6 +1,6 @@
 export const popularMovies = (page = 1) =>
   fetch(
-    `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`
+    `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=${page}`
   )
     .then(res => res.json())
     .then(data => data)
@@ -145,6 +145,13 @@ export const SortByGenre = (page, genre) =>
 export const SortByGenreAndDate = (page, order, genre, year) =>
   fetch(
     `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=${page}&sort_by=primary_release_date.${order}&primary_release_date.gte=2010-11-25&primary_release_date.lte=${year}&with_genres=${genre}`
+  )
+    .then(res => res.json())
+    .then(data => data)
+
+    export const getCountries = () =>
+  fetch(
+    `https://api.themoviedb.org/3/configuration/countries?api_key=${process.env.REACT_APP_API_KEY}`
   )
     .then(res => res.json())
     .then(data => data)

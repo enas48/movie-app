@@ -87,8 +87,10 @@ function MovieList (props) {
     }
     if (kind === 'similar') {
       MovieApi.similarMovie(id).then(movie => {
+        setIsLoading(true)
         MovieApi.list(movie.results).then(data => {
           setMovies(data.slice(0, 20))
+          setIsLoading(false)
         })
       })
     }
