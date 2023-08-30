@@ -7,13 +7,13 @@ import { useOutletContext, useParams } from 'react-router-dom'
 
 function Movie (props) {
   let { addBookMark, bookmarkedIds, favouriteIds, addFavourite } = props
-  let [date, handleChange, currentPage, filteredGenre] = useOutletContext()
+  let [date,country, handleChange, currentPage, filteredGenre] = useOutletContext()
   const [movies, setMovies] = useState([])
   const [totalPages, setTotalPages] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
 
   let { type } = useParams()
-
+console.log(country)
   const handlePageChange = async pageNumber => {
     handleChange(pageNumber)
     if (filteredGenre.length > 0 && date === 'all') {
@@ -31,10 +31,10 @@ function Movie (props) {
     }
   }
 
-  const loadByDateAndGenere = async (currentPage, order, genre) => {
+  const loadByDateAndGenere = async (currentPage, order, genre,country) => {
     setIsLoading(true)
     let year = new Date().toISOString().split('T')[0]
-    MovieApi.SortByGenreAndDate(currentPage, order, genre, year).then(movie => {
+    MovieApi.SortByGenreAndDate(currentPage, order, genre, year,country).then(movie => {
       console.log(movie)
       if (movie.total_pages >= 500) {
         setTotalPages(500)
@@ -49,10 +49,10 @@ function Movie (props) {
     })
   }
 
-  const loadByGenre = async (currentPage, genre) => {
+  const loadByGenre = async (currentPage, genre,country) => {
     setIsLoading(true)
     let genres = genre.length > 1 ? genre.join(', ') : genre.toString()
-    MovieApi.SortByGenre(currentPage, genres).then(movie => {
+    MovieApi.SortByGenre(currentPage, genres,country).then(movie => {
       console.log(movie)
       if (movie.total_pages >= 500) {
         setTotalPages(500)
@@ -65,6 +65,24 @@ function Movie (props) {
         setIsLoading(false)
       })
     })
+  }
+
+  const loadCountry= async currentPage => {
+    setIsLoading(true)
+  
+      MovieApi.SortByCountry(currentPage,country).then(movie => {
+        console.log(movie)
+        if (movie.total_pages >= 500) {
+          setTotalPages(500)
+        } else {
+          setTotalPages(movie.total_pages)
+        }
+        MovieApi.list(movie.results).then(data => {
+          setMovies(data)
+          setIsLoading(false)
+        })
+      })
+  
   }
 
   const loadData = async currentPage => {
@@ -115,6 +133,10 @@ function Movie (props) {
   }
 
   useEffect(() => {
+    // if(country !=='') {
+    //   loadCountry(currentPage)
+    // }
+    // else 
     if (filteredGenre.length > 0 && date === 'all') {
       loadByGenre(currentPage, filteredGenre)
     } else if (date === 'latest' && filteredGenre.length > 0) {
@@ -129,7 +151,7 @@ function Movie (props) {
       loadData(currentPage)
     }
     window.scrollTo(0, 80)
-  }, [currentPage, date, type, filteredGenre])
+  }, [currentPage, date,country, type, filteredGenre])
 
   return (
     <div className='d-flex flex-column justify-content-between'>

@@ -128,23 +128,31 @@ export const Search = query =>
     .then(res => res.json())
     .then(data => data)
 
-export const SortByDate = (page, order, year) =>
+export const SortByDate = (page, order, year,country='') =>
   fetch(
-    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=primary_release_date.${order}&primary_release_date.gte=2010-11-25&primary_release_date.lte=${year}`
+    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&include_video=false&language=en-US&page=${page}&with_origin_country=${country}&sort_by=primary_release_date.${order}&primary_release_date.gte=2010-11-25&primary_release_date.lte=${year}`
   )
     .then(res => res.json())
     .then(data => data)
 
-export const SortByGenre = (page, genre) =>
+export const SortByGenre = (page, genre,country='') =>
   fetch(
-    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=${page}&with_genres=${genre}`
+    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=${page}&with_origin_country=${country}&with_genres=${genre}`
   )
     .then(res => res.json())
     .then(data => data)
 
-export const SortByGenreAndDate = (page, order, genre, year) =>
+export const SortByGenreAndDate = (page, order, genre, year,country='') =>
   fetch(
-    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=${page}&sort_by=primary_release_date.${order}&primary_release_date.gte=2010-11-25&primary_release_date.lte=${year}&with_genres=${genre}`
+    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=${page}&with_origin_country=${country}&sort_by=primary_release_date.${order}&primary_release_date.gte=2010-11-25&primary_release_date.lte=${year}&with_genres=${genre}`
+  )
+    .then(res => res.json())
+    .then(data => data)
+
+    export const SortByCountry = (page, country) =>
+  fetch(
+   
+    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&include_video=false&language=en-US&page=${page}&with_origin_country=${country}&sort_by=popularity.desc`
   )
     .then(res => res.json())
     .then(data => data)

@@ -209,7 +209,12 @@ function AllSeries (props) {
                       onClick={e => handleGenre(e, item.id)}
                     >
                       {filteredGenre.includes(item.id)}
-                      {item.name}
+                      {item.name}&nbsp;
+                      {filteredGenre.includes(item.id) ? (
+                                <MdDone className='icon primary' />
+                              ) : (
+                                <BiPlus className='icon ' />
+                              )}
                     </button>
                   </div>
                 )
