@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
-const bookmarkRouter = require('./routes/bookmarkRoutes');
+const bookmarkRouter = require('./routes/BookmarkRoutes');
 const favouriteRouter=require('./routes/favouriteRoutes');
 const userRouter = require('./routes/userRoutes');
 const profileRouter = require('./routes/porfileRoutes');
