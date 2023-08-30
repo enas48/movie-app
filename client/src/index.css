@@ -782,7 +782,7 @@ button.icon-container.bookmark.active {
   display: inline-block;
   vertical-align: middle;
   height: 65px;
-  border-radius: 50%;
+  border-radius: 7px;
   overflow: hidden;
   width: 58px;
   margin: 0 0.5em;

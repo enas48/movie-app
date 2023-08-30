@@ -77,7 +77,7 @@ export const list = async series => {
   for (let data of series) {
     if (data?.backdrop_path && data.backdrop_path !== null) {
       const response = await fetch(
-        `https://image.tmdb.org/t/p/original/${data.backdrop_path}`
+        `https://image.tmdb.org/t/p/w780/${data.backdrop_path}`
       )
       const image = await response
       if (image?.url) {
@@ -135,7 +135,7 @@ export const crewList = async results => {
   for (let data of results) {
     if (data?.profile_path && data.profile_path !== null) {
       const response = await fetch(
-        `https://image.tmdb.org/t/p/original${data.profile_path}`
+        `https://image.tmdb.org/t/p/w300_and_h450_face/${data.profile_path}`
       )
       const image = await response
       if (image?.url) {
