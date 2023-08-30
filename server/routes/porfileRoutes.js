@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const dotenv = require('dotenv').config();
 const {
   getProfileByUserId,
   getProfileById,
@@ -14,8 +15,8 @@ const { CloudinaryStorage } = require('multer-storage-cloudinary')
 // Configuration
 cloudinary.config({
   cloud_name: 'disyammlp',
-  api_key: '742911561294192',
-  api_secret: 'Lp6jbKIKIbRdz4s3pOI8JFUxGQU'
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET
 })
 
 const storage = new CloudinaryStorage({
