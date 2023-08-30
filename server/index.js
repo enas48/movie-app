@@ -10,10 +10,10 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
-// const bookmarkRouter = require('./routes/bookmarkRoutes');
-// const favouriteRouter=require('./routes/favouriteRoutes');
-// const userRouter = require('./routes/userRoutes');
-// const profileRouter = require('./routes/porfileRoutes');
+const bookmarkRouter = require('routes/bookmarkRoutes');
+const favouriteRouter=require('routes/favouriteRoutes');
+const userRouter = require('routes/userRoutes');
+const profileRouter = require('routes/porfileRoutes');
 
 app.get('/', (req, res)=>{
     res.send('hi');
@@ -31,10 +31,10 @@ app.use((req, res, next) => {
 });
 
 
-// app.use('/bookmarks',bookmarkRouter );
-// app.use('/favourites',favouriteRouter );
-// app.use('/users',userRouter );
-// app.use('/profile',profileRouter );
+app.use('/bookmarks',bookmarkRouter );
+app.use('/favourites',favouriteRouter );
+app.use('/users',userRouter );
+app.use('/profile',profileRouter );
 
 //handling errors on routers
 app.use((error, req, res, next)=>{ 
