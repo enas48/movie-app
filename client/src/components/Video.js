@@ -15,11 +15,12 @@ function Video ({ video, keyVideo, playVideo }) {
                   item =>
                     item.key === keyVideo && (
                       <ReactPlayer
+                      
                         key={item.id}
                         className={
                           item.key === keyVideo
-                            ? 'm-auto d-block w-auto '
-                            : 'm-auto   d-none'
+                            ? 'm-auto d-block w-auto video-player'
+                            : 'm-auto   d-none '
                         }
                         url={`https://www.youtube-nocookie.com/embed/${item.key}?showinfo=0&enablejsapi=1&origin=http://localhost:3000'`}
                         controls={true}
