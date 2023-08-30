@@ -66,7 +66,7 @@ export const list = async movies => {
   for (let data of movies) {
     if (data?.backdrop_path && data.backdrop_path !== null) {
       const response = await fetch(
-        `https://image.tmdb.org/t/p/original/${data.backdrop_path}`
+        `https://image.tmdb.org/t/p/original/${data.backdrop_path}?api_key=${process.env.REACT_APP_API_KEY}`
       )
       const image = await response
       if (image?.url) {

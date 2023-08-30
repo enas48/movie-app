@@ -77,7 +77,7 @@ export const list = async series => {
   for (let data of series) {
     if (data?.backdrop_path && data.backdrop_path !== null) {
       const response = await fetch(
-        `https://image.tmdb.org/t/p/original/${data.backdrop_path}`
+        `https://image.tmdb.org/t/p/original/${data.backdrop_path}?api_key=${process.env.REACT_APP_API_KEY}`
       )
       const image = await response
       if (image?.url) {
