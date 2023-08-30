@@ -1,16 +1,15 @@
 const express = require("express");
-const cors = require('cors');
 const dotenv = require('dotenv').config();
 const connectDB = require('./config/db');
+const cors = require('cors');
 const port = process.env.PORT || 8000;
 
 connectDB();
 const app = express();
-app.use(cors())
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
-
+app.use(cors({origin:"*"}))
 const bookmarkRouter = require('./routes/BookmarkRoutes');
 const favouriteRouter=require('./routes/favouriteRoutes');
 const userRouter = require('./routes/userRoutes');
