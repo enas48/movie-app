@@ -73,7 +73,7 @@ function CarouselItem ({
                 {type === 'movie' ? <BiCameraMovie /> : <PiTelevisionBold />}
               </span>
             </div>
-            <h5 className=''>
+            <h5 className='' title={item?.title}>
               {item?.title && item.title.length > 20
                 ? item.title.slice(0, 20 - 1) + '…'
                 : item.title}

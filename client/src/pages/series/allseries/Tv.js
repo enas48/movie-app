@@ -7,7 +7,13 @@ import { useOutletContext, useParams } from 'react-router-dom'
 
 function Tv (props) {
   let { addBookMark, bookmarkedIds, favouriteIds, addFavourite } = props
-  let [date, handleChange, currentPage, filteredGenre] = useOutletContext()
+  let [
+    date,
+    country,
+    handleChange,
+    currentPage,
+    filteredGenre
+  ] = useOutletContext()
   const [series, setSeries] = useState([])
   const [totalPages, setTotalPages] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
@@ -16,32 +22,30 @@ function Tv (props) {
   const handlePageChange = async pageNumber => {
     handleChange(pageNumber)
     if (filteredGenre.length > 0 && date === 'all') {
-      loadByGenre(pageNumber, filteredGenre)
+      loadByGenre(pageNumber, filteredGenre, country)
     } else if (date === 'latest' && filteredGenre.length > 0) {
-      loadByDateAndGenere(pageNumber, 'desc', filteredGenre)
+      loadByDateAndGenere(pageNumber, 'desc', filteredGenre, country)
     } else if (date === 'latest') {
-      loadByDateAndGenere(pageNumber, 'desc')
+      loadByDate(pageNumber, 'desc', country)
     } else if (date === 'oldest' && filteredGenre.length > 0) {
-      loadByDateAndGenere(pageNumber, 'asc', filteredGenre)
+      loadByDateAndGenere(pageNumber, 'asc', filteredGenre, country)
     } else if (date === 'oldest') {
-      loadByDateAndGenere(pageNumber, 'asc')
+      loadByDate(pageNumber, 'asc', country)
     } else {
       loadData(pageNumber)
     }
   }
-  const loadByDateAndGenere = async (currentPage, order, genre) => {
+  const loadByDateAndGenere = async (currentPage, order, genre, country) => {
     setIsLoading(true)
-    let year = new Date().toISOString().split('T')[0]
-    TvSeriesApi.SortByGenreAndDate(currentPage, order, genre, year).then(
+    let genres = genre.length > 1 ? genre.join(', ') : genre.toString()
+    TvSeriesApi.SortByGenreAndDate(currentPage, order, genres, country).then(
       series => {
-        console.log(series)
         if (series.total_pages >= 500) {
           setTotalPages(500)
         } else {
           setTotalPages(series.total_pages)
         }
         TvSeriesApi.list(series.results).then(data => {
-          console.log(data)
           setSeries(data)
           setIsLoading(false)
         })
@@ -49,18 +53,46 @@ function Tv (props) {
     )
   }
 
-  const loadByGenre = async (currentPage, genre) => {
+  const loadByDate = async (currentPage, order, country) => {
     setIsLoading(true)
-    let genres = genre.length > 1 ? genre.join(', ') : genre.toString()
-    TvSeriesApi.SortByGenre(currentPage, genres).then(series => {
-      console.log(series)
+    TvSeriesApi.SortByDate(currentPage, order, country).then(series => {
       if (series.total_pages >= 500) {
         setTotalPages(500)
       } else {
         setTotalPages(series.total_pages)
       }
       TvSeriesApi.list(series.results).then(data => {
-        console.log(data)
+        setSeries(data)
+        setIsLoading(false)
+      })
+    })
+  }
+
+  const loadByGenre = async (currentPage, genre, country) => {
+    setIsLoading(true)
+    let genres = genre.length > 1 ? genre.join(', ') : genre.toString()
+    TvSeriesApi.SortByGenre(currentPage, genres, country).then(series => {
+      if (series.total_pages >= 500) {
+        setTotalPages(500)
+      } else {
+        setTotalPages(series.total_pages)
+      }
+      TvSeriesApi.list(series.results).then(data => {
+        setSeries(data)
+        setIsLoading(false)
+      })
+    })
+  }
+
+  const loadByCountry = async (currentPage, country) => {
+    setIsLoading(true)
+    TvSeriesApi.SortByCountry(currentPage, country).then(series => {
+      if (series.total_pages >= 500) {
+        setTotalPages(500)
+      } else {
+        setTotalPages(series.total_pages)
+      }
+      TvSeriesApi.list(series.results).then(data => {
         setSeries(data)
         setIsLoading(false)
       })
@@ -70,6 +102,9 @@ function Tv (props) {
   const loadData = async currentPage => {
     setIsLoading(true)
     if (type === 'topRated') {
+      if(country !=='US'){
+
+      }else{
       TvSeriesApi.topRatedSeries(currentPage).then(series => {
         if (series.total_pages >= 500) {
           setTotalPages(500)
@@ -81,23 +116,21 @@ function Tv (props) {
           setIsLoading(false)
         })
       })
+    }
     } else if (type === 'popular') {
       TvSeriesApi.popularSeries(currentPage).then(series => {
-        console.log(series)
         if (series.total_pages >= 500) {
           setTotalPages(500)
         } else {
           setTotalPages(series.total_pages)
         }
         TvSeriesApi.list(series.results).then(data => {
-          console.log(data)
           setSeries(data)
           setIsLoading(false)
         })
       })
     } else {
       TvSeriesApi.onAir(currentPage).then(series => {
-        console.log(series)
         if (series.total_pages >= 500) {
           setTotalPages(500)
         } else {
@@ -105,8 +138,6 @@ function Tv (props) {
         }
         TvSeriesApi.list(series.results).then(data => {
           let latest = data.sort((a, b) => b.year - a.year)
-          console.log(latest)
-
           setSeries(latest.slice(0, 20))
           setIsLoading(false)
         })
@@ -116,20 +147,20 @@ function Tv (props) {
 
   useEffect(() => {
     if (filteredGenre.length > 0 && date === 'all') {
-      loadByGenre(currentPage, filteredGenre)
+      loadByGenre(currentPage, filteredGenre, country)
     } else if (date === 'latest' && filteredGenre.length > 0) {
-      loadByDateAndGenere(currentPage, 'desc', filteredGenre)
+      loadByDateAndGenere(currentPage, 'desc', filteredGenre, country)
     } else if (date === 'latest') {
-      loadByDateAndGenere(currentPage, 'desc')
+      loadByDate(currentPage, 'desc', country)
     } else if (date === 'oldest' && filteredGenre.length > 0) {
-      loadByDateAndGenere(currentPage, 'asc', filteredGenre)
+      loadByDateAndGenere(currentPage, 'asc', filteredGenre, country)
     } else if (date === 'oldest') {
-      loadByDateAndGenere(currentPage, 'asc')
-    } else {
+      loadByDate(currentPage, 'asc', country)
+    }else {
       loadData(currentPage)
     }
-    window.scrollTo(0, 80)
-  }, [currentPage, date, type, filteredGenre])
+    window.scrollTo(0, 0)
+  }, [currentPage, date, country, type, filteredGenre])
 
   return (
     <div className='d-flex flex-column justify-content-between'>

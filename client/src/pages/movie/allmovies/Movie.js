@@ -4,74 +4,44 @@ import CarouselItem from '../../../components/CarouselItem'
 import Paginations from '../../../components/Pagination '
 import Loading from '../../../uiElements/preloading'
 import { useOutletContext, useParams } from 'react-router-dom'
+import { RiContrastDropLine } from 'react-icons/ri'
 
 function Movie (props) {
   let { addBookMark, bookmarkedIds, favouriteIds, addFavourite } = props
-  let [date,country, handleChange, currentPage, filteredGenre] = useOutletContext()
+  let [
+    date,
+    country,
+    handleChange,
+    currentPage,
+    filteredGenre
+  ] = useOutletContext()
   const [movies, setMovies] = useState([])
   const [totalPages, setTotalPages] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
-
   let { type } = useParams()
-console.log(country)
+
   const handlePageChange = async pageNumber => {
     handleChange(pageNumber)
     if (filteredGenre.length > 0 && date === 'all') {
-      loadByGenre(pageNumber, filteredGenre)
+      loadByGenre(pageNumber, filteredGenre, country)
     } else if (date === 'latest' && filteredGenre.length > 0) {
-      loadByDateAndGenere(pageNumber, 'desc', filteredGenre)
+      loadByDateAndGenere(pageNumber, 'desc', filteredGenre, country)
     } else if (date === 'latest') {
-      loadByDateAndGenere(pageNumber, 'desc')
+      loadByDate(pageNumber, 'desc', country)
     } else if (date === 'oldest' && filteredGenre.length > 0) {
-      loadByDateAndGenere(pageNumber, 'asc', filteredGenre)
+      loadByDateAndGenere(pageNumber, 'asc', filteredGenre, country)
     } else if (date === 'oldest') {
-      loadByDateAndGenere(pageNumber, 'asc')
+      loadByDate(pageNumber, 'asc', country)
     } else {
       loadData(pageNumber)
     }
   }
 
-  const loadByDateAndGenere = async (currentPage, order, genre,country) => {
-    setIsLoading(true)
-    let year = new Date().toISOString().split('T')[0]
-    MovieApi.SortByGenreAndDate(currentPage, order, genre, year,country).then(movie => {
-      console.log(movie)
-      if (movie.total_pages >= 500) {
-        setTotalPages(500)
-      } else {
-        setTotalPages(movie.total_pages)
-      }
-      MovieApi.list(movie.results).then(data => {
-        console.log(data)
-        setMovies(data)
-        setIsLoading(false)
-      })
-    })
-  }
-
-  const loadByGenre = async (currentPage, genre,country) => {
+  const loadByDateAndGenere = async (currentPage, order, genre, country) => {
     setIsLoading(true)
     let genres = genre.length > 1 ? genre.join(', ') : genre.toString()
-    MovieApi.SortByGenre(currentPage, genres,country).then(movie => {
-      console.log(movie)
-      if (movie.total_pages >= 500) {
-        setTotalPages(500)
-      } else {
-        setTotalPages(movie.total_pages)
-      }
-      MovieApi.list(movie.results).then(data => {
-        console.log(data)
-        setMovies(data)
-        setIsLoading(false)
-      })
-    })
-  }
-
-  const loadCountry= async currentPage => {
-    setIsLoading(true)
-  
-      MovieApi.SortByCountry(currentPage,country).then(movie => {
-        console.log(movie)
+    MovieApi.SortByGenreAndDate(currentPage, order, genres, country).then(
+      movie => {
         if (movie.total_pages >= 500) {
           setTotalPages(500)
         } else {
@@ -81,77 +51,160 @@ console.log(country)
           setMovies(data)
           setIsLoading(false)
         })
+      }
+    )
+  }
+
+  const loadByDate = async (currentPage, order, country) => {
+    setIsLoading(true)
+    MovieApi.SortByDate(currentPage, order, country).then(movie => {
+      if (movie.total_pages >= 500) {
+        setTotalPages(500)
+      } else {
+        setTotalPages(movie.total_pages)
+      }
+      MovieApi.list(movie.results).then(data => {
+        setMovies(data)
+        setIsLoading(false)
       })
-  
+    })
+  }
+
+  const loadByGenre = async (currentPage, genre, country) => {
+    setIsLoading(true)
+    let genres = genre.length > 1 ? genre.join(', ') : genre.toString()
+    MovieApi.SortByGenre(currentPage, genres, country).then(movie => {
+      if (movie.total_pages >= 500) {
+        setTotalPages(500)
+      } else {
+        setTotalPages(movie.total_pages)
+      }
+      MovieApi.list(movie.results).then(data => {
+        setMovies(data)
+        setIsLoading(false)
+      })
+    })
+  }
+
+  const loadByCountry = async (currentPage, country) => {
+    setIsLoading(true)
+    MovieApi.SortByCountry(currentPage, country).then(movie => {
+      if (movie.total_pages >= 500) {
+        setTotalPages(500)
+      } else {
+        setTotalPages(movie.total_pages)
+      }
+      MovieApi.list(movie.results).then(data => {
+        setMovies(data)
+        setIsLoading(false)
+      })
+    })
   }
 
   const loadData = async currentPage => {
     setIsLoading(true)
     if (type === 'topRated') {
-      MovieApi.topRatedMovies(currentPage).then(movie => {
-        if (movie.total_pages >= 500) {
-          setTotalPages(500)
-        } else {
-          setTotalPages(movie.total_pages)
-        }
-        MovieApi.list(movie.results).then(data => {
-          setMovies(data)
-          setIsLoading(false)
+      console.log(country)
+      if (country !== 'US') {
+    
+        MovieApi.topRatedBycountry(currentPage ,country).then(movie => {
+          if (movie.total_pages >= 500) {
+            setTotalPages(500)
+          } else {
+            setTotalPages(movie.total_pages)
+          }
+          MovieApi.list(movie.results).then(data => {
+            setMovies(data)
+            setIsLoading(false)
+          })
         })
-      })
+      } else {
+        MovieApi.topRatedMovies(currentPage).then(movie => {
+          if (movie.total_pages >= 500) {
+            setTotalPages(500)
+          } else {
+            setTotalPages(movie.total_pages)
+          }
+          MovieApi.list(movie.results).then(data => {
+            setMovies(data)
+            setIsLoading(false)
+          })
+        })
+      }
     } else if (type === 'upcoming') {
-      MovieApi.upcomingMovies(currentPage).then(movie => {
-        console.log(movie)
-        if (movie.total_pages >= 500) {
-          setTotalPages(500)
-        } else {
-          setTotalPages(movie.total_pages)
-        }
-        MovieApi.list(movie.results).then(data => {
-          console.log(data)
-          setMovies(data)
-          setIsLoading(false)
+      if (country !== 'US') {
+        MovieApi.upcomingBycountry(currentPage, country).then(movie => {
+          if (movie.total_pages >= 500) {
+            setTotalPages(500)
+          } else {
+            setTotalPages(movie.total_pages)
+          }
+          MovieApi.list(movie.results).then(data => {
+            setMovies(data)
+            setIsLoading(false)
+          })
         })
-      })
+      } else {
+        MovieApi.upcomingMovies(currentPage).then(movie => {
+          if (movie.total_pages >= 500) {
+            setTotalPages(500)
+          } else {
+            setTotalPages(movie.total_pages)
+          }
+          MovieApi.list(movie.results).then(data => {
+            setMovies(data)
+            setIsLoading(false)
+          })
+        })
+      }
     } else {
-      MovieApi.trendingMovies(currentPage).then(movie => {
-        console.log(movie)
-        if (movie.total_pages >= 500) {
-          setTotalPages(500)
+      MovieApi.popularBycountry(currentPage,country).then(movie => {
+        if (country !== 'US') {
+          MovieApi.SortByCountry(currentPage, country).then(movie => {
+            if (movie.total_pages >= 500) {
+              setTotalPages(500)
+            } else {
+              setTotalPages(movie.total_pages)
+            }
+            MovieApi.list(movie.results).then(data => {
+              setMovies(data)
+              setIsLoading(false)
+            })
+          })
         } else {
-          setTotalPages(movie.total_pages)
+          
+          MovieApi.popularMovies(currentPage).then(movie => {
+            if (movie.total_pages >= 500) {
+              setTotalPages(500)
+            } else {
+              setTotalPages(movie.total_pages)
+            }
+            MovieApi.list(movie.results).then(data => {
+              setMovies(data)
+              setIsLoading(false)
+            })
+          })
         }
-        MovieApi.list(movie.results).then(data => {
-          let latest = data.sort((a, b) => b.year - a.year)
-          console.log(latest)
-
-          setMovies(latest.slice(0, 20))
-          setIsLoading(false)
-        })
       })
     }
   }
 
   useEffect(() => {
-    // if(country !=='') {
-    //   loadCountry(currentPage)
-    // }
-    // else 
     if (filteredGenre.length > 0 && date === 'all') {
-      loadByGenre(currentPage, filteredGenre)
+      loadByGenre(currentPage, filteredGenre, country)
     } else if (date === 'latest' && filteredGenre.length > 0) {
-      loadByDateAndGenere(currentPage, 'desc', filteredGenre)
+      loadByDateAndGenere(currentPage, 'desc', filteredGenre, country)
     } else if (date === 'latest') {
-      loadByDateAndGenere(currentPage, 'desc')
+      loadByDate(currentPage, 'desc', country)
     } else if (date === 'oldest' && filteredGenre.length > 0) {
-      loadByDateAndGenere(currentPage, 'asc', filteredGenre)
+      loadByDateAndGenere(currentPage, 'asc', filteredGenre, country)
     } else if (date === 'oldest') {
-      loadByDateAndGenere(currentPage, 'asc')
+      loadByDate(currentPage, 'asc', country)
     } else {
       loadData(currentPage)
     }
-    window.scrollTo(0, 80)
-  }, [currentPage, date,country, type, filteredGenre])
+    window.scrollTo(0, 0)
+  }, [currentPage, date, country, type, filteredGenre])
 
   return (
     <div className='d-flex flex-column justify-content-between'>

@@ -59,9 +59,9 @@ function FavouriteItem ({
                     )}
                   </span>
                 </div>
-                <h5>
+                <h5 title={item?.title}>
                   {item.title.length > 20
-                    ? item.title.slice(0, 30 - 1) + '…'
+                    ? item.title.slice(0, 20 - 1) + '…'
                     : item.title}
                 </h5>
               </div>

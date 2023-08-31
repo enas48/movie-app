@@ -8,25 +8,58 @@ import RegisterModal from '../../../uiElements/RegisterModal'
 import { Outlet, useLocation } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Nav } from 'react-bootstrap'
-import Dropdown from 'react-bootstrap/Dropdown'
 import { BiFilterAlt, BiPlus } from 'react-icons/bi'
 import { MdDone } from 'react-icons/md'
+import { Dropdown } from 'primereact/dropdown'
 
 function AllSeries (props) {
   const [isLoading, setIsLoading] = useState(true)
   const location = useLocation()
   const [date, setDate] = useState('all')
   const [genre, setGenre] = useState([])
-  const [filteredGenre, setFilteredGenre] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
+  const [country, setCountry] = useState('US')
+  const [countries, setCountries] = useState([])
+  const [selectedCountry, setSelectedCountry] = useState(null)
+  const [selectedOrder, setSelectedOrder] = useState(null)
+  const [filteredGenre, setFilteredGenre] = useState([])
 
-  const handleChange = page => {
-    setCurrentPage(page)
+  const selectedTemplate = (option, props) => {
+    if (option) {
+      return (
+        <>
+          <div className='d-flex align-items-center gap-1'>
+            {props.placeholder === 'Select a Country' && (
+              <button
+                className='btn text-danger py-0 px-1 '
+                onClick={e => {
+                  e.preventDefault()
+                  setSelectedCountry(null)
+                  setCountry('US')
+                  setCurrentPage(1)
+                }}
+              >
+                X
+              </button>
+            )}
+
+            <div>{option.name}</div>
+          </div>
+        </>
+      )
+    }
+    return <span>{props.placeholder}</span>
   }
 
-  const handleClick = e => {
-    setDate(e.target.value)
-    setCurrentPage(1)
+  const OptionTemplate = option => {
+    return (
+      <div className='d-flex align-items-center'>
+        <div>{option.name}</div>
+      </div>
+    )
+  }
+  const handleChange = page => {
+    setCurrentPage(page)
   }
 
   const handleGenre = (e, id) => {
@@ -38,23 +71,28 @@ function AllSeries (props) {
     } else {
       setFilteredGenre([...filteredGenre, id])
     }
-
      setCurrentPage(1)
   }
 
-  const loadGenre = async () => {
-    TvSeriesApi.getGenre().then(data => {
-      console.log(data)
-      setGenre(data.genres)
+ //intilize get data from api
+ const loadGenreAndCountries = async () => {
+  TvSeriesApi.getGenre().then(data => {
+    setGenre(data.genres)
+  })
+  TvSeriesApi.getCountries().then(data => {
+    let countries = data.map(item => {
+      return { name: item.english_name, code: item.iso_3166_1 }
     })
-  }
+    setCountries(countries)
+  })
+}
 
   useEffect(() => {
     const loadData = async () => {
       await new Promise(r => setTimeout(r, 800))
       setIsLoading(false)
     }
-    loadGenre()
+    loadGenreAndCountries()
     loadData()
   }, [date, filteredGenre])
 
@@ -117,80 +155,40 @@ function AllSeries (props) {
           </Nav>
           <div className='filter-container d-flex gap-2 align-items-center'>
               <BiFilterAlt className='icon' />
-
-              <Dropdown className='filter-dropdown'>
-                <Dropdown.Toggle variant='success' id='dropdown-basic'>
-                Order
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                  <Dropdown.Item className={date === 'all' ? 'active' : ''}>
-                    <button
-                      className='btn'
-                      value='all'
-                      onClick={e => handleClick(e)}
-                    >
-                         Order
-                    </button>
-                  </Dropdown.Item>
-                  <Dropdown.Item className={date === 'latest' ? 'active' : ''}>
-                    <button
-                      className='btn'
-                      value='latest'
-                      onClick={e => handleClick(e)}
-                    >
-                      Latest
-                    </button>
-                  </Dropdown.Item>
-                  <Dropdown.Item className={date === 'oldest' ? 'active' : ''}>
-                    <button
-                      className='btn'
-                      value='oldest'
-                      onClick={e => handleClick(e)}
-                    >
-                      Oldest
-                    </button>
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-              {/* <Dropdown className='filter-dropdown'>
-                <Dropdown.Toggle
-                  variant='success'
-                  id='dropdown-basic'
-             
-                >
-                  Select Genres
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <div className='genre'>
-                    {genre.length !== 0 &&
-                      genre.map(item => {
-                        return (
-                          <Dropdown.Item
-                            key={item.id}
-                            className={
-                              filteredGenre.includes(item.id) ? 'active' : ''
-                            }
-                          >
-                            {filteredGenre.includes(item.id)}
-                            <button
-                              className='btn'
-                              onClick={e => handleGenre(e, item.id)}
-                            >
-                              {filteredGenre.includes(item.id)}
-                              {item.name}&nbsp;
-                              {filteredGenre.includes(item.id) ? (
-                                <MdDone className='icon primary' />
-                              ) : (
-                                <BiPlus className='icon ' />
-                              )}
-                            </button>
-                          </Dropdown.Item>
-                        )
-                      })}
-                  </div>
-                </Dropdown.Menu>
-              </Dropdown> */}
+              <Dropdown
+                value={selectedOrder}
+                onChange={e => {
+                  setSelectedOrder(e.value)
+                  setDate(e.value.name.toLowerCase())
+                  setCurrentPage(1)
+                }}
+                options={[
+                  { name: 'All' },
+                  { name: 'Latest' },
+                  { name: 'Oldest' }
+                ]}
+                optionLabel='Order'
+                placeholder='Order'
+                valueTemplate={selectedTemplate}
+                itemTemplate={OptionTemplate}
+                className='w-full md:w-14rem'
+              />
+              <Dropdown
+                value={selectedCountry}
+                onChange={e => {
+                  setSelectedCountry(e.value)
+                  setCountry(e.value.code)
+                  setCurrentPage(1)
+                }}
+                options={countries}
+                optionLabel='name'
+                placeholder='Select a Country'
+                filter
+                valueTemplate={selectedTemplate}
+                itemTemplate={OptionTemplate}
+                className='w-full md:w-14rem'
+              />
+     
               
             </div>
             </div>
@@ -220,7 +218,7 @@ function AllSeries (props) {
                 )
               })}
           </div>
-          <Outlet context={[date, handleChange, currentPage, filteredGenre]} />
+          <Outlet context={[date,country, handleChange, currentPage, filteredGenre]} />
         </div>
       </SidebarLayout>
     </>

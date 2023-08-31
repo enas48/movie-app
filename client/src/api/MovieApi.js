@@ -123,43 +123,64 @@ export const Trailer = movie_id =>
 
 export const Search = query =>
   fetch(
-    `https://api.themoviedb.org/3//search/multi?query=${query}&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false`
+    `https://api.themoviedb.org/3//search/multi?query=${query}&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&vote_average.gte=5`
   )
     .then(res => res.json())
     .then(data => data)
 
-export const SortByDate = (page, order, year,country='') =>
+export const SortByDate = (page, order, country) =>
   fetch(
-    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&include_video=false&language=en-US&page=${page}&with_origin_country=${country}&sort_by=primary_release_date.${order}&primary_release_date.gte=2010-11-25&primary_release_date.lte=${year}`
+    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&vote_average.gte=5&include_video=false&language=en-US&page=${page}&with_origin_country=${country}&sort_by=primary_release_date.${order}`
   )
     .then(res => res.json())
     .then(data => data)
 
-export const SortByGenre = (page, genre,country='') =>
+export const SortByGenre = (page, genre, country) =>
   fetch(
-    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=${page}&with_origin_country=${country}&with_genres=${genre}`
+    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&vote_average.gte=5&page=${page}&with_origin_country=${country}&with_genres=${genre}`
   )
     .then(res => res.json())
     .then(data => data)
 
-export const SortByGenreAndDate = (page, order, genre, year,country='') =>
+export const SortByGenreAndDate = (page, order, genre, country) =>
   fetch(
-    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&page=${page}&with_origin_country=${country}&sort_by=primary_release_date.${order}&primary_release_date.gte=2010-11-25&primary_release_date.lte=${year}&with_genres=${genre}`
+    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&vote_average.gte=5&page=${page}&with_origin_country=${country}&sort_by=primary_release_date.${order}&with_genres=${genre}`
   )
     .then(res => res.json())
     .then(data => data)
 
-    export const SortByCountry = (page, country) =>
+export const SortByCountry = (page, country) =>
   fetch(
-   
-    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&include_video=false&language=en-US&page=${page}&with_origin_country=${country}&sort_by=popularity.desc`
+    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&vote_average.gte=5&include_video=false&language=en-US&page=${page}&with_origin_country=${country}`
   )
     .then(res => res.json())
     .then(data => data)
 
-    export const getCountries = () =>
+export const getCountries = () =>
   fetch(
     `https://api.themoviedb.org/3/configuration/countries?api_key=${process.env.REACT_APP_API_KEY}`
   )
     .then(res => res.json())
     .then(data => data)
+
+export const topRatedBycountry = (page = 1, country) =>
+  fetch(
+    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&vote_average.gte=5&include_video=false&language=en-US&page=${page}&with_origin_country=${country}&sort_by=vote_average.desc`
+  )
+    .then(res => res.json())
+    .then(data => data)
+
+export const upcomingBycountry = (page = 1, country) =>
+  fetch(
+    `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&vote_average.gte=5&include_video=false&language=en-US&page=${page}&with_origin_country=${country}&sort_by=popularity.desc&with_release_type=2|3&release_date.gte=2023-01-01&release_date.lte=2024-11-25`
+  )
+    .then(res => res.json())
+    .then(data => data)
+
+    
+export const popularBycountry = (page = 1, country) =>
+fetch(
+  `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&vote_average.gte=5&include_video=false&language=en-US&page=${page}&with_origin_country=${country}&sort_by=popularity.desc&with_release_type=2|3&release_date.gte=2023-01-01&release_date.lte=2024-11-25`
+)
+  .then(res => res.json())
+  .then(data => data)
