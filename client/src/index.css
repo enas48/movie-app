@@ -274,6 +274,9 @@ input:-webkit-autofill:focus {
   box-shadow: none;
   padding: 0.275rem 1rem;
 }
+.filter-btn{
+  background-color: var(--dark-active);
+}
 .btn-outline {
   background-color: transparent;
   color: var(--primary);
@@ -288,10 +291,10 @@ input:-webkit-autofill:focus {
   box-shadow: none;
   background-color: var(--primary-active) !important;
 }
-.filter-btn{
+/* .filter-btn{
   background-color: var(--dark-active);
   color: var(--white);
-}
+} */
 .filter-btn:hover,
 .filter-btn:active,
 .filter-btn.active,
@@ -1086,7 +1089,25 @@ button.icon-container.bookmark.active {
   opacity: 0.6;
   border-color: var(--dark);
 }
+.genre-btn{
+  display: none;
+  margin:auto;
+  width:96%;
+  border-radius:5px
+}
+.genre-container{
+  display: flex!important;
+}
+@media screen and (max-width:768px) {
+  .genre-btn{
+    display: block;
+  }
+  .genre-container{
+    display: none!important;
+  }
+}
 @media screen and (max-width: 480px) {
+ 
   .page-link {
     font-size: 12px;
   }
@@ -1107,6 +1128,7 @@ button.icon-container.bookmark.active {
   flex-wrap: wrap;
 
 }
+
 .filter-dropdown .genre .dropdown-item {
   width: 50%;
   padding: 0;

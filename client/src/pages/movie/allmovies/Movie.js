@@ -42,11 +42,12 @@ function Movie (props) {
     let genres = genre.length > 1 ? genre.join(', ') : genre.toString()
     MovieApi.SortByGenreAndDate(currentPage, order, genres, country).then(
       movie => {
-        if (movie.total_pages >= 500) {
-          setTotalPages(500)
-        } else {
-          setTotalPages(movie.total_pages)
-        }
+      
+        if (movie.total_pages >= 10) {
+      setTotalPages(10)
+     } else {
+       setTotalPages(movie.total_pages)
+     }
         MovieApi.list(movie.results).then(data => {
           setMovies(data)
           setIsLoading(false)
@@ -58,11 +59,12 @@ function Movie (props) {
   const loadByDate = async (currentPage, order, country) => {
     setIsLoading(true)
     MovieApi.SortByDate(currentPage, order, country).then(movie => {
-      if (movie.total_pages >= 500) {
-        setTotalPages(500)
-      } else {
-        setTotalPages(movie.total_pages)
-      }
+    
+        if (movie.total_pages >= 10) {
+      setTotalPages(10)
+     } else {
+       setTotalPages(movie.total_pages)
+     }
       MovieApi.list(movie.results).then(data => {
         setMovies(data)
         setIsLoading(false)
@@ -74,11 +76,12 @@ function Movie (props) {
     setIsLoading(true)
     let genres = genre.length > 1 ? genre.join(', ') : genre.toString()
     MovieApi.SortByGenre(currentPage, genres, country).then(movie => {
-      if (movie.total_pages >= 500) {
-        setTotalPages(500)
-      } else {
-        setTotalPages(movie.total_pages)
-      }
+    
+      if (movie.total_pages >= 10) {
+      setTotalPages(10)
+     } else {
+       setTotalPages(movie.total_pages)
+     }
       MovieApi.list(movie.results).then(data => {
         setMovies(data)
         setIsLoading(false)
@@ -89,11 +92,12 @@ function Movie (props) {
   const loadByCountry = async (currentPage, country) => {
     setIsLoading(true)
     MovieApi.SortByCountry(currentPage, country).then(movie => {
-      if (movie.total_pages >= 500) {
-        setTotalPages(500)
-      } else {
-        setTotalPages(movie.total_pages)
-      }
+    
+        if (movie.total_pages >= 10) {
+      setTotalPages(10)
+     } else {
+       setTotalPages(movie.total_pages)
+     }
       MovieApi.list(movie.results).then(data => {
         setMovies(data)
         setIsLoading(false)
@@ -108,11 +112,12 @@ function Movie (props) {
       if (country !== 'US') {
     
         MovieApi.topRatedBycountry(currentPage ,country).then(movie => {
-          if (movie.total_pages >= 500) {
-            setTotalPages(500)
-          } else {
-            setTotalPages(movie.total_pages)
-          }
+     
+        if (movie.total_pages >= 10) {
+      setTotalPages(10)
+     } else {
+       setTotalPages(movie.total_pages)
+     }
           MovieApi.list(movie.results).then(data => {
             setMovies(data)
             setIsLoading(false)
@@ -120,11 +125,13 @@ function Movie (props) {
         })
       } else {
         MovieApi.topRatedMovies(currentPage).then(movie => {
-          if (movie.total_pages >= 500) {
-            setTotalPages(500)
-          } else {
-            setTotalPages(movie.total_pages)
-          }
+  
+   
+        if (movie.total_pages >= 10) {
+      setTotalPages(10)
+     } else {
+       setTotalPages(movie.total_pages)
+     }
           MovieApi.list(movie.results).then(data => {
             setMovies(data)
             setIsLoading(false)
@@ -134,11 +141,12 @@ function Movie (props) {
     } else if (type === 'upcoming') {
       if (country !== 'US') {
         MovieApi.upcomingBycountry(currentPage, country).then(movie => {
-          if (movie.total_pages >= 500) {
-            setTotalPages(500)
-          } else {
-            setTotalPages(movie.total_pages)
-          }
+    
+        if (movie.total_pages >= 10) {
+      setTotalPages(10)
+     } else {
+       setTotalPages(movie.total_pages)
+     }
           MovieApi.list(movie.results).then(data => {
             setMovies(data)
             setIsLoading(false)
@@ -146,11 +154,13 @@ function Movie (props) {
         })
       } else {
         MovieApi.upcomingMovies(currentPage).then(movie => {
-          if (movie.total_pages >= 500) {
-            setTotalPages(500)
-          } else {
-            setTotalPages(movie.total_pages)
-          }
+     
+        if (movie.total_pages >= 10) {
+      setTotalPages(10)
+     } else {
+       setTotalPages(movie.total_pages)
+     }
+        
           MovieApi.list(movie.results).then(data => {
             setMovies(data)
             setIsLoading(false)
@@ -158,14 +168,14 @@ function Movie (props) {
         })
       }
     } else {
-      MovieApi.popularBycountry(currentPage,country).then(movie => {
         if (country !== 'US') {
-          MovieApi.SortByCountry(currentPage, country).then(movie => {
-            if (movie.total_pages >= 500) {
-              setTotalPages(500)
-            } else {
-              setTotalPages(movie.total_pages)
-            }
+          MovieApi.popularBycountry(currentPage, country).then(movie => {
+    
+        if (movie.total_pages >= 10) {
+      setTotalPages(10)
+     } else {
+       setTotalPages(movie.total_pages)
+     }
             MovieApi.list(movie.results).then(data => {
               setMovies(data)
               setIsLoading(false)
@@ -174,18 +184,19 @@ function Movie (props) {
         } else {
           
           MovieApi.popularMovies(currentPage).then(movie => {
-            if (movie.total_pages >= 500) {
-              setTotalPages(500)
-            } else {
-              setTotalPages(movie.total_pages)
-            }
+     
+        if (movie.total_pages >= 10) {
+      setTotalPages(10)
+     } else {
+       setTotalPages(movie.total_pages)
+     }
             MovieApi.list(movie.results).then(data => {
               setMovies(data)
               setIsLoading(false)
             })
           })
         }
-      })
+      
     }
   }
 
