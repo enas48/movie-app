@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useContext } from 'react'
 
 import SidebarLayout from '../../../components/sidebarLayout'
 import Search from '../../../components/search'
@@ -8,6 +8,10 @@ import RegisterModal from '../../../uiElements/RegisterModal'
 import { Outlet, useLocation } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Nav } from 'react-bootstrap'
+import Accordion from "react-bootstrap/Accordion";
+import AccordionContext from "react-bootstrap/AccordionContext";
+import { useAccordionButton } from "react-bootstrap/AccordionButton";
+
 import { BiFilterAlt, BiPlus } from 'react-icons/bi'
 import { MdDone } from 'react-icons/md'
 import { Dropdown } from 'primereact/dropdown'
@@ -23,6 +27,30 @@ function AllSeries (props) {
   const [selectedCountry, setSelectedCountry] = useState(null)
   const [selectedOrder, setSelectedOrder] = useState(null)
   const [filteredGenre, setFilteredGenre] = useState([])
+
+  function ContextAwareToggle({ children, eventKey, callback }) {
+    const { activeEventKey } = useContext(AccordionContext);
+  
+    const decoratedOnClick = useAccordionButton(
+      eventKey,
+      () => callback && callback(eventKey)
+    );
+  
+    const isCurrentEventKey = activeEventKey === eventKey;
+  
+    return (
+      <button
+        type="button"
+  
+        className={
+          isCurrentEventKey ? "btn genre-btn filter-btn  active" : "btn genre-btn filter-btn "
+        }
+        onClick={decoratedOnClick}
+      >
+        {children}
+      </button>
+    );
+  }
 
   const selectedTemplate = (option, props) => {
     if (option) {
@@ -192,6 +220,38 @@ function AllSeries (props) {
               
             </div>
             </div>
+            <Accordion defaultActiveKey="0">
+            <ContextAwareToggle eventKey="1">Genre</ContextAwareToggle>
+
+            <Accordion.Collapse eventKey="1">
+            <div className='d-flex justify-content-center gap-3 flex-wrap mt-4'>
+            {genre.length !== 0 &&
+              genre.map((item, i) => {
+                return (
+                  <div key={item.id}>
+                    {filteredGenre.includes(item.id)}
+                    <button
+                      className={
+                        filteredGenre.includes(item.id)
+                          ? 'm-auto btn active text-nowrap filter-btn'
+                          : ' btn m-auto text-nowrap filter-btn'
+                      }
+                      onClick={e => handleGenre(e, item.id)}
+                    >
+                      {filteredGenre.includes(item.id)}
+                      {item.name}&nbsp;
+                      {filteredGenre.includes(item.id) ? (
+                                <MdDone className='icon primary' />
+                              ) : (
+                                <BiPlus className='icon ' />
+                              )}
+                    </button>
+                  </div>
+                )
+              })}
+          </div>
+            </Accordion.Collapse>
+          </Accordion>
           <div className='d-flex justify-content-center gap-3 flex-wrap mt-4'>
             {genre.length !== 0 &&
               genre.map((item, i) => {
