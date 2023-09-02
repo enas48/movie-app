@@ -97,7 +97,6 @@ function Tv (props) {
   }
 
   useEffect(() => {
-    console.log(filteredGenre)
     if (filteredGenre.length > 0 && date === 'all') {
       loadByDateAndGenere(currentPage, 'all', filteredGenre, country)
     } else if (date === 'latest') {

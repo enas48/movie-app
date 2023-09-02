@@ -110,9 +110,30 @@ function AllMovies (props) {
       setGenre(data.genres)
     })
     MovieApi.getCountries().then(data => {
-      let countries = data.map(item => {
-        return { name: item.english_name, code: item.iso_3166_1 }
-      })
+      // let countries = data.map(item => {
+      //   console.log(item)
+      //   return { name: item.english_name, code: item.iso_3166_1 }
+      // })
+
+      let countries =[
+        { name: 'America', code: 'US' },
+        { name: 'Germany', code: 'DE' },
+        { name: 'Egypt', code: 'EG' },
+        { name: 'France', code: 'FR' },
+        { name: 'Spain', code: 'ES' },
+        { name: 'United Kingdom', code: 'GB' },
+        { name: 'India', code: 'IN' },
+        { name: 'Italy', code: 'IT' },
+        { name: 'Japan', code: 'JP' },
+        { name: 'korea', code: 'KR' },
+        { name: 'Lebanon', code: 'LB' },
+        { name: 'Mexico', code: 'MX' },
+        { name: 'Russia', code: 'RU' },
+        { name: 'Thailand', code: 'TH' },
+        { name: 'Turkey', code: 'TR' },
+        { name: 'Taiwan', code: 'TW' },
+        { name: 'Vietnam', code: 'VN' },
+      ]
       setCountries(countries)
     })
   }

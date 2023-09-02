@@ -148,7 +148,7 @@ function App () {
     axios
       .delete(`${process.env.REACT_APP_APP_URL}/${type}/${userId}/${id}`)
       .then(response => {
-        // console.log(response.data)
+    
       })
       .catch(err => {
         if (err.response.data.message) {
