@@ -1092,7 +1092,7 @@ button.icon-container.bookmark.active {
 .genre-btn{
   display: none;
   margin:auto;
-  width:96%;
+  width:100%;
   border-radius:5px
 }
 .genre-container{
