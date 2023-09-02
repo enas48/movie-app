@@ -155,7 +155,7 @@ function AllMovies (props) {
 
         <Search />
         <div className='p-3 mt-lg-5'>
-          <div className='d-flex justify-content-between flex-wrap gap-2'>
+          <div className='d-flex justify-content-between flex-wrap mb-2'>
             <Nav className='tv-list flex-nowrap flex-shrink-0 mb-2'>
               <LinkContainer to='trending'>
                 <Nav.Link

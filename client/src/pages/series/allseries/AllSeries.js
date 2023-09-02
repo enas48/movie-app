@@ -154,8 +154,8 @@ function AllSeries (props) {
 
         <Search />
         <div className='p-3 mt-lg-5'>
-          <div className='d-flex justify-content-between flex-wrap gap-1'>
-            <Nav className='tv-list flex-nowrap flex-shrink-0 '>
+          <div className='d-flex justify-content-between flex-wrap mb-2'>
+            <Nav className='tv-list flex-nowrap flex-shrink-0 mb-2'>
               <LinkContainer to='onair'>
                 <Nav.Link
                   className={
@@ -215,7 +215,7 @@ function AllSeries (props) {
                 </Nav.Link>
               </LinkContainer>
             </Nav>
-            <div className='filter-container d-flex gap-2 align-items-center'>
+            <div className='filter-container d-flex gap-2 align-items-center mb-2'>
               <BiFilterAlt className='icon' />
               <Dropdown
                 value={selectedOrder}
