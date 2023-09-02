@@ -44,7 +44,6 @@ function Episode ({ episode }) {
     try {
       setDisabled(true)
       TvSeriesApi.getSeriesVideo(id).then(data => {
-        console.log(data)
         let firstKey = Object.keys(data.results)[0]
         let link = data.results[firstKey]
         if (link?.link && (link.link !== '') & (link.link !== null)) {

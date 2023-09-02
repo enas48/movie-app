@@ -70,7 +70,6 @@ function MovieDetails ({
   const fetchTrailer = async id => {
     try {
       MovieApi.Trailer(id).then(data => {
-        console.log(data.results)
         let youtubeVideos = data.results.filter(d => d.site === 'YouTube')
         setTrailervideo(youtubeVideos)
         if (youtubeVideos[0]?.key && key === null) {

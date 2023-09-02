@@ -46,7 +46,6 @@ function SeasonList({ seasons, seriesId }) {
     TvSeriesApi.seasonList(seasons).then((data) => {
       setSeries(data);
     });
-    console.log(series)
   }, [seasons]);
 
   return (

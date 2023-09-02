@@ -21,7 +21,7 @@ function Tv (props) {
 
   const handlePageChange = async pageNumber => {
     handleChange(pageNumber)
- 
+
     if (filteredGenre.length > 0 && date === 'all') {
       loadByDateAndGenere(pageNumber, 'all', filteredGenre, country)
     } else if (date === 'latest') {
@@ -35,19 +35,23 @@ function Tv (props) {
   const loadByDateAndGenere = async (currentPage, order, genre, country) => {
     setIsLoading(true)
     let genres = genre.length > 1 ? genre.join(', ') : genre.toString()
-    TvSeriesApi.SortByGenreAndDate(currentPage, order, genres, country,type).then(
-      series => {
-        if (series.total_pages >= 10) {
-          setTotalPages(10)
-        } else {
-          setTotalPages(series.total_pages)
-        }
-        TvSeriesApi.list(series.results).then(data => {
-          setSeries(data)
-          setIsLoading(false)
-        })
+    TvSeriesApi.SortByGenreAndDate(
+      currentPage,
+      order,
+      genres,
+      country,
+      type
+    ).then(series => {
+      if (series.total_pages >= 10) {
+        setTotalPages(10)
+      } else {
+        setTotalPages(series.total_pages)
       }
-    )
+      TvSeriesApi.list(series.results).then(data => {
+        setSeries(data)
+        setIsLoading(false)
+      })
+    })
   }
 
   const loadData = async currentPage => {
@@ -59,7 +63,6 @@ function Tv (props) {
         } else {
           setTotalPages(series.total_pages)
         }
-        console.log(series)
         TvSeriesApi.list(series.results).then(data => {
           setSeries(data)
           setIsLoading(false)
@@ -72,7 +75,6 @@ function Tv (props) {
         } else {
           setTotalPages(series.total_pages)
         }
-        console.log(series)
         TvSeriesApi.list(series.results).then(data => {
           setSeries(data)
           setIsLoading(false)
@@ -85,7 +87,7 @@ function Tv (props) {
         } else {
           setTotalPages(series.total_pages)
         }
-        console.log(series)
+
         TvSeriesApi.list(series.results).then(data => {
           setSeries(data)
           setIsLoading(false)
@@ -97,16 +99,12 @@ function Tv (props) {
   useEffect(() => {
     console.log(filteredGenre)
     if (filteredGenre.length > 0 && date === 'all') {
-      console.log('1')
       loadByDateAndGenere(currentPage, 'all', filteredGenre, country)
     } else if (date === 'latest') {
-      console.log('2')
       loadByDateAndGenere(currentPage, 'desc', filteredGenre, country)
     } else if (date === 'oldest') {
-      console.log('3')
       loadByDateAndGenere(currentPage, 'asc', filteredGenre, country)
     } else {
-      console.log('4')
       loadData(currentPage)
     }
     window.scrollTo(0, 0)

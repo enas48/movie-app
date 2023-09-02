@@ -20,7 +20,7 @@ function SeasonDetails (props) {
   const [image, setImage] = useState(null)
   const [bg, setBg] = useState(null)
   const [season, setSeason] = useState({})
-const month = [
+  const month = [
     'January',
     'February',
     'March',
@@ -59,8 +59,6 @@ const month = [
   const fetchSeries = async id => {
     try {
       TvSeriesApi.getSeriesDetails(id).then(series => {
-        console.log(series)
-
         preloadImages(series, 'bg')
         setDetails(series)
       })
@@ -71,7 +69,6 @@ const month = [
   const fetchSeason = async (id, seasonNum) => {
     try {
       TvSeriesApi.seasonDetails(id, seasonNum).then(season => {
-        console.log(season)
         preloadImages(season, 'img')
         setSeason(season)
       })
@@ -96,11 +93,7 @@ const month = [
       {isLoading && <Loading />}
       <SidebarLayout>
         <Search />
-        <RegisterModal
-          show={props.show}
-   
-          handleCloseModal={props.handleClose}
-        />
+        <RegisterModal show={props.show} handleCloseModal={props.handleClose} />
         {details?.id && (
           <div className='details-container mt-lg-5'>
             <div className=' details-content row m-0 d-flex justify-content-center'>
@@ -109,11 +102,11 @@ const month = [
                 className='episode-bg'
               ></div>
               <div className='overlay eposide-overlay'></div>
-        
+
               <div className='col-md-5 col-lg-3 order-md-2 text-center mb-3'>
-              <LazyLoadImage
-              src={image}
-              className='img-fluid rounded eposide '
+                <LazyLoadImage
+                  src={image}
+                  className='img-fluid rounded eposide '
                   alt=''
                 />
               </div>
@@ -161,7 +154,9 @@ const month = [
                       )
                     : season?.air_date && (
                         <span className='d-flex gap-1'>
-                          <span className='text-secondry fw-bold'>Release Date: </span>
+                          <span className='text-secondry fw-bold'>
+                            Release Date:{' '}
+                          </span>
                           <span className='text-nowrap'>
                             {new Date(season.air_date).getDate()} &nbsp;
                             {month[new Date(season.air_date).getMonth()]},&nbsp;
@@ -172,7 +167,9 @@ const month = [
                   {details?.spoken_languages &&
                     details.spoken_languages[0]?.english_name && (
                       <span className='d-flex gap-1'>
-                        <span className='text-secondry fw-bold'>Language: </span>
+                        <span className='text-secondry fw-bold'>
+                          Language:{' '}
+                        </span>
                         <span>{details.spoken_languages[0].english_name}</span>
                       </span>
                     )}

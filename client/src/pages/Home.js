@@ -14,7 +14,6 @@ function Home(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState([]);
   const { userId } = useContext(AuthContext)
-  console.log(userId)
   let imageArr = useMemo(() => [], []);
   const captionStyle = {
     fontSize: "2em",

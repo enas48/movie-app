@@ -49,7 +49,6 @@ function App () {
 
   const handleSearch = async query => {
     MovieApi.Search(query).then(data => {
-      console.log(data)
       setSearchList(data.results)
     })
   }
@@ -109,7 +108,7 @@ function App () {
     axios
       .post(`${process.env.REACT_APP_APP_URL}/${type}`, data)
       .then(response => {
-        // console.log(response.data)
+  
       })
       .catch(err => {
         if (err.response.data.message) {

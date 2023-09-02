@@ -33,7 +33,6 @@ function OnAir(props) {
   };
   useEffect(() => {
     loadData(currentPage);
-    console.log(currentPage);
   }, [currentPage]);
 
   return (

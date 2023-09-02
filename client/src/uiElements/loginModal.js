@@ -39,7 +39,6 @@ export default function LoginModal({ page, openSignup }) {
     axios
       .post(`${process.env.REACT_APP_APP_URL}/users/login`, data)
       .then((response) => {
-        console.log(response)
         if (response.data.status === 200) {
           login(response.data);
           setLoading(false);

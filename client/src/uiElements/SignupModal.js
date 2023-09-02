@@ -44,14 +44,10 @@ export default function SignupModal ({ page, openLogin }) {
   const { errors } = formState
 
   const onSubmit = data => {
-    console.log(data)
-
     axios
       .post(`${process.env.REACT_APP_APP_URL}/users`, data)
       .then(response => {
-        console.log(response.data)
         if (response.data.status === 200) {
-          console.log(response.data.message)
           setMessage({ text: response.data.message, state: 'success' })
           return navigate('/login', { replace: true })
         }

@@ -117,7 +117,6 @@ function AllSeries (props) {
   }
 
   useEffect(() => {
-    console.log(filteredGenre)
     const loadData = async () => {
       await new Promise(r => setTimeout(r, 800))
       setIsLoading(false)

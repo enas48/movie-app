@@ -1,30 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { LinkContainer } from "react-router-bootstrap";
+import React, { useState, useEffect } from 'react'
+import { LinkContainer } from 'react-router-bootstrap'
 
-import { PiTelevisionBold } from "react-icons/pi";
-import { useParams, useLocation } from "react-router-dom";
-import Loading from "../uiElements/preloading";
-import MovieDetails from "./movie/MovieDetails";
-import TvDetails from "./series/TvDetails";
-import Person from "./Person";
+import { PiTelevisionBold } from 'react-icons/pi'
+import { useParams, useLocation } from 'react-router-dom'
+import Loading from '../uiElements/preloading'
+import MovieDetails from './movie/MovieDetails'
+import TvDetails from './series/TvDetails'
+import Person from './Person'
 
-function SearchItem(props) {
-  const {media_type} = useParams();
-  const [isLoading, setIsLoading] = useState(true);
-console.log(media_type)
+function SearchItem (props) {
+  const { media_type } = useParams()
+  const [isLoading, setIsLoading] = useState(true)
+  const [type, setType] = useState('')
 
-
-  const [type, setType] = useState("");
   useEffect(() => {
-    setIsLoading(true);
-    setType(media_type);
-    setIsLoading(false);
-  }, []);
+    setIsLoading(true)
+    setType(media_type)
+    setIsLoading(false)
+  }, [])
 
   return (
     <>
       {isLoading && <Loading />}
-      {type === "movie" && (
+      {type === 'movie' && (
         <MovieDetails
           bookmarkedIds={props.bookmarkedIds}
           addBookMark={props.addBookMark}
@@ -32,11 +30,9 @@ console.log(media_type)
           addFavourite={props.addFavourite}
           show={props.show}
           handleClose={props.handleClose}
-         
-        
         />
       )}
-      {type === "tv" && (
+      {type === 'tv' && (
         <TvDetails
           bookmarkedIds={props.bookmarkedIds}
           addBookMark={props.addBookMark}
@@ -44,11 +40,9 @@ console.log(media_type)
           addFavourite={props.addFavourite}
           show={props.show}
           handleClose={props.handleClose}
-        
-         
         />
       )}
-      {type === "person" && (
+      {type === 'person' && (
         <Person
           bookmarkedIds={props.bookmarkedIds}
           addBookMark={props.addBookMark}
@@ -56,12 +50,11 @@ console.log(media_type)
           addFavourite={props.addFavourite}
           show={props.show}
           handleClose={props.handleClose}
-        
         />
       )}
-      {type !== "movie" || type !== "tv" || (type !== "person" && "no result")}
+      {type !== 'movie' || type !== 'tv' || (type !== 'person' && 'no result')}
     </>
-  );
+  )
 }
 
-export default SearchItem;
+export default SearchItem

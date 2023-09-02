@@ -564,6 +564,7 @@ a:focus-visible {
   top: 0;
   min-height: 168px;
   object-fit: cover;
+  background: var(--dark-active);
 }
 
 @media (max-width: 668px) {
