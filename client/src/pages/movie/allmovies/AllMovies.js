@@ -152,7 +152,7 @@ function AllMovies (props) {
                     setSelectedOrder({ name: 'All' })
                     setSelectedCountry(null)
                     setCountry('US')
-                    setFilteredGenre(genre)
+                    setFilteredGenre([])
                   }}
                 >
                   Trending
@@ -170,7 +170,7 @@ function AllMovies (props) {
                     setSelectedOrder({ name: 'All' })
                     setSelectedCountry(null)
                     setCountry('US')
-                    setFilteredGenre(genre)
+                    setFilteredGenre([])
                   }}
                 >
                   Top Rated
@@ -188,7 +188,7 @@ function AllMovies (props) {
                     setSelectedOrder({ name: 'All' })
                     setSelectedCountry(null)
                     setCountry('US')
-                    setFilteredGenre(genre)
+                    setFilteredGenre([])
                   }}
                 >
                   Upcoming

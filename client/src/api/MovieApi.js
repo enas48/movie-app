@@ -210,8 +210,8 @@ export const SortByGenreAndDate = (page, order, genre, country, type) => {
             )
             return data
           } else {
+            return data
           }
-          return data
         })
     } else if (type === 'upcoming') {
       return fetch(
@@ -225,7 +225,21 @@ export const SortByGenreAndDate = (page, order, genre, country, type) => {
         `https://api.themoviedb.org/3/discover/movie?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&vote_average.gte=5&language=en-US&page=${page}&with_origin_country=${country}&sort_by=popularity.desc&with_genres=${genre}`
       )
         .then(res => res.json())
-        .then(data => data)
+        .then(data =>  {
+          if (order === 'desc') {
+            data.results.sort(
+              (a, b) => new Date(b.release_date) - new Date(a.release_date)
+            )
+            return data
+          } else if (order === 'asc') {
+            data.results.sort(
+              (a, b) => new Date(a.release_date) - new Date(b.release_date)
+            )
+            return data
+          } else {
+            return data
+          }
+        })
     }
   }
 }

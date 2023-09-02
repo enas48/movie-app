@@ -117,6 +117,7 @@ function AllSeries (props) {
   }
 
   useEffect(() => {
+    console.log(filteredGenre)
     const loadData = async () => {
       await new Promise(r => setTimeout(r, 800))
       setIsLoading(false)
@@ -151,7 +152,7 @@ function AllSeries (props) {
                     setSelectedOrder({ name: 'All' })
                     setSelectedCountry(null)
                     setCountry('US')
-       
+                    setFilteredGenre([])
                   }}
                 >
                   onAir
@@ -169,7 +170,7 @@ function AllSeries (props) {
                     setSelectedOrder({ name: 'All' })
                     setSelectedCountry(null)
                     setCountry('US')
-               
+                    setFilteredGenre([])
                   }}
                 >
                   Top Rated
@@ -187,7 +188,7 @@ function AllSeries (props) {
                     setSelectedOrder({ name: 'All' })
                     setSelectedCountry(null)
                     setCountry('US')
-               
+                    setFilteredGenre([])
                   }}
                 >
                   popular

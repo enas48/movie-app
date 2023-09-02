@@ -35,7 +35,7 @@ function Tv (props) {
   const loadByDateAndGenere = async (currentPage, order, genre, country) => {
     setIsLoading(true)
     let genres = genre.length > 1 ? genre.join(', ') : genre.toString()
-    TvSeriesApi.SortByGenreAndDate(currentPage, order, genres, country).then(
+    TvSeriesApi.SortByGenreAndDate(currentPage, order, genres, country,type).then(
       series => {
         if (series.total_pages >= 10) {
           setTotalPages(10)

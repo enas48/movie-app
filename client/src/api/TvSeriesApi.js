@@ -228,18 +228,24 @@ export const SortByDate = (page, order, country) =>
 export const SortByGenreAndDate = (page, order, genre, country, type) => {
   if (order === 'all') {
     if (type === 'topRated') {
+      console.log(order)
+      console.log(type)
       return fetch(
         `https://api.themoviedb.org/3/discover/tv?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&vote_average.gte=5&page=${page}&with_origin_country=${country}&with_genres=${genre}&sort_by=vote_average.desc`
       )
         .then(res => res.json())
         .then(data => data)
     } else if (type === 'popular') {
+      console.log(order)
+      console.log(type)
       return fetch(
         `https://api.themoviedb.org/3/discover/tv?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&vote_average.gte=5&include_video=false&page=${page}&with_origin_country=${country}&with_genres=${genre}&sort_by=popularity.desc`
       )
         .then(res => res.json())
         .then(data => data)
     } else {
+      console.log(order)
+      console.log(type)
       //ona air
       return fetch(
         `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&vote_average.gte=5&language=en-US&page=${page}&with_origin_country=${country}&with_genres=${genre}&sort_by=popularity.desc&air_date.gte=2023-01-01&air_date.lte=2024-11-25`
@@ -249,6 +255,8 @@ export const SortByGenreAndDate = (page, order, genre, country, type) => {
     }
   } else {
     if (type === 'topRated') {
+      console.log(order)
+      console.log(type)
       return fetch(
         `https://api.themoviedb.org/3/discover/tv?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&vote_average.gte=5&page=${page}&with_origin_country=${country}&with_genres=${genre}&sort_by=vote_average.desc`
       )
@@ -256,31 +264,50 @@ export const SortByGenreAndDate = (page, order, genre, country, type) => {
         .then(data => {
           if (order === 'desc') {
             data.results.sort(
-              (a, b) => new Date(b.release_date) - new Date(a.release_date)
+              (a, b) => new Date(b.first_air_date) - new Date(a.first_air_date)
             )
             return data
           } else if (order === 'asc') {
             data.results.sort(
-              (a, b) => new Date(a.release_date) - new Date(b.release_date)
+              (a, b) => new Date(a.first_air_date) - new Date(b.first_air_date)
             )
             return data
           } else {
+            return data
           }
-          return data
         })
     } else if (type === 'popular') {
+      console.log(order)
+      console.log(type)
       return fetch(
         `https://api.themoviedb.org/3/discover/tv?&api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&vote_average.gte=5&page=${page}&with_origin_country=${country}&with_genres=${genre}&sort_by=popularity.desc`
       )
         .then(res => res.json())
-        .then(data => data)
+        .then(data => {
+          console.log(data)
+          if (order === 'desc') {
+            data.results.sort(
+              (a, b) => new Date(b.first_air_date) - new Date(a.first_air_date)
+            )
+            return data
+          } else if (order === 'asc') {
+            data.results.sort(
+              (a, b) => new Date(a.first_air_date) - new Date(b.first_air_date)
+            )
+            return data
+          } else {
+            return data
+          }
+        })
     } else {
+      console.log(order)
+      console.log(type)
       //on air
       return fetch(
         `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.REACT_APP_API_KEY}&include_adult=false&vote_average.gte=5&language=en-US&page=${page}&with_origin_country=${country}&sort_by=primary_release_date.${order}&air_date.gte=2023-01-01&air_date.lte=2024-11-25&with_genres=${genre}`
       )
         .then(res => res.json())
-        .then(data => data)
+        .then(data =>data)
     }
   }
 }
