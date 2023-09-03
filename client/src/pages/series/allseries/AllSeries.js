@@ -235,7 +235,7 @@ function AllSeries (props) {
                 itemTemplate={OptionTemplate}
                 className='w-full md:w-14rem'
               />
-              <Dropdown
+              {/* <Dropdown
                 value={selectedCountry}
                 onChange={e => {
                   setSelectedCountry(e.value)
@@ -249,7 +249,7 @@ function AllSeries (props) {
                 valueTemplate={selectedTemplate}
                 itemTemplate={OptionTemplate}
                 className='w-full md:w-14rem'
-              />
+              /> */}
             </div>
           </div>
           <Accordion defaultActiveKey='0'>

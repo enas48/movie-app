@@ -237,7 +237,7 @@ function AllMovies (props) {
                 itemTemplate={OptionTemplate}
                 className='w-full md:w-14rem'
               />
-              <Dropdown
+              {/* <Dropdown
                 value={selectedCountry}
                 onChange={e => {
                   setSelectedCountry(e.value)
@@ -251,7 +251,7 @@ function AllMovies (props) {
                 valueTemplate={selectedTemplate}
                 itemTemplate={OptionTemplate}
                 className='w-full md:w-14rem'
-              />
+              /> */}
             </div>
           </div>
           <Accordion defaultActiveKey='0'>
