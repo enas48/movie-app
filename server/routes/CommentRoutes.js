@@ -9,7 +9,7 @@ const {
 const { protect } = require('../middleware/authMiddleware')
 
 router.route('/').post(protect, createComment)
-router.route('/:postId/:type').get(protect, getComments)
+router.route('/:type/:postId').get(protect, getComments)
 router
   .route('/:id')
   .put(protect, updatedComment)

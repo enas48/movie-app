@@ -111,7 +111,7 @@ function App () {
   
       })
       .catch(err => {
-        if (err.response.data.message) {
+        if (err.response?.data.message) {
           setMessage({
             text: err.response.data.message || 'something want wrong',
             state: 'error'
@@ -151,7 +151,7 @@ function App () {
     
       })
       .catch(err => {
-        if (err.response.data.message) {
+        if (err.response?.data.message) {
           setMessage({
             text: err.response.data.message || 'something want wrong',
             state: 'error'

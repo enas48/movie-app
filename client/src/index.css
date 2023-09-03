@@ -302,7 +302,7 @@ input:-webkit-autofill:focus {
 .filter-btn:focus-visible {
   opacity: 1;
   box-shadow: none;
-  background-color: var(--dark-active)!important;
+  background-color: var(--primary)!important;
   color: var(--white);
 }
 
@@ -1269,18 +1269,29 @@ background-color: var(--dark-active)!important;
 .userLink:hover{
   color: var(--secondry);
 }
-.react-responsive-modal-modal{
-  background: var(--dark-active)!important;
-  padding-top: 2.5rem!important;
-}
-.react-responsive-modal-modal .delete{
-  background-color: var(--primary)!important;
+
+/*comment section*/
+.comment{
+
 
 }
-.react-responsive-modal-modal .cancel{
-  color: var(--dark)!important;
+.comment-container{
+  background: var(--dark-active);
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
 }
+.replies{
+  width: 95%;
+  margin-left: 5%;
+  border-left: 1px solid;
+  margin-bottom: 1rem;
+  padding-left: 5%;
 
-.no-comDiv {
-  color: #939393d1!important;
+}
+.replies .comment-container,.replies .comment:last-child{
+  margin-bottom: 0;
+}
+.replies .comment{
+  margin-bottom: 1rem;
 }

@@ -84,7 +84,7 @@ function Profile (props) {
     axios
       .put(process.env.REACT_APP_APP_URL + '/profile/' + profileId, formData)
       .then(response => {
-        if (response.data.status === 200) {
+        if (response?.data.status === 200) {
           setMessage({ text: response.data.message, state: 'success' })
           setTimeout(() => {
             navigate(0)
@@ -92,7 +92,7 @@ function Profile (props) {
         }
       })
       .catch(err => {
-        if (err.response.data.message) {
+        if (err.response?.data.message) {
           setMessage({
             text: err.response.data.message || 'something want wrong',
             state: 'error'

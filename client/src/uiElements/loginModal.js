@@ -39,16 +39,23 @@ export default function LoginModal({ page, openSignup }) {
     axios
       .post(`${process.env.REACT_APP_APP_URL}/users/login`, data)
       .then((response) => {
-        if (response.data.status === 200) {
+        if (response?.data.status === 200) {
           login(response.data);
           setLoading(false);
 
           return navigate("/", { replace: true });
+        }else{
+          setLoading(false);
+          setMessage({
+            text:  "something want wrong",
+            state: "error",
+          });
         }
       })
       .catch((err) => {
         console.log(err);
-        if (err.response.data.message) {
+        setLoading(false);
+        if (err.response?.data.message) {
           setMessage({
             text: err.response.data.message || "something want wrong",
             state: "error",
@@ -59,7 +66,7 @@ export default function LoginModal({ page, openSignup }) {
             state: "error",
           });
         }
-        setLoading(false);
+       
       });
   };
 

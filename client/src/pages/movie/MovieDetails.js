@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useContext } from 'react'
 import { useParams } from 'react-router-dom'
 
 import * as MovieApi from '../../api/MovieApi'
@@ -16,7 +16,8 @@ import Video from '../../components/Video'
 import { FaPlay } from 'react-icons/fa'
 import { MdLanguage } from 'react-icons/md'
 import { BiTimeFive, BiCameraMovie } from 'react-icons/bi'
-import Comment from '../../components/Comment'
+import Comments from '../../components/Comments'
+import AuthContext from '../../helpers/authContext'
 
 function MovieDetails ({
   addBookMark,
@@ -34,7 +35,7 @@ function MovieDetails ({
   const [key, setKey] = useState(null)
   const [video, setvideo] = useState('')
   const [trailerVideo, setTrailervideo] = useState('')
-  const [currentUser, setCurrentUser] = useState(null)
+  const { userId } = useContext(AuthContext)
 
   const handleBookmark = (e, id, type) => {
     e.stopPropagation()
@@ -208,7 +209,7 @@ function MovieDetails ({
             <Crew id={id} type='movie' />
 
             <Video keyVideo={key} playVideo={playVideo} video={trailerVideo} />
-            <Comment id={id} type='movie' />
+            <Comments id={id} type='movie' currentUserId={userId}/>
             <div className='details-related-content'>
               <MovieList
                 bookmarkedIds={bookmarkedIds}

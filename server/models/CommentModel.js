@@ -13,34 +13,40 @@ const commentSchema = new Schema(
       trim: true,
       required: true
     },
-    date: {
-      type: Date,
-      default: Date.now
-    },
     post_id: String,
     type: String,
     fullName: String,
     avatarUrl: String,
-    replies: [
-      {
-        text: {
-          type: String,
-          trim: true
-        },
-        fullName: String,
-        avatarUrl: String,
-        userId: {
-          type: mongoose.Schema.Types.ObjectId,
-          required: true,
-          ref: 'User'
-        },
-        date: {
-          type: Date,
-          default: Date.now
-        },
-        default: []
-      },
-    ]
+    parentCommentId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Comment',
+      default:null,
+      required: false, // if not populated, then its a top level comment
+    },
+    date: {
+      type: Date,
+      default: Date.now
+    },
+    // replies: [
+    //   {
+    //     text: {
+    //       type: String,
+    //       trim: true
+    //     },
+    //     fullName: String,
+    //     avatarUrl: String,
+    //     userId: {
+    //       type: mongoose.Schema.Types.ObjectId,
+    //       required: true,
+    //       ref: 'User'
+    //     },
+    //     date: {
+    //       type: Date,
+    //       default: Date.now
+    //     },
+    //     default: []
+    //   },
+    // ]
   },
   {
     timestamps: true

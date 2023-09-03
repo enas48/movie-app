@@ -47,14 +47,14 @@ export default function SignupModal ({ page, openLogin }) {
     axios
       .post(`${process.env.REACT_APP_APP_URL}/users`, data)
       .then(response => {
-        if (response.data.status === 200) {
+        if (response?.data.status === 200) {
           setMessage({ text: response.data.message, state: 'success' })
           return navigate('/login', { replace: true })
         }
       })
       .catch(err => {
         console.log(err)
-        if (err.response.data?.message) {
+        if (err.response?.data.message) {
           setMessage({
             text: err.response.data.message || 'something want wrong',
             state: 'error'

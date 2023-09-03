@@ -1,11 +1,8 @@
 const Comment = require('../models/CommentModel')
 
 
-exports.getComments = async (post_id, type) => {
-  return await Comment.find({ post_id, type }).populate({
-    path: 'userId',
-    select: '-password'
-  })
+exports.getComments = async (postId, type) => {
+  return await Comment.find({ postId, type })
 }
 
 exports.createComment = async comment => {

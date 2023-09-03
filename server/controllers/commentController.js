@@ -8,7 +8,7 @@ const HttpError = require('../middleware/errorMiddleware')
 const getComments = async (req, res, next) => {
   try {
     const comments = await commentService.getComments(
-      req.params.postId,
+      req.params.postId.toString(),
       req.params.type
     )
 
@@ -27,7 +27,7 @@ const getComments = async (req, res, next) => {
 //@access private
 const createComment = async (req, res, next) => {
   try {
-    const { userId, text, post_id,fullName,avatarUrl, type, replies } = req.body
+    const { userId, text, post_id,fullName,avatarUrl, type, replies ,parentCommentId} = req.body
     const comment = await commentService.createComment({
       userId: userId,
       text,
@@ -35,7 +35,8 @@ const createComment = async (req, res, next) => {
       fullName,
       avatarUrl,
       type,
-      replies: replies
+      parentCommentId
+      // replies: replies
     })
     res
       .status(200)
@@ -51,7 +52,7 @@ const createComment = async (req, res, next) => {
 //@access private
 const updatedComment = async (req, res, next) => {
   try {
-    const { userId, text, replies } = req.body
+    const { userId, text, replies,parentCommentId } = req.body
     const comment = await commentService.getCommentById(req.params.id)
     if (!comment) {
       const error = new HttpError('comment not found', 400)
@@ -76,7 +77,8 @@ const updatedComment = async (req, res, next) => {
 
       const updatedComment = await commentService.updateComment(req.params.id, {
         text,
-        replies: replies
+        parentCommentId
+        // replies: replies
       })
 
       res.status(200).json({
