@@ -237,6 +237,7 @@ input:-webkit-autofill:focus {
   margin: 20px 1rem;
 }
 .form-container .form {
+  flex-direction: column;
   padding: 8rem 2rem 6rem;
   background-color: var(--dark-active);
   border-radius: 0.5rem;
@@ -301,9 +302,10 @@ input:-webkit-autofill:focus {
 .filter-btn:focus-visible {
   opacity: 1;
   box-shadow: none;
-  background-color: var(--primary)!important;
+  background-color: var(--dark-active)!important;
   color: var(--white);
 }
+
 .btn-outline:hover,
 .btn-outline:active,
 .btn-outline:focus-visible {
@@ -1108,7 +1110,9 @@ button.icon-container.bookmark.active {
   }
 }
 @media screen and (max-width: 480px) {
- 
+ .slick-arrow {
+  display: none;
+ }
   .page-link {
     font-size: 12px;
   }
@@ -1222,7 +1226,61 @@ background-color: var(--dark-active)!important;
   .video-player{
     height: 500px!important;
    }
+   .video-container{
+    max-height: 500px;
+   }
 }
 .slick-next:before, .slick-prev:before{
   font-size: 24px;
+}
+.overlay:has(.comment-title){
+  position: relative;
+}
+.comment-title{
+  color: var(--white)!important;
+}
+.form .postBtn,.signBox .signBtn {
+  border: 2px solid var(--primary)!important;
+  background-color: var(--primary)!important;
+}
+.signBox .loginBtn {
+  border: 2px solid var(--primary)!important;
+  color: var(--primary)!important;
+}
+.signBox .loginBtn:hover {
+  border: 2px solid var(--primary-active)!important;
+  color: var(--primary-active)!important;
+}
+.signBox .signBtn
+.form .postBtn:hover{
+  border: 2px solid var(--primary-active)!important;
+  background-color: var(--primary-active)!important;
+}
+.details-container .form{ 
+  background-color: var(--dark-active);
+}
+.form .postComment {
+  border-bottom: 1px solid var(--white)!important;
+  color: var(--white)!important;
+}
+.form .cancelBtn{
+  color: var(--dark)!important;
+}
+.userLink:hover{
+  color: var(--secondry);
+}
+.react-responsive-modal-modal{
+  background: var(--dark-active)!important;
+  padding-top: 2.5rem!important;
+}
+.react-responsive-modal-modal .delete{
+  background-color: var(--primary)!important;
+
+}
+.react-responsive-modal-modal .cancel{
+  color: var(--dark)!important;
+}
+
+.no-comDiv {
+  color: #939393d1!important;
 }

@@ -141,6 +141,11 @@ function Bookmark (props) {
                   )
                 })}
             </div>
+            <div className='row'>
+              {tvBookmarks.length === 0 && movieBookmarks.length === 0 && (
+                <h3 className='mb-3'>No Bookmarks found</h3>
+              )}
+            </div>
           </div>
         </div>
       </SidebarLayout>

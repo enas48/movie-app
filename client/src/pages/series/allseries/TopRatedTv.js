@@ -19,12 +19,11 @@ function TopRatedTv(props) {
   const loadData = async (currentPage) => {
     setIsLoading(true);
     TvSeriesApi.topRatedSeries(currentPage).then((series) => {
-      // if (series.total_pages >= 500) {
-      //   setTotalPages(10);
-      // } else {
-      //   setTotalPages(series.total_pages);
-      // }
-      setTotalPages(10);
+      if (series.total_pages >= 6) {
+        setTotalPages(6);
+      } else {
+        setTotalPages(series.total_pages);
+      }
       TvSeriesApi.list(series.results).then((data) => {
         setSeries(data.slice(0, 20));
         setIsLoading(false);

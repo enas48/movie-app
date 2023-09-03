@@ -1,7 +1,7 @@
 const Bookmark = require('../models/BookmarkModel')
 
 exports.getBookmarkByUserId = async userId => {
-  return await Bookmark.find({ userId }).select('-user')
+  return await Bookmark.find({ userId })
 }
 
 exports.createBookmark = async bookmark => {

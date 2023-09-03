@@ -22,7 +22,7 @@ const Paginations = ({ currentPage, totalPages, onPageChange }) => {
       return { start: currentPage - ceilling + 1, end: currentPage + floor };
     }
   };
-  let pageCut = getPageCut({ totalPages, pagesCutCount: 5, currentPage });
+  let pageCut = getPageCut({ totalPages, pagesCutCount: 3, currentPage });
   let pages = range(pageCut.start, pageCut.end);
 
   return (

@@ -19,7 +19,11 @@ function PopularTv (props) {
   const loadData = async currentPage => {
     setIsLoading(true)
     TvSeriesApi.popularSeries(currentPage).then(series => {
-      setTotalPages(10)
+      if (series.total_pages >= 6) {
+        setTotalPages(6);
+      } else {
+        setTotalPages(series.total_pages);
+      }
       TvSeriesApi.list(series.results).then(data => {
         setSeries(data.slice(0, 20))
         setIsLoading(false)

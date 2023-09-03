@@ -143,6 +143,11 @@ function Favourite(props) {
                   );
                 })}
             </div>
+            <div className='row'>
+              {tvFavourites.length === 0 && movieFavourites.length === 0 && (
+                <h3 className='mb-3'>No Favoutites found</h3>
+              )}
+            </div>
           </div>
         </div>
       </SidebarLayout>

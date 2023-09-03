@@ -37,8 +37,8 @@ function Movie (props) {
     let genres = genre.length > 1 ? genre.join(', ') : genre.toString()
     MovieApi.SortByGenreAndDate(currentPage, order, genres, country, type).then(
       movie => {
-        if (movie.total_pages >= 10) {
-          setTotalPages(10)
+        if (movie.total_pages >= 6) {
+          setTotalPages(6)
         } else {
           setTotalPages(movie.total_pages)
         }
@@ -54,8 +54,8 @@ function Movie (props) {
     setIsLoading(true)
     if (type === 'topRated') {
       MovieApi.topRatedMovies(currentPage, country).then(movie => {
-        if (movie.total_pages >= 10) {
-          setTotalPages(10)
+        if (movie.total_pages >= 6) {
+          setTotalPages(6)
         } else {
           setTotalPages(movie.total_pages)
         }
@@ -66,8 +66,8 @@ function Movie (props) {
       })
     } else if (type === 'upcoming') {
       MovieApi.upcomingMovies(currentPage, country).then(movie => {
-        if (movie.total_pages >= 10) {
-          setTotalPages(10)
+        if (movie.total_pages >= 6) {
+          setTotalPages(6)
         } else {
           setTotalPages(movie.total_pages)
         }
@@ -78,8 +78,8 @@ function Movie (props) {
       })
     } else {
       MovieApi.popularMovies(currentPage, country).then(movie => {
-        if (movie.total_pages >= 10) {
-          setTotalPages(10)
+        if (movie.total_pages >= 6) {
+          setTotalPages(6)
         } else {
           setTotalPages(movie.total_pages)
         }

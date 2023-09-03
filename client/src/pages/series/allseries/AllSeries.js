@@ -117,22 +117,22 @@ function AllSeries (props) {
     
     let countries =[
       { name: 'America', code: 'US' },
-      { name: 'Germany', code: 'DE' },
       { name: 'Egypt', code: 'EG' },
-      { name: 'France', code: 'FR' },
-      { name: 'Spain', code: 'ES' },
       { name: 'United Kingdom', code: 'GB' },
-      { name: 'India', code: 'IN' },
-      { name: 'Italy', code: 'IT' },
-      { name: 'Japan', code: 'JP' },
-      { name: 'korea', code: 'KR' },
-      { name: 'Lebanon', code: 'LB' },
-      { name: 'Mexico', code: 'MX' },
-      { name: 'Russia', code: 'RU' },
-      { name: 'Thailand', code: 'TH' },
-      { name: 'Turkey', code: 'TR' },
-      { name: 'Taiwan', code: 'TW' },
-      { name: 'Vietnam', code: 'VN' },
+      // { name: 'Germany', code: 'DE' },
+      // { name: 'France', code: 'FR' },
+      // { name: 'Spain', code: 'ES' },
+      // { name: 'India', code: 'IN' },
+      // { name: 'Italy', code: 'IT' },
+      // { name: 'Japan', code: 'JP' },
+      // { name: 'korea', code: 'KR' },
+      // { name: 'Lebanon', code: 'LB' },
+      // { name: 'Mexico', code: 'MX' },
+      // { name: 'Russia', code: 'RU' },
+      // { name: 'Thailand', code: 'TH' },
+      // { name: 'Turkey', code: 'TR' },
+      // { name: 'Taiwan', code: 'TW' },
+      // { name: 'Vietnam', code: 'VN' },
     ]
     setCountries(countries)
   }
@@ -155,7 +155,7 @@ function AllSeries (props) {
         <Search />
         <div className='p-3 mt-lg-5'>
           <div className='d-flex justify-content-between flex-wrap mb-2'>
-            <Nav className='tv-list flex-nowrap flex-shrink-0 mb-2'>
+            <Nav className='tv-list flex-nowrap flex-shrink-0 mb-3'>
               <LinkContainer to='onair'>
                 <Nav.Link
                   className={
@@ -235,7 +235,7 @@ function AllSeries (props) {
                 itemTemplate={OptionTemplate}
                 className='w-full md:w-14rem'
               />
-              {/* <Dropdown
+              <Dropdown
                 value={selectedCountry}
                 onChange={e => {
                   setSelectedCountry(e.value)
@@ -249,7 +249,7 @@ function AllSeries (props) {
                 valueTemplate={selectedTemplate}
                 itemTemplate={OptionTemplate}
                 className='w-full md:w-14rem'
-              /> */}
+              />
             </div>
           </div>
           <Accordion defaultActiveKey='0'>

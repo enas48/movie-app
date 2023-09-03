@@ -21,7 +21,7 @@ const getProfileById = async (req, res, next) => {
     return next(error)
   }
 }
-// @desc update profile
+
 //@route get /profiles/userprofile
 //@access private
 const getProfileByUserId = async (req, res, next) => {

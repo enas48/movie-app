@@ -14,9 +14,9 @@ import BookmarkFavBtn from '../../components/BookmarkFavBtn'
 import Video from '../../components/Video'
 
 import { FaPlay } from 'react-icons/fa'
-
 import { MdLanguage } from 'react-icons/md'
 import { BiTimeFive, BiCameraMovie } from 'react-icons/bi'
+import Comment from '../../components/Comment'
 
 function MovieDetails ({
   addBookMark,
@@ -34,6 +34,7 @@ function MovieDetails ({
   const [key, setKey] = useState(null)
   const [video, setvideo] = useState('')
   const [trailerVideo, setTrailervideo] = useState('')
+  const [currentUser, setCurrentUser] = useState(null)
 
   const handleBookmark = (e, id, type) => {
     e.stopPropagation()
@@ -48,6 +49,7 @@ function MovieDetails ({
     window.open(video, '_blank')
   }
 
+  
   const fetchMovieVideo = async id => {
     setIsLoading(true)
     try {
@@ -114,7 +116,7 @@ function MovieDetails ({
       fetchMovieVideo(id)
       fetchTrailer(id)
     }
-  }, [id,key])
+  }, [id, key])
 
   return (
     <>
@@ -206,8 +208,7 @@ function MovieDetails ({
             <Crew id={id} type='movie' />
 
             <Video keyVideo={key} playVideo={playVideo} video={trailerVideo} />
-
-
+            <Comment id={id} type='movie' />
             <div className='details-related-content'>
               <MovieList
                 bookmarkedIds={bookmarkedIds}

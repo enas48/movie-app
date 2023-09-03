@@ -42,8 +42,8 @@ function Tv (props) {
       country,
       type
     ).then(series => {
-      if (series.total_pages >= 10) {
-        setTotalPages(10)
+      if (series.total_pages >= 6) {
+        setTotalPages(6)
       } else {
         setTotalPages(series.total_pages)
       }
@@ -58,8 +58,8 @@ function Tv (props) {
     setIsLoading(true)
     if (type === 'topRated') {
       TvSeriesApi.topRatedSeries(currentPage, country).then(series => {
-        if (series.total_pages >= 10) {
-          setTotalPages(10)
+        if (series.total_pages >= 6) {
+          setTotalPages(6)
         } else {
           setTotalPages(series.total_pages)
         }
@@ -70,8 +70,8 @@ function Tv (props) {
       })
     } else if (type === 'popular') {
       TvSeriesApi.popularSeries(currentPage, country).then(series => {
-        if (series.total_pages >= 10) {
-          setTotalPages(10)
+        if (series.total_pages >= 6) {
+          setTotalPages(6)
         } else {
           setTotalPages(series.total_pages)
         }
@@ -82,8 +82,8 @@ function Tv (props) {
       })
     } else {
       TvSeriesApi.onAir(currentPage, country).then(series => {
-        if (series.total_pages >= 10) {
-          setTotalPages(10)
+        if (series.total_pages >= 6) {
+          setTotalPages(6)
         } else {
           setTotalPages(series.total_pages)
         }

@@ -8,14 +8,14 @@ function Video ({ video, keyVideo, playVideo }) {
       {video.length !== 0 && (
         <div className='details-related-content'>
           <h3 className='mb-4'>Videos</h3>
-          <div className='gap-4 d-flex justify-content-center flex-wrap'>
+          <div className='gap-4 d-flex justify-content-center flex-wrap container'>
             <div className=' my-2 w-100 w-md-60 rounded overflow-hidden'>
               {video.map(
                 (item,i) =>
                   item.key === keyVideo && (
-                    <>
+                    <div       key={i}>
                       <ReactPlayer
-                        key={i}
+                  
                         className={
                           item.key === keyVideo
                             ? 'm-auto d-block w-auto video-player'
@@ -25,7 +25,7 @@ function Video ({ video, keyVideo, playVideo }) {
                         controls={true}
                       />
                       <h3 className='py-3'>{item?.name}</h3>
-                    </>
+                    </div>
                   )
               )}
             </div>
@@ -44,7 +44,7 @@ function Video ({ video, keyVideo, playVideo }) {
                     >
                       <div className='card-body row'>
                         <div className='col-4 d-flex align-items-center gap-2'>
-                          <div style={{ minWidth: '16px' }}>
+                          <div style={{ minWidth: '17px' }}>
                             {item.key === keyVideo ? (
                               <FaPlay />
                             ) : (

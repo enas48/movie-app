@@ -15,6 +15,7 @@ const bookmarkRouter = require('./routes/BookmarkRoutes');
 const favouriteRouter=require('./routes/favouriteRoutes');
 const userRouter = require('./routes/userRoutes');
 const profileRouter = require('./routes/porfileRoutes');
+const commentRouter=require('./routes/CommentRoutes');
 
 app.get('/', (req, res)=>{
     res.send('hi');
@@ -36,6 +37,7 @@ app.use('/bookmarks',bookmarkRouter );
 app.use('/favourites',favouriteRouter );
 app.use('/users',userRouter );
 app.use('/profile',profileRouter );
+app.use('/comments',commentRouter );
 
 //handling errors on routers
 app.use((error, req, res, next)=>{ 
