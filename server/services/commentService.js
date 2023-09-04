@@ -1,8 +1,8 @@
 const Comment = require('../models/CommentModel')
 
 
-exports.getComments = async (postId, type) => {
-  return await Comment.find({ postId, type })
+exports.getComments = async ( type,postId) => {
+  return await Comment.find({ type,post_id:postId })
 }
 
 exports.createComment = async comment => {

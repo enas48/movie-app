@@ -1,28 +1,15 @@
-import React, { useState, useEffect } from 'react'
-import { LinkContainer } from 'react-router-bootstrap'
 
-import { PiTelevisionBold } from 'react-icons/pi'
-import { useParams, useLocation } from 'react-router-dom'
-import Loading from '../uiElements/preloading'
+import { useParams } from 'react-router-dom'
 import MovieDetails from './movie/MovieDetails'
 import TvDetails from './series/TvDetails'
 import Person from './Person'
 
 function SearchItem (props) {
   const { media_type } = useParams()
-  const [isLoading, setIsLoading] = useState(true)
-  const [type, setType] = useState('')
-
-  useEffect(() => {
-    setIsLoading(true)
-    setType(media_type)
-    setIsLoading(false)
-  }, [])
 
   return (
     <>
-      {isLoading && <Loading />}
-      {type === 'movie' && (
+      {media_type === 'movie' && (
         <MovieDetails
           bookmarkedIds={props.bookmarkedIds}
           addBookMark={props.addBookMark}
@@ -32,7 +19,7 @@ function SearchItem (props) {
           handleClose={props.handleClose}
         />
       )}
-      {type === 'tv' && (
+      {media_type === 'tv' && (
         <TvDetails
           bookmarkedIds={props.bookmarkedIds}
           addBookMark={props.addBookMark}
@@ -42,7 +29,7 @@ function SearchItem (props) {
           handleClose={props.handleClose}
         />
       )}
-      {type === 'person' && (
+      {media_type === 'person' && (
         <Person
           bookmarkedIds={props.bookmarkedIds}
           addBookMark={props.addBookMark}
@@ -52,7 +39,7 @@ function SearchItem (props) {
           handleClose={props.handleClose}
         />
       )}
-      {type !== 'movie' || type !== 'tv' || (type !== 'person' && 'no result')}
+      {media_type !== 'movie' || media_type !== 'tv' || (media_type !== 'person' && 'no result')}
     </>
   )
 }

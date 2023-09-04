@@ -8,8 +8,8 @@ const HttpError = require('../middleware/errorMiddleware')
 const getComments = async (req, res, next) => {
   try {
     const comments = await commentService.getComments(
-      req.params.postId.toString(),
-      req.params.type
+      req.params.type,
+      req.params.postId,
     )
 
     res.status(200).json({
@@ -27,7 +27,7 @@ const getComments = async (req, res, next) => {
 //@access private
 const createComment = async (req, res, next) => {
   try {
-    const { userId, text, post_id,fullName,avatarUrl, type, replies ,parentCommentId} = req.body
+    const { userId, text, post_id,fullName,avatarUrl, type ,parentCommentId} = req.body
     const comment = await commentService.createComment({
       userId: userId,
       text,
@@ -36,7 +36,7 @@ const createComment = async (req, res, next) => {
       avatarUrl,
       type,
       parentCommentId
-      // replies: replies
+    
     })
     res
       .status(200)

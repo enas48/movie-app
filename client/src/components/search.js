@@ -55,11 +55,13 @@ function Search() {
       {searchList.length !== 0 && (
         <div className="search-results">
           {searchList.map((item, i) => {
+         
             return (
               item?.media_type && (
                 <LinkContainer
                   key={i}
-                  to={`/search/${item.media_type}/${item.id}`}
+                  to={`/search/${item?.media_type}/${item.id}`}
+                 onClick={()=>{setSearchField('');setSearchList([])}}
                   state={{ data: item }}
                 >
                   <div className="cursor-pointer d-flex align-items-center gap-1 search-item">
@@ -72,9 +74,11 @@ function Search() {
                     {item.media_type === "person" && (
                       <MdPerson className="search-icon" />
                     )}
-                    <span>{item?.title}</span>
+                    <span >{item?.title}</span>
                     <span>{item?.name}</span>
                   </div>
+          
+            
                 </LinkContainer>
               )
             );

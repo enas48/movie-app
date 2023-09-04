@@ -76,7 +76,7 @@ export default function LoginModal({ page, openSignup }) {
 
   useEffect(() => {
     setTimeout(() => {
-      if (["/profile", "/bookmark"].includes(location.state?.prevPath)) {
+      if (["/profile", "/wishlist","/favourite"].includes(location.state?.prevPath)) {
         setMessage({
           text: "You Need To Login First!",
           state: "warning",

@@ -103,7 +103,7 @@ function Header() {
 
                   <Dropdown.Menu>
                     <Dropdown.Item>
-                      <LinkContainer to="/profile">
+                    <LinkContainer to={`/profile/${userId}`}>
                         <Nav.Link>profile</Nav.Link>
                       </LinkContainer>
                     </Dropdown.Item>

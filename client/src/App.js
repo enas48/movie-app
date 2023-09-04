@@ -392,7 +392,7 @@ function App () {
             />
           </Route>
           <Route
-            path='/profile'
+            path='/profile/:id'
             element={
               <ProtectedRoute isAllowed={!!token}>
                 <Profile onLogout={logout} profile={profile.profile} />{' '}

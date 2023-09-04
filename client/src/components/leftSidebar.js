@@ -108,7 +108,7 @@ function LeftSidebar () {
       <Nav>
         {userId ? (
           <div className='d-flex  py-2'>
-            <LinkContainer to='/profile'>
+            <LinkContainer to={`/profile/${userId}`}>
               <Nav.Link>
                 <div className='avater'>
                   <img  loading="lazy" src={image} className='img-fluid' alt='' />

@@ -1,7 +1,7 @@
 /*--------------general-------------------*/
 :root {
   --primary: #e21515;
-  --primary-active: #f51b1b;
+  --primary-active: #ff1c1cea;
   --secondry: #eab414;
   --secondry-active: #f7bb0e;
   --white: #fbfbfb;
@@ -54,7 +54,7 @@ h3 {
   align-items: center;
   display: flex;
   transition: 0.2s all ease-in-out;
-  background: transparent;
+  /* background: transparent; */
 }
 .btn:hover,
 .btn:active,
@@ -64,7 +64,7 @@ h3 {
 .btn:first-child:active,
 :not(.btn-check) + .btn:active {
   color: white;
-  background-color: rgba(0, 0, 0, 0.5);
+  /* background-color: rgba(0, 0, 0, 0.5); */
   border-color: transparent;
 }
 /*---------------message modal-------------------------*/
@@ -182,7 +182,7 @@ h3 {
 .btn.show,
 .btn:first-child:active,
 :not(.btn-check) + .btn:active {
-  background: transparent;
+  /* background: transparent; */
 }
 .form-control:hover {
   box-shadow: none;
@@ -290,6 +290,10 @@ input:-webkit-autofill:focus {
 .custom-btn:focus-visible {
   opacity: 1;
   box-shadow: none;
+  background-color: var(--primary-active) !important;
+}
+.custom-btn.disabled,
+.custom-btn:disabled{
   background-color: var(--primary-active) !important;
 }
 /* .filter-btn{
@@ -744,6 +748,10 @@ button.icon-container.bookmark.active {
 .custom-modal .modal-content {
   width: fit-content;
   margin: auto;
+}
+.modal-backdrop
+{
+    opacity:0.5 !important;
 }
 .custom-modal .form-container {
   min-height: auto;
@@ -1278,7 +1286,7 @@ background-color: var(--dark-active)!important;
 .comment-container{
   background: var(--dark-active);
   padding: 1rem;
-  border-radius: 4px;
+  border-radius: 7px;
   margin-bottom: 1rem;
 }
 .replies{
@@ -1289,9 +1297,58 @@ background-color: var(--dark-active)!important;
   padding-left: 5%;
 
 }
-.replies .comment-container,.replies .comment:last-child{
+.replies .comment-container{
+  margin-bottom: 1rem;
+}
+.replies .comment:last-child{
   margin-bottom: 0;
 }
 .replies .comment{
   margin-bottom: 1rem;
+}
+.login-comments .btn-outline{
+  background: transparent!important;
+  color: var(--primary)!important;
+  border: 1px solid var(--primary);
+  padding: 0.275rem 1rem;
+}
+.login-comments .btn-outline:hover,
+.login-comments .btn-outline:active,
+.login-comments .btn-outline.active,
+.login-comments .btn-outline:focus-visible {
+  opacity: 1;
+  box-shadow: none;
+  background-color:transparent!important;
+  color: var(--primary-active)!important;
+  border: 1px solid var(--primary-active);
+}
+.login-comments {
+  border: 1px solid var(--white);
+  background: var(--dark-active);
+  padding:0.75rem 1rem;
+  border-radius: 7px; 
+  margin-bottom: 1rem;
+}
+.comments-form{
+    display: flex;
+    padding: 1rem;
+    border-radius: 7px;
+    align-items: center;
+    background: var(--dark-active);
+    margin-bottom: 1rem;
+}
+.comment-action .dropdown-toggle::after{display: none;}
+.comment-action .dropdown-menu{
+  box-shadow: 1px 1px 3px #40474d;
+}
+.delete-modal .modal-body p{
+  font-size: 1.2rem;
+}
+.delete-modal .modal-body,
+.delete-modal .modal-header,
+.delete-modal .modal-footer,
+.delete-modal .modal-content{
+  background-color: var(--dark-active)!important;
+  border-bottom: none;
+  border-top: none;
 }
