@@ -329,10 +329,10 @@ a:focus-visible {
   color: var(--primary-active);
 }
 
-.form .icon-container {
+form .icon-container {
   position: relative;
 }
-.form .icon-container .icon {
+form .icon-container .icon {
   position: absolute;
   top: -3px;
   left: 0;
@@ -752,6 +752,10 @@ button.icon-container.bookmark.active {
 .modal-backdrop
 {
     opacity:0.5 !important;
+}
+.fade {
+  -webkit-animation-duration: 0.3s!important;
+  animation-duration: 0.3s!important;
 }
 .custom-modal .form-container {
   min-height: auto;
@@ -1351,4 +1355,40 @@ background-color: var(--dark-active)!important;
   background-color: var(--dark-active)!important;
   border-bottom: none;
   border-top: none;
+}
+
+.comment-btn{
+  padding: 0;
+  width: 2.5rem;
+  height: 2rem;
+  text-align: center;
+  align-items: center;
+  display: flex!important;
+  justify-content: center;
+}
+
+.comment-text{
+  padding: 0.3rem;
+  border-bottom:1px solid transparent ;
+}
+.edit-form{
+  padding: 0;
+  margin-top:10px;
+  margin-bottom: 1px;
+}
+.edit-form .form-control{
+  padding: 0 0.3rem;
+
+}
+.comments-container  .icon-container .icon {
+  top: 3px;
+  right: 3px;
+  left: auto;
+  font-size: 15px;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+.comments-container  .icon-container .icon .spinner-border {
+  width: 1.4rem;
+  height: 1.4rem;
 }

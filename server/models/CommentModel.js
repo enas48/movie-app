@@ -15,8 +15,6 @@ const commentSchema = new Schema(
     },
     post_id: String,
     type: String,
-    fullName: String,
-    avatarUrl: String,
     parentCommentId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Comment',
@@ -27,26 +25,7 @@ const commentSchema = new Schema(
       type: Date,
       default: Date.now
     },
-    // replies: [
-    //   {
-    //     text: {
-    //       type: String,
-    //       trim: true
-    //     },
-    //     fullName: String,
-    //     avatarUrl: String,
-    //     userId: {
-    //       type: mongoose.Schema.Types.ObjectId,
-    //       required: true,
-    //       ref: 'User'
-    //     },
-    //     date: {
-    //       type: Date,
-    //       default: Date.now
-    //     },
-    //     default: []
-    //   },
-    // ]
+
   },
   {
     timestamps: true

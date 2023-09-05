@@ -1,63 +1,87 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Form, Button } from "react-bootstrap";
-import AuthContext from "../helpers/authContext";
-import { LinkContainer } from "react-router-bootstrap";
+import React, { useEffect, useState, useContext } from 'react'
+import { Form, Button } from 'react-bootstrap'
+import AuthContext from '../helpers/authContext'
+import { LinkContainer } from 'react-router-bootstrap'
+import { AiOutlineClose } from 'react-icons/ai'
+import Spinner from 'react-bootstrap/Spinner'
 
-function CommentForm({
+function CommentForm ({
   submitLabel,
   handleSubmit,
   avaterUrl,
-  activeComments,
   setActiveComments,
+  kind,
+  value = '',
+  loading
 }) {
-  const { userId } = useContext(AuthContext);
-  const [text, setText] = useState("");
+  const { userId } = useContext(AuthContext)
+  const [text, setText] = useState(value)
 
-  const isTextDisabled = text.length === 0;
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    handleSubmit(text);
-    setText("");
-  };
+  const isTextDisabled = text.length === 0
+  console.log(kind)
+  const onSubmit = e => {
+    e.preventDefault()
+    handleSubmit(text)
 
-  useEffect(() => {}, []);
+    setText(value)
+  }
+  console.log(kind)
+  useEffect(() => {}, [])
 
   return (
-    <Form onSubmit={onSubmit} className="comments-form gap-2">
-      <LinkContainer to={`/profile/${userId}`}>
-        <div className="d-flex align-items-center me-1 gap-2">
-          <div className="avater">
-            <img src={avaterUrl} className="img-fluid" alt="" />
-          </div>
-        </div>
-      </LinkContainer>
-      <Form.Group className="w-100" controlId="formBasicEmail">
-        <Form.Control
-          type="text"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Add a Comment..."
-        />
-      </Form.Group>
-      {submitLabel === "Reply" && (
-        <Button
-          variant="secondary"
-          className="rounded  d-flex align-items-center gap-2"
-          onClick={() => setActiveComments(null)}
-        >
-          <span>cancel</span>
-        </Button>
-      )}
-      <Button
-        variant="primary"
-        className="rounded custom-btn d-flex align-items-center gap-2"
-        type="submit"
-        disabled={isTextDisabled}
+    <>
+      <Form
+        onSubmit={onSubmit}
+        className={
+          kind === 'edit'
+            ? 'comments-form gap-2 edit-form'
+            : 'comments-form gap-2'
+        }
       >
-        <span>{submitLabel}</span>
-      </Button>
-    </Form>
-  );
+        {kind !== 'edit' && (
+          <LinkContainer to={`/profile/${userId}`}>
+            <div className='d-flex align-items-center me-1 gap-2'>
+              <div className='avater'>
+                <img src={avaterUrl} className='img-fluid' alt='' />
+              </div>
+            </div>
+          </LinkContainer>
+        )}
+        <Form.Group className='w-100' controlId='formBasicEmail'>
+          <div className='icon-container d-flex'>
+            <Form.Control
+              type='text'
+              value={text}
+              onChange={e => setText(e.target.value)}
+              placeholder='Add a Comment...'
+              autoComplete='off'
+            />
+            <span className='icon'>
+              {loading && kind==='edit' && kind!=='add' && kind !== 'reply' && <Spinner animation='border' />}
+
+            </span>
+          </div>
+        </Form.Group>
+        {kind !== 'add' && (
+          <Button
+            variant='secondary'
+            className='rounded  d-flex align-items-center  comment-btn'
+            onClick={() => setActiveComments(null)}
+          >
+            <AiOutlineClose />
+          </Button>
+        )}
+        <Button
+          variant='primary'
+          className='rounded custom-btn d-flex align-items-center comment-btn'
+          type='submit'
+          disabled={isTextDisabled}
+        >
+          <span>{submitLabel}</span>
+        </Button>
+      </Form>
+    </>
+  )
 }
-export default CommentForm;
+export default CommentForm

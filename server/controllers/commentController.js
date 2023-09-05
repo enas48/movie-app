@@ -27,13 +27,12 @@ const getComments = async (req, res, next) => {
 //@access private
 const createComment = async (req, res, next) => {
   try {
-    const { userId, text, post_id,fullName,avatarUrl, type ,parentCommentId} = req.body
+    const { userId, text, post_id,type ,parentCommentId} = req.body
     const comment = await commentService.createComment({
       userId: userId,
       text,
       post_id,
-      fullName,
-      avatarUrl,
+
       type,
       parentCommentId
     
@@ -52,7 +51,7 @@ const createComment = async (req, res, next) => {
 //@access private
 const updatedComment = async (req, res, next) => {
   try {
-    const { userId, text, replies,parentCommentId } = req.body
+    const { userId, text } = req.body
     const comment = await commentService.getCommentById(req.params.id)
     if (!comment) {
       const error = new HttpError('comment not found', 400)
@@ -76,9 +75,7 @@ const updatedComment = async (req, res, next) => {
       }
 
       const updatedComment = await commentService.updateComment(req.params.id, {
-        text,
-        parentCommentId
-        // replies: replies
+        text
       })
 
       res.status(200).json({
@@ -103,7 +100,12 @@ const deleteComment = async (req, res, next) => {
       const error = new HttpError('comment not found', 400)
       return next(error)
     } else {
-      await commentService.deleteComment(req.params.id)
+    await commentService.deleteComment(req.params.id)
+   if(res.statusCode ===200){
+    //delete replies 
+    await commentService.deleteManyComment(req.params.id)
+   }
+
       res.status(200).json({ message: `comment deleted successfully` })
     }
   } catch (err) {
