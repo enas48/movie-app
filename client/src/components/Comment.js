@@ -179,9 +179,10 @@ function Comment ({
               handleSubmit={text => updateComment(text, comment._id)}
               avaterUrl={userImage}
               setActiveComments={setActiveComments}
-              kind='edit'
+              kind='editing'
               value={comment?.text}
               loading={loading}
+              activeComments={activeComments}
             />
           )}
           <div
@@ -204,8 +205,9 @@ function Comment ({
             handleSubmit={text => addComment(text, replyId)}
             avaterUrl={userImage}
             setActiveComments={setActiveComments}
-            kind='reply'
+            kind='replying'
             loading={loading}
+            activeComments={activeComments}
           />
         )}
         {replies.length > 0 && (

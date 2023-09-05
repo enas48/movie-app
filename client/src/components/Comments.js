@@ -172,6 +172,7 @@ function Comments ({ type, id }) {
               avaterUrl={userImage}
               setActiveComments={setActiveComments}
               kind='add'
+              activeComments={activeComments}
               loading={loading}
             />
           )}

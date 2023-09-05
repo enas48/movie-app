@@ -10,13 +10,14 @@ function CommentForm ({
   handleSubmit,
   avaterUrl,
   setActiveComments,
+  activeComments,
   kind,
   value = '',
   loading
 }) {
   const { userId } = useContext(AuthContext)
   const [text, setText] = useState(value)
-
+console.log(activeComments)
 
   const isTextDisabled = text.length === 0
   console.log(kind)
@@ -34,12 +35,12 @@ function CommentForm ({
       <Form
         onSubmit={onSubmit}
         className={
-          kind === 'edit'
+          kind === 'editing'
             ? 'comments-form gap-2 edit-form'
             : 'comments-form gap-2'
         }
       >
-        {kind !== 'edit' && (
+        {kind !== 'editing' && (
           <LinkContainer to={`/profile/${userId}`}>
             <div className='d-flex align-items-center me-1 gap-2'>
               <div className='avater'>
@@ -58,7 +59,7 @@ function CommentForm ({
               autoComplete='off'
             />
             <span className='icon'>
-              {loading && kind==='edit' && kind!=='add' && kind !== 'reply' && <Spinner animation='border' />}
+              {loading && kind===activeComments?.type && <Spinner animation='border' />}
 
             </span>
           </div>
