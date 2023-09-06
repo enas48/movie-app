@@ -14,6 +14,8 @@ import moment from 'moment'
 import { LinkContainer } from 'react-router-bootstrap'
 import Modal from 'react-bootstrap/Modal'
 import CommentForm from './CommentForm'
+import LikeButton from './LikeButton'
+import MessageModal from "../uiElements/messageModel";
 
 function Comment ({
   type,
@@ -28,12 +30,15 @@ function Comment ({
   updateComment,
   userImage,
   loading,
+  showEmojis,
+  setShowEmojis,
   parentId = null
 }) {
   const { userId } = useContext(AuthContext)
   const [image, setImage] = useState(process.env.PUBLIC_URL + '/person.png')
   const [username, setUsername] = useState('')
   const [showModal, setShowModal] = useState(false)
+  const [message, setMessage] = useState({ text: null, state: "error" });
 
   const isReplying =
     activeComments &&
@@ -45,9 +50,81 @@ function Comment ({
     activeComments.id === comment._id
   const replyId = parentId ? parentId : comment._id
 
+  const [likes, setLikes] = useState(comment.likes.length)
+  const [liked, setLiked] = useState(false)
+
+  const handleLike = commentId => {
+    if (liked) {
+      setLikes(likes - 1)
+      setLiked(false)
+      updateCommentLike(commentId, 'unlike')
+    } else {
+      setLikes(likes + 1)
+      setLiked(true)
+      updateCommentLike(commentId, 'like')
+    }
+  }
+
+  const updateCommentLike = async (commentId, type) => {
+    let comment = {
+      userId: userId
+    }
+    axios
+      .put(
+        `${process.env.REACT_APP_APP_URL}/comments/${type}/${commentId}`,
+        comment
+      )
+      .then(response => {
+        setShowEmojis(false)
+        if (response?.status === 200) {
+        } else {
+          if (response?.data.message) {
+            setMessage({
+              text: response.data.message || "something want wrong",
+              state: "error",
+            });
+          } else {
+            setMessage({
+              text:  "something want wrong",
+              state: "error",
+            });
+          }
+          setLikes(likes)
+          setLiked(liked)
+        }
+      })
+      .catch(err => {
+        console.log(err)
+        if (err.response?.data.message) {
+          setMessage({
+            text: err.response.data.message || "something want wrong",
+            state: "error",
+          });
+        } else {
+          setMessage({
+            text: err.message || "something want wrong",
+            state: "error",
+          });
+        }
+        setLikes(likes)
+        setLiked(liked)
+      })
+  }
+  const handleClear = () => {
+    setMessage({ text: null, state: "error" });
+  };
+
   useEffect(() => {
     if (commentuserId) {
       fetchUser()
+    }
+
+    let userLiked = comment.likes.filter(item => item === userId)
+
+    if (userLiked.length > 0) {
+      setLiked(true)
+    } else {
+      setLiked(false)
     }
   }, [commentuserId])
 
@@ -77,6 +154,7 @@ function Comment ({
   }
   return (
     <>
+      {message.text && <MessageModal message={message} onClear={handleClear} />}
       <Modal
         data-bs-theme='dark'
         show={showModal}
@@ -133,20 +211,22 @@ function Comment ({
                       <Dropdown.Item>
                         <div
                           onClick={handelShowDelete}
-                          className='cursor-pointer text-white-50'
+                          className='cursor-pointer '
                         >
                           <BsFillTrashFill /> Delete
                         </div>
                       </Dropdown.Item>
                       <Dropdown.Item>
                         <div
-                          className='cursor-pointer text-white-50'
-                          onClick={() =>
+                          className='cursor-pointer '
+                          onClick={() => {
+                            setShowEmojis(false)
+
                             setActiveComments({
                               id: comment._id,
                               type: 'editing'
                             })
-                          }
+                          }}
                         >
                           <BsFillPencilFill /> Edit
                         </div>
@@ -154,13 +234,14 @@ function Comment ({
                     </>
                     <Dropdown.Item>
                       <div
-                        className='cursor-pointer text-white-50'
-                        onClick={() =>
+                        className='cursor-pointer'
+                        onClick={() => {
+                          setShowEmojis(false)
                           setActiveComments({
                             id: comment._id,
                             type: 'replying'
                           })
-                        }
+                        }}
                       >
                         <BsFillReplyFill /> Replay
                       </div>
@@ -183,19 +264,33 @@ function Comment ({
               value={comment?.text}
               loading={loading}
               activeComments={activeComments}
+              showEmojis={showEmojis}
+              setShowEmojis={setShowEmojis}
             />
           )}
-          <div
-            className='cursor-pointer text-white-50'
-            onClick={() =>
-              setActiveComments({
-                id: comment._id,
-                type: 'replying'
-              })
-            }
-          >
-            <BsFillReplyFill /> Replay
-          </div>
+          {userId && (
+            <div className='d-flex gap-3'>
+              <div
+                className='cursor-pointer text-white-50 reply d-flex align-items-center gap-1'
+                onClick={() => {
+                  setShowEmojis(false)
+                  setActiveComments({
+                    id: comment._id,
+                    type: 'replying'
+                  })
+                }}
+              >
+                <BsFillReplyFill />
+                <span> Replay</span>
+              </div>
+              <LikeButton
+                handleLike={handleLike}
+                commentId={comment._id}
+                likes={likes}
+                liked={liked}
+              />
+            </div>
+          )}
         </div>
         {isReplying && (
           <CommentForm
@@ -208,6 +303,8 @@ function Comment ({
             kind='replying'
             loading={loading}
             activeComments={activeComments}
+            showEmojis={showEmojis}
+            setShowEmojis={setShowEmojis}
           />
         )}
         {replies.length > 0 && (
@@ -228,6 +325,8 @@ function Comment ({
                 parentId={comment._id}
                 userImage={userImage}
                 loading={loading}
+                showEmojis={showEmojis}
+                setShowEmojis={setShowEmojis}
               />
             ))}
           </div>

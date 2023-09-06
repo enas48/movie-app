@@ -6,15 +6,21 @@ import Comment from './Comment'
 import { LinkContainer } from 'react-router-bootstrap'
 import CommentForm from './CommentForm'
 import { BsSendFill } from 'react-icons/bs'
+import {FaRegComment} from 'react-icons/fa'
 
 function Comments ({ type, id }) {
   const { userId } = useContext(AuthContext)
   const [userImage, setImage] = useState(process.env.PUBLIC_URL + '/person.png')
-  const [activeComments, setActiveComments] = useState(null)
+  const [activeComments, setActiveComments] = useState({
+    id: null,
+    type: 'add'
+  })
   const [backendComments, setBackendComments] = useState([])
   const [authorized, setAuthorized] = useState(true)
   const [loading, setLoading] = useState(false)
+  const [showEmojis, setShowEmojis] = useState(false)
 
+ 
   const rootComments = backendComments
     .filter(c => c.parentCommentId === null)
     .sort(
@@ -30,10 +36,9 @@ function Comments ({ type, id }) {
       )
   }
 
-  const addComment = (text, parentId) => {
-    if (!parentId) {
-      parentId = null
-    }
+
+  const addComment = (text, parentId= null) => {
+ 
     let comment = {
       userId: userId,
       text: text,
@@ -47,7 +52,11 @@ function Comments ({ type, id }) {
       .then(response => {
         if (response?.status === 200) {
           setBackendComments([response.data.comment, ...backendComments])
-          setActiveComments(null)
+          setActiveComments({
+            id: null,
+            type: 'add'
+          })
+          setShowEmojis(false)
           setLoading(false)
         }
       })
@@ -74,7 +83,11 @@ function Comments ({ type, id }) {
           })
 
           setBackendComments(updatedComments)
-          setActiveComments(null)
+          setActiveComments({
+            id: null,
+            type: 'add'
+          })
+          setShowEmojis(false)
           setLoading(false)
         }
       })
@@ -83,8 +96,8 @@ function Comments ({ type, id }) {
         setLoading(false)
       })
   }
-  const deleteComment = commentId => {
 
+  const deleteComment = commentId => {
     axios
       .delete(`${process.env.REACT_APP_APP_URL}/comments/${commentId}`)
       .then(response => {
@@ -93,12 +106,15 @@ function Comments ({ type, id }) {
             item => item._id !== commentId
           )
           setBackendComments(updatedComments)
-       
+          setActiveComments({
+            id: null,
+            type: 'add'
+          })
+          setShowEmojis(false)
         }
       })
       .catch(err => {
         console.log(err)
-       
       })
   }
 
@@ -144,8 +160,8 @@ function Comments ({ type, id }) {
   }, [type, id, userId])
 
   return (
-    <div className='details-related-content '>
-      <h3>Comments</h3>
+    <div className='details-related-content ' style={{ zIndex: '13' }}>
+      <h3 className='mb-4'> {rootComments.length}&nbsp;Comments &nbsp;<FaRegComment/></h3>
       <div className='container'>
         <div className='comments-container '>
           {!authorized && (
@@ -174,6 +190,8 @@ function Comments ({ type, id }) {
               kind='add'
               activeComments={activeComments}
               loading={loading}
+              showEmojis={showEmojis}
+              setShowEmojis={setShowEmojis}
             />
           )}
         </div>
@@ -194,6 +212,11 @@ function Comments ({ type, id }) {
               updateComment={updateComment}
               userImage={userImage}
               loading={loading}
+              showEmojis={showEmojis}
+              setShowEmojis={setShowEmojis}
+            
+             
+          
             />
           ))}
         </div>

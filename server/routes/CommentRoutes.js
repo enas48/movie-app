@@ -4,7 +4,8 @@ const {
   getComments,
   createComment,
   updatedComment,
-  deleteComment
+  deleteComment,
+  updatedLike
 } = require('../controllers/commentController')
 const { protect } = require('../middleware/authMiddleware')
 
@@ -14,5 +15,7 @@ router
   .route('/:id')
   .put(protect, updatedComment)
   .delete(protect, deleteComment)
-
+  router
+  .route('/:type/:id')
+  .put(protect, updatedLike)
 module.exports = router

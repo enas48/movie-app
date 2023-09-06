@@ -19,6 +19,7 @@ exports.updateComment = async (id, comment) => {
   )
 }
 
+
 exports.deleteComment = async id => {
   return await Comment.findByIdAndDelete(id)
 }

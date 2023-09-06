@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useContext } from 'react'
 import { useParams } from 'react-router-dom'
 
 import * as TvSeriesApi from '../../api/TvSeriesApi'
@@ -14,7 +14,8 @@ import BookmarkFavBtn from '../../components/BookmarkFavBtn'
 import Video from '../../components/Video'
 import { PiTelevisionBold } from 'react-icons/pi'
 import { MdLanguage } from 'react-icons/md'
-
+import Comments from '../../components/Comments'
+import AuthContext from "../../helpers/authContext";
 function TvDetails ({
   addBookMark,
   bookmarkedIds,
@@ -29,6 +30,7 @@ function TvDetails ({
   const [image, setImage] = useState(null)
   const [key, setKey] = useState(null)
   const [video, setVideos] = useState([])
+  const { userId } = useContext(AuthContext);
 
   const handleBookmark = (e, id, type) => {
     e.stopPropagation()
@@ -190,7 +192,12 @@ function TvDetails ({
               </div>
             </div>
             <Video keyVideo={key} playVideo={playVideo} video={video} />
-
+            <Comments
+              id={id}
+              type="tv"
+              currentUserId={userId}
+     
+            />
             <div className='details-related-content'>
               {details?.seasons && details.seasons.length !== 0 && (
                 <SeasonList

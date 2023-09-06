@@ -18,14 +18,14 @@ const commentSchema = new Schema(
     parentCommentId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Comment',
-      default:null,
-      required: false, // if not populated, then its a top level comment
+      default: null,
+      required: false // if not populated, then its a top level comment
     },
     date: {
       type: Date,
       default: Date.now
     },
-
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
   },
   {
     timestamps: true

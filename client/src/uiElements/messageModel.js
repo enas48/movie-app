@@ -12,7 +12,7 @@ const MessageModal = props => {
     const timer = setTimeout(() => {
       setShow(false)
       props.onClear()
-    }, 3000)
+    }, 3000000)
     return () => clearTimeout(timer)
   }, [props])
 

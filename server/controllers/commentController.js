@@ -9,7 +9,7 @@ const getComments = async (req, res, next) => {
   try {
     const comments = await commentService.getComments(
       req.params.type,
-      req.params.postId,
+      req.params.postId
     )
 
     res.status(200).json({
@@ -27,7 +27,7 @@ const getComments = async (req, res, next) => {
 //@access private
 const createComment = async (req, res, next) => {
   try {
-    const { userId, text, post_id,type ,parentCommentId} = req.body
+    const { userId, text, post_id, type, parentCommentId } = req.body
     const comment = await commentService.createComment({
       userId: userId,
       text,
@@ -35,7 +35,6 @@ const createComment = async (req, res, next) => {
 
       type,
       parentCommentId
-    
     })
     res
       .status(200)
@@ -90,6 +89,60 @@ const updatedComment = async (req, res, next) => {
   }
 }
 
+// @desc update comment
+//@route put /comments/:type/:id
+//@access private
+const updatedLike = async (req, res, next) => {
+  const type = req.params.type
+  console.log(type)
+  try {
+    const { userId } = req.body
+    const comment = await commentService.getCommentById(req.params.id)
+    if (!comment) {
+      const error = new HttpError('comment not found', 400)
+      return next(error)
+    } else {
+      if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
+        // Yes, it's a valid ObjectId, proceed with `findById` call.
+        const error = new HttpError('user not found', 401)
+        return next(error)
+      }
+      const user = await User.findById(userId)
+      //check for  user
+      if (!user) {
+        const error = new HttpError('user not found', 401)
+        return next(error)
+      }
+   
+      // /comments/like/:id
+      if (type === 'like') {
+        let updatedComment = await commentService.updateComment(req.params.id, {
+          $push: { likes: userId }
+        })
+        res.status(200).json({
+          comment: updatedComment,
+          message: `comment updated successfully`,
+          status: 200
+        })
+      }
+      // /comments/unlike/:id
+      else if ((type === 'unlike')) {
+        let updatedComment = await commentService.updateComment(req.params.id, {
+          $pull: { likes: userId }
+        })
+        res.status(200).json({
+          comment: updatedComment,
+          message: `comment updated successfully`,
+          status: 200
+        })
+      }
+    }
+  } catch (err) {
+    const error = new HttpError(err.message, 500)
+    return next(error)
+  }
+}
+
 // @desc delete comment
 //@route delete /comments/:id
 //@access private
@@ -100,11 +153,11 @@ const deleteComment = async (req, res, next) => {
       const error = new HttpError('comment not found', 400)
       return next(error)
     } else {
-    await commentService.deleteComment(req.params.id)
-   if(res.statusCode ===200){
-    //delete replies 
-    await commentService.deleteManyComment(req.params.id)
-   }
+      await commentService.deleteComment(req.params.id)
+      if (res.statusCode === 200) {
+        //delete replies
+        await commentService.deleteManyComment(req.params.id)
+      }
 
       res.status(200).json({ message: `comment deleted successfully` })
     }
@@ -118,5 +171,6 @@ module.exports = {
   getComments,
   createComment,
   updatedComment,
-  deleteComment
+  deleteComment,
+  updatedLike
 }
