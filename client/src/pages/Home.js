@@ -32,19 +32,19 @@ function Home (props) {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    customPaging: function (i) {
-      const x = posters.map((item, i) => {
-        return (
-          <a
+    // customPaging: function (i) {
+    //   const x = posters.map((item, i) => {
+    //     return (
+    //       <a
           
-          >
-            <img src={`${item.image}`} alt='' />
-          </a>
-        )
-      })
+    //       >
+    //         <img src={`${item.image}`} alt='' />
+    //       </a>
+    //     )
+    //   })
 
-      return x[i]
-    },
+    //   return x[i]
+    // },
     autoplay: true
   }
 
