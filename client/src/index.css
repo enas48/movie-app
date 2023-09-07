@@ -406,7 +406,7 @@ form .icon-container .icon {
 }
 .dropdown-item {
   border-bottom: 1px solid var(--dark);
-  color:rgba(255,255,255,.5)!important
+  color: rgba(255, 255, 255, 0.5) !important;
 }
 .dropdown-item:last-child {
   border-bottom: none;
@@ -426,11 +426,77 @@ form .icon-container .icon {
 }
 
 /*----------------------home page----------------------------*/
+.home .carsoul .slick-next {
+  right: 14px !important;
+  z-index: 2;
+}
+.home .carsoul .slick-prev {
+  left: 5px !important;
+  z-index: 2;
+}
+.home .carsoul .carsoul-item {
+  text-align: center;
+  max-width: 100vw;
+  max-height: calc(100vh - 70px);
+  margin: 0px auto;
+  position: relative;
+}
+.home .carsoul .carsoul-item img {
+  height: calc(100vh - 70px);
+  object-fit: cover;
+  width: 100%;
+}
+.home .carsoul .carsoul-item h3 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+.home .carsoul .slick-dots li button:before {
+  color: var(--white);
+}
+.home .carsoul .slick-dots {
+  display: flex !important;
+  /* overflow: hidden; */
+  gap: 15px;
+}
+.home .carsoul .slick-dots li {
+  width: 140px;
+  height: auto;
+}
+.home .carsoul .slick-dots img {
+  width: 140px;
+}
+.home .carsoul li.slick-active {
+  transform: scale(1.23);
+}
+.home .carsoul .slick-dots {
+  transition: 0.3s ease-in-out;
+  animation-name: example;
+  animation-duration:62s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
+}
+@keyframes example {
+  0% {
+    /* transform: translateX(0); */
+    left: 0;
+  }
+
+  100% {
+    left: -100%;
+    /* transform: translateX(-100%); */
+  }
+
+}
 .create-account {
   background: var(--dark-active);
   padding: 5rem 1rem;
 }
-.home .carousel-container {
+
+/* .home .carousel-container {
   background: var(--dark) !important;
 }
 
@@ -457,20 +523,25 @@ form .icon-container .icon {
 .home .active-thumbnail {
   border: none;
   transform: scale(1.2);
-}
+} */
 @media (max-width: 1200px) {
   h5 {
     font-size: 1rem;
   }
 }
-@media (max-width: 1024px) {
-  .home .thumbnails {
+/*@media (max-width: 1024px) {
+ .home .thumbnails {
     margin-top: -24vh;
   }
 }
-
+*/
 @media (max-width: 768px) {
-  .home .thumbnails {
+  .home .carsoul .carsoul-item img {
+    /* height:  100%!important; */
+    width: 100%;
+    height: auto;
+  }
+  /* .home .thumbnails {
     margin-top: -18vh;
   }
   .carousel-image {
@@ -478,17 +549,23 @@ form .icon-container .icon {
   }
   .home .carousel-container {
     height: 82vh !important;
-  }
+  } */
 }
 
 @media (max-width: 678px) {
-  .home .thumbnails {
+  /* .home .thumbnails {
     display: none;
   }
   .home .carousel-container {
     height: min-content !important;
     max-height: 100vh !important;
     overflow: hidden;
+  } */
+}
+@media (max-width: 480px) {
+  .home .carsoul .slick-next,
+  .home .carsoul .slick-prev {
+    display: none !important;
   }
 }
 
@@ -1407,12 +1484,12 @@ button.icon-container.bookmark.active {
     right: -6%;
   }
 }
-.like{
+.like {
   font-size: 20px;
 }
-.like:hover{
+.like:hover {
   color: var(--secondry);
 }
-.reply:hover{
-  color:var(--white)!important;
+.reply:hover {
+  color: var(--white) !important;
 }

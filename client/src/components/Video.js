@@ -43,8 +43,8 @@ function Video ({ video, keyVideo, playVideo }) {
                       onClick={() => playVideo(item.key)}
                     >
                       <div className='card-body row'>
-                        <div className='col-4 d-flex align-items-center gap-2'>
-                          <div style={{ minWidth: '17px' }}>
+                        <div className='col-5 d-flex align-items-center gap-2 pe-0'>
+                          <div style={{ minWidth: '25px',textWrap:'noWrap',textAlign:'center' }}>
                             {item.key === keyVideo ? (
                               <FaPlay />
                             ) : (
@@ -59,9 +59,9 @@ function Video ({ video, keyVideo, playVideo }) {
                             />
                           </div>
                         </div>
-                        <div className='col-8'>
-                          {item?.name && item.name.length > 30
-                            ? item.name.slice(0, 30 - 1) + '…'
+                        <div className='col-7' title={item?.name }>
+                          {item?.name && item.name.length > 40
+                            ? item.name.slice(0, 40 - 1) + '…'
                             : item.name}
                         </div>
                       </div>

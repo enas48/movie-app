@@ -94,7 +94,7 @@ const updatedComment = async (req, res, next) => {
 //@access private
 const updatedLike = async (req, res, next) => {
   const type = req.params.type
-  console.log(type)
+
   try {
     const { userId } = req.body
     const comment = await commentService.getCommentById(req.params.id)
