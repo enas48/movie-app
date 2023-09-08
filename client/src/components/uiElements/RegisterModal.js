@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import LoginModal from "./loginModal";
 import SignupModal from "./SignupModal";
-
+import './modal.css'
 function RegisterModal(props) {
   const [show, setShow] = useState(false);
   const [signup, setSignUp] = useState(false);

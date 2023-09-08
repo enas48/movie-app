@@ -1,71 +1,71 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from "react";
 
-import SidebarLayout from '../../../components/sidebarLayout'
-import Search from '../../../components/search'
-import * as TvSeriesApi from '../../../api/TvSeriesApi'
-import Loading from '../../../uiElements/preloading'
-import RegisterModal from '../../../uiElements/RegisterModal'
-import { Outlet, useLocation } from 'react-router-dom'
-import { LinkContainer } from 'react-router-bootstrap'
-import { Nav } from 'react-bootstrap'
-import Accordion from 'react-bootstrap/Accordion'
-import AccordionContext from 'react-bootstrap/AccordionContext'
-import { useAccordionButton } from 'react-bootstrap/AccordionButton'
+import SidebarLayout from "../../../components/sidebar/sidebarLayout";
+import Search from "../../../components/search/search";
+import * as TvSeriesApi from "../../../api/TvSeriesApi";
+import Loading from "../../../components/uiElements/preloading";
+import RegisterModal from "../../../components/uiElements/RegisterModal";
+import { Outlet, useLocation } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
+import { Nav } from "react-bootstrap";
+import Accordion from "react-bootstrap/Accordion";
+import AccordionContext from "react-bootstrap/AccordionContext";
+import { useAccordionButton } from "react-bootstrap/AccordionButton";
 
-import { BiFilterAlt, BiPlus } from 'react-icons/bi'
-import { MdDone } from 'react-icons/md'
-import { Dropdown } from 'primereact/dropdown'
+import { BiFilterAlt, BiPlus } from "react-icons/bi";
+import { MdDone } from "react-icons/md";
+import { Dropdown } from "primereact/dropdown";
 
-function ContextAwareToggle ({ children, eventKey, callback }) {
-  const { activeEventKey } = useContext(AccordionContext)
+function ContextAwareToggle({ children, eventKey, callback }) {
+  const { activeEventKey } = useContext(AccordionContext);
 
   const decoratedOnClick = useAccordionButton(
     eventKey,
     () => callback && callback(eventKey)
-  )
+  );
 
-  const isCurrentEventKey = activeEventKey === eventKey
+  const isCurrentEventKey = activeEventKey === eventKey;
 
   return (
     <button
-      type='button'
+      type="button"
       className={
         isCurrentEventKey
-          ? 'btn genre-btn filter-btn  active'
-          : 'btn genre-btn filter-btn '
+          ? "btn genre-btn filter-btn  active"
+          : "btn genre-btn filter-btn "
       }
       onClick={decoratedOnClick}
     >
       {children}
     </button>
-  )
+  );
 }
 
-function AllSeries (props) {
-  const [isLoading, setIsLoading] = useState(true)
-  const location = useLocation()
-  const [date, setDate] = useState('all')
-  const [genre, setGenre] = useState([])
-  const [currentPage, setCurrentPage] = useState(1)
-  const [country, setCountry] = useState('US')
-  const [countries, setCountries] = useState([])
-  const [selectedCountry, setSelectedCountry] = useState(null)
-  const [selectedOrder, setSelectedOrder] = useState(null)
-  const [filteredGenre, setFilteredGenre] = useState([])
+function AllSeries(props) {
+  const [isLoading, setIsLoading] = useState(true);
+  const location = useLocation();
+  const [date, setDate] = useState("all");
+  const [genre, setGenre] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [country, setCountry] = useState("US");
+  const [countries, setCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [filteredGenre, setFilteredGenre] = useState([]);
 
   const selectedTemplate = (option, props) => {
     if (option) {
       return (
         <>
-          <div className='d-flex align-items-center gap-1'>
-            {props.placeholder === 'Select a Country' && (
+          <div className="d-flex align-items-center gap-1">
+            {props.placeholder === "Select a Country" && (
               <button
-                className='btn text-danger py-0 px-1 '
-                onClick={e => {
-                  e.preventDefault()
-                  setSelectedCountry(null)
-                  setCountry('US')
-                  setCurrentPage(1)
+                className="btn text-danger py-0 px-1 "
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSelectedCountry(null);
+                  setCountry("US");
+                  setCurrentPage(1);
                 }}
               >
                 X
@@ -75,50 +75,50 @@ function AllSeries (props) {
             <div>{option.name}</div>
           </div>
         </>
-      )
+      );
     }
-    return <span>{props.placeholder}</span>
-  }
+    return <span>{props.placeholder}</span>;
+  };
 
-  const OptionTemplate = option => {
+  const OptionTemplate = (option) => {
     return (
-      <div className='d-flex align-items-center'>
+      <div className="d-flex align-items-center">
         <div>{option.name}</div>
       </div>
-    )
-  }
-  const handleChange = page => {
-    setCurrentPage(page)
-  }
+    );
+  };
+  const handleChange = (page) => {
+    setCurrentPage(page);
+  };
 
   const handleGenre = (e, id) => {
     if (filteredGenre.includes(id)) {
-      let filtered = filteredGenre.filter(item => {
-        return item !== id
-      })
-      setFilteredGenre(filtered)
+      let filtered = filteredGenre.filter((item) => {
+        return item !== id;
+      });
+      setFilteredGenre(filtered);
     } else {
-      setFilteredGenre([...filteredGenre, id])
+      setFilteredGenre([...filteredGenre, id]);
     }
-    setCurrentPage(1)
-  }
+    setCurrentPage(1);
+  };
 
   //intilize get data from api
   const loadGenreAndCountries = async () => {
-    TvSeriesApi.getGenre().then(data => {
-      setGenre(data.genres)
-    })
+    TvSeriesApi.getGenre().then((data) => {
+      setGenre(data.genres);
+    });
     // TvSeriesApi.getCountries().then(data => {
     //   let countries = data.map(item => {
     //     return { name: item.english_name, code: item.iso_3166_1 }
     //   })
     //   setCountries(countries)
     // })
-    
-    let countries =[
-      { name: 'America', code: 'US' },
-      { name: 'Egypt', code: 'EG' },
-      { name: 'United Kingdom', code: 'GB' },
+
+    let countries = [
+      { name: "America", code: "US" },
+      { name: "Egypt", code: "EG" },
+      { name: "United Kingdom", code: "GB" },
       // { name: 'Germany', code: 'DE' },
       // { name: 'France', code: 'FR' },
       // { name: 'Spain', code: 'ES' },
@@ -133,18 +133,18 @@ function AllSeries (props) {
       // { name: 'Turkey', code: 'TR' },
       // { name: 'Taiwan', code: 'TW' },
       // { name: 'Vietnam', code: 'VN' },
-    ]
-    setCountries(countries)
-  }
+    ];
+    setCountries(countries);
+  };
 
   useEffect(() => {
     const loadData = async () => {
-      await new Promise(r => setTimeout(r, 800))
-      setIsLoading(false)
-    }
-    loadGenreAndCountries()
-    loadData()
-  }, [date, filteredGenre])
+      await new Promise((r) => setTimeout(r, 800));
+      setIsLoading(false);
+    };
+    loadGenreAndCountries();
+    loadData();
+  }, [date, filteredGenre]);
 
   return (
     <>
@@ -153,110 +153,110 @@ function AllSeries (props) {
         <RegisterModal show={props.show} handleCloseModal={props.handleClose} />
 
         <Search />
-        <div className='p-3 mt-lg-5'>
-          <div className='d-flex justify-content-between flex-wrap mb-2'>
-            <Nav className='tv-list flex-nowrap flex-shrink-0 mb-3'>
-              <LinkContainer to='onair'>
+        <div className="p-3 mt-lg-5">
+          <div className="d-flex justify-content-between flex-wrap mb-2">
+            <Nav className="tv-list flex-nowrap flex-shrink-0 mb-3">
+              <LinkContainer to="onair">
                 <Nav.Link
                   className={
-                    location.pathname.includes('onair') ||
-                    (location.pathname.includes('allseries') &&
-                      !location.pathname.includes('topRated') &&
-                      !location.pathname.includes('popular'))
-                      ? 'active'
-                      : ''
+                    location.pathname.includes("onair") ||
+                    (location.pathname.includes("allseries") &&
+                      !location.pathname.includes("topRated") &&
+                      !location.pathname.includes("popular"))
+                      ? "active"
+                      : ""
                   }
                   onClick={() => {
-                    setCurrentPage(1)
-                    setDate('all')
-                    setSelectedOrder({ name: 'All' })
-                    setSelectedCountry(null)
-                    setCountry('US')
-                    setFilteredGenre([])
+                    setCurrentPage(1);
+                    setDate("all");
+                    setSelectedOrder({ name: "All" });
+                    setSelectedCountry(null);
+                    setCountry("US");
+                    setFilteredGenre([]);
                   }}
                 >
                   onAir
                 </Nav.Link>
               </LinkContainer>
 
-              <LinkContainer to='topRated'>
+              <LinkContainer to="topRated">
                 <Nav.Link
                   className={
-                    location.pathname.includes('topRated') ? 'active' : ''
+                    location.pathname.includes("topRated") ? "active" : ""
                   }
                   onClick={() => {
-                    setCurrentPage(1)
-                    setDate('all')
-                    setSelectedOrder({ name: 'All' })
-                    setSelectedCountry(null)
-                    setCountry('US')
-                    setFilteredGenre([])
+                    setCurrentPage(1);
+                    setDate("all");
+                    setSelectedOrder({ name: "All" });
+                    setSelectedCountry(null);
+                    setCountry("US");
+                    setFilteredGenre([]);
                   }}
                 >
                   Top Rated
                 </Nav.Link>
               </LinkContainer>
 
-              <LinkContainer to='popular'>
+              <LinkContainer to="popular">
                 <Nav.Link
                   className={
-                    location.pathname.includes('popular') ? 'active' : ''
+                    location.pathname.includes("popular") ? "active" : ""
                   }
                   onClick={() => {
-                    setCurrentPage(1)
-                    setDate('all')
-                    setSelectedOrder({ name: 'All' })
-                    setSelectedCountry(null)
-                    setCountry('US')
-                    setFilteredGenre([])
+                    setCurrentPage(1);
+                    setDate("all");
+                    setSelectedOrder({ name: "All" });
+                    setSelectedCountry(null);
+                    setCountry("US");
+                    setFilteredGenre([]);
                   }}
                 >
                   popular
                 </Nav.Link>
               </LinkContainer>
             </Nav>
-            <div className='filter-container d-flex gap-2 align-items-center mb-2'>
-              <BiFilterAlt className='icon' />
+            <div className="filter-container d-flex gap-2 align-items-center mb-2">
+              <BiFilterAlt className="icon" />
               <Dropdown
                 value={selectedOrder}
-                onChange={e => {
-                  setSelectedOrder(e.value)
-                  setDate(e.value.name.toLowerCase())
-                  setCurrentPage(1)
+                onChange={(e) => {
+                  setSelectedOrder(e.value);
+                  setDate(e.value.name.toLowerCase());
+                  setCurrentPage(1);
                 }}
                 options={[
-                  { name: 'All' },
-                  { name: 'Latest' },
-                  { name: 'Oldest' }
+                  { name: "All" },
+                  { name: "Latest" },
+                  { name: "Oldest" },
                 ]}
-                optionLabel='Order'
-                placeholder='Order'
+                optionLabel="Order"
+                placeholder="Order"
                 valueTemplate={selectedTemplate}
                 itemTemplate={OptionTemplate}
-                className='w-full md:w-14rem'
+                className="w-full md:w-14rem"
               />
               <Dropdown
                 value={selectedCountry}
-                onChange={e => {
-                  setSelectedCountry(e.value)
-                  setCountry(e.value.code)
-                  setCurrentPage(1)
+                onChange={(e) => {
+                  setSelectedCountry(e.value);
+                  setCountry(e.value.code);
+                  setCurrentPage(1);
                 }}
                 options={countries}
-                optionLabel='name'
-                placeholder='Select a Country'
+                optionLabel="name"
+                placeholder="Select a Country"
                 filter
                 valueTemplate={selectedTemplate}
                 itemTemplate={OptionTemplate}
-                className='w-full md:w-14rem'
+                className="w-full md:w-14rem"
               />
             </div>
           </div>
-          <Accordion defaultActiveKey='0'>
-            <ContextAwareToggle eventKey='1'>Genre</ContextAwareToggle>
+          <Accordion defaultActiveKey="0">
+            <ContextAwareToggle eventKey="1">Genre</ContextAwareToggle>
 
-            <Accordion.Collapse eventKey='1'>
-              <div className='d-flex justify-content-center gap-3 flex-wrap mt-4'>
+            <Accordion.Collapse eventKey="1">
+              <div className="d-flex justify-content-center gap-3 flex-wrap mt-4">
                 {genre.length !== 0 &&
                   genre.map((item, i) => {
                     return (
@@ -265,26 +265,26 @@ function AllSeries (props) {
                         <button
                           className={
                             filteredGenre.includes(item.id)
-                              ? 'm-auto btn active text-nowrap filter-btn'
-                              : ' btn m-auto text-nowrap filter-btn'
+                              ? "m-auto btn active text-nowrap filter-btn"
+                              : " btn m-auto text-nowrap filter-btn"
                           }
-                          onClick={e => handleGenre(e, item.id)}
+                          onClick={(e) => handleGenre(e, item.id)}
                         >
                           {filteredGenre.includes(item.id)}
                           {item.name}&nbsp;
                           {filteredGenre.includes(item.id) ? (
-                            <MdDone className='icon ' />
+                            <MdDone className="icon " />
                           ) : (
-                            <BiPlus className='icon ' />
+                            <BiPlus className="icon " />
                           )}
                         </button>
                       </div>
-                    )
+                    );
                   })}
               </div>
             </Accordion.Collapse>
           </Accordion>
-          <div className='d-flex justify-content-center gap-3 flex-wrap mt-4 genre-container'>
+          <div className="d-flex justify-content-center gap-3 flex-wrap mt-4 genre-container">
             {genre.length !== 0 &&
               genre.map((item, i) => {
                 return (
@@ -293,21 +293,21 @@ function AllSeries (props) {
                     <button
                       className={
                         filteredGenre.includes(item.id)
-                          ? 'm-auto btn active text-nowrap filter-btn'
-                          : ' btn m-auto text-nowrap filter-btn'
+                          ? "m-auto btn active text-nowrap filter-btn"
+                          : " btn m-auto text-nowrap filter-btn"
                       }
-                      onClick={e => handleGenre(e, item.id)}
+                      onClick={(e) => handleGenre(e, item.id)}
                     >
                       {filteredGenre.includes(item.id)}
                       {item.name}&nbsp;
                       {filteredGenre.includes(item.id) ? (
-                        <MdDone className='icon ' />
+                        <MdDone className="icon " />
                       ) : (
-                        <BiPlus className='icon ' />
+                        <BiPlus className="icon " />
                       )}
                     </button>
                   </div>
-                )
+                );
               })}
           </div>
           <Outlet
@@ -316,7 +316,7 @@ function AllSeries (props) {
         </div>
       </SidebarLayout>
     </>
-  )
+  );
 }
 
-export default AllSeries
+export default AllSeries;

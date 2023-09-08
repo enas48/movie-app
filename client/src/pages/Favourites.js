@@ -2,13 +2,13 @@ import React, { useState, useEffect, useMemo, useContext } from "react";
 import axios from "axios";
 
 import AuthContext from "../helpers/authContext";
-import SidebarLayout from "../components/sidebarLayout";
-import Search from "../components/search";
-import Loading from "../uiElements/preloading";
+import SidebarLayout from "../components/sidebar/sidebarLayout";
+import Search from "../components/search/search";
+import Loading from "../components/uiElements/preloading";
 
 import * as MovieApi from "../api/MovieApi";
 import * as TvSeriesApi from "../api/TvSeriesApi";
-import FavouriteItem from "../components/FavouriteItem";
+import BfwItem from "../components/bookFavWatch/BfwItem";
 
 function Favourite(props) {
   const { addBookMark, bookmarkedIds, favouriteIds, addFavourite } = props;
@@ -37,6 +37,11 @@ function Favourite(props) {
       setTvFavourites(filteredFavourites);
     }
   };
+  const handleBookmark = (e, id, type) => {
+    console.log(id)
+    e.stopPropagation()
+    addBookMark(id, type)
+  }
 
   const loadMovieData = async (ids) => {
     for (let data of ids) {
@@ -52,7 +57,7 @@ function Favourite(props) {
   };
 
   const loadTvData = async (ids) => {
-    setIsLoading(true);
+
     for (let data of ids) {
       const response = await TvSeriesApi.getSeriesDetails(data).then((tv) => {
         return tv;
@@ -63,7 +68,7 @@ function Favourite(props) {
     TvSeriesApi.list(tvArr).then((data) => {
       setTvFavourites(data);
     });
-    setIsLoading(false);
+  
   };
 
   const fetchFavourites = async () => {
@@ -112,12 +117,12 @@ function Favourite(props) {
               {movieFavourites.length !== 0 &&
                 movieFavourites.map((item, i) => {
                   return (
-                    <FavouriteItem
+                    <BfwItem
                       key={i}
                       link="/details/movies"
                       item={item}
                       type="movie"
-                      addBookMark={addBookMark}
+                      addBookMark={handleBookmark}
                       bookmarkedIds={bookmarkedIds}
                       favouriteIds={favouriteIds}
                       addFavourite={handleFavourite}
@@ -130,12 +135,12 @@ function Favourite(props) {
               {tvFavourites.length !== 0 &&
                 tvFavourites.map((item, i) => {
                   return (
-                    <FavouriteItem
+                    <BfwItem
                       key={i}
                       link="/details/series"
                       item={item}
                       type="tv"
-                      addBookMark={addBookMark}
+                      addBookMark={handleBookmark}
                       bookmarkedIds={bookmarkedIds}
                       favouriteIds={favouriteIds}
                       addFavourite={handleFavourite}

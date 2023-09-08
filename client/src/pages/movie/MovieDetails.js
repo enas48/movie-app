@@ -1,24 +1,24 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 
-
 import * as MovieApi from "../../api/MovieApi";
 
-import SidebarLayout from "../../components/sidebarLayout";
+import SidebarLayout from "../../components/sidebar/sidebarLayout";
 import StarRating from "../../components/StarRating";
 import MovieList from "../../components/MovieList";
 import Crew from "../../components/Crew";
-import Search from "../../components/search";
-import Loading from "../../uiElements/preloading";
-import RegisterModal from "../../uiElements/RegisterModal";
-import BookmarkFavBtn from "../../components/BookmarkFavBtn";
-import Video from "../../components/Video";
+import Search from "../../components/search/search";
+import Loading from "../../components/uiElements/preloading";
+import RegisterModal from "../../components/uiElements/RegisterModal";
+
+import Video from "../../components/video/Video";
 
 import { FaPlay } from "react-icons/fa";
 import { MdLanguage } from "react-icons/md";
 import { BiTimeFive, BiCameraMovie } from "react-icons/bi";
-import Comments from "../../components/Comments";
+import Comments from "../../components/comment/Comments";
 import AuthContext from "../../helpers/authContext";
+import BfwButton from "../../components/bookFavWatch/BfwButton";
 
 function MovieDetails({
   addBookMark,
@@ -51,9 +51,12 @@ function MovieDetails({
     window.open(video, "_blank");
   };
 
+  const clearVideoKey = () => {
+    setKey(null);
+  };
 
   const fetchMovieVideo = async (id) => {
-    setIsLoading(true);
+ 
     try {
       MovieApi.getMovieVideo(id).then((movie) => {
         let firstKey = Object.keys(movie.results)[0];
@@ -64,9 +67,9 @@ function MovieDetails({
           setDisabled(false);
         }
       });
-      setIsLoading(false);
+
     } catch (err) {
-      setIsLoading(false);
+    
       console.log(err);
     }
   };
@@ -87,6 +90,7 @@ function MovieDetails({
   const playVideo = (key) => {
     setKey(key);
   };
+
   let preloadImages = async (movie) => {
     if (movie?.backdrop_path && movie.backdrop_path !== null) {
       const response = await fetch(
@@ -98,21 +102,23 @@ function MovieDetails({
   };
 
   const fetchMovie = async (id) => {
-    setIsLoading(true);
-
     try {
       MovieApi.getMovieDetails(id).then((movie) => {
         preloadImages(movie);
         setDetails(movie);
       });
-      setIsLoading(false);
     } catch (err) {
-      setIsLoading(false);
       console.log(err);
     }
   };
 
   useEffect(() => {
+    const loadData = async () => {
+      setIsLoading(true);
+      await new Promise((r) => setTimeout(r, 1000));
+      setIsLoading(false);
+    };
+    loadData();
     if (id) {
       fetchMovie(id);
       fetchMovieVideo(id);
@@ -122,8 +128,8 @@ function MovieDetails({
 
   return (
     <>
-      {/* {isLoading && <Loading />} */}
- 
+      {isLoading && <Loading />}
+
       <SidebarLayout>
         <Search />
         <RegisterModal show={show} handleCloseModal={handleClose} />
@@ -196,7 +202,7 @@ function MovieDetails({
                   Watch Now&nbsp;
                   <FaPlay />
                 </button>
-                <BookmarkFavBtn
+                <BfwButton
                   bookmarkedIds={bookmarkedIds}
                   favouriteIds={favouriteIds}
                   addBookMark={handleBookmark}
@@ -211,12 +217,7 @@ function MovieDetails({
             <Crew id={id} type="movie" />
 
             <Video keyVideo={key} playVideo={playVideo} video={trailerVideo} />
-            <Comments
-              id={id}
-              type="movie"
-              currentUserId={userId}
-     
-            />
+            <Comments id={id} type="movie" currentUserId={userId} />
             <div className="details-related-content">
               <MovieList
                 bookmarkedIds={bookmarkedIds}
@@ -226,6 +227,7 @@ function MovieDetails({
                 kind="similar"
                 cols={4}
                 id={id}
+                clearVideoKey={clearVideoKey}
               />
             </div>
           </div>

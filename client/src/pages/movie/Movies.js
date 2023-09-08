@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 
-import SidebarLayout from '../../components/sidebarLayout'
-import Search from '../../components/search'
+import SidebarLayout from '../../components/sidebar/sidebarLayout'
+import Search from '../../components/search/search'
 import MovieList from '../../components/MovieList'
-import RegisterModal from '../../uiElements/RegisterModal'
-import Loading from '../../uiElements/preloading'
+import RegisterModal from '../../components/uiElements/RegisterModal'
+import Loading from '../../components/uiElements/preloading'
 
 function Movies (props) {
   const [isLoading, setIsLoading] = useState(true)

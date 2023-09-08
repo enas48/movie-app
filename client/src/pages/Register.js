@@ -1,8 +1,8 @@
 import { useState, useEffect,useContext } from 'react'
 
-import Header from '../components/Header'
-import Loading from '../uiElements/preloading'
-import SignupModal from '../uiElements/SignupModal'
+import Header from '../components/header/Header'
+import Loading from '../components/uiElements/preloading'
+import SignupModal from '../components/uiElements/SignupModal'
 import AuthContext from "../helpers/authContext";
 import { useNavigate } from "react-router-dom";
 

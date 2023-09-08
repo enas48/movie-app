@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 // import Carousel from "react-grid-carousel";
 import Slider from 'react-slick'
 import { useParams } from 'react-router-dom'
-import SidebarLayout from '../components/sidebarLayout'
-import Loading from '../uiElements/preloading'
+import SidebarLayout from '../components/sidebar/sidebarLayout'
+import Loading from '../components/uiElements/preloading'
 import CarouselItem from '../components/CarouselItem'
 import * as PersonApi from '../api/PersonApi'
 import * as MovieApi from '../api/MovieApi'
 import * as TvSeriesApi from '../api/TvSeriesApi'
-import RegisterModal from '../uiElements/RegisterModal'
+import RegisterModal from '../components/uiElements/RegisterModal'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 function Person (props) {
@@ -125,7 +125,7 @@ function Person (props) {
         <div className='details-container person-container'>
           <div className=' details-content row m-0 d-flex justify-content-center'>
             <div className='col-md-5 col-lg-3 order-md-2 text-center mb-3'>
-              {person?.image !== '' && (
+              {person?.image && (
                 <LazyLoadImage
                   className='img-fluid rounded eposide '
                   src={person?.image}

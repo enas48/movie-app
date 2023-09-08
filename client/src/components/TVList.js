@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Slider from 'react-slick'
 import * as TvSeriesApi from '../api/TvSeriesApi'
 
-import Loading from '../uiElements/preloading'
+import Loading from './uiElements/preloading'
 import CarouselItem from './CarouselItem'
 import { LinkContainer } from 'react-router-bootstrap'
 
@@ -15,7 +15,8 @@ function TvList (props) {
     bookmarkedIds,
     favouriteIds,
     addFavourite,
-    cols
+    cols,
+    clearVideoKey
   } = props
   const [isLoading, setIsLoading] = useState(true)
   const [series, setSeries] = useState([])
@@ -136,6 +137,7 @@ function TvList (props) {
                         bookmarkedIds={bookmarkedIds}
                         favouriteIds={favouriteIds}
                         addFavourite={addFavourite}
+                        clearVideoKey={clearVideoKey}
                       />
                     )
                   })}

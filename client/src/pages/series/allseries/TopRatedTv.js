@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import * as TvSeriesApi from "../../../api/TvSeriesApi";
 import CarouselItem from "../../../components/CarouselItem";
 import Paginations from "../../../components/Pagination ";
-import Loading from "../../../uiElements/preloading";
+import Loading from "../../../components/uiElements/preloading";
 
 function TopRatedTv(props) {
   let { addBookMark, bookmarkedIds, favouriteIds, addFavourite } = props;

@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useState } from 'react'
+import './episodes.css';
 import Episode from './Episode'
-
 function Episodes ({ episodes }) {
   const [allEpisodes, setEpisodes] = useState([])
   const imagePerRow = 20
@@ -10,9 +10,8 @@ function Episodes ({ episodes }) {
     setNext(next + imagePerRow)
   }
 
-  let tvArr = useMemo(() => [], [])
-
   const loadEpisode = async episodes => {
+    let tvArr=[];
     if (episodes.length !== 0) {
       for (let data of episodes) {
         if (data?.still_path && data.still_path !== null) {
@@ -58,8 +57,9 @@ function Episodes ({ episodes }) {
     }
   }
   useEffect(() => {
+    setEpisodes(episodes)
     loadEpisode(episodes)
-  }, [])
+  }, [episodes])
 
   return (
     <>
@@ -68,8 +68,8 @@ function Episodes ({ episodes }) {
           <>
             <h3 className='mb-4 px-md-2'>Episodes</h3>
             <div className='row m-0 gap-4 d-flex justify-content-center '>
-              {allEpisodes?.slice(0, next)?.map(item => {
-                return <Episode key={item.id} episode={item} />
+              {allEpisodes?.slice(0, next)?.map((item,i) => {
+                return <Episode key={i} episode={item} />
               })}
             </div>
             {next < allEpisodes?.length && (

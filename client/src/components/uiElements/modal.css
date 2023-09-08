@@ -1,0 +1,27 @@
+/*--------------------register modal style----------------------*/
+.custom-modal .modal-content {
+    width: fit-content;
+    margin: auto;
+  }
+
+  .custom-modal .form-container {
+    min-height: auto;
+    margin: 0;
+  }
+  .custom-modal .modal-body {
+    padding: 0;
+  }
+  .custom-modal .modal-header {
+    position: absolute;
+    top: 0;
+    z-index: 4;
+    width: 100%;
+    border: none;
+  }
+  .custom-modal .modal-header button {
+    background-color: #fff;
+    opacity: 1;
+    width: 0.7rem;
+    border-radius: 50%;
+    height: 0.7rem;
+  }

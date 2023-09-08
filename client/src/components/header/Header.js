@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import './header.css'
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -12,7 +12,7 @@ import { RiMovie2Fill } from "react-icons/ri";
 import { BiLogIn } from "react-icons/bi";
 import { MdPersonAddAlt1 } from "react-icons/md";
 
-import AuthContext from "../helpers/authContext";
+import AuthContext from "../../helpers/authContext";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 function Header() {

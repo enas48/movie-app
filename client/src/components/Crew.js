@@ -3,6 +3,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import * as TvSeriesApi from "../api/TvSeriesApi";
 import * as MovieApi from "../api/MovieApi";
+import './crew.css';
 
 function Crew({ id, type }) {
   const [crew, setCrew] = useState([]);

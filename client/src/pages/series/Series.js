@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 
-import SidebarLayout from '../../components/sidebarLayout'
-import Search from '../../components/search'
+import SidebarLayout from '../../components/sidebar/sidebarLayout'
+import Search from '../../components/search/search'
 import TvList from '../../components/TVList'
-import Loading from '../../uiElements/preloading'
-import RegisterModal from '../../uiElements/RegisterModal'
+import Loading from '../../components/uiElements/preloading'
+import RegisterModal from '../../components/uiElements/RegisterModal'
 
 function Series (props) {
   const [isLoading, setIsLoading] = useState(true)

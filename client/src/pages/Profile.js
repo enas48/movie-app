@@ -5,9 +5,9 @@ import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-import SidebarLayout from "../components/sidebarLayout";
-import MessageModal from "../uiElements/messageModel";
-import Loading from "../uiElements/preloading";
+import SidebarLayout from "../components/sidebar/sidebarLayout";
+import MessageModal from "../components/uiElements/messageModel";
+import Loading from "../components/uiElements/preloading";
 import AuthContext from "../helpers/authContext";
 
 import { AiFillCamera } from "react-icons/ai";

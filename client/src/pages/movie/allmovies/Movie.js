@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import * as MovieApi from '../../../api/MovieApi'
 import CarouselItem from '../../../components/CarouselItem'
 import Paginations from '../../../components/Pagination '
-import Loading from '../../../uiElements/preloading'
+import Loading from '../../../components/uiElements/preloading'
 import { useOutletContext, useParams } from 'react-router-dom'
 
 function Movie (props) {

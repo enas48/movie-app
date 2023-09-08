@@ -8,7 +8,7 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";                                       
 import './index.css'
 
-import Home from './pages/Home'
+import Home from './pages/home/Home'
 import Series from './pages/series/Series'
 import Bookmark from './pages/Bookmark'
 import Movies from './pages//movie/Movies'
@@ -24,15 +24,16 @@ import ProtectedRoute from './helpers/protectedRoute'
 import { setAuthToken } from './helpers/setAuthToken'
 import AuthContext from './helpers/authContext'
 
-import MessageModal from './uiElements/messageModel'
+import MessageModal from './components/uiElements/messageModel'
 import Person from './pages/Person'
-import SearchItem from './pages/SearchItem'
+import SearchItem from './components/search/SearchItem'
 import * as MovieApi from './api/MovieApi'
 import Favourite from './pages/Favourites'
 import AllSeries from './pages/series/allseries/AllSeries'
 import AllMovies from './pages/movie/allmovies/AllMovies'
 import Movie from './pages/movie/allmovies/Movie'
 import Tv from './pages/series/allseries/Tv'
+import SearchList from './pages/search/SearchList';
 
 function App () {
   const [message, setMessage] = useState({ text: null, state: 'error' })
@@ -239,6 +240,7 @@ function App () {
   }
 
   useEffect(() => {
+    console.log(searchList)
     if (userId) {
       fetchUser()
       fetchItems('bookmarks')
@@ -481,6 +483,21 @@ function App () {
             path='/search/:media_type/:id'
             element={
               <SearchItem
+                searchList={searchList}
+                bookmarkedIds={bookmarkedIds}
+                addBookMark={handleBookmark}
+                favouriteIds={favouritedIds}
+                addFavourite={handleFavourite}
+                show={show}
+                handleClose={handleClose}
+               
+              />
+            }
+          />
+              <Route
+            path='/search/:query'
+            element={
+              <SearchList
                 searchList={searchList}
                 bookmarkedIds={bookmarkedIds}
                 addBookMark={handleBookmark}

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Slider from 'react-slick'
 import * as MovieApi from '../api/MovieApi'
 
-import Loading from '../uiElements/preloading'
+import Loading from './uiElements/preloading'
 import CarouselItem from './CarouselItem'
 import { LinkContainer } from 'react-router-bootstrap'
 
@@ -15,7 +15,8 @@ function MovieList (props) {
     bookmarkedIds,
     favouriteIds,
     addFavourite,
-    cols
+    cols,
+    clearVideoKey
   } = props
   const [isLoading, setIsLoading] = useState(true)
   const [movies, setMovies] = useState([])
@@ -134,6 +135,7 @@ function MovieList (props) {
                         bookmarkedIds={bookmarkedIds}
                         favouriteIds={favouriteIds}
                         addFavourite={addFavourite}
+                        clearVideoKey={clearVideoKey}
                       />
                     )
                   })}

@@ -29,14 +29,13 @@
   padding: 1.5rem 0.5rem 0.4rem;
 }
 
-
 .avater {
   width: 2.2rem;
   height: 2.2rem;
   border-radius: 50%;
   overflow: hidden;
   background: #393939;
-  background: url('../../public/person.png');
+  background: url('./person.png');
   background-size: cover;
   box-shadow: 2px 2px 2px #932e2e;
   display: inline-block;

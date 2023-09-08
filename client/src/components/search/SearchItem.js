@@ -1,8 +1,8 @@
 
 import { useParams } from 'react-router-dom'
-import MovieDetails from './movie/MovieDetails'
-import TvDetails from './series/TvDetails'
-import Person from './Person'
+import MovieDetails from '../../pages/movie/MovieDetails'
+import TvDetails from '../../pages/series/TvDetails'
+import Person from '../../pages/Person'
 
 function SearchItem (props) {
   const { media_type } = useParams()

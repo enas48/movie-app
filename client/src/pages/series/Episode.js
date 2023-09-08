@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
+
 import { useParams } from 'react-router-dom'
-import { FaPlay } from 'react-icons/fa'
 import * as TvSeriesApi from '../../api/TvSeriesApi'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { HiOutlinePlayCircle } from 'react-icons/hi2'
@@ -8,35 +8,13 @@ import { HiOutlinePlayCircle } from 'react-icons/hi2'
 function Episode ({ episode }) {
   const [disabled, setDisabled] = useState(false)
   const { id, seasonNum } = useParams()
-  const [youtubevideo, setYoutubevideo] = useState('')
   const [video, setVideo] = useState('')
 
   const handlePlay = epNum => {
-    // fetchSerisVideoYoutbe(id, seasonNum, epNum)
-    // if (youtubevideo !== '') {
-    //     window.open(video, '_blank')
-    // }
+
     fetchSeriesVideo(id)
     if (video !== '') {
       window.open(video, '_blank')
-    }
-  }
-  const fetchSerisVideoYoutbe = async (id, season_number, episode_number) => {
-    try {
-      setDisabled(true)
-      TvSeriesApi.getSeriesVideoYoutube(id, season_number, episode_number).then(
-        data => {
-          if (data?.results && data.results.length !== 0) {
-            let link = data.results[0].key
-            if (link !== null) {
-              setYoutubevideo(`https://www.youtube.com/embed/${link}`)
-              setDisabled(false)
-            }
-          }
-        }
-      )
-    } catch (err) {
-      console.log(err)
     }
   }
 
@@ -58,15 +36,15 @@ function Episode ({ episode }) {
 
   useEffect(() => {
     fetchSeriesVideo(id)
-    // fetchSerisVideoYoutbe(id,seasonNum,episode.episode_number)
-  }, [])
+    console.log(episode?.image)
+  }, [id])
 
   return (
     <div className='d-flex flex-column episode-container card card-container'>
-      {episode.image !== '' && (
+      {episode?.image  && (
         <LazyLoadImage src={episode.image} alt={episode.name} />
       )}
-      {episode.image === '' && (
+      {episode?.image === ''  && (
         <img
           loading='lazy'
           src={process.env.PUBLIC_URL + '../../noimg2.jpg'}
@@ -101,7 +79,7 @@ function Episode ({ episode }) {
                 : episode.name}
             </span>
             <br />
-            {episode.overview}
+            {episode?.overview}
           </span>
         )}
       </div>

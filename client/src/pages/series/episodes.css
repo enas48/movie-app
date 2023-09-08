@@ -1,0 +1,150 @@
+/*--------------------------eposides-------------------*/
+.eposides {
+    z-index: 4;
+  }
+  .eposide {
+    box-shadow: 0px 1px 5px #000000;
+  }
+  .episode-container {
+    max-width: 250px;
+    position: relative;
+    overflow: hidden;
+    min-height: 120px;
+    background: var(--dark-active);
+    padding: 0;
+    cursor: default;
+    transition: all ease-in 0.3s;
+    transform: scale(1);
+    box-shadow: 0px 1px 5px #000000;
+  }
+  .episode-container .img-container {
+    overflow: hidden;
+    min-height: 140px;
+  }
+  .episode-container img {
+    max-width: 100%;
+    border-top-left-radius: calc(0.375rem - 1px);
+    border-top-right-radius: calc(0.375rem - 1px);
+    height: max-content;
+    object-fit: contain;
+  }
+  .episode-container .card-body {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    align-items: flex-start;
+    height: 100%;
+    width: 100%;
+  }
+  .episode-content {
+    display: none;
+  }
+  .episode-container .text-secondry,
+  .episode-container .episode-num {
+    z-index: 1;
+    position: relative;
+  }
+  .episode-container .episode-num {
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    margin-top: auto;
+    padding: 0.2rem 0.5rem;
+    justify-self: end;
+    color: var(--white);
+  }
+  .episode-container button.icon-container {
+    background-color: transparent;
+    position: absolute;
+    top: 23%;
+    left: 40%;
+    z-index: 400;
+  }
+  .episode-container .play-icon {
+    font-size: 3rem;
+  }
+  .episode-container:hover {
+    overflow: initial;
+    transform: scale(1.2);
+    z-index: 27;
+    min-height: 100%;
+  }
+  .episode-container:hover > * .episode-content {
+    color: var(--white);
+    display: block;
+    position: absolute;
+    top: 140px;
+    left: 0;
+    background: var(--dark);
+    z-index: 27;
+    padding: 1rem;
+    box-shadow: 0px 1px 5px #000000;
+  }
+  
+  .episode-bg {
+    height: 100%;
+    position: absolute;
+    top: 2px;
+    left: 0;
+    bottom: 0;
+    filter: blur(2px);
+    right: 0;
+    background-size: contain;
+  }
+  .eposide-overlay {
+    background-color: rgba(0, 0, 0, 0.65);
+  }
+  @media (max-width: 768px) {
+    .episode-container {
+      overflow: initial;
+      min-height: auto;
+    }
+    .episode-container .card-body {
+      position: relative;
+    }
+    .episode-content {
+      display: block;
+    }
+    .episode-container .episode-num {
+      margin-top: -38px;
+    }
+    .episode-container button.icon-container {
+      top: 5%;
+    }
+    .episode-container img {
+      height: 120px;
+      object-fit: cover;
+    }
+    .episode-container > * .episode-content,
+    .episode-container:hover > * .episode-content {
+      display: block;
+      height: 100%;
+      position: relative;
+      top: 0;
+      left: 0;
+      background: var(--dark);
+      z-index: 27;
+      padding: 1rem;
+      box-shadow: 0px 1px 5px #000000;
+      color: var(--white);
+    }
+    .episode-container:hover {
+      transform: scale(1);
+    }
+  }
+  @media (max-width: 680px) {
+    .eposide {
+        width: 60%;
+      }
+    .episode-bg {
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .episode-container:hover > * .episode-content {
+      display: block;
+    }
+  
+  }
+  
+  
