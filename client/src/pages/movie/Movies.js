@@ -30,6 +30,8 @@ function Movies (props) {
             addBookMark={props.addBookMark}
             favouriteIds={props.favouriteIds}
             addFavourite={props.addFavourite}
+            watchedIds={props.watchedIds}
+            addWatched={props.addWatched}
             kind='trending'
             cols={2}
           />
@@ -38,6 +40,8 @@ function Movies (props) {
             addBookMark={props.addBookMark}
             favouriteIds={props.favouriteIds}
             addFavourite={props.addFavourite}
+            watchedIds={props.watchedIds}
+            addWatched={props.addWatched}
             kind='topRated'
             cols={3}
           />
@@ -46,6 +50,8 @@ function Movies (props) {
             addBookMark={props.addBookMark}
             favouriteIds={props.favouriteIds}
             addFavourite={props.addFavourite}
+            watchedIds={props.watchedIds}
+            addWatched={props.addWatched}
             kind='upcoming'
             cols={4}
           />

@@ -16,6 +16,8 @@ function CarouselItem({
   bookmarkedIds,
   favouriteIds,
   addFavourite,
+  watchedIds,
+  addWatched,
   clearVideoKey = () => {},
 }) {
   const handleBookmark = (e, id, type) => {
@@ -25,6 +27,10 @@ function CarouselItem({
   const handleFavourite = (e, id, type) => {
     e.stopPropagation();
     addFavourite(id, type);
+  };
+  const handleWatched = (e, id, type) => {
+    e.stopPropagation();
+    addWatched(id, type);
   };
   const handleClick = () => {
     clearVideoKey();
@@ -64,8 +70,10 @@ function CarouselItem({
             <BfwButton
               bookmarkedIds={bookmarkedIds}
               favouriteIds={favouriteIds}
+              watchedIds={watchedIds}
               addBookMark={handleBookmark}
               addFavourite={handleFavourite}
+              addWatched={handleWatched}
               kind="btnContainer"
               type={type}
               item={item}

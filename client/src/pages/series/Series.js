@@ -34,6 +34,8 @@ function Series (props) {
             addBookMark={props.addBookMark}
             favouriteIds={props.favouriteIds}
             addFavourite={props.addFavourite}
+            watchedIds={props.watchedIds}
+            addWatched={props.addWatched}
             kind='onair'
             cols={2}
           />
@@ -42,6 +44,8 @@ function Series (props) {
             addBookMark={props.addBookMark}
             favouriteIds={props.favouriteIds}
             addFavourite={props.addFavourite}
+            watchedIds={props.watchedIds}
+            addWatched={props.addWatched}
             kind='topRated'
             cols={3}
           />
@@ -50,6 +54,8 @@ function Series (props) {
             addBookMark={props.addBookMark}
             favouriteIds={props.favouriteIds}
             addFavourite={props.addFavourite}
+            watchedIds={props.watchedIds}
+            addWatched={props.addWatched}
             kind='popular'
             cols={4}
           />

@@ -87,6 +87,8 @@ function Home(props) {
             addBookMark={props.addBookMark}
             favouriteIds={props.favouriteIds}
             addFavourite={props.addFavourite}
+            watchedIds={props.watchedIds}
+            addWatched={props.addWatched}
             kind="trending"
             cols={4}
           />
@@ -96,6 +98,8 @@ function Home(props) {
             addBookMark={props.addBookMark}
             favouriteIds={props.favouriteIds}
             addFavourite={props.addFavourite}
+            watchedIds={props.watchedIds}
+            addWatched={props.addWatched}
             kind="topRated"
             cols={4}
           />
@@ -123,6 +127,8 @@ function Home(props) {
             addBookMark={props.addBookMark}
             favouriteIds={props.favouriteIds}
             addFavourite={props.addFavourite}
+            watchedIds={props.watchedIds}
+            addWatched={props.addWatched}
             kind="topRated"
             cols={4}
           />
@@ -131,6 +137,8 @@ function Home(props) {
             addBookMark={props.addBookMark}
             favouriteIds={props.favouriteIds}
             addFavourite={props.addFavourite}
+            watchedIds={props.watchedIds}
+            addWatched={props.addWatched}
             kind="onair"
             cols={4}
           />

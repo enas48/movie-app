@@ -12,7 +12,7 @@ import RegisterModal from '../components/uiElements/RegisterModal'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 function Person (props) {
-  let { addBookMark, bookmarkedIds, favouriteIds, addFavourite } = props
+  let { addBookMark, bookmarkedIds, favouriteIds, addFavourite ,watchedIds,addWatched} = props
   const { id } = useParams()
   const [loading, setIsLoading] = useState(true)
   const [person, setPerson] = useState(null)
@@ -226,7 +226,9 @@ function Person (props) {
                         bookmarkedIds={bookmarkedIds}
                         favouriteIds={favouriteIds}
                         addFavourite={addFavourite}
-                      />
+                        watchedIds={watchedIds}
+                        addWatched={addWatched}
+                        />
                       // </Carousel.Item>
                     )
                   })}
@@ -255,6 +257,8 @@ function Person (props) {
                         bookmarkedIds={bookmarkedIds}
                         favouriteIds={favouriteIds}
                         addFavourite={addFavourite}
+                        watchedIds={watchedIds}
+                        addWatched={addWatched}
                       />
                       // </Carousel.Item>
                     )

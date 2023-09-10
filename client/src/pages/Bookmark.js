@@ -11,7 +11,7 @@ import * as TvSeriesApi from "../api/TvSeriesApi";
 import BfwItem from "../components/bookFavWatch/BfwItem";
 
 function Bookmark(props) {
-  const { addBookMark, bookmarkedIds, favouriteIds, addFavourite } = props;
+  const { addBookMark, bookmarkedIds, favouriteIds, addFavourite,watchedIds,addWatched } = props;
   const [isLoading, setIsLoading] = useState(false);
   const [movieBookmarks, setMovieBookmarks] = useState([]);
   const [tvBookmarks, setTvBookmarks] = useState([]);
@@ -41,7 +41,10 @@ function Bookmark(props) {
     e.stopPropagation();
     addFavourite(id, type);
   };
-
+  const handleWatched= (e, id, type) => {
+    e.stopPropagation();
+    addWatched(id, type);
+  };
   const loadMovieData = async (ids) => {
     for (let data of ids) {
       const response = await MovieApi.getMovieDetails(data).then((movie) => {
@@ -107,7 +110,7 @@ function Bookmark(props) {
       {isLoading && <Loading />}
       <SidebarLayout>
         <div className="p-3">
-          <Search label="Search for Bookmark" />
+          <Search  />
           <div className="col-12 mb-4 movieList bookmarks mt-lg-5">
             <div className="row">
               {movieBookmarks.length !== 0 && <h3 className="mb-3">Movies</h3>}
@@ -123,6 +126,8 @@ function Bookmark(props) {
                       bookmarkedIds={bookmarkedIds}
                       favouriteIds={favouriteIds}
                       addFavourite={handleFavourite}
+                      watchedIds={watchedIds}
+                      addWatched={handleWatched}
                     />
                   );
                 })}
@@ -141,13 +146,15 @@ function Bookmark(props) {
                       bookmarkedIds={bookmarkedIds}
                       favouriteIds={favouriteIds}
                       addFavourite={handleFavourite}
+                      watchedIds={watchedIds}
+                      addWatched={handleWatched}
                     />
                   );
                 })}
             </div>
             <div className="row">
               {tvBookmarks.length === 0 && movieBookmarks.length === 0 && (
-                <h3 className="mb-3">No Bookmarks found</h3>
+                <h3 className="mb-3">No data found</h3>
               )}
             </div>
           </div>

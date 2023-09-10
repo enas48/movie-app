@@ -15,6 +15,8 @@ function BfwItem({
   bookmarkedIds,
   favouriteIds,
   addFavourite,
+  watchedIds,
+  addWatched,
 }) {
   return (
     <>
@@ -38,6 +40,8 @@ function BfwItem({
                   favouriteIds={favouriteIds}
                   addBookMark={addBookMark}
                   addFavourite={addFavourite}
+                  watchedIds={watchedIds}
+                  addWatched={addWatched}
                   kind="btnContainer"
                   type={type}
                   item={item}

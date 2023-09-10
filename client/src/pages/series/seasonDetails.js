@@ -222,6 +222,8 @@ function SeasonDetails(props) {
                   addBookMark={props.addBookMark}
                   favouriteIds={props.favouriteIds}
                   addFavourite={props.addFavourite}
+                  watchedIds={props.watchedIds}
+                  addWatched={props.addWatched}
                   seasons={details.seasons}
                   seriesId={id}
               
@@ -233,6 +235,8 @@ function SeasonDetails(props) {
                 addBookMark={props.addBookMark}
                 favouriteIds={props.favouriteIds}
                 addFavourite={props.addFavourite}
+                watchedIds={props.watchedIds}
+                addWatched={props.addWatched}
                 kind="similar"
                 id={id}
                 cols={4}

@@ -11,7 +11,7 @@ import * as TvSeriesApi from "../api/TvSeriesApi";
 import BfwItem from "../components/bookFavWatch/BfwItem";
 
 function Favourite(props) {
-  const { addBookMark, bookmarkedIds, favouriteIds, addFavourite } = props;
+  const { addBookMark, bookmarkedIds, favouriteIds, addFavourite,watchedIds,addWatched  } = props;
   const [isLoading, setIsLoading] = useState(false);
   const [movieFavourites, setMovieFavourites] = useState([]);
   const [tvFavourites, setTvFavourites] = useState([]);
@@ -42,7 +42,10 @@ function Favourite(props) {
     e.stopPropagation()
     addBookMark(id, type)
   }
-
+  const handleWatched= (e, id, type) => {
+    e.stopPropagation();
+    addWatched(id, type);
+  };
   const loadMovieData = async (ids) => {
     for (let data of ids) {
       const response = await MovieApi.getMovieDetails(data).then((movie) => {
@@ -110,7 +113,7 @@ function Favourite(props) {
       {isLoading && <Loading />}
       <SidebarLayout>
         <div className="p-3">
-          <Search label="Search for Bookmark" />
+          <Search  />
           <div className="col-12 mb-4 movieList bookmarks mt-lg-5">
             <div className="row">
               {movieFavourites.length !== 0 && <h3 className="mb-3">Movies</h3>}
@@ -126,7 +129,9 @@ function Favourite(props) {
                       bookmarkedIds={bookmarkedIds}
                       favouriteIds={favouriteIds}
                       addFavourite={handleFavourite}
-                    />
+                      watchedIds={watchedIds}
+                      addWatched={handleWatched}
+                      />
                   );
                 })}
             </div>
@@ -144,13 +149,15 @@ function Favourite(props) {
                       bookmarkedIds={bookmarkedIds}
                       favouriteIds={favouriteIds}
                       addFavourite={handleFavourite}
-                    />
+                      watchedIds={watchedIds}
+                      addWatched={handleWatched}
+                      />
                   );
                 })}
             </div>
             <div className='row'>
               {tvFavourites.length === 0 && movieFavourites.length === 0 && (
-                <h3 className='mb-3'>No Favoutites found</h3>
+                <h3 className='mb-3'>No data found</h3>
               )}
             </div>
           </div>

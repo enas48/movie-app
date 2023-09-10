@@ -15,6 +15,8 @@ function SearchItem (props) {
           addBookMark={props.addBookMark}
           favouriteIds={props.favouriteIds}
           addFavourite={props.addFavourite}
+          watchedIds={props.watchedIds}
+          addWatched={props.addWatched}
           show={props.show}
           handleClose={props.handleClose}
         />
@@ -25,6 +27,8 @@ function SearchItem (props) {
           addBookMark={props.addBookMark}
           favouriteIds={props.favouriteIds}
           addFavourite={props.addFavourite}
+          watchedIds={props.watchedIds}
+          addWatched={props.addWatched}
           show={props.show}
           handleClose={props.handleClose}
         />
@@ -35,6 +39,8 @@ function SearchItem (props) {
           addBookMark={props.addBookMark}
           favouriteIds={props.favouriteIds}
           addFavourite={props.addFavourite}
+          watchedIds={props.watchedIds}
+          addWatched={props.addWatched}
           show={props.show}
           handleClose={props.handleClose}
         />

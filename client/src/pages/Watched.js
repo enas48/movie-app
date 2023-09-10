@@ -90,17 +90,17 @@ function Watched (props) {
           }
         }
       )
-      if (result.data.bookmark) {
-        let movieBookMarkedIds = result.data.bookmark
+      if (result.data.watched) {
+        let movieWatchedIds = result.data.watched
           .filter(item => item.type === 'movie')
-          .map(item => item.bookmark_id)
+          .map(item => item.watched_id)
 
-        let tvBookMarkedIds = result.data.bookmark
+        let tvWatchedIds = result.data.watched
           .filter(item => item.type === 'tv')
-          .map(item => item.bookmark_id)
+          .map(item => item.watched_id)
 
-        loadMovieData(movieBookMarkedIds)
-        loadTvData(tvBookMarkedIds)
+        loadMovieData(movieWatchedIds)
+        loadTvData(tvWatchedIds)
       }
       setIsLoading(false)
     } catch (err) {
@@ -110,7 +110,7 @@ function Watched (props) {
   }
 
   useEffect(() => {
-    fetchBookmarks()
+    fetchWatched()
   }, [])
 
   return (
@@ -118,7 +118,7 @@ function Watched (props) {
       {isLoading && <Loading />}
       <SidebarLayout>
         <div className='p-3'>
-          <Search label='Search for Bookmark' />
+          <Search />
           <div className='col-12 mb-4 movieList bookmarks mt-lg-5'>
             <div className='row'>
               {watchedMovie.length !== 0 && <h3 className='mb-3'>Movies</h3>}
@@ -134,6 +134,8 @@ function Watched (props) {
                       bookmarkedIds={bookmarkedIds}
                       favouriteIds={favouriteIds}
                       addFavourite={handleFavourite}
+                      watchedIds={watchedIds}
+                      addWatched={handleWatched}
                     />
                   )
                 })}
@@ -152,13 +154,15 @@ function Watched (props) {
                       bookmarkedIds={bookmarkedIds}
                       favouriteIds={favouriteIds}
                       addFavourite={handleFavourite}
+                      watchedIds={watchedIds}
+                      addWatched={handleWatched}
                     />
                   )
                 })}
             </div>
             <div className='row'>
               {WatchedTv.length === 0 && watchedMovie.length === 0 && (
-                <h3 className='mb-3'>No Bookmarks found</h3>
+                <h3 className='mb-3'>No data found</h3>
               )}
             </div>
           </div>

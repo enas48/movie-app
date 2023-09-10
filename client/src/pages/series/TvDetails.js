@@ -22,6 +22,8 @@ function TvDetails({
   bookmarkedIds,
   favouriteIds,
   addFavourite,
+  watchedIds,
+  addWatched,
   handleClose,
   show,
 }) {
@@ -40,6 +42,10 @@ function TvDetails({
   const handleFavourite = (e, id, type) => {
     e.stopPropagation();
     addFavourite(id, type);
+  };
+  const handleWatched = (e, id, type) => {
+    e.stopPropagation();
+    addWatched(id, type);
   };
   const clearVideoKey=()=>{
     setKey(null)
@@ -189,10 +195,12 @@ function TvDetails({
 
               <div className="d-flex gap-2">
                 <BfwButton
-                  bookmarkedIds={bookmarkedIds}
-                  favouriteIds={favouriteIds}
-                  addBookMark={handleBookmark}
-                  addFavourite={handleFavourite}
+               bookmarkedIds={bookmarkedIds}
+               favouriteIds={favouriteIds}
+               watchedIds={watchedIds}
+               addBookMark={handleBookmark}
+               addFavourite={handleFavourite}
+               addWatched={handleWatched}
                   kind="dropdown"
                   type="tv"
                   item={details}
@@ -208,6 +216,8 @@ function TvDetails({
                   addBookMark={addBookMark}
                   favouriteIds={favouriteIds}
                   addFavourite={addFavourite}
+                  watchedIds={watchedIds}
+                  addWatched={addWatched}
                   seasons={details.seasons}
                   seriesId={details.id}
                   clearVideoKey={clearVideoKey}
@@ -219,6 +229,8 @@ function TvDetails({
                 addBookMark={addBookMark}
                 favouriteIds={favouriteIds}
                 addFavourite={addFavourite}
+                watchedIds={watchedIds}
+                addWatched={addWatched}
                 kind="similar"
                 id={id}
                 cols={4}

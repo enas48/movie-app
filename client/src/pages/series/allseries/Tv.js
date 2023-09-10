@@ -6,7 +6,14 @@ import Loading from "../../../components/uiElements/preloading";
 import { useOutletContext, useParams } from "react-router-dom";
 
 function Tv(props) {
-  let { addBookMark, bookmarkedIds, favouriteIds, addFavourite } = props;
+  let {
+    addBookMark,
+    bookmarkedIds,
+    favouriteIds,
+    addFavourite,
+    watchedIds,
+    addWatched,
+  } = props;
   let [date, country, handleChange, currentPage, filteredGenre] =
     useOutletContext();
   const [series, setSeries] = useState([]);
@@ -37,8 +44,8 @@ function Tv(props) {
       country,
       type
     ).then((series) => {
-      if (series.total_pages >= 6) {
-        setTotalPages(6);
+      if (series.total_pages >= 10) {
+        setTotalPages(10);
       } else {
         setTotalPages(series.total_pages);
       }
@@ -53,8 +60,8 @@ function Tv(props) {
     setIsLoading(true);
     if (type === "topRated") {
       TvSeriesApi.topRatedSeries(currentPage, country).then((series) => {
-        if (series.total_pages >= 6) {
-          setTotalPages(6);
+        if (series.total_pages >= 10) {
+          setTotalPages(10);
         } else {
           setTotalPages(series.total_pages);
         }
@@ -65,8 +72,8 @@ function Tv(props) {
       });
     } else if (type === "popular") {
       TvSeriesApi.popularSeries(currentPage, country).then((series) => {
-        if (series.total_pages >= 6) {
-          setTotalPages(6);
+        if (series.total_pages >= 10) {
+          setTotalPages(10);
         } else {
           setTotalPages(series.total_pages);
         }
@@ -77,8 +84,8 @@ function Tv(props) {
       });
     } else {
       TvSeriesApi.onAir(currentPage, country).then((series) => {
-        if (series.total_pages >= 6) {
-          setTotalPages(6);
+        if (series.total_pages >= 10) {
+          setTotalPages(10);
         } else {
           setTotalPages(series.total_pages);
         }
@@ -123,6 +130,8 @@ function Tv(props) {
                       bookmarkedIds={bookmarkedIds}
                       favouriteIds={favouriteIds}
                       addFavourite={addFavourite}
+                      watchedIds={watchedIds}
+                      addWatched={addWatched}
                     />
                   </div>
                 );

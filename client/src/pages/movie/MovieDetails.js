@@ -25,6 +25,8 @@ function MovieDetails({
   bookmarkedIds,
   favouriteIds,
   addFavourite,
+  watchedIds,
+  addWatched,
   handleClose,
   show,
 }) {
@@ -46,6 +48,10 @@ function MovieDetails({
     e.stopPropagation();
     addFavourite(id, type);
   };
+  const handleWatched = (e, id, type) => {
+    e.stopPropagation();
+    addWatched(id, type);
+  };
   const handlePlay = (id) => {
     fetchMovieVideo(id);
     window.open(video, "_blank");
@@ -56,7 +62,6 @@ function MovieDetails({
   };
 
   const fetchMovieVideo = async (id) => {
- 
     try {
       MovieApi.getMovieVideo(id).then((movie) => {
         let firstKey = Object.keys(movie.results)[0];
@@ -67,9 +72,7 @@ function MovieDetails({
           setDisabled(false);
         }
       });
-
     } catch (err) {
-    
       console.log(err);
     }
   };
@@ -205,8 +208,10 @@ function MovieDetails({
                 <BfwButton
                   bookmarkedIds={bookmarkedIds}
                   favouriteIds={favouriteIds}
+                  watchedIds={watchedIds}
                   addBookMark={handleBookmark}
                   addFavourite={handleFavourite}
+                  addWatched={handleWatched}
                   kind="dropdown"
                   type="movie"
                   item={details}
@@ -221,9 +226,11 @@ function MovieDetails({
             <div className="details-related-content">
               <MovieList
                 bookmarkedIds={bookmarkedIds}
-                addBookMark={addBookMark}
                 favouriteIds={favouriteIds}
-                addFavourite={addFavourite}
+                watchedIds={watchedIds}
+                addBookMark={handleBookmark}
+                addFavourite={handleFavourite}
+                addWatched={handleWatched}
                 kind="similar"
                 cols={4}
                 id={id}

@@ -313,7 +313,26 @@ form .icon-container .icon {
 .fav-btn:hover .bookmark_icon {
   color: #d82e3f !important;
 }
-
+.watch-btn:hover .bookmark_icon {
+  color: #0ed40e !important;
+}
+.watch-btn:hover .bookmark_icon {
+  color: rgba(23, 233, 23, 0.899)1!important;
+}
+.bookmark-btn,
+.fav-btn,.watch-btn{
+  width: fit-content;
+  margin-left: auto;
+  background: rgba(0, 0, 0, 0.5);
+}
+.green{
+  color:#0ed40e;
+}
+.fav-btn:hover,
+.bookmark-btn:hover,
+.watch-btn:hover  {
+  background: rgba(0, 0, 0, 0.5) !important;
+}
 button.icon-container {
   background: var(--primary);
   text-align: center;
@@ -420,7 +439,7 @@ button.icon-container.bookmark {
 .card-content {
   position: absolute;
   justify-content: space-between;
-  z-index: 400;
+  z-index: 100;
   top: 0;
   bottom: 0;
   padding: 10px 14px;
@@ -493,16 +512,7 @@ input[type='file'] {
   z-index: 6;
 }
 
-.bookmark-btn,
-.fav-btn {
-  width: fit-content;
-  margin-left: auto;
-  background: rgba(0, 0, 0, 0.5);
-}
-.fav-btn:hover,
-.bookmark-btn:hover {
-  background: rgba(0, 0, 0, 0.5) !important;
-}
+
 
 /*-----------------------details page--------------------------------*/
 .list-dropdown {

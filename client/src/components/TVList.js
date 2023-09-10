@@ -15,6 +15,8 @@ function TvList (props) {
     bookmarkedIds,
     favouriteIds,
     addFavourite,
+    watchedIds,
+    addWatched,
     cols,
     clearVideoKey
   } = props
@@ -137,6 +139,8 @@ function TvList (props) {
                         bookmarkedIds={bookmarkedIds}
                         favouriteIds={favouriteIds}
                         addFavourite={addFavourite}
+                        watchedIds={watchedIds}
+                        addWatched={addWatched}
                         clearVideoKey={clearVideoKey}
                       />
                     )
