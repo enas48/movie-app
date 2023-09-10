@@ -5,7 +5,7 @@ import * as TvSeriesApi from "../../api/TvSeriesApi";
 
 import SidebarLayout from "../../components/sidebar/sidebarLayout";
 import SeasonList from "../../components/SeasonList";
-import Crew from "../../components/Crew";
+import Crew from "../../components/crew/Crew";
 import TvList from "../../components/TVList";
 import Search from "../../components/search/search";
 import RegisterModal from "../../components/uiElements/RegisterModal";

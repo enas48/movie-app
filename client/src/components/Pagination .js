@@ -1,97 +1,140 @@
-import React, { useState } from "react";
-import Pagination from "react-bootstrap/Pagination";
-import { Form, Button } from "react-bootstrap";
-import {IoIosArrowForward} from 'react-icons/io'
+import React, { useState } from 'react'
+import Pagination from 'react-bootstrap/Pagination'
+import { Form, Button } from 'react-bootstrap'
+import { IoIosArrowForward } from 'react-icons/io'
 
 const Paginations = ({ currentPage, totalPages, onPageChange }) => {
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState(currentPage)
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = e => {
+    e.preventDefault()
     onPageChange(Number(value))
-    console.log(value);
-  };
-  function range(start, end) {
-    var ans = [];
-    for (let i = start; i <= end; i++) {
-      ans.push(i);
+  }
+  const increase = () => {
+    if (value < totalPages) {
+      setValue(Number(value) + 1)
+      onPageChange(Number(value) + 1)
     }
-    return ans;
+  }
+  const decrease = () => {
+    if (1 < value < totalPages) {
+      setValue(Number(value) - 1)
+      onPageChange(Number(value) - 1)
+    }
+  }
+  function range (start, end) {
+    var ans = []
+    for (let i = start; i <= end; i++) {
+      ans.push(i)
+    }
+    return ans
   }
   const getPageCut = ({ totalPages, pagesCutCount, currentPage }) => {
-    const ceilling = Math.ceil(pagesCutCount / 2);
-    const floor = Math.floor(pagesCutCount / 2);
+    const ceilling = Math.ceil(pagesCutCount / 2)
+    const floor = Math.floor(pagesCutCount / 2)
     if (totalPages < pagesCutCount) {
-      return { start: 1, end: totalPages };
+      return { start: 1, end: totalPages }
     } else if (currentPage >= 1 && currentPage <= ceilling) {
-      return { start: 1, end: pagesCutCount };
+      return { start: 1, end: pagesCutCount }
     } else if (currentPage + floor >= totalPages) {
-      return { start: totalPages - pagesCutCount + 1, end: totalPages };
+      return { start: totalPages - pagesCutCount + 1, end: totalPages }
     } else {
-      return { start: currentPage - ceilling + 1, end: currentPage + floor };
+      return { start: currentPage - ceilling + 1, end: currentPage + floor }
     }
-  };
-  let pageCut = getPageCut({ totalPages, pagesCutCount: 3, currentPage });
-  let pages = range(pageCut.start, pageCut.end);
-  console.log(pages);
+  }
+  let pageCut = getPageCut({ totalPages, pagesCutCount: 5, currentPage })
+  let pages = range(pageCut.start, pageCut.end)
 
   return (
-    <div className="d-flex justify-content-center gap-1 mt-2">
-      <Pagination className="justify-content-center">
+    <div className='d-flex justify-content-center gap-1 mt-2 flex-wrap'>
+      <Pagination className='justify-content-center'>
         <Pagination.First
           disabled={currentPage === 1}
-          onClick={() => onPageChange(1)}
+          onClick={() => {
+            setValue(1)
+            onPageChange(1)
+          }}
         />
         <Pagination.Prev
           disabled={currentPage === 1}
-          onClick={() => onPageChange(currentPage - 1)}
+          onClick={() => {
+            setValue(currentPage - 1)
+            onPageChange(currentPage - 1)
+          }}
         />
-        {pages.map((number) => (
+        {pages.map(number => (
           <Pagination.Item
             key={number}
             active={currentPage === number}
-            onClick={() => onPageChange(number)}
+            onClick={() => {
+              setValue(number)
+              onPageChange(number)
+            }}
           >
             {number}
           </Pagination.Item>
         ))}
         <Pagination.Next
           disabled={currentPage === totalPages}
-          onClick={() => onPageChange(currentPage + 1)}
+          onClick={() => {
+            setValue(currentPage + 1)
+            onPageChange(currentPage + 1)
+          }}
         />
         <Pagination.Last
           disabled={currentPage === totalPages}
-          onClick={() => onPageChange(totalPages)}
+          onClick={() => {
+            setValue(totalPages)
+            onPageChange(totalPages)
+          }}
         />
       </Pagination>
       <Form
-        className="d-flex gap-2 align-items-center mb-3"
+        className='d-flex gap-2 align-items-center page-form mb-3'
         onSubmit={handleSubmit}
       >
-        <Form.Group className="" controlId="exampleForm.ControlInput1">
+        <Form.Group
+          className='form-type-number'
+          controlId='exampleForm.ControlInput1'
+        >
           <Form.Control
-            className="border-0"
-            type="number"
+            className='border-0 '
+            required
+            type='number'
             value={value}
             min={1}
             max={totalPages}
-            onChange={(e) => setValue(e.target.value)}
-            onkeypress="return event.charCode &gt;= 48 &amp;&amp; event.charCode &lt;= 57"
+            onChange={e => setValue(e.target.value)}
+            onKeyPress={e => {
+              if (!/[0-9]/.test(e.key)) {
+                e.preventDefault()
+              }
+            }}
           />
+          <div
+            onClick={increase}
+            className={`btn-plus ${value >= totalPages ? 'disabled' : ''}`}
+          >
+            +
+          </div>
+          <div
+            onClick={decrease}
+            className={`btn-minus  ${
+              value <= 1 || value > totalPages ? 'disabled' : ''
+            }`}
+          >
+            -
+          </div>
         </Form.Group>
 
-        <div> of {totalPages} pages</div>
-        <Button
-        type="submit"
-
-          className="btn btn-outline p-0 text-secondry"
-        >
+        <div className='page'> of {totalPages} pages</div>
+        <Button type='submit' className='btn btn-outline p-0 text-secondry'>
           Go
-          <IoIosArrowForward/>
+          <IoIosArrowForward />
         </Button>
       </Form>
     </div>
-  );
-};
+  )
+}
 
-export default Paginations;
+export default Paginations

@@ -20,15 +20,11 @@ function Movies (props) {
   return (
     <>
       {isLoading && <Loading />}
-      <SidebarLayout >
-        <RegisterModal
-          show={props.show}
-    
-          handleCloseModal={props.handleClose}
-        />
-    
-          <Search />
-          <div className='p-3 mt-lg-5'>
+      <SidebarLayout>
+        <RegisterModal show={props.show} handleCloseModal={props.handleClose} />
+
+        <Search />
+        <div className='p-3 mt-lg-5'>
           <MovieList
             bookmarkedIds={props.bookmarkedIds}
             addBookMark={props.addBookMark}

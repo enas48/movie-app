@@ -49,7 +49,7 @@ const getBookmarksByUserId = async (req, res, next) => {
 }
 
 // @desc delete bookmark
-//@route delete /bookmarks/:id
+//@route delete /:userId/:id
 //@access private
 const deleteBookmark = async (req, res, next) => {
   try {

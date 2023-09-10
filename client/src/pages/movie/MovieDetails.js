@@ -6,7 +6,7 @@ import * as MovieApi from "../../api/MovieApi";
 import SidebarLayout from "../../components/sidebar/sidebarLayout";
 import StarRating from "../../components/StarRating";
 import MovieList from "../../components/MovieList";
-import Crew from "../../components/Crew";
+import Crew from "../../components/crew/Crew";
 import Search from "../../components/search/search";
 import Loading from "../../components/uiElements/preloading";
 import RegisterModal from "../../components/uiElements/RegisterModal";

@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import axios from 'axios'
 //theme
-import "primereact/resources/themes/lara-light-indigo/theme.css";     
-    
+import 'primereact/resources/themes/lara-light-indigo/theme.css'
+
 //core
-import "primereact/resources/primereact.min.css";                                       
+import 'primereact/resources/primereact.min.css'
 import './index.css'
 
 import Home from './pages/home/Home'
@@ -33,7 +33,7 @@ import AllSeries from './pages/series/allseries/AllSeries'
 import AllMovies from './pages/movie/allmovies/AllMovies'
 import Movie from './pages/movie/allmovies/Movie'
 import Tv from './pages/series/allseries/Tv'
-import SearchList from './pages/search/SearchList';
+import SearchList from './pages/search/SearchList'
 
 function App () {
   const [message, setMessage] = useState({ text: null, state: 'error' })
@@ -108,9 +108,7 @@ function App () {
   const addItem = async (data, type, ids, id) => {
     axios
       .post(`${process.env.REACT_APP_APP_URL}/${type}`, data)
-      .then(response => {
-  
-      })
+      .then(response => {})
       .catch(err => {
         if (err.response?.data.message) {
           setMessage({
@@ -148,9 +146,7 @@ function App () {
   const deleteItem = async (id, type) => {
     axios
       .delete(`${process.env.REACT_APP_APP_URL}/${type}/${userId}/${id}`)
-      .then(response => {
-    
-      })
+      .then(response => {})
       .catch(err => {
         if (err.response?.data.message) {
           setMessage({
@@ -187,7 +183,6 @@ function App () {
       }
     } catch (err) {
       console.log(err)
-      
     }
   }
 
@@ -295,8 +290,6 @@ function App () {
                 addFavourite={handleFavourite}
                 show={show}
                 handleClose={handleClose}
-                handleSearch={handleSearch}
-                searchList={searchList}
               />
             }
           />
@@ -490,11 +483,10 @@ function App () {
                 addFavourite={handleFavourite}
                 show={show}
                 handleClose={handleClose}
-               
               />
             }
           />
-              <Route
+          <Route
             path='/search/:query'
             element={
               <SearchList
@@ -505,7 +497,6 @@ function App () {
                 addFavourite={handleFavourite}
                 show={show}
                 handleClose={handleClose}
-               
               />
             }
           />
