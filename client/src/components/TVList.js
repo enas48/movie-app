@@ -22,7 +22,7 @@ function TvList (props) {
   } = props
   const [isLoading, setIsLoading] = useState(true)
   const [series, setSeries] = useState([])
-
+  let ipadCols = kind === 'popular' ? cols - 1 : cols
   var settings = {
     dots: false,
     infinite: true,
@@ -34,16 +34,16 @@ function TvList (props) {
     autoplaySpeed: 4000,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1200,
         settings: {
-          slidesToShow: cols,
-          slidesToScroll: cols,
+          slidesToShow: ipadCols,
+          slidesToScroll: ipadCols,
           infinite: true,
           dots: false
         }
       },
       {
-        breakpoint: 600,
+        breakpoint:678,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,

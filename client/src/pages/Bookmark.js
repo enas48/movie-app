@@ -109,9 +109,9 @@ function Bookmark(props) {
     <>
       {isLoading && <Loading />}
       <SidebarLayout>
-        <div className="p-3">
           <Search  />
-          <div className="col-12 mb-4 movieList bookmarks mt-lg-5">
+        <div className="p-3">
+          <div className="col-12 mb-4 movieList bookmarks ">
             <div className="row">
               {movieBookmarks.length !== 0 && <h3 className="mb-3">Movies</h3>}
               {movieBookmarks.length !== 0 &&

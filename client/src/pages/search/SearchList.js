@@ -47,7 +47,7 @@ function SearchList() {
       {isLoading && <Loading />}
       <SidebarLayout>
         <Search />
-        <div className="search-page p-3 mt-lg-5">
+        <div className="search-page p-3 ">
           {list.length !== 0 && (
             <div className="">
               {list.map((item, i) => {
@@ -59,15 +59,15 @@ function SearchList() {
                         to={`/search/${item?.media_type}/${item.id}`}
                         state={{ data: item }}
                       >
-                        <div className="cursor-pointer d-flex align-items-center gap-1 search-item">
+                        <div className="cursor-pointer d-flex align-items-start gap-1 search-item">
                           {item.media_type === "movie" && (
-                            <BiCameraMovie className="search-icon" />
+                            <BiCameraMovie className="search-icon flex-shrink-0" />
                           )}
                           {item.media_type === "tv" && (
-                            <PiTelevisionBold className="search-icon" />
+                            <PiTelevisionBold className="search-icon flex-shrink-0" />
                           )}
                           {item.media_type === "person" && (
-                            <MdPerson className="search-icon" />
+                            <MdPerson className="search-icon flex-shrink-0" />
                           )}
                           <span>{item?.title}</span>
                           <span>{item?.name}</span>

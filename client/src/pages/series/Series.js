@@ -28,7 +28,7 @@ function Series (props) {
         />
 
           <Search  />
-        <div className='p-3 mt-lg-5'>
+        <div className='p-3 '>
           <TvList
             bookmarkedIds={props.bookmarkedIds}
             addBookMark={props.addBookMark}

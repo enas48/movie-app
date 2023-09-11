@@ -24,7 +24,7 @@ function Movies (props) {
         <RegisterModal show={props.show} handleCloseModal={props.handleClose} />
 
         <Search />
-        <div className='p-3 mt-lg-5'>
+        <div className='p-3 '>
           <MovieList
             bookmarkedIds={props.bookmarkedIds}
             addBookMark={props.addBookMark}

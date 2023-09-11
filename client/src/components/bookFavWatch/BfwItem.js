@@ -20,7 +20,7 @@ function BfwItem({
 }) {
   return (
     <>
-      <div className="col-sm-6 col-md-4 col-lg-3 mb-4  ">
+      <div className="col-sm-6 col-md-4 col-xl-3 mb-4  ">
         <LinkContainer
           to={`${link}/${item.id}`}
           onClick={() => (window.location.href = `${link}/${item.id}`)}
@@ -33,8 +33,10 @@ function BfwItem({
               <div className="overlay"></div>
             </div>
             <div className="d-flex flex-column card-content">
-              <div className="d-flex align-items-center gap-1">
-                <MdStar className="text-warning" /> {item.rate}
+              <div className="d-flex align-items-center gap-1  flex-warp justify-content-between ">
+              <span className='flex-shrink-0'>
+              <MdStar className='text-warning' /> {item.rate}
+            </span >
                 <BfwButton
                   bookmarkedIds={bookmarkedIds}
                   favouriteIds={favouriteIds}

@@ -302,7 +302,7 @@ form .icon-container .icon {
   color: var(--primary);
   vertical-align: bottom;
   font-size: 2rem;
-  margin-right: 0.6rem;
+  /* margin-right: 0.6rem; */
 }
 .bookmark_icon {
   font-size: 24px;
@@ -322,7 +322,7 @@ form .icon-container .icon {
 .bookmark-btn,
 .fav-btn,.watch-btn{
   width: fit-content;
-  margin-left: auto;
+  /* margin-left: auto; */
   background: rgba(0, 0, 0, 0.5);
 }
 .green{

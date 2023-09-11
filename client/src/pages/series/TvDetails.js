@@ -112,7 +112,7 @@ function TvDetails({
         <Search />
         <RegisterModal show={show} handleCloseModal={handleClose} />
         {details?.id && (
-          <div className="details-container mt-lg-5">
+          <div className="details-container ">
             <div
               style={{ backgroundImage: `url(${image})` }}
               className=" details-bg details-content d-flex flex-column gap-2"

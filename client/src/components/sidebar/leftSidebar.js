@@ -12,6 +12,8 @@ import { AiFillHome } from "react-icons/ai";
 import { BiLogIn, BiCameraMovie } from "react-icons/bi";
 import { TbEyeCheck } from "react-icons/tb";
 import AuthContext from "../../helpers/authContext";
+import { HiMiniBars3 } from "react-icons/hi2";
+import Header from "../header/Header";
 
 function LeftSidebar() {
   const location = useLocation();
@@ -49,8 +51,10 @@ function LeftSidebar() {
   }, [userId]);
 
   return (
+ 
+    
     <div className="left-sidebar">
-      <LinkContainer to="/">
+      <LinkContainer to="/" >
         <Nav.Link className="navbar-brand sidebar  mb-3">
           <RiMovie2Fill className="movie-icon" />
           <span className="icon-text">Movie</span>
@@ -60,7 +64,7 @@ function LeftSidebar() {
         className="m-auto m-lg-0 me-lg-auto my-lg-0 d-flex flex-row flex-lg-column align-items-baseline"
         navbarScroll
       >
-        <LinkContainer to="/" className="mt-lg-5 pt-lg-4">
+        <LinkContainer to="/" className=" pt-lg-4">
           <Nav.Link
             className={location.pathname.includes("home") ? "active" : ""}
           >
@@ -136,7 +140,8 @@ function LeftSidebar() {
           </>
         )}
       </Nav>
-      <Nav>
+
+      <Nav >
         {userId ? (
           <div className="d-flex  py-2">
             <LinkContainer to={`/profile/${userId}`}>
@@ -181,7 +186,10 @@ function LeftSidebar() {
           </span>
         )}
       </Nav>
+  
     </div>
+
+
   );
 }
 

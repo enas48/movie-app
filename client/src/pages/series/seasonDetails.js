@@ -95,7 +95,7 @@ function SeasonDetails(props) {
         <Search />
         <RegisterModal show={props.show} handleCloseModal={props.handleClose} />
         {details?.id && (
-          <div className="details-container mt-lg-5">
+          <div className="details-container ">
             <div className=" details-content row m-0 d-flex justify-content-center">
               <div
                 style={{ backgroundImage: `url(${bg})` }}

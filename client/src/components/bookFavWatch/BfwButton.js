@@ -24,7 +24,7 @@ const BookFavWatchBtn = ({
   item,
 }) => {
   return (
-    <>
+    <div className=" d-flex gap-1">
       {bookmarkedIds.includes(item.id.toString()) ? (
         <OverlayTrigger
           delay={{ hide: 450, show: 300 }}
@@ -110,7 +110,7 @@ const BookFavWatchBtn = ({
           </Button>
         </OverlayTrigger>
       )}
-    </>
+    </div>
   );
 };
 
