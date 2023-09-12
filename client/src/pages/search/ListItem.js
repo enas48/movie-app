@@ -176,7 +176,8 @@ function ListItem () {
         <Loading content={true} />
       ) : list.length !== 0 ? (
         <div className=''>
-          {results} results
+          <p>       {results} results</p>
+   
           {list.map((item, i) => {
             return (
               <div key={i} className='item'>
