@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import './searchlist.css'
-import SidebarLayout from '../../components/sidebar/sidebarLayout'
-import Search from '../../components/search/search'
 import Loading from '../../components/uiElements/preloading'
 import Paginations from '../../components/Pagination '
 import { LinkContainer } from 'react-router-bootstrap'
@@ -10,10 +8,7 @@ import { PiTelevisionBold } from 'react-icons/pi'
 import { BiCameraMovie } from 'react-icons/bi'
 import { useParams, useOutletContext } from 'react-router-dom'
 import * as MovieApi from '../../api/MovieApi'
-import * as TvApi from '../../api/TvSeriesApi'
-import * as Person from '../../api/PersonApi'
-import NavbarCollapse from 'react-bootstrap/esm/NavbarCollapse'
-import Nav from 'react-bootstrap/Nav'
+
 
 function ListItem () {
   const [list, setList] = useState([])
@@ -21,6 +16,7 @@ function ListItem () {
   const [totalPages, setTotalPages] = useState(1)
   const [results, setResults] = useState(0)
   const [images, setImages] = useState([])
+  const [badWords, setBackwords] = useState([]);
   const { type, query } = useParams()
 
   let [handleChange, currentPage] = useOutletContext()
@@ -123,7 +119,16 @@ function ListItem () {
         } else {
           setTotalPages(data.total_pages)
         }
-        setList(data.results)
+        let filtered = data.results.filter((i) => {
+          const helloExist = badWords.some((item) =>
+            (i?.name || i?.title).toLowerCase().includes(item)
+          );
+          console.log(helloExist);
+          if (!helloExist) {
+            return i;
+          }
+        });
+        setList(filtered)
         if (data.media_type === 'person') {
           preloadPersonImages(data.results).then(data => {
             setImages(data)
@@ -142,7 +147,17 @@ function ListItem () {
         } else {
           setTotalPages(data.total_pages)
         }
-        setList(data.results)
+        let filtered = data.results.filter((i) => {
+          const helloExist = badWords.some((item) =>
+            (i?.name || i?.title).toLowerCase().includes(item)
+          );
+          console.log(helloExist);
+          if (!helloExist) {
+            return i;
+          }
+        });
+
+        setList(filtered)
         if (type === 'person') {
           preloadPersonImages(data.results).then(data => {
             setImages(data)
@@ -163,6 +178,7 @@ function ListItem () {
   }
 
   useEffect(() => {
+    MovieApi.badWords().then((data) => setBackwords(data));
     if (type === 'all') {
       loadData(currentPage)
     } else {

@@ -19,6 +19,7 @@ function Movie(props) {
   const [movies, setMovies] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const [badWords, setBackwords] = useState([]);
   let { type } = useParams();
 
   const handlePageChange = async (pageNumber) => {
@@ -45,7 +46,17 @@ function Movie(props) {
           setTotalPages(movie.total_pages);
         }
         MovieApi.list(movie.results).then((data) => {
-          setMovies(data);
+          let filtered = data.filter((i) => {
+            const helloExist = badWords.some((item) =>
+              (i?.title).toLowerCase().includes(item)
+            );
+            console.log(helloExist);
+            if (!helloExist) {
+              return i;
+            }
+          });
+
+          setMovies(filtered);
           setIsLoading(false);
         });
       }
@@ -62,7 +73,17 @@ function Movie(props) {
           setTotalPages(movie.total_pages);
         }
         MovieApi.list(movie.results).then((data) => {
-          setMovies(data);
+          let filtered = data.filter((i) => {
+            const helloExist = badWords.some((item) =>
+              (i?.title).toLowerCase().includes(item)
+            );
+            console.log(helloExist);
+            if (!helloExist) {
+              return i;
+            }
+          });
+
+          setMovies(filtered);
           setIsLoading(false);
         });
       });
@@ -74,7 +95,17 @@ function Movie(props) {
           setTotalPages(movie.total_pages);
         }
         MovieApi.list(movie.results).then((data) => {
-          setMovies(data);
+          let filtered = data.filter((i) => {
+            const helloExist = badWords.some((item) =>
+              (i?.title).toLowerCase().includes(item)
+            );
+            console.log(helloExist);
+            if (!helloExist) {
+              return i;
+            }
+          });
+
+          setMovies(filtered);
           setIsLoading(false);
         });
       });
@@ -86,7 +117,17 @@ function Movie(props) {
           setTotalPages(movie.total_pages);
         }
         MovieApi.list(movie.results).then((data) => {
-          setMovies(data);
+          let filtered = data.filter((i) => {
+            const helloExist = badWords.some((item) =>
+              (i?.title).toLowerCase().includes(item)
+            );
+            console.log(helloExist);
+            if (!helloExist) {
+              return i;
+            }
+          });
+
+          setMovies(filtered);
           setIsLoading(false);
         });
       });
@@ -94,6 +135,7 @@ function Movie(props) {
   };
 
   useEffect(() => {
+    MovieApi.badWords().then((data) => setBackwords(data));
     if (filteredGenre.length > 0 && date === "all") {
       loadByDateAndGenere(currentPage, "all", filteredGenre, country);
     } else if (date === "latest") {
@@ -136,12 +178,12 @@ function Movie(props) {
       ) : (
         <p className="text-center p-2">No data</p>
       )}
-          {movies.length !== 0 && totalPages > 1 && (
-      <Paginations
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />
+      {movies.length !== 0 && totalPages > 1 && (
+        <Paginations
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       )}
     </div>
   );

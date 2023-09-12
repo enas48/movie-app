@@ -22,6 +22,8 @@ function MovieList (props) {
   } = props
   const [isLoading, setIsLoading] = useState(true)
   const [movies, setMovies] = useState([])
+
+
   let ipadCols = kind === 'upcoming' ? cols - 1 : cols
   var settings = {
     dots: false,
@@ -100,6 +102,7 @@ function MovieList (props) {
   }
 
   useEffect(() => {
+ 
     loadData()
   }, [kind, id])
 

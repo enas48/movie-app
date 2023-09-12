@@ -58,6 +58,7 @@ function Header ({ type }) {
       variant='dark'
       expand='lg'
       className={type === 'leftsidebar' ? 'leftsidebar-nav' : ''}
+      sticky="top" 
     >
       <Container>
         <LinkContainer to='/'>
