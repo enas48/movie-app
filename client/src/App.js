@@ -37,6 +37,8 @@ import AuthContext from "./helpers/authContext";
 /*component*/
 import MessageModal from "./components/uiElements/messageModel";
 import SearchItem from "./components/search/SearchItem";
+import { Search } from "./api/MovieApi";
+import ListItem from "./pages/search/ListItem";
 
 function App() {
   const [message, setMessage] = useState({ text: null, state: "error" });
@@ -556,7 +558,7 @@ function App() {
             }
           />
           <Route
-            path="/search/:query"
+            path="/searchlist/:type/:query"
             element={
               <SearchList
                 bookmarkedIds={bookmarkedIds}
@@ -569,7 +571,39 @@ function App() {
                 handleClose={handleClose}
               />
             }
-          />
+          >
+                <Route
+              index
+              exact
+              element={
+                <ListItem
+                  bookmarkedIds={bookmarkedIds}
+                  addBookMark={handleBookmark}
+                  favouriteIds={favouritedIds}
+                  addFavourite={handleFavourite}
+                  watchedIds={watchedIds}
+                  addWatched={handleWatched}
+                  show={show}
+                  handleClose={handleClose}
+                />
+              }
+            />
+            <Route
+              path=":type/:query"
+              element={
+                <ListItem
+                  bookmarkedIds={bookmarkedIds}
+                  addBookMark={handleBookmark}
+                  favouriteIds={favouritedIds}
+                  addFavourite={handleFavourite}
+                  watchedIds={watchedIds}
+                  addWatched={handleWatched}
+                  show={show}
+                  handleClose={handleClose}
+                />
+              }
+            />
+            </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<Notfound />} />

@@ -136,11 +136,13 @@ function Movie(props) {
       ) : (
         <p className="text-center p-2">No data</p>
       )}
+          {movies.length !== 0 && totalPages > 1 && (
       <Paginations
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={handlePageChange}
       />
+      )}
     </div>
   );
 }

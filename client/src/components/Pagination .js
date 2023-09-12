@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState ,useEffect} from 'react'
 import Pagination from 'react-bootstrap/Pagination'
 import { Form, Button } from 'react-bootstrap'
 import { IoIosArrowForward } from 'react-icons/io'
@@ -44,6 +44,8 @@ const Paginations = ({ currentPage, totalPages, onPageChange }) => {
   }
   let pageCut = getPageCut({ totalPages, pagesCutCount: 5, currentPage })
   let pages = range(pageCut.start, pageCut.end)
+
+
 
   return (
     <div className='d-flex justify-content-center gap-1 mt-2 flex-wrap'>

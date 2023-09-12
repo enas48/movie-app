@@ -1,98 +1,80 @@
-import React, { useState, useEffect } from "react";
-import "./searchlist.css";
-import SidebarLayout from "../../components/sidebar/sidebarLayout";
-import Search from "../../components/search/search";
-import Loading from "../../components/uiElements/preloading";
-import Paginations from "../../components/Pagination ";
-import { LinkContainer } from "react-router-bootstrap";
-import { MdPerson } from "react-icons/md";
-import { PiTelevisionBold } from "react-icons/pi";
-import { BiCameraMovie } from "react-icons/bi";
-import { useParams } from "react-router-dom";
-import * as MovieApi from "../../api/MovieApi";
+import React, { useState, useEffect } from 'react'
+import './searchlist.css'
+import SidebarLayout from '../../components/sidebar/sidebarLayout'
+import Search from '../../components/search/search'
+import Loading from '../../components/uiElements/preloading'
+import { LinkContainer } from 'react-router-bootstrap'
+import { Outlet, useParams, useLocation } from 'react-router-dom'
+import Nav from 'react-bootstrap/Nav'
 
+function SearchList () {
+  const [list, setList] = useState([])
+  //  const [isLoading, setIsLoading] = useState(true)
+  let { query } = useParams()
+  const location = useLocation()
+  const [currentPage, setCurrentPage] = useState(1)
 
-function SearchList() {
-  const [list, setList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  let { query } = useParams();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const handleChange = page => {
+    setCurrentPage(page)
+  }
 
-  const loadData = async (currentPage) => {
-    setIsLoading(true);
-    MovieApi.Search(query, currentPage).then((data) => {
-      if (data.total_pages >= 500) {
-        setTotalPages(500);
-      } else {
-        setTotalPages(data.total_pages);
-      }
-      setList(data.results);
-    });
-
-    setIsLoading(false);
-  };
-
-  
-  const handleChange = (page) => {
-    setCurrentPage(page);
-    loadData(page);
-  };
-
-  useEffect(() => {
-    loadData(currentPage);
-  }, [query, currentPage]);
   return (
     <>
-      {isLoading && <Loading />}
+      {/* {isLoading && <Loading />} */}
       <SidebarLayout>
         <Search />
-        <div className="search-page p-3 ">
-          {list.length !== 0 && (
-            <div className="">
-              {list.map((item, i) => {
-                return (
-                  <div key={i} className="py-1">
-                    {item?.media_type && (
-                      <LinkContainer
-                        key={i}
-                        to={`/search/${item?.media_type}/${item.id}`}
-                        state={{ data: item }}
-                      >
-                        <div className="cursor-pointer d-flex align-items-start gap-1 search-item">
-                          {item.media_type === "movie" && (
-                            <BiCameraMovie className="search-icon flex-shrink-0" />
-                          )}
-                          {item.media_type === "tv" && (
-                            <PiTelevisionBold className="search-icon flex-shrink-0" />
-                          )}
-                          {item.media_type === "person" && (
-                            <MdPerson className="search-icon flex-shrink-0" />
-                          )}
-                          <span>{item?.title}</span>
-                          <span>{item?.name}</span>
-                        </div>
-                      </LinkContainer>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          )}
-          {list.length === 0 && (
-            <div className="">
-              <span className="p-3">No Results found</span>
-            </div>
-          )}
-          <Paginations
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handleChange}
-          />
+        <div className='search-page p-3 '>
+          <Nav className='tv-list flex-nowrap flex-shrink-0 mb-3'>
+            <LinkContainer to={`/searchlist/all/${query}`}>
+              <Nav.Link
+                className={location.pathname.includes('all') ? 'active' : ''}
+                onClick={() => {
+                  setCurrentPage(1)
+                }}
+              >
+                All
+              </Nav.Link>
+            </LinkContainer>
+
+            <LinkContainer to={`/searchlist/movie/${query}`}>
+              <Nav.Link
+                className={location.pathname.includes('movie') ? 'active' : ''}
+                onClick={() => {
+                  setCurrentPage(1)
+                }}
+              >
+                Movies
+              </Nav.Link>
+            </LinkContainer>
+
+            <LinkContainer to={`/searchlist/tv/${query}`}>
+              <Nav.Link
+                className={location.pathname.includes('tv') ? 'active' : ''}
+                onClick={() => {
+                  setCurrentPage(1)
+                }}
+              >
+                Tv series
+              </Nav.Link>
+            </LinkContainer>
+
+            <LinkContainer to={`/searchlist/person/${query}`}>
+              <Nav.Link
+                className={location.pathname.includes('person') ? 'active' : ''}
+                onClick={() => {
+                  setCurrentPage(1)
+                }}
+              >
+                person
+              </Nav.Link>
+            </LinkContainer>
+          </Nav>
+
+          <Outlet context={[handleChange, currentPage]} />
         </div>
       </SidebarLayout>
     </>
-  );
+  )
 }
 
-export default SearchList;
+export default SearchList

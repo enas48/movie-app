@@ -27,7 +27,7 @@ function Search () {
     if (searchField !== '') {
       setSearchField('')
       setSearchList([])
-      navigate(`/search/${searchField}`, { replace: true })
+      navigate(`/searchlist/all/${searchField}`, { replace: true })
     }
   }
 
@@ -35,7 +35,7 @@ function Search () {
     if (e.key === 'Enter' && searchField !== '') {
       setSearchField('')
       setSearchList([])
-      navigate(`/search/${searchField}`, { replace: true })
+      navigate(`/searchlist/all/${searchField}`, { replace: true })
     }
   }
 
