@@ -710,5 +710,8 @@ return [
   "erotic",
   "sexy",
   "breast",
+  "shut",
+  "temptation",
+  "Temptation"
 ];
 }
