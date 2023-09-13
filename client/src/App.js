@@ -13,7 +13,7 @@ import Home from './pages/home/Home'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import Notfound from './pages/Notfound'
-import Profile from './pages/profile/Profile'
+import List from './pages/profile/List'
 import SearchList from './pages/search/SearchList'
 import Movies from './pages//movie/Movies'
 import MovieDetails from './pages/movie/MovieDetails'
@@ -40,6 +40,7 @@ import SearchItem from './components/search/SearchItem'
 import ListItem from './pages/search/ListItem'
 import ViewProfile from './pages/profile/ViewProfile'
 import EditProfile from './pages/profile/EditProfile'
+import BookmarkList from './pages/bookmarks/BookmarkList'
 
 function App () {
   const [message, setMessage] = useState({ text: null, state: 'error' })
@@ -442,7 +443,7 @@ function App () {
             path='/profile/:id'
             element={
               <ProtectedRoute isAllowed={!!token}>
-                <Profile onLogout={logout} uerprofile={profile} />{' '}
+                <ViewProfile onLogout={logout} uerprofile={profile} />{' '}
               </ProtectedRoute>
             }
           >
@@ -451,23 +452,46 @@ function App () {
               exact
               element={
                 <ProtectedRoute isAllowed={!!token}>
-                  <ViewProfile onLogout={logout} uerprofile={profile} />{' '}
+                  <List
+                    bookmarkedIds={bookmarkedIds}
+                    addBookMark={handleBookmark}
+                    favouriteIds={favouriteIds}
+                    addFavourite={handleFavourite}
+                    watchedIds={watchedIds}
+                    addWatched={handleWatched}
+                  />
                 </ProtectedRoute>
               }
             />
             <Route
-              path='edit'
+              path=':list'
               element={
                 <ProtectedRoute isAllowed={!!token}>
-                  <EditProfile
-                    onLogout={logout}
-                    uerprofile={profile}
-                    handleUpdate={handleUpdateProfile}
-                  />{' '}
+                  <List
+                    bookmarkedIds={bookmarkedIds}
+                    addBookMark={handleBookmark}
+                    favouriteIds={favouriteIds}
+                    addFavourite={handleFavourite}
+                    watchedIds={watchedIds}
+                    addWatched={handleWatched}
+                  />
                 </ProtectedRoute>
               }
             />
           </Route>
+          <Route
+            path='/profile/:id/edit'
+            element={
+              <ProtectedRoute isAllowed={!!token}>
+                <EditProfile
+                  onLogout={logout}
+                  uerprofile={profile}
+                  handleUpdate={handleUpdateProfile}
+                />{' '}
+              </ProtectedRoute>
+            }
+          />
+
           <Route
             path='/wishlist'
             element={

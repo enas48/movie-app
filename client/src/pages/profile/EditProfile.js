@@ -7,10 +7,13 @@ import Form from 'react-bootstrap/Form'
 
 import MessageModal from '../../components/uiElements/messageModel'
 import Loading from '../../components/uiElements/preloading'
+import SidebarLayout from '../../components/sidebar/sidebarLayout'
+
 import AuthContext from '../../helpers/authContext'
 
 import { AiFillCamera } from 'react-icons/ai'
 import { BiSolidEditAlt } from 'react-icons/bi'
+import './profile.css'
 
 const imageMimeType = /image\/(png|jpg|jpeg)/i
 
@@ -127,63 +130,65 @@ function EditProfile ({ uerprofile, handleUpdate }) {
     <>
       {loading && <Loading />}
       {message.text && <MessageModal message={message} onClear={handleClear} />}
-      <div className='header-bg'>
-        <Form onSubmit={handleSubmit} className=' profile-header container'>
-          <Form.Group className='mb-3' controlId='formimage'>
-            <div className='profile-container'>
-              <AiFillCamera className='icon' />
-              <div className='overlay'></div>
-              <input
-                type='file'
-                name='image'
-                accept='image/*'
-                onChange={onImageChange}
-              />
-              <div className='profile-image'>
-                {!fileDataURL && (
-                  <img
-                    src={
-                      image === ''
-                        ? process.env.PUBLIC_URL + './person.png'
-                        : image
-                    }
-                    alt=''
-                  />
-                )}
-                {fileDataURL && <img src={fileDataURL} alt='' />}
+      <SidebarLayout>
+        <div className='header-bg'>
+          <Form onSubmit={handleSubmit} className=' profile-header container'>
+            <Form.Group className='mb-3' controlId='formimage'>
+              <div className='profile-container'>
+                <AiFillCamera className='icon' />
+                <div className='overlay'></div>
+                <input
+                  type='file'
+                  name='image'
+                  accept='image/*'
+                  onChange={onImageChange}
+                />
+                <div className='profile-image'>
+                  {!fileDataURL && (
+                    <img
+                      src={
+                        image === ''
+                          ? process.env.PUBLIC_URL + './person.png'
+                          : image
+                      }
+                      alt=''
+                    />
+                  )}
+                  {fileDataURL && <img src={fileDataURL} alt='' />}
+                </div>
               </div>
-            </div>
-          </Form.Group>
-          <Form.Group
-            className='mb-3 position-relative'
-            controlId='formBasicusername'
-          >
-            <Form.Control
-              value={username}
-              name='username'
-              type='text'
-              autoComplete='username'
-              placeholder='username'
-              onChange={onChange}
-            />
+            </Form.Group>
+            <Form.Group
+              className='mb-3 position-relative'
+              controlId='formBasicusername'
+            >
+              <Form.Control
+                value={username}
+                name='username'
+                type='text'
+                autoComplete='username'
+                placeholder='username'
+                onChange={onChange}
+              />
+              <Button
+                type='submit'
+                className='edit-icon btn-outline'
+                disabled={disabled}
+              >
+                <BiSolidEditAlt />
+              </Button>
+            </Form.Group>
             <Button
+              variant='primary'
+              className='mb-3 custom-btn d-flex align-items-center gap-2 ms-auto'
               type='submit'
-              className='edit-icon btn-outline'
               disabled={disabled}
             >
-              <BiSolidEditAlt />
+              Edit Profile
             </Button>
-          </Form.Group>
-          <Button
-            variant='primary'
-            className='mb-3 custom-btn d-flex align-items-center gap-2 ms-auto'
-            type='submit'
-            disabled={disabled}
-          >
-            Edit
-          </Button>
-        </Form>
-      </div>
+          </Form>
+        </div>
+      </SidebarLayout>
     </>
   )
 }
