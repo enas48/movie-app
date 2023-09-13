@@ -26,7 +26,7 @@ function Bookmark (props) {
             addFavourite={addFavourite}
             watchedIds={watchedIds}
             addWatched={addWatched}
-            userId={userId}
+            profileUserId={userId}
           />
         </div>
       </SidebarLayout>

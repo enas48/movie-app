@@ -10,7 +10,7 @@
 }
 .navbar {
   background-color: var(--dark-active) !important;
-  z-index: 22;
+  z-index: 300;
 }
 
 .navbar-brand {

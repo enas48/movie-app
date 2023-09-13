@@ -17,7 +17,7 @@ function BfwItem({
   addFavourite,
   watchedIds,
   addWatched,
-  profilePage=false
+
 }) {
 
   return (
@@ -31,7 +31,7 @@ function BfwItem({
             <div
               className={`card trending  d-flex flex-column justify-content-between`}
             >
-              <LazyLoadImage src={item.image} alt={item.title} />
+              <LazyLoadImage  src={item.image} alt={item.title} />
               <div className="overlay"></div>
             </div>
             <div className="d-flex flex-column card-content">
@@ -39,7 +39,7 @@ function BfwItem({
               <span className='flex-shrink-0'>
               <MdStar className='text-warning' /> {item.rate}
             </span >
-                {profilePage && <BfwButton
+                <BfwButton
                   bookmarkedIds={bookmarkedIds}
                   favouriteIds={favouriteIds}
                   addBookMark={addBookMark}
@@ -49,7 +49,7 @@ function BfwItem({
                   kind="btnContainer"
                   type={type}
                   item={item}
-                />}
+                />
               </div>
               <div className="d-flex   flex-column ">
                 <div className="d-flex gap-2">

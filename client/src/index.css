@@ -139,7 +139,7 @@ a:focus-visible {
 }
 
 .input-group {
-  /* box-shadow: 0px 1px 5px #000000; */
+  box-shadow: 0px 1px 5px #000000;
   max-width: 400px;
 }
 
@@ -421,7 +421,8 @@ button.icon-container.bookmark {
   position: relative;
   overflow: hidden;
   border: 0;
-  background: transparent;
+  /* background: transparent; */
+  background: var(--dark-active);
   cursor: pointer;
   margin: auto;
   color: var(--white);
@@ -465,20 +466,6 @@ button.icon-container.bookmark {
   }
 }
 
-
-input[type='file'] {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  pointer-events: auto;
-  left: 50%;
-  clip-path: circle(50%);
-  top: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  cursor: pointer;
-  z-index: 3;
-}
 
 .movieList {
   z-index: 6;
@@ -613,7 +600,7 @@ input[type='file'] {
 }
 .tv-list a {
   color: #a8a8a8 !important;
-  border-bottom: 2px solid transparent;
+  border-bottom: 3px solid transparent;
   padding: 0.2rem 0.5rem;
   transition: all ease-in 0.2s;
 }
@@ -622,7 +609,7 @@ input[type='file'] {
 .tv-list a:hover {
   cursor: pointer;
   color: var(--white) !important;
-  border-bottom: 2px solid var(--secondry);
+  border-bottom: 3px solid var(--secondry);
 }
 
 .active > .page-link,
@@ -866,4 +853,7 @@ input[type='file'] {
   .page-form .btn {
     font-size: 1rem;
   }
+}
+:focus {
+outline: none!important;
 }

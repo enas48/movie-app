@@ -443,7 +443,7 @@ function App () {
             path='/profile/:id'
             element={
               <ProtectedRoute isAllowed={!!token}>
-                <ViewProfile onLogout={logout} uerprofile={profile} />{' '}
+                <ViewProfile      handleUpdate={handleUpdateProfile} />{' '}
               </ProtectedRoute>
             }
           >
@@ -484,10 +484,8 @@ function App () {
             element={
               <ProtectedRoute isAllowed={!!token}>
                 <EditProfile
-                  onLogout={logout}
-                  uerprofile={profile}
                   handleUpdate={handleUpdateProfile}
-                />{' '}
+                />
               </ProtectedRoute>
             }
           />
