@@ -36,7 +36,6 @@ function Episode ({ episode }) {
 
   useEffect(() => {
     fetchSeriesVideo(id)
-    console.log(episode?.image)
   }, [id])
 
   return (

@@ -465,35 +465,7 @@ button.icon-container.bookmark {
   }
 }
 
-/*---------------------------profile page-----------------------*/
-.profile-container .overlay {
-  border-radius: 50%;
-}
-.profile-container {
-  position: relative;
-  overflow: hidden;
-  width: 7rem;
-  height: 7rem;
-  margin: auto;
-}
-.profile-image {
-  width: 7rem;
-  height: 7rem;
-  border-radius: 50%;
-  overflow: hidden;
-  margin: auto;
-}
-.profile-image img {
-  width: 100%;
-}
-.profile-container .icon {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 24px;
-  z-index: 3;
-}
+
 input[type='file'] {
   position: absolute;
   width: 100%;

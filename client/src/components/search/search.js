@@ -30,7 +30,7 @@ function Search() {
           const helloExist = badWords.some((item) =>
             (i?.name || i?.title).toLowerCase().includes(item)
           );
-          console.log(helloExist);
+
           if (!helloExist) {
             return i;
           }
@@ -115,8 +115,8 @@ function Search() {
         </div>
       )}
       {searchField !== "" && searchField.length < 3 && (
-        <div className="search-results">
-          <span className="p-3">
+        <div className="search-results  p-3">
+          <span >
             Please enter at least 3 characters to search...
           </span>
         </div>
@@ -124,8 +124,8 @@ function Search() {
       {searchList.length === 0 &&
         searchField !== "" &&
         searchField.length >= 3 && (
-          <div className="search-results">
-            <span className="p-3">No Results found</span>
+          <div className="search-results p-3">
+            <span >No Results found</span>
           </div>
         )}
     </div>

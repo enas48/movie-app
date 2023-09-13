@@ -1,28 +1,23 @@
 import React, { useState, useEffect, useMemo, useContext } from 'react'
 import axios from 'axios'
+import Loading from '../../components/uiElements/preloading'
+import * as MovieApi from '../../api/MovieApi'
+import * as TvSeriesApi from '../../api/TvSeriesApi'
+import BfwItem from '../../components/bookFavWatch/BfwItem'
 
-import AuthContext from '../helpers/authContext'
-import SidebarLayout from '../components/sidebar/sidebarLayout'
-import Search from '../components/search/search'
-import Loading from '../components/uiElements/preloading'
-
-import * as MovieApi from '../api/MovieApi'
-import * as TvSeriesApi from '../api/TvSeriesApi'
-import BfwItem from '../components/bookFavWatch/BfwItem'
-
-function Watched (props) {
+function WatchedList (props) {
   const {
     addBookMark,
     bookmarkedIds,
     favouriteIds,
     addFavourite,
     watchedIds,
-    addWatched
+    addWatched,
+    userId
   } = props
   const [isLoading, setIsLoading] = useState(false)
   const [watchedMovie, setWatchedMovie] = useState([])
   const [WatchedTv, setWatchedTv] = useState([])
-  const { userId } = useContext(AuthContext)
 
   let movieArr = useMemo(() => [], [])
   let tvArr = useMemo(() => [], [])
@@ -79,7 +74,7 @@ function Watched (props) {
     })
   }
 
-  const fetchWatched= async () => {
+  const fetchWatched = async () => {
     try {
       setIsLoading(true)
       const result = await axios(
@@ -116,60 +111,56 @@ function Watched (props) {
   return (
     <>
       {isLoading && <Loading />}
-      <SidebarLayout>
-          <Search />
-        <div className='p-3'>
-          <div className='col-12 mb-4 movieList bookmarks '>
-            <div className='row'>
-              {watchedMovie.length !== 0 && <h3 className='mb-3'>Movies</h3>}
-              {watchedMovie.length !== 0 &&
-                watchedMovie.map((item, i) => {
-                  return (
-                    <BfwItem
-                      key={i}
-                      link='/details/movies'
-                      item={item}
-                      type='movie'
-                      addBookMark={handleBookmark}
-                      bookmarkedIds={bookmarkedIds}
-                      favouriteIds={favouriteIds}
-                      addFavourite={handleFavourite}
-                      watchedIds={watchedIds}
-                      addWatched={handleWatched}
-                    />
-                  )
-                })}
-            </div>
-            <div className='row'>
-              {WatchedTv.length !== 0 && <h3 className='mb-3'>Tv Series</h3>}
-              {WatchedTv.length !== 0 &&
-                WatchedTv.map((item, i) => {
-                  return (
-                    <BfwItem
-                      key={i}
-                      link='/details/series'
-                      item={item}
-                      type='tv'
-                      addBookMark={handleBookmark}
-                      bookmarkedIds={bookmarkedIds}
-                      favouriteIds={favouriteIds}
-                      addFavourite={handleFavourite}
-                      watchedIds={watchedIds}
-                      addWatched={handleWatched}
-                    />
-                  )
-                })}
-            </div>
-            <div className='row'>
-              {WatchedTv.length === 0 && watchedMovie.length === 0 && (
-                <h3 className='mb-3'>No data found</h3>
-              )}
-            </div>
-          </div>
+
+      <div className='col-12 mb-4 movieList bookmarks '>
+        <div className='row'>
+          {watchedMovie.length !== 0 && <h3 className='mb-3'>Movies</h3>}
+          {watchedMovie.length !== 0 &&
+            watchedMovie.map((item, i) => {
+              return (
+                <BfwItem
+                  key={i}
+                  link='/details/movies'
+                  item={item}
+                  type='movie'
+                  addBookMark={handleBookmark}
+                  bookmarkedIds={bookmarkedIds}
+                  favouriteIds={favouriteIds}
+                  addFavourite={handleFavourite}
+                  watchedIds={watchedIds}
+                  addWatched={handleWatched}
+                />
+              )
+            })}
         </div>
-      </SidebarLayout>
+        <div className='row'>
+          {WatchedTv.length !== 0 && <h3 className='mb-3'>Tv Series</h3>}
+          {WatchedTv.length !== 0 &&
+            WatchedTv.map((item, i) => {
+              return (
+                <BfwItem
+                  key={i}
+                  link='/details/series'
+                  item={item}
+                  type='tv'
+                  addBookMark={handleBookmark}
+                  bookmarkedIds={bookmarkedIds}
+                  favouriteIds={favouriteIds}
+                  addFavourite={handleFavourite}
+                  watchedIds={watchedIds}
+                  addWatched={handleWatched}
+                />
+              )
+            })}
+        </div>
+        <div className='row'>
+          {WatchedTv.length === 0 && watchedMovie.length === 0 && (
+            <h3 className='mb-3'>No data found</h3>
+          )}
+        </div>
+      </div>
     </>
   )
 }
 
-export default Watched
+export default WatchedList

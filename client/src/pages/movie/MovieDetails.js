@@ -1,26 +1,27 @@
-import React, { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useContext } from 'react'
+import { useParams } from 'react-router-dom'
 
-import * as MovieApi from "../../api/MovieApi";
+import * as MovieApi from '../../api/MovieApi'
 
-import SidebarLayout from "../../components/sidebar/sidebarLayout";
-import StarRating from "../../components/StarRating";
-import MovieList from "../../components/MovieList";
-import Crew from "../../components/crew/Crew";
-import Search from "../../components/search/search";
-import Loading from "../../components/uiElements/preloading";
-import RegisterModal from "../../components/uiElements/RegisterModal";
+import SidebarLayout from '../../components/sidebar/sidebarLayout'
+import StarRating from '../../components/StarRating'
+import MovieList from '../../components/MovieList'
+import Crew from '../../components/crew/Crew'
+import Search from '../../components/search/search'
+import Loading from '../../components/uiElements/preloading'
+import RegisterModal from '../../components/uiElements/RegisterModal'
 
-import Video from "../../components/video/Video";
+import Video from '../../components/video/Video'
 
-import { FaPlay } from "react-icons/fa";
-import { MdLanguage } from "react-icons/md";
-import { BiTimeFive, BiCameraMovie } from "react-icons/bi";
-import Comments from "../../components/comment/Comments";
-import AuthContext from "../../helpers/authContext";
-import BfwButton from "../../components/bookFavWatch/BfwButton";
+import { FaPlay } from 'react-icons/fa'
+import { MdLanguage } from 'react-icons/md'
+import { BiTimeFive, BiCameraMovie } from 'react-icons/bi'
+import Comments from '../../components/comment/Comments'
+import AuthContext from '../../helpers/authContext'
+import BfwButton from '../../components/bookFavWatch/BfwButton'
+import MovieDetailsItem from './MovieDetailsItem'
 
-function MovieDetails({
+function MovieDetails ({
   addBookMark,
   bookmarkedIds,
   favouriteIds,
@@ -28,106 +29,106 @@ function MovieDetails({
   watchedIds,
   addWatched,
   handleClose,
-  show,
+  show
 }) {
-  const [isLoading, setIsLoading] = useState(true);
-  const { id } = useParams();
-  const [details, setDetails] = useState({});
-  const [image, setImage] = useState(null);
-  const [disabled, setDisabled] = useState(false);
-  const [key, setKey] = useState(null);
-  const [video, setvideo] = useState("");
-  const [trailerVideo, setTrailervideo] = useState("");
-  const { userId } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(true)
+  const { id } = useParams()
+  const [details, setDetails] = useState({})
+  const [image, setImage] = useState(null)
+  const [disabled, setDisabled] = useState(false)
+  const [key, setKey] = useState(null)
+  const [video, setvideo] = useState('')
+  const [trailerVideo, setTrailervideo] = useState('')
+  const { userId } = useContext(AuthContext)
 
   const handleBookmark = (e, id, type) => {
-    e.stopPropagation();
-    addBookMark(id, type);
-  };
+    e.stopPropagation()
+    addBookMark(id, type)
+  }
   const handleFavourite = (e, id, type) => {
-    e.stopPropagation();
-    addFavourite(id, type);
-  };
+    e.stopPropagation()
+    addFavourite(id, type)
+  }
   const handleWatched = (e, id, type) => {
-    e.stopPropagation();
-    addWatched(id, type);
-  };
-  const handlePlay = (id) => {
-    fetchMovieVideo(id);
-    window.open(video, "_blank");
-  };
+    e.stopPropagation()
+    addWatched(id, type)
+  }
+  const handlePlay = id => {
+    fetchMovieVideo(id)
+    window.open(video, '_blank')
+  }
 
   const clearVideoKey = () => {
-    setKey(null);
-  };
+    setKey(null)
+  }
 
-  const fetchMovieVideo = async (id) => {
+  const fetchMovieVideo = async id => {
     try {
-      MovieApi.getMovieVideo(id).then((movie) => {
-        let firstKey = Object.keys(movie.results)[0];
-        let link = movie.results[firstKey];
-        setDisabled(true);
+      MovieApi.getMovieVideo(id).then(movie => {
+        let firstKey = Object.keys(movie.results)[0]
+        let link = movie.results[firstKey]
+        setDisabled(true)
         if (link) {
-          setvideo(link.link);
-          setDisabled(false);
+          setvideo(link.link)
+          setDisabled(false)
         }
-      });
+      })
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
+  }
 
-  const fetchTrailer = async (id) => {
+  const fetchTrailer = async id => {
     try {
-      MovieApi.Trailer(id).then((data) => {
-        let youtubeVideos = data.results.filter((d) => d.site === "YouTube");
-        setTrailervideo(youtubeVideos);
+      MovieApi.Trailer(id).then(data => {
+        let youtubeVideos = data.results.filter(d => d.site === 'YouTube')
+        setTrailervideo(youtubeVideos)
         if (youtubeVideos[0]?.key && key === null) {
-          setKey(youtubeVideos[0].key);
+          setKey(youtubeVideos[0].key)
         }
-      });
+      })
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
-  const playVideo = (key) => {
-    setKey(key);
-  };
+  }
+  const playVideo = key => {
+    setKey(key)
+  }
 
-  let preloadImages = async (movie) => {
+  let preloadImages = async movie => {
     if (movie?.backdrop_path && movie.backdrop_path !== null) {
       const response = await fetch(
         `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`
-      );
-      const image = await response;
-      if (image.url) setImage(image.url);
+      )
+      const image = await response
+      if (image.url) setImage(image.url)
     }
-  };
+  }
 
-  const fetchMovie = async (id) => {
+  const fetchMovie = async id => {
     try {
-      MovieApi.getMovieDetails(id).then((movie) => {
-        preloadImages(movie);
-        setDetails(movie);
-      });
+      MovieApi.getMovieDetails(id).then(movie => {
+        preloadImages(movie)
+        setDetails(movie)
+      })
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
+  }
 
   useEffect(() => {
     const loadData = async () => {
-      setIsLoading(true);
-      await new Promise((r) => setTimeout(r, 1000));
-      setIsLoading(false);
-    };
-    loadData();
-    if (id) {
-      fetchMovie(id);
-      fetchMovieVideo(id);
-      fetchTrailer(id);
+      setIsLoading(true)
+      await new Promise(r => setTimeout(r, 1000))
+      setIsLoading(false)
     }
-  }, [id, key]);
+    loadData()
+    if (id) {
+      fetchMovie(id)
+      fetchMovieVideo(id)
+      fetchTrailer(id)
+    }
+  }, [id, key])
 
   return (
     <>
@@ -137,101 +138,32 @@ function MovieDetails({
         <Search />
         <RegisterModal show={show} handleCloseModal={handleClose} />
         {details?.id && (
-          <div className="details-container ">
-            <div
-              style={{ backgroundImage: `url(${image})` }}
-              className=" details-bg details-content d-flex flex-column gap-2"
-            >
-              <span>
-                &bull;&nbsp;
-                {details?.release_date &&
-                  new Date(details.release_date).getFullYear()}
-              </span>
-              <h1>{details?.title}</h1>
-
-              <div className="d-flex gap-1 flex-wrap">
-                {details?.genres &&
-                  details.genres.length !== 0 &&
-                  details.genres.map((item, i) => {
-                    return (
-                      <span
-                        key={item.id}
-                        className={
-                          i === details.genres.length - 1
-                            ? "px-2"
-                            : "border-end pe-2"
-                        }
-                      >
-                        {item.name}
-                      </span>
-                    );
-                  })}
-              </div>
-              <div className="d-flex gap-2 align-items-center mb-1">
-                <StarRating
-                  rate={
-                    details?.vote_average && details.vote_average.toFixed(1)
-                  }
-                />
-                <span>
-                  {details?.vote_average && details.vote_average.toFixed(1)}/10
-                </span>
-              </div>
-              <p className="col-md-8 col-lg-6">{details?.overview}</p>
-              <div className="d-flex gap-4 mb-4 flex-wrap">
-                <span className="d-flex gap-2 align-items-center">
-                  <BiTimeFive />
-                  <span>{details?.runtime} min</span>
-                </span>
-
-                <span className="d-flex gap-2 align-items-center">
-                  <MdLanguage />
-                  <span>
-                    {details?.spoken_languages &&
-                      details.spoken_languages[0]?.english_name &&
-                      details.spoken_languages[0].english_name}
-                  </span>
-                </span>
-                <span className="d-flex gap-2 align-items-center">
-                  <BiCameraMovie /> movie
-                </span>
-              </div>
-              <div className="d-flex gap-2">
-                <button
-                  disabled={disabled}
-                  className="btn icon-container"
-                  onClick={(e) => handlePlay(details.id)}
-                >
-                  Watch Now&nbsp;
-                  <FaPlay />
-                </button>
-                <BfwButton
-                  bookmarkedIds={bookmarkedIds}
-                  favouriteIds={favouriteIds}
-                  watchedIds={watchedIds}
-                  addBookMark={handleBookmark}
-                  addFavourite={handleFavourite}
-                  addWatched={handleWatched}
-                  kind="dropdown"
-                  type="movie"
-                  item={details}
-                />
-              </div>
-            </div>
-
-            <Crew id={id} type="movie" />
-
+          <div className='details-container '>
+            <MovieDetailsItem
+              bookmarkedIds={bookmarkedIds}
+              addBookMark={handleBookmark}
+              favouriteIds={favouriteIds}
+              addFavourite={handleFavourite}
+              watchedIds={watchedIds}
+              addWatched={handleWatched}
+              details={details}
+              image={image}
+              handlePlay={handlePlay}
+              disabled={disabled}
+            />
+           
+            <Crew id={id} type='movie' />
             <Video keyVideo={key} playVideo={playVideo} video={trailerVideo} />
-            <Comments id={id} type="movie" currentUserId={userId} />
-            <div className="details-related-content">
+            <Comments id={id} type='movie' currentUserId={userId} />
+            <div className='details-related-content'>
               <MovieList
                 bookmarkedIds={bookmarkedIds}
                 favouriteIds={favouriteIds}
                 watchedIds={watchedIds}
-                addBookMark={handleBookmark}
-                addFavourite={handleFavourite}
-                addWatched={handleWatched}
-                kind="similar"
+                addBookMark={addBookMark}
+                addFavourite={addFavourite}
+                addWatched={addWatched}
+                kind='similar'
                 cols={4}
                 id={id}
                 clearVideoKey={clearVideoKey}
@@ -241,7 +173,7 @@ function MovieDetails({
         )}
       </SidebarLayout>
     </>
-  );
+  )
 }
 
-export default MovieDetails;
+export default MovieDetails

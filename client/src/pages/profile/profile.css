@@ -1,0 +1,74 @@
+/*---------------------------profile page-----------------------*/
+.profile-container .overlay {
+  border-radius: 50%;
+}
+.profile-container {
+  position: relative;
+  overflow: hidden;
+  width: 10rem;
+  height: 10rem;
+  margin: auto;
+}
+.profile-image {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: auto;
+}
+.profile-image img {
+  width: 100%;
+}
+.profile-container .icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  z-index: 3;
+}
+
+.profile-header {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 1rem;
+  padding: 4rem 1rem;
+}
+.header-bg {
+  background: #26222b;
+}
+.profile-header .edit-icon {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+}
+.profile-header .btn-outline {
+  color: var(--white);
+}
+.profile-header .btn-outline:hover {
+  color: var(--primary);
+}
+.profile-header .form-control,
+.profile-header .form-control:focus,
+.profile-header .btn-outline:disabled,
+.profile-header .btn-outline.disabled {
+  background: transparent;
+}
+@media screen and (max-width: 480px) {
+  .profile-header {
+    flex-direction: column;
+    gap: 0;
+  }
+  .profile-header .custom-btn,
+  .profile-header .btn-container {
+    margin-left: 0 !important;
+  }
+  .profile-info {
+    flex-direction: column;
+  }
+  .profile-header .btn-outline:hover {
+    color: var(--white);
+  }
+}
