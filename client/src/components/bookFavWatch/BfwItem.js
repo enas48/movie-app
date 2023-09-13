@@ -18,6 +18,7 @@ function BfwItem({
   watchedIds,
   addWatched,
 }) {
+
   return (
     <>
       <div className="col-sm-6 col-md-4 col-xl-3 mb-4  ">

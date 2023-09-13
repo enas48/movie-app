@@ -14,14 +14,18 @@ function BookmarkList (props) {
     addFavourite,
     watchedIds,
     addWatched,
-    userId 
+    userId
   } = props
   const [isLoading, setIsLoading] = useState(false)
   const [movieBookmarks, setMovieBookmarks] = useState([])
   const [tvBookmarks, setTvBookmarks] = useState([])
-console.log(userId)
-let {id}= useParams()
-console.log(id)
+  console.log(userId)
+  let { id } = useParams()
+  console.log(id)
+  console.log(userId)
+  if(userId===id){
+    console.log('profile')
+  }
   let movieArr = useMemo(() => [], [])
   let tvArr = useMemo(() => [], [])
 
