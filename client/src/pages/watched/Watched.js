@@ -29,6 +29,7 @@ function Watched (props) {
             watchedIds={watchedIds}
             addWatched={addWatched}
             userId={userId}
+            
           />
         </div>
       </SidebarLayout>

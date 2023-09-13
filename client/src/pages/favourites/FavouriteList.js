@@ -13,7 +13,8 @@ function FavouriteList (props) {
     addFavourite,
     watchedIds,
     addWatched,
-    userId
+    userId,
+    profilePage=false
   } = props
   const [isLoading, setIsLoading] = useState(false)
   const [movieFavourites, setMovieFavourites] = useState([])
@@ -129,6 +130,7 @@ function FavouriteList (props) {
                   addFavourite={handleFavourite}
                   watchedIds={watchedIds}
                   addWatched={handleWatched}
+                  profilePage={profilePage}
                 />
               )
             })}
@@ -149,6 +151,7 @@ function FavouriteList (props) {
                   addFavourite={handleFavourite}
                   watchedIds={watchedIds}
                   addWatched={handleWatched}
+                  profilePage={profilePage}
                 />
               )
             })}

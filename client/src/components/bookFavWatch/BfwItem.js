@@ -17,6 +17,7 @@ function BfwItem({
   addFavourite,
   watchedIds,
   addWatched,
+  profilePage=false
 }) {
 
   return (
@@ -38,7 +39,7 @@ function BfwItem({
               <span className='flex-shrink-0'>
               <MdStar className='text-warning' /> {item.rate}
             </span >
-                <BfwButton
+                {profilePage && <BfwButton
                   bookmarkedIds={bookmarkedIds}
                   favouriteIds={favouriteIds}
                   addBookMark={addBookMark}
@@ -48,7 +49,7 @@ function BfwItem({
                   kind="btnContainer"
                   type={type}
                   item={item}
-                />
+                />}
               </div>
               <div className="d-flex   flex-column ">
                 <div className="d-flex gap-2">

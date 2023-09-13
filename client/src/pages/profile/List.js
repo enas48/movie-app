@@ -28,6 +28,7 @@ function List (props) {
             watchedIds={watchedIds}
             addWatched={addWatched}
             userId={id}
+            profilePage={true}
           />
         )}
         {list === 'favourite' && (
@@ -39,6 +40,7 @@ function List (props) {
             watchedIds={watchedIds}
             addWatched={addWatched}
             userId={id}
+            profilePage={true}
           />
         )}
         {list === 'watched' && (
@@ -50,6 +52,7 @@ function List (props) {
             watchedIds={watchedIds}
             addWatched={addWatched}
             userId={id}
+            profilePage={true}
           />
         )}
       </div>
