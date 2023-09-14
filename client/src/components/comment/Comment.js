@@ -138,8 +138,8 @@ function Comment({
           },
         }
       );
-      if (result.data.profile.image !== "") {
-        setImage(result.data.profile.image);
+      if (result.data.profile.profileImage !== "") {
+        setImage(result.data.profile.profileImage);
       }
       setUsername(result.data.profile.user.username);
     } catch (err) {

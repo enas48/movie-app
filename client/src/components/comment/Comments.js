@@ -140,8 +140,8 @@ function Comments({ type, id }) {
           },
         }
       );
-      if (result.data.profile.image !== "") {
-        setImage(result.data.profile.image);
+      if (result.data.profile.profileImage !== "") {
+        setImage(result.data.profile.profileImage);
       }
     } catch (err) {
       console.log(err);

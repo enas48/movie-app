@@ -181,9 +181,19 @@ function EditProfile({ handleUpdate, setEdit }) {
               />
               <div className="profile-image">
                 <div className="overlay"></div>
-                {!bgfileDataURL && coverImage !== "" && (
-                  <img src={coverImage} alt="" />
+                {!bgfileDataURL && (
+                  <img
+                    src={
+                      coverImage === ""
+                        ? process.env.PUBLIC_URL + "../../cover.jpg"
+                        : coverImage
+                    }
+                    alt=""
+                  />
                 )}
+                {/* {!bgfileDataURL && coverImage !== "" && (
+                  <img src={coverImage} alt="" />
+                )} */}
                 {bgfileDataURL && <img src={bgfileDataURL} alt="" />}
               </div>
             </div>

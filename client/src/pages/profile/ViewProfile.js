@@ -45,15 +45,6 @@ function ViewProfile({ handleUpdate, edit, setEdit }) {
       setLoading(false);
     }
   };
-  const bgImageStyle =
-    coverImage !== ""
-      ? {
-          width: "100%",
-          backgroundImage: `url(${coverImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }
-      : {};
 
   useEffect(() => {
     if (id) {
@@ -74,7 +65,15 @@ function ViewProfile({ handleUpdate, edit, setEdit }) {
                 <div className="profile-container ">
                   <div className="profile-image">
                     <div className="overlay"></div>
-                    {coverImage !== "" && <img src={coverImage} alt="" />}
+                    <LazyLoadImage
+                        src={
+                          coverImage === ""
+                            ? process.env.PUBLIC_URL + "../../cover.jpg"
+                            : coverImage
+                        }
+                        alt=""
+                      />
+                    {/* {coverImage !== "" && <img src={coverImage} alt="" />} */}
                   </div>
                 </div>
               </div>
