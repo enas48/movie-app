@@ -10,7 +10,7 @@ function SidebarLayout (props) {
       <div className='content-container'>
         <Header type='leftsidebar' />
         <div className='d-flex'>
-          <LeftSidebar />
+          <LeftSidebar setEdit={props?.setEdit} />
         </div>
         <div className='content d-flex flex-column '>{props.children}</div>
       </div>

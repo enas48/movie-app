@@ -13,7 +13,7 @@ import { BiLogIn, BiCameraMovie } from 'react-icons/bi'
 import { TbEyeCheck } from 'react-icons/tb'
 import AuthContext from '../../helpers/authContext'
 
-function LeftSidebar () {
+function LeftSidebar ({ setEdit = () => {} }) {
   const location = useLocation()
   const { userId, logout, userProfile } = useContext(AuthContext)
   const [image, setImage] = useState(process.env.PUBLIC_URL + './person.png')
@@ -124,7 +124,10 @@ function LeftSidebar () {
       <Nav>
         {userId ? (
           <div className='d-flex  py-2'>
-            <LinkContainer to={`/profile/${userId}`}>
+            <LinkContainer
+              to={`/profile/${userId}`}
+              onClick={() => setEdit(false)}
+            >
               <Nav.Link>
                 <div className='avater'>
                   <img

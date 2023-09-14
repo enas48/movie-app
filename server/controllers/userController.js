@@ -33,7 +33,7 @@ const registerUser = async (req, res, next) => {
         if (user) {
           //create profile
            await profileService.createProfile({
-            image: '',
+            // image: '',
             user:user.id
         
           })

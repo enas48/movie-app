@@ -14,7 +14,11 @@ const getProfileById = async (req, res, next) => {
     } else {
       res
         .status(200)
-        .json({ profile: profile, message: `find profile ${req.params.id}`,status: 200 })
+        .json({
+          profile: profile,
+          message: `find profile ${req.params.id}`,
+          status: 200
+        })
     }
   } catch (err) {
     const error = new HttpError(err.message, 500)
@@ -40,7 +44,9 @@ const getProfileByUserId = async (req, res, next) => {
       return next(error)
     } else {
       const profile = await profileService.getProfileByUserId(userId)
-      res.status(200).json({ profile: profile, message: `get profile` ,status: 200})
+      res
+        .status(200)
+        .json({ profile: profile, message: `get profile`, status: 200 })
     }
   } catch (err) {
     const error = new HttpError(err.message, 500)
@@ -75,27 +81,40 @@ const updatedProfile = async (req, res, next) => {
         const error = new HttpError('user not authorized', 401)
         return next(error)
       }
-  
-      if (req.file) {
-        imageurl = req.file.path
-       
-      } else {
+
+      if (!req.files['image']) {
         imageurl = profile.image
+      } else {
+        imageurl = req.files['image'][0].path
       }
+      if (!req.files['bgImage']) {
+        bgimage = profile.image
+      } else {
+        bgimage = req.files['bgImage'][0].path
+      }
+      // console.log(req.files['bgImage'])
+      // if (req.file) {
+
+      // console.log(req.files['image'])
+      // console.log(req.files['bgImage'])
+      // imageurl = req.file.path
+
+      // } else {
+      //   imageurl = profile.image
+      // }
       await profileService.updateUser(userId, {
         username: req.body.username
       })
       const updatedProfile = await profileService.updateProfile(req.params.id, {
-        image: imageurl
+        image: imageurl,
+        bgImage: bgimage
       })
 
-      res
-        .status(200)
-        .json({
-          profile: updatedProfile,
-          message: `profile updated successfully`
-          ,status: 200
-        })
+      res.status(200).json({
+        profile: updatedProfile,
+        message: `profile updated successfully`,
+        status: 200
+      })
     }
   } catch (err) {
     const error = new HttpError(err.message, 500)

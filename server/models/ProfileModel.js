@@ -8,7 +8,14 @@ const profileSchema = new Schema(
       required: true,
       ref: 'User'
     },
-    image: String
+    image: {
+      type: String,
+      default: ''
+    },
+    bgImage: {
+      type: String,
+      default: ''
+    }
   },
   {
     timestamps: true

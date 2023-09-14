@@ -27,7 +27,11 @@ const storage = new CloudinaryStorage({
 })
 const parser = multer({ storage: storage })
 
-router.route('/:id').get(getProfileById).put(parser.single('image'), protect, updatedProfile)
+router.route('/:id').get(getProfileById).put( parser.fields([{name:'image',maxCount:1},
+{name:'bgImage',maxCount:1},
+
+]), protect, updatedProfile)
 router.route('/users/:userid').get(getProfileByUserId)
 
 module.exports = router
+ 

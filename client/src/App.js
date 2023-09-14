@@ -54,6 +54,7 @@ function App () {
   const [bookmarkedIds, setBookMarkedId] = useState([])
   const [favouriteIds, setFavouriteId] = useState([])
   const [watchedIds, setWatchedId] = useState([])
+  const [edit, setEdit] = useState(false)
 
   const handleBookmark = (id, type) => {
     id = id.toString()
@@ -221,6 +222,9 @@ function App () {
       )
       if (result.data.profile) {
         setProfile(result.data.profile)
+        // setTimeout(() => {
+        //   setEdit(false)
+        // }, 3000)
       }
     } catch (err) {
       console.log(err)
@@ -443,7 +447,11 @@ function App () {
             path='/profile/:id'
             element={
               <ProtectedRoute isAllowed={!!token}>
-                <ViewProfile      handleUpdate={handleUpdateProfile} />{' '}
+                <ViewProfile
+                  edit={edit}
+                  setEdit={setEdit}
+                  handleUpdate={handleUpdateProfile}
+                />{' '}
               </ProtectedRoute>
             }
           >
@@ -483,9 +491,7 @@ function App () {
             path='/profile/:id/edit'
             element={
               <ProtectedRoute isAllowed={!!token}>
-                <EditProfile
-                  handleUpdate={handleUpdateProfile}
-                />
+                <EditProfile handleUpdate={handleUpdateProfile} />
               </ProtectedRoute>
             }
           />

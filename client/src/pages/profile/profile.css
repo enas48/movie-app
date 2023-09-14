@@ -1,5 +1,7 @@
 /*---------------------------profile page-----------------------*/
-.profile-container .overlay { border-radius: 50%;}
+.profile-container .overlay {
+  border-radius: 50%;
+}
 .profile-container {
   position: relative;
   /* overflow: hidden; */
@@ -7,7 +9,7 @@
   height: 10rem;
   /* margin: auto; */
   background: var(--dark-active);
-    border-radius: 50%;
+  border-radius: 50%;
 }
 .profile-image {
   width: 10rem;
@@ -16,7 +18,9 @@
   overflow: hidden;
   margin: auto;
 }
-.profile-image img { width: 100%;}
+.profile-image img {
+  width: 100%;
+}
 /* .profile-container .icon {
  position: absolute;
   left: 50%;
@@ -26,52 +30,73 @@
   z-index: 3; 
 
 } */
-.profile-container .icon-container{
+.profile-container .icon-container {
   position: absolute;
-    left: 85%;
-    background: #a99f9f;
-    padding: 6px;
-    top: 87%;
-    transform: translate(-50%, -50%);
-    font-size: 30px;
-    /* z-index: 5; */
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  left: 85%;
+  background: #a99f9f;
+  padding: 6px;
+  top: 87%;
+  transform: translate(-50%, -50%);
+  font-size: 30px;
+  z-index: 2;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.profile-container .icon{
-  position: initial!important;
-
+.profile-container .icon {
+  position: initial !important;
 }
 .profile-header {
   display: flex;
   width: 100%;
   align-items: center;
   gap: 1rem;
-  padding: 4rem 1rem;
+  padding: 6rem 1rem;
+  position: relative;
 }
-.header-bg { background: #26222b;}
+.profile-info {
+  z-index: 4;
+}
+.header-bg {
+  background: #26222b;
+}
 .profile-header .edit-icon {
   position: absolute;
   top: 50%;
   right: 0.75rem;
   transform: translateY(-50%);
 }
-.profile-header .btn-outline {color: var(--white);}
-.profile-header .btn-outline:hover {color: var(--primary);}
+.profile-header .custom-btn {
+  z-index: 3;
+}
+.profile-header .btn-outline {
+  color: var(--white);
+}
+.profile-header .btn-outline:hover {
+  color: var(--primary);
+}
 .profile-header .form-control,
 .profile-header .form-control:focus,
 .profile-header .btn-outline:disabled,
 .profile-header .btn-outline.disabled {
   background: transparent;
 }
-.profile.tv-list{position: relative;gap: 0;}
-.profile.tv-list a{ padding: 0.5rem 1rem;}
-.profile.tv-list a:hover{ border-color: transparent;}
-.profile.tv-list a.active:hover{ border-color: var(--secondry);}
-.profile.tv-list::before{
+.profile.tv-list {
+  position: relative;
+  gap: 0;
+}
+.profile.tv-list a {
+  padding: 0.5rem 1rem;
+}
+.profile.tv-list a:hover {
+  border-color: transparent;
+}
+.profile.tv-list a.active:hover {
+  border-color: var(--secondry);
+}
+.profile.tv-list::before {
   position: absolute;
   content: '';
   width: 100%;
@@ -95,7 +120,16 @@ input[type='file'] {
   cursor: pointer;
   z-index: 3;
 }
-
+.recharts-default-legend {
+  text-align: left !important;
+}
+.recharts-legend-wrapper {
+  position: absolute;
+  width: 190px !important;
+  height: auto;
+  left: 280px !important;
+  bottom: 122px !important;
+}
 @media screen and (max-width: 678px) {
   .profile-header {
     padding: 1rem;
@@ -110,8 +144,47 @@ input[type='file'] {
   .profile-header .btn-container {
     margin-left: 0 !important;
   }
-  .profile-info { flex-direction: column;}
-  .profile-header .btn-outline:hover { color: var(--white);}
-  .profile.tv-list a{ padding: 0.5rem }
+  .profile-info {
+    flex-direction: column;
+  }
+  .profile-header .btn-outline:hover {
+    color: var(--white);
+  }
+  .profile.tv-list a {
+    padding: 0.5rem;
+  }
+  .recharts-legend-wrapper {
+    left: 111px !important;
+    bottom: 0px !important;
+  }
+}
+.edit-cover {
+  position: absolute;
+  width: 100%;
 
+  border-radius: 0;
+  height: 100%;
+  left: 0;
+}
+.edit-cover .profile-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+.edit-cover .icon-container {
+  left: 50%;
+  top: 50%;
+}
+.edit-cover .profile-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+.edit-cover .profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.edit-cover .overlay {
+  border-radius: 0;
 }
