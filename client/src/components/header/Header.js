@@ -18,7 +18,7 @@ import Search from '../search/search';
 
 function Header ({ type }) {
   const { userId, logout } = useContext(AuthContext)
-  const [image, setImage] = useState(process.env.PUBLIC_URL + './person.png')
+  const [profileImage, setImage] = useState(process.env.PUBLIC_URL + './person.png')
   const [name, setName] = useState('')
   let navigate = useNavigate()
 
@@ -37,8 +37,8 @@ function Header ({ type }) {
           }
         }
       )
-      if (result.data.profile.image !== '') {
-        setImage(result.data.profile.image)
+      if (result.data.profile.profileImage !== '') {
+        setImage(result.data.profile.profileImage)
       }
       setName(result.data.profile.user.username)
     } catch (err) {
@@ -105,7 +105,7 @@ function Header ({ type }) {
                     <div className='d-flex align-items-center me-1 gap-2'>
                       <div className='avater'>
                         <LazyLoadImage
-                          src={image}
+                          src={profileImage}
                           className='img-fluid'
                           alt=''
                         />

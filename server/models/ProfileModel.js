@@ -8,11 +8,11 @@ const profileSchema = new Schema(
       required: true,
       ref: 'User'
     },
-    image: {
+    profileImage: {
       type: String,
       default: ''
     },
-    bgImage: {
+    coverImage: {
       type: String,
       default: ''
     }

@@ -132,8 +132,8 @@ function ProfileChart ({ profileUserId }) {
     fetchWatched()
   }, [])
   return (
-    <div className='d-flex flex-wrap gap-5 justify-content-left justify-content-xl-center align-items-center'>
-      <PieChart width={360} height={250}>
+    <div className='d-flex flex-wrap gap-5 justify-content-center align-items-center'>
+      <PieChart width={200} height={280}>
         <Pie
           data={piedataMovie}
           labelLine={false}
@@ -152,7 +152,7 @@ function ProfileChart ({ profileUserId }) {
         </Pie>
         <Legend />
       </PieChart>
-      <PieChart width={360} height={250}>
+      <PieChart width={200} height={280}>
         <Pie
           data={piedataTv}
           labelLine={false}

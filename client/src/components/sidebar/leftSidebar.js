@@ -16,7 +16,7 @@ import AuthContext from '../../helpers/authContext'
 function LeftSidebar ({ setEdit = () => {} }) {
   const location = useLocation()
   const { userId, logout, userProfile } = useContext(AuthContext)
-  const [image, setImage] = useState(process.env.PUBLIC_URL + './person.png')
+  const [profileImage, setImage] = useState(process.env.PUBLIC_URL + './person.png')
   let navigate = useNavigate()
 
   const handleLogout = () => {
@@ -26,8 +26,8 @@ function LeftSidebar ({ setEdit = () => {} }) {
 
   useEffect(() => {
     if (userId) {
-      if (userProfile?.image !== '') {
-        setImage(userProfile?.image)
+      if (userProfile?.profileImage !== '') {
+        setImage(userProfile?.profileImage)
       }
     }
   }, [userId, userProfile])
@@ -132,7 +132,7 @@ function LeftSidebar ({ setEdit = () => {} }) {
                 <div className='avater'>
                   <img
                     loading='lazy'
-                    src={image}
+                    src={profileImage}
                     className='img-fluid'
                     alt=''
                   />

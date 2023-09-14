@@ -82,15 +82,15 @@ const updatedProfile = async (req, res, next) => {
         return next(error)
       }
 
-      if (!req.files['image']) {
-        imageurl = profile.image
+      if (!req.files['profileImage']) {
+        profileImage = profile.profileImage
       } else {
-        imageurl = req.files['image'][0].path
+        profileImage = req.files['profileImage'][0].path
       }
-      if (!req.files['bgImage']) {
-        bgimage = profile.image
+      if (!req.files['coverImage']) {
+        coverImage = profile.coverImage
       } else {
-        bgimage = req.files['bgImage'][0].path
+        coverImage = req.files['coverImage'][0].path
       }
       // console.log(req.files['bgImage'])
       // if (req.file) {
@@ -106,8 +106,8 @@ const updatedProfile = async (req, res, next) => {
         username: req.body.username
       })
       const updatedProfile = await profileService.updateProfile(req.params.id, {
-        image: imageurl,
-        bgImage: bgimage
+        profileImage: profileImage,
+        coverImage: coverImage
       })
 
       res.status(200).json({
