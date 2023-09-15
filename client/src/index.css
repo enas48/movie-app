@@ -38,6 +38,9 @@ h3 {
 .cursor-pointer {
   cursor: pointer;
 }
+.cursor-default {
+  cursor: default!important;
+}
 .active,
 .dot:hover {
   background-color: inherit !important;
@@ -246,7 +249,8 @@ form .icon-container .icon {
 /*-----------buttons----------*/
 .custom-btn,
 .btn-outline,
-.filter-btn {
+.filter-btn,
+.secondry-btn {
   background-color: var(--primary);
   transition: all ease-in-out 0.2s;
   color: var(--white);
@@ -257,6 +261,9 @@ form .icon-container .icon {
 }
 .filter-btn {
   background-color: var(--dark-active);
+}
+.secondry-btn{
+  background-color: var(--secondry);
 }
 .btn-outline {
   background-color: transparent;
@@ -283,6 +290,15 @@ form .icon-container .icon {
   opacity: 1;
   box-shadow: none;
   background-color: var(--primary) !important;
+  color: var(--white);
+}
+.secondry-btn:hover,
+.secondry-btn:active,
+.secondry-btn.active,
+.secondry-btn:focus-visible {
+  opacity: 1;
+  box-shadow: none;
+  background-color: var(--secondry-active) !important;
   color: var(--white);
 }
 .btn-outline:hover,

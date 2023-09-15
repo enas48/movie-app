@@ -55,7 +55,7 @@ function Crew({ id, type }) {
               {crew?.slice(0, next)?.map((item) => {
                 return (
                   <LinkContainer to={`/person/${item.id}`} key={item.id}>
-                    <div className="d-flex flex-wrap flex-sm-nowrap flex-row align-items-center justify-content-center justify-content-sm-start crew card card-container">
+                    <div className="d-flex flex-row align-items-start justify-content-center justify-content-sm-start crew card card-container">
                       <div className="img-container">
                         {item.image !== "" && (
                           <LazyLoadImage src={item.image} alt={item.name} />
@@ -68,7 +68,7 @@ function Crew({ id, type }) {
                           />
                         )}
                       </div>
-                      <div className="card-body p-1 text-sm-start">
+                      <div className="card-body p-1 text-start">
                         <span className="text-secondry "> {item.name}</span>
                         <br />
                         <span  className="text-wrap"> {item.character} </span>
@@ -80,7 +80,7 @@ function Crew({ id, type }) {
             </div>
             {next < crew?.length && (
               <button
-                className="m-auto btn custom-btn"
+                className="m-auto btn custom-btn mt-3"
                 onClick={handleMoreImage}
               >
                 Load more

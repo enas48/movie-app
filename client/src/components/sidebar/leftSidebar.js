@@ -41,7 +41,7 @@ function LeftSidebar ({ setEdit = () => {} }) {
         </Nav.Link>
       </LinkContainer>
       <Nav
-        className='m-auto m-lg-0 me-lg-auto my-lg-0 d-flex flex-row flex-lg-column align-items-baseline'
+        className='m-auto m-lg-0 me-lg-auto top-nav d-flex flex-row flex-lg-column align-items-baseline'
         navbarScroll
       >
         <LinkContainer to='/' className=' pt-lg-4'>
@@ -79,7 +79,7 @@ function LeftSidebar ({ setEdit = () => {} }) {
             </span>
           </Nav.Link>
         </LinkContainer>
-        {userId && (
+        {/* {userId && (
           <>
             <LinkContainer to='/favourite'>
               <Nav.Link
@@ -118,7 +118,7 @@ function LeftSidebar ({ setEdit = () => {} }) {
               </Nav.Link>
             </LinkContainer>
           </>
-        )}
+        )} */}
       </Nav>
 
       <Nav>

@@ -122,7 +122,7 @@ const updatedLike = async (req, res, next) => {
         res.status(200).json({
           comment: updatedComment,
           message: `comment updated successfully`,
-          status: 200
+          status: 200 
         })
       }
       // /comments/unlike/:id

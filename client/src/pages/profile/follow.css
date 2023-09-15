@@ -1,0 +1,41 @@
+/*------------------------follow page----------------*/
+.card.follow {
+    background: var(--dark-active);
+    cursor: pointer;
+    max-width: 280px;
+    color: var(--white);
+    box-shadow: 0px 1px 8px #000000;
+    transition: all ease-in-out 0.3s;
+    text-align: center;
+    overflow: hidden;
+    padding: 6px;
+  }
+  
+  .card.follow:hover {
+    transform: scale(1.1);
+  }
+  
+  .card.follow .img-container {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    height: 58px;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 58px;
+    margin: 0 0.5em;
+    flex-shrink: 0;
+  }
+  
+  .card.follow .img-container img {
+    display: block;
+    border-radius: 3px;
+    position: absolute;
+    top: 0;
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .card.follow .img-container .no-img {
+    top: -11px;
+  }

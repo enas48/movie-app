@@ -19,7 +19,7 @@ exports.updateProfile = async (id, profile) => {
   return await Profile.findByIdAndUpdate(id, profile,{new:true}).select('-user');;
 };
 exports.updateUser = async (id, data) => {
-  return await User.findByIdAndUpdate(id, data,{new:true}).select('-user');;
+  return await User.findByIdAndUpdate(id, data,{new:true}).select('-password');;
 };
 
 

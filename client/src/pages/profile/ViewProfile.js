@@ -5,24 +5,30 @@ import axios from "axios";
 import Loading from "../../components/uiElements/preloading";
 import AuthContext from "../../helpers/authContext";
 import { LinkContainer } from "react-router-bootstrap";
-import { Button, Nav } from "react-bootstrap";
+import { Button, Nav, Modal } from "react-bootstrap";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import SidebarLayout from "../../components/sidebar/sidebarLayout";
 import Search from "../../components/search/search";
 import "./profile.css";
 import EditProfile from "./EditProfile";
+import FollowButton from "./FollowButton";
+import MessageModal from "../../components/uiElements/messageModel";
 
 function ViewProfile({ handleUpdate, edit, setEdit }) {
   const [loading, setLoading] = useState(false);
-  const { userId } = useContext(AuthContext);
+  const { userId, userProfile } = useContext(AuthContext);
   const { id } = useParams();
   const [profileImage, setProfileImage] = useState("");
   const [coverImage, setCoverImage] = useState("");
   const location = useLocation();
   const [username, setUsername] = useState("");
+  const [followed, setFollowed] = useState(false);
+  const [followers, setFollowers] = useState([]);
+  const [following, setFollowing] = useState([]);
+
   // const [edit, setEdit] = useState(false);
 
-  const fetchUserProfile = async () => {
+  const fetchUserProfile = async (id) => {
     try {
       setLoading(true);
       const result = await axios(
@@ -33,11 +39,12 @@ function ViewProfile({ handleUpdate, edit, setEdit }) {
           },
         }
       );
-
       if (result.data.profile) {
         setProfileImage(result.data.profile.profileImage);
         setCoverImage(result.data.profile.coverImage);
         setUsername(result.data.profile.user.username);
+        setFollowers(result.data.profile.user.followers);
+        setFollowing(result.data.profile.user.following);
         setLoading(false);
       }
     } catch (err) {
@@ -48,10 +55,15 @@ function ViewProfile({ handleUpdate, edit, setEdit }) {
 
   useEffect(() => {
     if (id) {
-      fetchUserProfile();
+      fetchUserProfile(id);
+      //check if following user
+      if (userProfile?.user.following.includes(id)) {
+        setFollowed(true);
+      }
+      console.log(followers)
     }
-  }, [id, edit]);
-  console.log(edit);
+  }, [id, edit, userProfile]);
+
   return (
     <>
       <SidebarLayout setEdit={setEdit}>
@@ -65,15 +77,8 @@ function ViewProfile({ handleUpdate, edit, setEdit }) {
                 <div className="profile-container ">
                   <div className="profile-image">
                     <div className="overlay"></div>
-                    <LazyLoadImage
-                        src={
-                          coverImage === ""
-                            ? process.env.PUBLIC_URL + "../../cover.jpg"
-                            : coverImage
-                        }
-                        alt=""
-                      />
-                    {/* {coverImage !== "" && <img src={coverImage} alt="" />} */}
+
+                    {coverImage !== "" && <img src={coverImage} alt="" />}
                   </div>
                 </div>
               </div>
@@ -97,15 +102,14 @@ function ViewProfile({ handleUpdate, edit, setEdit }) {
                     <div className="d-flex gap-2 text-white-50">
                       <div className="d-flex flex-column align-items-center ">
                         <p className="">
-                          {" "}
-                          <span className="fw-bold">0</span> Following
-                        </p>{" "}
+                          <span className="fw-bold">{following.length}</span>{" "}
+                          Following
+                        </p>
                       </div>
                       <div className="d-flex flex-column align-items-center">
                         <p className="">
-                          {" "}
-                          <span className="fw-bold">0</span> Followers
-                        </p>{" "}
+                          <span className="fw-bold">{followers.length}</span> Followers
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -121,7 +125,11 @@ function ViewProfile({ handleUpdate, edit, setEdit }) {
                       Edit Profile
                     </Button>
                   ) : (
-                    <Button className="custom-btn ">Follow</Button>
+                    <FollowButton
+                      setFollowers={setFollowers}
+                      followed={followed}
+                      setFollowed={setFollowed}
+                    />
                   )}
                 </div>
               </div>
@@ -167,9 +175,27 @@ function ViewProfile({ handleUpdate, edit, setEdit }) {
                 Watched
               </Nav.Link>
             </LinkContainer>
+            <LinkContainer to={`/profile/${id}/followers`}>
+              <Nav.Link
+                className={
+                  location.pathname.includes("followers") ? "active " : ""
+                }
+              >
+                followers
+              </Nav.Link>
+            </LinkContainer>
+            <LinkContainer to={`/profile/${id}/following`}>
+              <Nav.Link
+                className={
+                  location.pathname.includes("following") ? "active " : ""
+                }
+              >
+                following
+              </Nav.Link>
+            </LinkContainer>
           </Nav>
 
-          <Outlet />
+          <Outlet context={[setFollowers, followed, setFollowed,followers,following]} />
         </div>
       </SidebarLayout>
     </>

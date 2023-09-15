@@ -80,7 +80,7 @@ function Header ({ type }) {
               <Nav.Link>Tv Series</Nav.Link>
             </LinkContainer>
             
-            {userId && (
+            {/* {userId && (
               <>
                 <LinkContainer to='/wishlist'>
                   <Nav.Link>Wishlist</Nav.Link>
@@ -92,7 +92,7 @@ function Header ({ type }) {
                   <Nav.Link>Watched</Nav.Link>
                 </LinkContainer>
               </>
-            )}
+            )} */}
             
           </Nav>
         

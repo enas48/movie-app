@@ -133,7 +133,7 @@ function ProfileChart ({ profileUserId }) {
   }, [])
   return (
     <div className='d-flex flex-wrap gap-5 justify-content-center align-items-center'>
-      <PieChart width={200} height={280}>
+      <PieChart width={230} height={280}>
         <Pie
           data={piedataMovie}
           labelLine={false}
@@ -152,7 +152,7 @@ function ProfileChart ({ profileUserId }) {
         </Pie>
         <Legend />
       </PieChart>
-      <PieChart width={200} height={280}>
+      <PieChart width={230} height={280}>
         <Pie
           data={piedataTv}
           labelLine={false}

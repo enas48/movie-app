@@ -162,7 +162,7 @@ function EditProfile({ handleUpdate, setEdit }) {
       {/* <SidebarLayout>
         <Search /> */}
       <div className="header-bg">
-        <Form onSubmit={handleSubmit} multi className=" ">
+        <Form onSubmit={handleSubmit} >
           <Form.Group className="edit-cover">
             <div className="profile-container ">
               <div className="cover-btn ">
@@ -181,19 +181,10 @@ function EditProfile({ handleUpdate, setEdit }) {
               />
               <div className="profile-image">
                 <div className="overlay"></div>
-                {!bgfileDataURL && (
-                  <img
-                    src={
-                      coverImage === ""
-                        ? process.env.PUBLIC_URL + "../../cover.jpg"
-                        : coverImage
-                    }
-                    alt=""
-                  />
-                )}
-                {/* {!bgfileDataURL && coverImage !== "" && (
+       
+                {!bgfileDataURL && coverImage !== "" && (
                   <img src={coverImage} alt="" />
-                )} */}
+                )}
                 {bgfileDataURL && <img src={bgfileDataURL} alt="" />}
               </div>
             </div>

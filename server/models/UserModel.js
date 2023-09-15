@@ -22,10 +22,10 @@ const userSchema = new Schema(
 
     isVerified: { type: Boolean, default: false },
     followers: [
-      { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+      { type: mongoose.Schema.Types.ObjectId, ref: 'User'}
     ],
     following: [
-      { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+      { type: mongoose.Schema.Types.ObjectId, ref: 'User'}
     ]
   },
   {
