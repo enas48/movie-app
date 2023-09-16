@@ -24,6 +24,13 @@
 .profile-image img {
   width: 100%;
 }
+.follow-link {
+  color: #a8a8a8 !important;
+}
+.follow-link.active,
+.follow-link:hover {
+  color: white !important;
+}
 
 /* .profile-container .icon {
  position: absolute;
@@ -76,7 +83,6 @@
 
 .header-bg {
   /* background: #26222b; */
-
 }
 
 .profile-header .edit-icon {
@@ -151,12 +157,10 @@ input[type='file'] {
   text-align: left !important;
   display: flex;
   flex-direction: column;
-
 }
 
 .recharts-legend-wrapper {
   left: 18% !important;
-
 }
 
 /* .recharts-legend-wrapper {
@@ -232,8 +236,15 @@ input[type='file'] {
   cursor: pointer;
 }
 
-@media screen and (max-width: 678px) {
+.back,.back.active, .back:hover {
+  margin-left: auto;
+  font-size: 25px;
+  border: none;
+  transform: rotate(180deg);
+  border-bottom: 3px solid transparent!important;
+}
 
+@media screen and (max-width: 678px) {
   .edit-cover {
     min-height: 14rem;
     height: 14rem !important;
@@ -243,7 +254,6 @@ input[type='file'] {
     min-height: 14rem;
     height: 14rem;
   }
-
 }
 
 @media screen and (max-width: 480px) {
@@ -273,6 +283,5 @@ input[type='file'] {
 
   .recharts-legend-wrapper {
     left: 22% !important;
-
   }
 }

@@ -3,13 +3,13 @@ import { useParams, Outlet, useLocation } from "react-router-dom";
 import axios from "axios";
 
 import AuthContext from "../../helpers/authContext";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal,Dropdown } from "react-bootstrap";
 import "./profile.css";
 import MessageModal from "../../components/uiElements/messageModel";
 
-function FollowButton({setFollowers,followed,setFollowed}) {
+function FollowButton({setFollowers,followed,setFollowed,followUserId}) {
   const { userId, userProfile } = useContext(AuthContext);
-  const { id } = useParams();
+  // const { id } = useParams();
 //   const [followed, setFollowed] = useState(false);
   const [message, setMessage] = useState({ text: null, state: "error" });
   const [showModal, setShowModal] = useState(false);
@@ -78,8 +78,8 @@ function FollowButton({setFollowers,followed,setFollowed}) {
 
   const handelShowDelete = () => setShowModal(true);
   const handleCloseDelete = () => setShowModal(false);
-  const handleDeleteFollow = (id) => {
-    handleUnfollow(id);
+  const handleDeleteFollow = (followUserId) => {
+    handleUnfollow(followUserId);
     handleCloseDelete();
   };
   return (
@@ -100,30 +100,47 @@ function FollowButton({setFollowers,followed,setFollowed}) {
           <Button variant="secondary" onClick={handleCloseDelete}>
             Close
           </Button>
-          <Button variant="danger" onClick={() => handleDeleteFollow(id)}>
+          <Button variant="danger" onClick={() => handleDeleteFollow(followUserId)}>
             Delete
           </Button>
         </Modal.Footer>
       </Modal>
       {followed ? (
-        <div className="d-flex gap-1">
-          <Button
-            className="custom-btn "
-            onClick={() => {
-              handelShowDelete(id);
-            }}
-          >
-            Unfollow
-          </Button>
-          <Button className="secondry-btn secondry cursor-default">
-            Following
-          </Button>
-        </div>
+        <Dropdown className="list-dropdown follow">
+        <Dropdown.Toggle variant="success" id="dropdown-basic">
+          Following
+        </Dropdown.Toggle>
+  
+        <Dropdown.Menu>
+          <Dropdown.Item>
+            <button
+              onClick={() => handelShowDelete(followUserId)}
+              className=" btn icon-container text-danger bookmark bookmark-btn"
+            >
+             Unfollow
+            </button>
+          </Dropdown.Item>
+  
+        </Dropdown.Menu>
+      </Dropdown>
+        // <div className="d-flex gap-1">
+        //   <Button
+        //     className="custom-btn "
+        //     onClick={() => {
+        //       handelShowDelete(id);
+        //     }}
+        //   >
+        //     Unfollow
+        //   </Button>
+        //   <Button className="secondry-btn secondry cursor-default">
+        //     Following
+        //   </Button>
+        // </div>
       ) : (
         <Button
-          className="secondry-btn"
+          className="secondry-btn rounded follow-btn"
           onClick={() => {
-            handleFollow(id);
+            handleFollow(followUserId);
           }}
         >
           Follow

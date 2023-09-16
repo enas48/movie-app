@@ -132,8 +132,15 @@ function ProfileChart ({ profileUserId }) {
     fetchWatched()
   }, [])
   return (
-    <div className='d-flex flex-wrap gap-5 justify-content-center align-items-center'>
-      <PieChart width={230} height={280}>
+    <>
+      {(moviebookmarkedIds === 0 &&
+        moviefavouriteIds === 0 &&
+        moviewatchedIds === 0 &&
+        tvbookmarkedIds === 0 &&
+        tvfavouriteIds === 0 &&
+        tvwatchedIds === 0)? <h5 className="mb-3 text-white-50 text-center">No data found</h5>:
+        <div className='d-flex flex-wrap gap-5 justify-content-center align-items-center'>
+            <PieChart width={230} height={280}>
         <Pie
           data={piedataMovie}
           labelLine={false}
@@ -171,7 +178,9 @@ function ProfileChart ({ profileUserId }) {
         </Pie>
         <Legend />
       </PieChart>
-    </div>
+        </div>}
+  
+    </>
   )
 }
 export default ProfileChart
