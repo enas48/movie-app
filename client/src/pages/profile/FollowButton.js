@@ -7,9 +7,9 @@ import { Button, Modal,Dropdown } from "react-bootstrap";
 import "./profile.css";
 import MessageModal from "../../components/uiElements/messageModel";
 
-function FollowButton({setFollowers,followed,setFollowed,followUserId}) {
+function FollowButton({setFollowers,followed,setFollowed,followUserId,setFollowing}) {
   const { userId, userProfile } = useContext(AuthContext);
-  // const { id } = useParams();
+  const { id } = useParams();
 //   const [followed, setFollowed] = useState(false);
   const [message, setMessage] = useState({ text: null, state: "error" });
   const [showModal, setShowModal] = useState(false);
@@ -18,6 +18,7 @@ function FollowButton({setFollowers,followed,setFollowed,followUserId}) {
   // const [edit, setEdit] = useState(false);
 
   const handleFollow = (followUserId) => {
+    console.log(followUserId)
     setFollowed(true);
     handleFollowUser(followUserId, "follow");
   };
@@ -36,8 +37,12 @@ function FollowButton({setFollowers,followed,setFollowed,followUserId}) {
       )
       .then((response) => {
         if (response?.status === 200) {
-          console.log(response);
-          setFollowers(response.data.followingUser.followers);
+          console.log(response.data.user);
+    
+
+          setFollowers(response.data.user.followers);
+          setFollowing(response.data.user.following)
+          fetchUserProfile(id)
         } else {
           if (response?.data.message) {
             setMessage({
@@ -70,6 +75,35 @@ function FollowButton({setFollowers,followed,setFollowed,followUserId}) {
         setFollowed(false);
       });
   };
+  const fetchUserProfile = async id => {
+    try {
+      // setLoading(true)
+      const result = await axios(
+        `${process.env.REACT_APP_APP_URL}/profile/users/${id}`,
+        {
+          headers: {
+            Accept: 'application/json'
+          }
+        }
+      )
+      if (result.data.profile) {
+        console.log(result.data.profile)
+        if (result.data.profile.user.followers.includes(followUserId)) {
+          setFollowed(true)
+        } else if (result.data.profile.user.following.includes(followUserId)){
+          setFollowed(true) 
+        }
+        else{
+          setFollowed(false)
+        }
+        // setLoading(false)
+      }
+    
+    } catch (err) {
+      console.log(err)
+      // setLoading(false)
+    }
+  }
 
   const handleClear = () => {
     setMessage({ text: null, state: "error" });
@@ -82,6 +116,11 @@ function FollowButton({setFollowers,followed,setFollowed,followUserId}) {
     handleUnfollow(followUserId);
     handleCloseDelete();
   };
+  useEffect(()=>{
+  if(userId){
+    fetchUserProfile(userId)
+  }
+  },[userId])
   return (
     <>
       {message.text && <MessageModal message={message} onClear={handleClear} />}

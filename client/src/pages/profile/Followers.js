@@ -10,10 +10,11 @@ function Followers ({
   setFollowers,
   followed,
   setFollowed,
-  followers
+  followers,
+  setFollowing
 }) {
   const { userId } = useContext(AuthContext)
-  console.log(followers)
+  const { id } = useParams()
   const imagePerRow = 8
   const [next, setNext] = useState(imagePerRow)
   const [followersDetails, setfollowersDetails] = useState([])
@@ -23,32 +24,48 @@ function Followers ({
   }
 
   const getDetails = async followers => {
-    try {
-      followers.map(async id => {
-        const details = await axios(
-          `${process.env.REACT_APP_APP_URL}/profile/users/${id}`,
-          {
-            headers: {
-              Accept: 'application/json'
-            }
-          }
-        )
-        console.log(details.data.profile)
-        setfollowersDetails([...followersDetails, details.data.profile])
-      })
-    } catch (err) {
-      console.log(err)
+    let arr =[]
+    for (let data of followers) {
+      const response = await  axios(
+        `${process.env.REACT_APP_APP_URL}/profile/users/${data}`,
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      ).then((details) => {
+        return details.data.profile;
+      });
+      const details = await response;
+      arr.push(details);
     }
+    console.log(arr)
+    setfollowersDetails(arr);
+    // try {
+    //   followers.map(async uid => {
+    //     const details = await axios(
+    //       `${process.env.REACT_APP_APP_URL}/profile/users/${uid}`,
+    //       {
+    //         headers: {
+    //           Accept: 'application/json'
+    //         }
+    //       }
+    //     )
+    
+      
+    //     setfollowersDetails([...followersDetails, details.data.profile])
+    //   })
+    // } catch (err) {
+    //   console.log(err)
+    // }
   }
-
-  console.log(followersDetails)
 
   useEffect(() => {
     if (followers.length !== 0) {
       getDetails(followers)
     }
     console.log(followers)
-  }, [])
+  }, [followers])
 
   return (
     <>
@@ -57,15 +74,12 @@ function Followers ({
           <>
             <div className='row m-0 gap-4 d-flex justify-content-center '>
               {followersDetails?.slice(0, next)?.map(item => {
-                         console.log(item.user._id)
-                         console.log(userId)
+                console.log(item.user._id)
+                console.log(userId)
                 return (
-                  <div className=' col-12'>
+                  <div className=' col-12' key={item.user._id}>
                     <div className='d-flex flex-row align-items-center justify-content-center justify-content-sm-start follow card card-container'>
-                      <LinkContainer
-                        to={`/profile/${item.user._id}`}
-                        key={item.user._id}
-                      >
+                      <LinkContainer to={`/profile/${item.user._id}`}>
                         <div className='d-flex align-items-center me-2'>
                           <div className='img-container'>
                             {item.profileImage !== '' && (
@@ -98,6 +112,7 @@ function Followers ({
                           followed={followed}
                           setFollowed={setFollowed}
                           followUserId={item.user._id}
+                          setFollowing={setFollowing}
                         />
                       )}
                     </div>

@@ -12,6 +12,7 @@ function Following({
   followed,
   setFollowed,
   following,
+  setFollowing
 }) {
   const { userId } = useContext(AuthContext)
   const { id } = useParams();
@@ -23,25 +24,44 @@ function Following({
   };
 
   const getDetails = async (following) => {
-    try {
-        following.map(async (id) => {
-        const details = await axios(
-          `${process.env.REACT_APP_APP_URL}/profile/users/${id}`,
-          {
-            headers: {
-              Accept: "application/json",
-            },
-          }
-        );
-        console.log(details.data.profile);
-        setfollowingDetails([...followingDetails, details.data.profile]);
+    let arr =[]
+    for (let data of following) {
+      const response = await  axios(
+        `${process.env.REACT_APP_APP_URL}/profile/users/${data}`,
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      ).then((details) => {
+        return details.data.profile;
       });
-    } catch (err) {
-      console.log(err);
+      const details = await response;
+      arr.push(details);
     }
+    console.log(arr)
+    setfollowingDetails(arr);
+    // try {
+    //     following.map(async (uid) => {
+    //     const details = await axios(
+    //       `${process.env.REACT_APP_APP_URL}/profile/users/${uid}`,
+    //       {
+    //         headers: {
+    //           Accept: "application/json",
+    //         },
+    //       }
+    //     );
+    //     const d = await details;
+    //   arr.push( d);
+    //     setfollowingDetails([...followingDetails, details.data.profile]);
+    //   });
+    //   console.log(arr)
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
 
-  console.log(followingDetails);
+
 
   useEffect(() => {
     if (following.length !== 0) {
@@ -49,7 +69,7 @@ function Following({
     }
 
   }, [following]);
-
+console.log(followingDetails)
   return (
     <>
       <div className="details-related-content">
@@ -57,14 +77,14 @@ function Following({
           <>
                      <div className='row m-0 gap-4 d-flex justify-content-center '>
               {followingDetails?.slice(0, next)?.map(item => {
-                console.log(item.user._id)
+                console.log(item.user)
                 console.log(userId)
                 return (
-                  <div className=' col-12'>
+                  <div className=' col-12'         key={item.user._id}>
                     <div className='d-flex flex-row align-items-center justify-content-center justify-content-sm-start follow card card-container'>
                       <LinkContainer
                         to={`/profile/${item.user._id}`}
-                        key={item.user._id}
+                
                       >
                         <div className='d-flex align-items-center me-2'>
                           <div className='img-container'>
@@ -92,12 +112,13 @@ function Following({
                           </div>
                         </div>
                       </LinkContainer>
-                      {userId !== id || userId ===item.user._id&& (
+                      {userId !== item.user._id &&(
                         <FollowButton
                           setFollowers={setFollowers}
                           followed={followed}
                           setFollowed={setFollowed}
                           followUserId={item.user._id}
+                          setFollowing={setFollowing}
                         />
                       )}
                     </div>

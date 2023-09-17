@@ -17,7 +17,7 @@ function List(props) {
     watchedIds,
     addWatched,
   } = props;
-  let [setFollowers, followed, setFollowed, followers,following] =
+  let [setFollowers, followed, setFollowed, followers,following,setFollowing] =
     useOutletContext();
   const { id, list } = useParams();
 
@@ -68,6 +68,7 @@ function List(props) {
             setFollowed={setFollowed}
             followers={followers}
             following={following}
+            setFollowing={setFollowing}
             profilePage={true}
           />
         )}
@@ -79,6 +80,7 @@ function List(props) {
             setFollowed={setFollowed}
             followers={followers}
             following={following}
+            setFollowing={setFollowing}
             profilePage={true}
           />
         )}

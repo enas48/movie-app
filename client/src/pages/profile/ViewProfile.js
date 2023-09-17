@@ -5,7 +5,7 @@ import axios from 'axios'
 import Loading from '../../components/uiElements/preloading'
 import AuthContext from '../../helpers/authContext'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Button, Nav  } from 'react-bootstrap'
+import { Button, Nav } from 'react-bootstrap'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import SidebarLayout from '../../components/sidebar/sidebarLayout'
 import Search from '../../components/search/search'
@@ -15,7 +15,7 @@ import FollowButton from './FollowButton'
 import { MdKeyboardBackspace } from 'react-icons/md'
 
 function ViewProfile ({ handleUpdate, edit, setEdit }) {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const { userId, userProfile } = useContext(AuthContext)
   const { id } = useParams()
   const [profileImage, setProfileImage] = useState('')
@@ -47,6 +47,17 @@ function ViewProfile ({ handleUpdate, edit, setEdit }) {
         setFollowing(result.data.profile.user.following)
         setLoading(false)
       }
+      console.log(result.data)
+       
+    
+        // if (result.data.profile.user.followers.includes(id)) {
+      
+        //   setFollowed(true)
+        // }
+        // if (result.data.profile.user.following.includes(id)) {
+      
+        //   setFollowed(true)
+        // }
     } catch (err) {
       console.log(err)
       setLoading(false)
@@ -54,20 +65,18 @@ function ViewProfile ({ handleUpdate, edit, setEdit }) {
   }
 
   useEffect(() => {
+    console.log(id)
     if (id) {
       fetchUserProfile(id)
-      //check if following user
-      if (userProfile?.user.following.includes(id)) {
-        setFollowed(true)
-      }else{
-        setFollowed(false)
-      }
-      console.log(followers)
     }
-  }, [id, edit, userProfile])
+
+    console.log(followers)
+    console.log(following)
+  }, [id])
 
   return (
     <>
+      {loading && <Loading />}
       <SidebarLayout setEdit={setEdit}>
         <Search />
         {edit && userId === id ? (
@@ -103,19 +112,15 @@ function ViewProfile ({ handleUpdate, edit, setEdit }) {
                     <p className='mb-2 text-capitalize'>{username}</p>
                     <div className='d-flex gap-2 text-white-50'>
                       <LinkContainer to={`/profile/${id}/followers`}>
-                        <Nav.Link
-                          className='follow-link'
-                        >
-                      <span>
+                        <Nav.Link className='follow-link'>
+                          <span>
                             <span className='fw-bold'>{followers.length} </span>
                             <span>followers</span>
                           </span>
                         </Nav.Link>
                       </LinkContainer>
                       <LinkContainer to={`/profile/${id}/following`}>
-                        <Nav.Link
-                          className='follow-link'
-                        >
+                        <Nav.Link className='follow-link'>
                           <span>
                             <span className='fw-bold'>{following.length} </span>
                             <span>Following</span>
@@ -152,6 +157,7 @@ function ViewProfile ({ handleUpdate, edit, setEdit }) {
                       followed={followed}
                       setFollowed={setFollowed}
                       followUserId={id}
+                      setFollowing={setFollowing}
                     />
                   )}
                 </div>
@@ -160,88 +166,87 @@ function ViewProfile ({ handleUpdate, edit, setEdit }) {
           </>
         )}
         <div className='content-wrap'>
-          <Nav className='tv-list profile flex-nowrap flex-shrink-0  p-3 '>
-            {location.pathname.includes('followers') ||
-            location.pathname.includes('following') ? (
-              <>
-                <LinkContainer to={`/profile/${id}/followers`}>
-                  <Nav.Link
-                    className={
-                      location.pathname.includes('followers') ? 'active' : ''
-                    }
-                  >
-                    followers
-                  </Nav.Link>
-                </LinkContainer>
-                <LinkContainer to={`/profile/${id}/following`}>
-                  <Nav.Link
-                    className={
-                      location.pathname.includes('following') ? 'active' : ''
-                    }
-                  >
-                    following
-                  </Nav.Link>
-                </LinkContainer>
-                <LinkContainer to={`/profile/${id}`}>
-                  <Nav.Link className='back'>
-                    <MdKeyboardBackspace />
-                  </Nav.Link>
-                </LinkContainer>
-              </>
-            ) : (
-              <>
-                <LinkContainer to={`/profile/${id}`}>
-                  <Nav.Link
-                    className={
-                      location.pathname.includes('all') ? 'active ' : ''
-                    }
-                  >
-                    All
-                  </Nav.Link>
-                </LinkContainer>
+          {location.pathname.includes('followers') ||
+          location.pathname.includes('following') ? (
+            <Nav className='tv-list profile flex-nowrap flex-shrink-0  p-3 '>
+              <LinkContainer to={`/profile/${id}/followers`}>
+                <Nav.Link
+                  className={
+                    location.pathname.includes('followers') ? 'active' : ''
+                  }
+                >
+                  followers
+                </Nav.Link>
+              </LinkContainer>
+              <LinkContainer to={`/profile/${id}/following`}>
+                <Nav.Link
+                  className={
+                    location.pathname.includes('following') ? 'active' : ''
+                  }
+                >
+                  following
+                </Nav.Link>
+              </LinkContainer>
+              <LinkContainer to={`/profile/${id}`}>
+                <Nav.Link className='back'>
+                  <MdKeyboardBackspace />
+                </Nav.Link>
+              </LinkContainer>
+            </Nav>
+          ) : (
+            <Nav className='tv-list profile flex-nowrap flex-shrink-0  p-3 '>
+              <LinkContainer to={`/profile/${id}`}>
+                <Nav.Link
+                  className={location.pathname.includes('all') ? 'active ' : ''}
+                >
+                  All
+                </Nav.Link>
+              </LinkContainer>
 
-                <LinkContainer to={`/profile/${id}/bookmark`}>
-                  <Nav.Link
-                    className={
-                      location.pathname.includes('bookmark') ? 'active ' : ''
-                    }
-                  >
-                    wishlist
-                  </Nav.Link>
-                </LinkContainer>
+              <LinkContainer to={`/profile/${id}/bookmark`}>
+                <Nav.Link
+                  className={
+                    location.pathname.includes('bookmark') ? 'active ' : ''
+                  }
+                >
+                  wishlist
+                </Nav.Link>
+              </LinkContainer>
 
-                <LinkContainer to={`/profile/${id}/favourite`}>
-                  <Nav.Link
-                    className={
-                      location.pathname.includes('favourite') ? 'active ' : ''
-                    }
-                  >
-                    Favourite
-                  </Nav.Link>
-                </LinkContainer>
+              <LinkContainer to={`/profile/${id}/favourite`}>
+                <Nav.Link
+                  className={
+                    location.pathname.includes('favourite') ? 'active ' : ''
+                  }
+                >
+                  Favourite
+                </Nav.Link>
+              </LinkContainer>
 
-                <LinkContainer to={`/profile/${id}/watched`}>
-                  <Nav.Link
-                    className={
-                      location.pathname.includes('watched') ? 'active ' : ''
-                    }
-                  >
-                    Watched
-                  </Nav.Link>
-                </LinkContainer>
-              </>
-            )}
-          </Nav>
+              <LinkContainer to={`/profile/${id}/watched`}>
+                <Nav.Link
+                  className={
+                    location.pathname.includes('watched') ? 'active ' : ''
+                  }
+                >
+                  Watched
+                </Nav.Link>
+              </LinkContainer>
+            </Nav>
+          )}
 
-          <Outlet
-            context={[
-              setFollowers,
-              followed,
-              setFollowed,
-              followers,
-              following
-            ]}
-          />
+          {followers && following ? (
+            <Outlet
+              context={[
+                setFollowers,
+                followed,
+                setFollowed,
+                followers,
+                following,
+                setFollowing
+              ]}
+            />
+          ) : null}
         </div>
       </SidebarLayout>
     </>
