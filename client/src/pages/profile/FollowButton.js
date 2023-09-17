@@ -1,31 +1,29 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useParams, Outlet, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
 import AuthContext from "../../helpers/authContext";
-import { Button, Modal,Dropdown } from "react-bootstrap";
+import { Button, Modal, Dropdown } from "react-bootstrap";
 import "./profile.css";
 import MessageModal from "../../components/uiElements/messageModel";
 
-function FollowButton({setFollowers,followed,setFollowed,followUserId,setFollowing}) {
-  const { userId, userProfile } = useContext(AuthContext);
+function FollowButton({ setFollowers, followUserId, setFollowing }) {
+  const { userId } = useContext(AuthContext);
   const { id } = useParams();
-//   const [followed, setFollowed] = useState(false);
   const [message, setMessage] = useState({ text: null, state: "error" });
   const [showModal, setShowModal] = useState(false);
-
-
-  // const [edit, setEdit] = useState(false);
+  const [followed, setFollowed] = useState(false);
 
   const handleFollow = (followUserId) => {
-    console.log(followUserId)
     setFollowed(true);
     handleFollowUser(followUserId, "follow");
   };
+
   const handleUnfollow = (followUserId) => {
     setFollowed(false);
     handleFollowUser(followUserId, "unfollow");
   };
+
   const handleFollowUser = async (followUserId, type) => {
     let user = {
       userId: userId,
@@ -38,11 +36,12 @@ function FollowButton({setFollowers,followed,setFollowed,followUserId,setFollowi
       .then((response) => {
         if (response?.status === 200) {
           console.log(response.data.user);
-    
-
-          setFollowers(response.data.user.followers);
-          setFollowing(response.data.user.following)
-          fetchUserProfile(id)
+          if (userId === id) {
+            setFollowers(response.data.user.followers);
+            setFollowing(response.data.user.following);
+          }
+          //to update if userid not equal id
+          fetchUserProfile(id);
         } else {
           if (response?.data.message) {
             setMessage({
@@ -71,56 +70,66 @@ function FollowButton({setFollowers,followed,setFollowed,followUserId,setFollowi
             state: "error",
           });
         }
-
         setFollowed(false);
       });
   };
-  const fetchUserProfile = async id => {
+  const fetchUserProfile = async (id) => {
     try {
-      // setLoading(true)
       const result = await axios(
         `${process.env.REACT_APP_APP_URL}/profile/users/${id}`,
         {
           headers: {
-            Accept: 'application/json'
-          }
+            Accept: "application/json",
+          },
         }
-      )
+      );
       if (result.data.profile) {
-        console.log(result.data.profile)
-        if (result.data.profile.user.followers.includes(followUserId)) {
-          setFollowed(true)
-        } else if (result.data.profile.user.following.includes(followUserId)){
-          setFollowed(true) 
-        }
-        else{
-          setFollowed(false)
-        }
-        // setLoading(false)
+        setFollowers(result.data.profile.user.followers);
+        setFollowing(result.data.profile.user.following);
       }
-    
     } catch (err) {
-      console.log(err)
-      // setLoading(false)
+      console.log(err);
     }
-  }
+  };
+
+  const fetchUser = async (id) => {
+    try {
+      const result = await axios(
+        `${process.env.REACT_APP_APP_URL}/profile/users/${id}`,
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
+      if (result.data.profile) {
+        if (result.data.profile.user.following.includes(followUserId)) {
+          setFollowed(true);
+        } else {
+          setFollowed(false);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleClear = () => {
     setMessage({ text: null, state: "error" });
   };
 
-
   const handelShowDelete = () => setShowModal(true);
   const handleCloseDelete = () => setShowModal(false);
+
   const handleDeleteFollow = (followUserId) => {
     handleUnfollow(followUserId);
     handleCloseDelete();
   };
-  useEffect(()=>{
-  if(userId){
-    fetchUserProfile(userId)
-  }
-  },[userId])
+  useEffect(() => {
+    if (userId) {
+      fetchUser(userId);
+    }
+  }, [id]);
   return (
     <>
       {message.text && <MessageModal message={message} onClear={handleClear} />}
@@ -139,42 +148,31 @@ function FollowButton({setFollowers,followed,setFollowed,followUserId,setFollowi
           <Button variant="secondary" onClick={handleCloseDelete}>
             Close
           </Button>
-          <Button variant="danger" onClick={() => handleDeleteFollow(followUserId)}>
+          <Button
+            variant="danger"
+            onClick={() => handleDeleteFollow(followUserId)}
+          >
             Delete
           </Button>
         </Modal.Footer>
       </Modal>
       {followed ? (
         <Dropdown className="list-dropdown follow">
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          Following
-        </Dropdown.Toggle>
-  
-        <Dropdown.Menu>
-          <Dropdown.Item>
-            <button
-              onClick={() => handelShowDelete(followUserId)}
-              className=" btn icon-container text-danger bookmark bookmark-btn"
-            >
-             Unfollow
-            </button>
-          </Dropdown.Item>
-  
-        </Dropdown.Menu>
-      </Dropdown>
-        // <div className="d-flex gap-1">
-        //   <Button
-        //     className="custom-btn "
-        //     onClick={() => {
-        //       handelShowDelete(id);
-        //     }}
-        //   >
-        //     Unfollow
-        //   </Button>
-        //   <Button className="secondry-btn secondry cursor-default">
-        //     Following
-        //   </Button>
-        // </div>
+          <Dropdown.Toggle variant="success" id="dropdown-basic">
+            Following
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu>
+            <Dropdown.Item>
+              <button
+                onClick={() => handelShowDelete(followUserId)}
+                className=" btn icon-container text-danger bookmark bookmark-btn"
+              >
+                Unfollow
+              </button>
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       ) : (
         <Button
           className="secondry-btn rounded follow-btn"

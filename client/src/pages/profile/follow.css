@@ -37,7 +37,7 @@ width: fit-content;
 }
 
 .card.follow .img-container .no-img {
-  top: -11px;
+  /* top: -11px; */
 }
 
 .list-dropdown.follow .dropdown-toggle::after {

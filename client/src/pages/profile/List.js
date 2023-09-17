@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useParams, useOutletContext } from "react-router-dom";
 
 import BookmarkList from "../bookmarks/BookmarkList";
@@ -17,8 +17,7 @@ function List(props) {
     watchedIds,
     addWatched,
   } = props;
-  let [setFollowers, followed, setFollowed, followers,following,setFollowing] =
-    useOutletContext();
+  let [setFollowers, followers, following, setFollowing] = useOutletContext();
   const { id, list } = useParams();
 
   return (
@@ -64,8 +63,6 @@ function List(props) {
           <Followers
             profileUserId={id}
             setFollowers={setFollowers}
-            followed={followed}
-            setFollowed={setFollowed}
             followers={followers}
             following={following}
             setFollowing={setFollowing}
@@ -76,8 +73,6 @@ function List(props) {
           <Following
             profileUserId={id}
             setFollowers={setFollowers}
-            followed={followed}
-            setFollowed={setFollowed}
             followers={followers}
             following={following}
             setFollowing={setFollowing}

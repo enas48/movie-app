@@ -14,6 +14,7 @@
     "bootstrap": "^5.2.3",
     "emoji-mart": "^5.5.2",
     "env-cmd": "^10.1.0",
+    "eslint-plugin-react-hooks": "^5.0.0-canary-d6dcad6a8-20230914",
     "filereader": "^0.10.3",
     "moment": "^2.29.4",
     "primereact": "^9.6.2",
