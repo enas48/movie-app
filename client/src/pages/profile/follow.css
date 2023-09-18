@@ -1,14 +1,15 @@
 /*------------------------follow page----------------*/
 .card.follow {
   background: var(--dark-active);
-  cursor: pointer;
-width: fit-content;
+  cursor: default;
+  width: fit-content;
   color: var(--white);
   box-shadow: 0px 1px 8px #000000;
   transition: all ease-in-out 0.3s;
   text-align: center;
   /* overflow: hidden; */
   padding: 6px;
+  width: 100%;
 }
 
 .card.follow:hover {
@@ -23,7 +24,7 @@ width: fit-content;
   border-radius: 50%;
   overflow: hidden;
   width: 58px;
-  margin: 0 0.5em;
+  /* margin: 0 0.5em; */
   flex-shrink: 0;
 }
 
@@ -44,7 +45,8 @@ width: fit-content;
   display: initial;
 }
 
-.list-dropdown.follow, .follow-btn {
+.list-dropdown.follow,
+.follow-btn {
   width: 160px;
   display: block;
 }

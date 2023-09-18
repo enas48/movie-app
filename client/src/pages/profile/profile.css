@@ -24,9 +24,11 @@
 .profile-image img {
   width: 100%;
 }
+
 .follow-link {
   color: #a8a8a8 !important;
 }
+
 .follow-link.active,
 .follow-link:hover {
   color: white !important;
@@ -134,7 +136,7 @@
   width: 100%;
   z-index: -1;
   left: 0;
-  bottom: 16px;
+  bottom: 0px;
   height: 1px;
   background-color: white;
 }
@@ -145,7 +147,6 @@ input[type='file'] {
   height: 100%;
   pointer-events: auto;
   left: 50%;
-  /* clip-path: circle(50%); */
   top: 50%;
   transform: translate(-50%, -50%);
   opacity: 0;
@@ -162,14 +163,6 @@ input[type='file'] {
 .recharts-legend-wrapper {
   left: 18% !important;
 }
-
-/* .recharts-legend-wrapper {
-  position: absolute;
-  width: 190px !important;
-  height: auto;
-  left: 258px !important;
-  bottom: 122px !important;
-} */
 
 .edit-cover {
   position: relative;
@@ -236,12 +229,32 @@ input[type='file'] {
   cursor: pointer;
 }
 
-.back,.back.active, .back:hover {
+.back,
+.back.active,
+.back:hover {
   margin-left: auto;
   font-size: 25px;
   border: none;
   transform: rotate(180deg);
-  border-bottom: 3px solid transparent!important;
+  border-bottom: 3px solid transparent !important;
+}
+
+.follow-list-btn .dropdown-toggle::after {
+  display: initial;
+  content: '…';
+  border: none;
+}
+
+.follow-list-btn button {
+  margin: 0 !important;
+}
+
+.follow-list-btn, .follow-list-btn.follow .follow-btn {
+  width: fit-content !important;
+}
+
+.follow-list-btn .following-txt {
+  display: none;
 }
 
 @media screen and (max-width: 678px) {
