@@ -59,7 +59,7 @@ function Comments ({ type, id }) {
             type: 'add'
           })
           setShowEmojis(false)
-          socket.emit('sendComment',{userId:userId,comment: response.data.comment})
+          socket.emit('sendComment', response.data.comment)
 
           setLoading(false)
         }
@@ -109,8 +109,8 @@ function Comments ({ type, id }) {
           const updatedComments = backendComments.filter(
             item => item._id !== commentId
           )
-          socket.emit('deleteComment', updatedComments)
-          // setBackendComments(updatedComments)
+          setBackendComments(updatedComments)
+              // socket.emit('deleteComment', updatedComments)
           setActiveComments({
             id: null,
             type: 'add'
@@ -129,7 +129,6 @@ function Comments ({ type, id }) {
       .then(response => {
         if (response?.status === 200) {
           setBackendComments(response.data.comments)
-          console.log('e')
         }
       })
       .catch(err => {
@@ -166,14 +165,11 @@ function Comments ({ type, id }) {
     fetchComents()
     socket.on('comment', comment => {
       console.log(comment)
-  
-
-        setBackendComments(backendComments => [comment.comment, ...backendComments])
-      
+      setBackendComments(backendComments => [comment, ...backendComments])
     })
     // socket.on('delete-Comment', comments => {
     //   console.log(comments)
-    //   setBackendComments(comments)
+    //   setBackendComments(backendComments => [comments, ...backendComments])
     // })
   }, [id, userId])
 
