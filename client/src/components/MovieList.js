@@ -38,8 +38,8 @@ function MovieList (props) {
       {
         breakpoint: 1200,
         settings: {
-          slidesToShow: ipadCols,
-          slidesToScroll: ipadCols,
+          slidesToShow: 3,
+          slidesToScroll: 3,
           infinite: true,
           dots: false
         }

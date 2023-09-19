@@ -50,66 +50,6 @@ function Comment({
     activeComments.id === comment._id;
   const replyId = parentId ? parentId : comment._id;
 
-  const [likes, setLikes] = useState(comment.likes.length);
-  const [liked, setLiked] = useState(false);
-
-  const handleLike = (commentId) => {
-    if (liked) {
-      setLikes(likes - 1);
-      setLiked(false);
-      updateCommentLike(commentId, "unlike");
-    } else {
-      setLikes(likes + 1);
-      setLiked(true);
-      updateCommentLike(commentId, "like");
-    }
-  };
-
-  const updateCommentLike = async (commentId, type) => {
-    let comment = {
-      userId: userId,
-    };
-    axios
-      .put(
-        `${process.env.REACT_APP_APP_URL}/comments/${type}/${commentId}`,
-        comment
-      )
-      .then((response) => {
-        setShowEmojis(false);
-        if (response?.status === 200) {
-        } else {
-          if (response?.data.message) {
-            setMessage({
-              text: response.data.message || "something want wrong",
-              state: "error",
-            });
-          } else {
-            setMessage({
-              text: "something want wrong",
-              state: "error",
-            });
-          }
-          setLikes(likes);
-          setLiked(liked);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        if (err.response?.data.message) {
-          setMessage({
-            text: err.response.data.message || "something want wrong",
-            state: "error",
-          });
-        } else {
-          setMessage({
-            text: err.message || "something want wrong",
-            state: "error",
-          });
-        }
-        setLikes(likes);
-        setLiked(liked);
-      });
-  };
   const handleClear = () => {
     setMessage({ text: null, state: "error" });
   };
@@ -118,15 +58,7 @@ function Comment({
     if (commentuserId) {
       fetchUser();
     }
-
-    let userLiked = comment.likes.filter((item) => item === userId);
-
-    if (userLiked.length > 0) {
-      setLiked(true);
-    } else {
-      setLiked(false);
-    }
-  }, [commentuserId]);
+  }, [commentuserId, comment]);
 
   const fetchUser = async () => {
     try {
@@ -284,10 +216,12 @@ function Comment({
                 <span> Replay</span>
               </div>
               <LikeButton
-                handleLike={handleLike}
                 commentId={comment._id}
-                likes={likes}
-                liked={liked}
+                setShowEmojis={setShowEmojis}
+                comment={comment}
+                postType={type}
+                id={id}
+                commentLikes={comment.likes}
               />
             </div>
           )}

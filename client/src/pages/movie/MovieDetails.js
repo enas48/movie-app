@@ -4,21 +4,14 @@ import { useParams } from 'react-router-dom'
 import * as MovieApi from '../../api/MovieApi'
 
 import SidebarLayout from '../../components/sidebar/sidebarLayout'
-import StarRating from '../../components/StarRating'
 import MovieList from '../../components/MovieList'
 import Crew from '../../components/crew/Crew'
 import Search from '../../components/search/search'
 import Loading from '../../components/uiElements/preloading'
 import RegisterModal from '../../components/uiElements/RegisterModal'
-
 import Video from '../../components/video/Video'
-
-import { FaPlay } from 'react-icons/fa'
-import { MdLanguage } from 'react-icons/md'
-import { BiTimeFive, BiCameraMovie } from 'react-icons/bi'
 import Comments from '../../components/comment/Comments'
 import AuthContext from '../../helpers/authContext'
-import BfwButton from '../../components/bookFavWatch/BfwButton'
 import MovieDetailsItem from './MovieDetailsItem'
 
 function MovieDetails ({

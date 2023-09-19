@@ -65,7 +65,7 @@ function CarouselItem ({
           <div className='overlay'></div>
         </div>
         <div className='d-flex flex-column card-content'>
-          <div className='d-flex align-items-center gap-1 flex-warp justify-content-between '>
+          <div className='d-flex align-items-center gap-1 flex-wrap justify-content-between '>
             <span className='flex-shrink-0'>
               <MdStar className='text-warning' /> {item.rate}
             </span>

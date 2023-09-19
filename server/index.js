@@ -64,16 +64,9 @@ const io = socketio(server, {
 io.on('connection', socket => {
   console.log(`Socket ${socket.id} connected`)
 
-  /*-------comments----------------*/
-  socket.on('sendComment', comment => {
-    console.log(comment)
-    io.emit('comment', comment)
-  })
-  socket.on('deleteComment', comments => {
-    console.log(comments)
-    io.emit('delete-Comment', comments)
-  })
+
   socket.on('disconnect', () => {
     console.log(`Socket ${socket.id} disconnected`)
   })
 })
+exports.io=io;
