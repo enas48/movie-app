@@ -22,6 +22,9 @@ exports.updateUser = async (id, data) => {
   return await User.findByIdAndUpdate(id, data,{new:true}).select('-password');;
 };
 
+exports.getUser = async (id) => {
+  return await User.findById(id).select('-password');
+};
 
 exports.deleteProfile = async (id) => {
   return await Profile.findByIdAndDelete(id);

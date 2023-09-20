@@ -102,7 +102,7 @@ function TvDetails ({
     <>
       {isLoading && <Loading />}
       <SidebarLayout>
-        <Search />
+        {/* <Search /> */}
         <RegisterModal show={show} handleCloseModal={handleClose} />
         {details?.id && (
           <div className='details-container '>
@@ -118,7 +118,7 @@ function TvDetails ({
             />
             <Video keyVideo={key} playVideo={playVideo} video={video} />
             <Comments id={id} type='tv' currentUserId={userId} />
-            <div className='details-related-content'>
+            <div className='details-related-content container'>
               {details?.seasons && details.seasons.length !== 0 && (
                 <SeasonList
                   bookmarkedIds={bookmarkedIds}

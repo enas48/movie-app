@@ -1,0 +1,22 @@
+.notification .dropdown-toggle::after{
+display: none;
+}
+.notification .notifiction-icon {
+    position: relative;
+}
+.notification .btn .badge {
+    position: absolute;
+    top: 1px;
+    right: 3px;
+    background-color: var(--primary)!important;
+}
+.notification  .icon{
+    font-size: 1.7rem;
+}
+.notification .dropdown-menu {
+    color: var(--white);
+    padding: 0.6rem;
+}
+ .navbar-nav .dropdown-menu{
+    position: absolute!important;
+}

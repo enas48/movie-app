@@ -18,8 +18,8 @@ function SearchList() {
   return (
     <>
       <SidebarLayout>
-        <Search />
-        <div className="search-page p-3 ">
+        {/* <Search /> */}
+        <div className="search-page p-3 container">
           <Nav className="tv-list flex-nowrap flex-shrink-0 mb-3">
             <LinkContainer to={`/searchlist/all/${query}`}>
               <Nav.Link

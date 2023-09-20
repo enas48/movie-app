@@ -33,14 +33,15 @@ function TvList (props) {
     autoplay: true,
     autoplaySpeed: 4000,
     responsive: [
+     
       {
-        breakpoint: 1200,
+        breakpoint: 1400,
         settings: {
-          slidesToShow: ipadCols,
-          slidesToScroll: ipadCols,
+          slidesToShow: 3,
+          slidesToScroll: 3,
           infinite: true,
-          dots: false
-        }
+          dots: false,
+        },
       },
       {
         breakpoint:678,
@@ -106,11 +107,11 @@ function TvList (props) {
   }, [kind, id])
 
   return (
-    <div className='list'>
+    <div className='list container'>
       {series.length !== 0 && (
         <>
           <div className='d-flex align-items-start justify-content-between'>
-            <h3 className='px-md-4 mb-4'>
+            <h3 className=' mb-4'>
               {kind === 'popular' && 'Popular Tv Series'}
               {kind === 'topRated' && 'Top rated Tv Series'}
               {kind === 'onair' && 'On The Air'}
@@ -125,7 +126,7 @@ function TvList (props) {
           {isLoading ? (
             <Loading content={true} />
           ) : (
-            <div className='col-11 mx-auto mb-5 movieList'>
+            <div className='col-12 mx-auto mb-5 movieList '>
               <Slider {...settings}>
                 {series.length !== 0 &&
                   series.map((item, i) => {

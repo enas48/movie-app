@@ -6,7 +6,6 @@ import { AiFillLike } from "react-icons/ai";
 
 function LikeButton({
   commentId,
-  comment,
   id,
   commentLikes,
   postType,

@@ -17,7 +17,7 @@ function SeasonList({ seasons, seriesId }) {
    
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1200,
         settings: {
           slidesToShow: 4,
           slidesToScroll: 4,
@@ -25,6 +25,7 @@ function SeasonList({ seasons, seriesId }) {
           dots: false,
         },
       },
+      
       {
         breakpoint: 600,
         settings: {
@@ -33,13 +34,13 @@ function SeasonList({ seasons, seriesId }) {
           initialSlide: 2,
         },
       },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
+      // {
+      //   breakpoint: 480,
+      //   settings: {
+      //     slidesToShow: 1,
+      //     slidesToScroll: 1,
+      //   },
+      // },
     ],
   };
   useEffect(() => {
@@ -51,9 +52,9 @@ function SeasonList({ seasons, seriesId }) {
   return (
     <>
       {series.length !== 0 && (
-        <div className="seasons-list">
-          <h3 className="px-md-4 mb-4">Seasons</h3>
-          <div className="col-11 mx-auto mb-5 movieList">
+        <div className="seasons-list container">
+          <h3 className=" mb-4">Seasons</h3>
+          <div className="col-12 mx-auto mb-5 movieList">
             {/* <Carousel cols={5} rows={1} gap={10} loop autoplay={6000}> */}
             <Slider {...settings}>
               {series.length !== 0 &&

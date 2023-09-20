@@ -24,7 +24,7 @@ function ViewProfile ({ handleUpdate, edit, setEdit }) {
   const [username, setUsername] = useState('')
   const [followers, setFollowers] = useState([])
   const [following, setFollowing] = useState([])
-  console.log(location.pathname)
+
   const fetchUserProfile = async id => {
     try {
       setLoading(true)
@@ -60,7 +60,7 @@ function ViewProfile ({ handleUpdate, edit, setEdit }) {
     <>
       {loading && <Loading />}
       <SidebarLayout setEdit={setEdit}>
-        <Search />
+        {/* <Search /> */}
         {edit && userId === id ? (
           <EditProfile handleUpdate={handleUpdate} setEdit={setEdit} />
         ) : (
@@ -160,7 +160,7 @@ function ViewProfile ({ handleUpdate, edit, setEdit }) {
             </div>
           </>
         )}
-        <div className='content-wrap'>
+        <div className='content-wrap container'>
           <Nav className='tv-list profile flex-nowrap flex-shrink-0  p-3 pb-0 '>
             {location.pathname.includes('followers') ||
             location.pathname.includes('following') ? (

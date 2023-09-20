@@ -65,7 +65,7 @@ function Episodes ({ episodes }) {
     <>
       <div className='details-related-content eposides'>
         {allEpisodes.length !== 0 && (
-          <>
+          <div className='container'>
             <h3 className='mb-4 px-md-2'>Episodes</h3>
             <div className='row m-0 gap-4 d-flex justify-content-center '>
               {allEpisodes?.slice(0, next)?.map((item,i) => {
@@ -80,7 +80,7 @@ function Episodes ({ episodes }) {
                 Load more
               </button>
             )}
-          </>
+          </div>
         )}
       </div>
     </>

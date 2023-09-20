@@ -43,17 +43,18 @@ function Person (props) {
     autoplaySpeed: 4000,
 
     responsive: [
+    
       {
-        breakpoint: 1024,
+        breakpoint: 1400,
         settings: {
-          slidesToShow: 4,
-          slidesToScroll: 4,
+          slidesToShow: 3,
+          slidesToScroll: 3,
           infinite: true,
-          dots: false
-        }
+          dots: false,
+        },
       },
       {
-        breakpoint: 600,
+        breakpoint: 678,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
@@ -123,7 +124,7 @@ function Person (props) {
       <SidebarLayout>
         <RegisterModal show={props.show} handleCloseModal={props.handleClose} />
         <div className='details-container person-container'>
-          <div className=' details-content row m-0 d-flex justify-content-center'>
+          <div className=' details-content container row m-auto d-flex justify-content-center'>
             <div className='col-md-5 col-lg-3 order-md-2 text-center mb-3'>
               {person?.image && (
                 <LazyLoadImage
@@ -208,9 +209,9 @@ function Person (props) {
 
         {/* movie list */}
         {movies.length !== 0 && (
-          <>
-            <h3 className='px-md-4 mb-4'>Movies</h3>
-            <div className='col-11 mx-auto mb-4 movieList'>
+          <div className='container'>
+            <h3 className=' mb-4'>Movies</h3>
+            <div className='col-12 mx-auto mb-4 movieList'>
               {/* <Carousel cols={4} rows={1} gap={10} loop autoplay={6000}> */}
               <Slider {...settings}>
                 {movies.length !== 0 &&
@@ -235,13 +236,13 @@ function Person (props) {
               </Slider>
               {/* </Carousel> */}
             </div>
-          </>
+          </div>
         )}
         {/* tv list */}
         {series.length !== 0 && (
-          <div className='seasons-list'>
-            <h3 className='px-md-4 mb-4'>Drama Series</h3>
-            <div className='col-11 mx-auto mb-5 movieList'>
+          <div className='seasons-list container'>
+            <h3 className=' mb-4'>Drama Series</h3>
+            <div className='col-12 mx-auto mb-5 movieList'>
               {/* <Carousel cols={4} rows={1} gap={10} loop autoplay={6000}> */}
               <Slider {...settings}>
                 {series.length !== 0 &&

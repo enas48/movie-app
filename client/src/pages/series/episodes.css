@@ -81,7 +81,7 @@
     box-shadow: 0px 1px 5px #000000;
   }
   
-  .episode-bg {
+  /* .episode-bg {
     height: 100%;
     position: absolute;
     top: 2px;
@@ -90,6 +90,18 @@
     filter: blur(2px);
     right: 0;
     background-size: contain;
+  } */
+  .episode-bg {
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0;
+    bottom: 0;
+    filter: blur(1px);
+    right: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
   }
   .eposide-overlay {
     background-color: rgba(0, 0, 0, 0.65);

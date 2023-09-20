@@ -19,7 +19,7 @@ function Watched (props) {
   return (
     <>
       <SidebarLayout>
-        <Search />
+        {/* <Search /> */}
         <div className='p-3'>
           <WatchedList
             bookmarkedIds={bookmarkedIds}

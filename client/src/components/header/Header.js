@@ -15,6 +15,7 @@ import { MdPersonAddAlt1 } from 'react-icons/md'
 import AuthContext from '../../helpers/authContext'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import Search from '../search/search';
+import Notification from '../Notification/Notification'
 
 function Header ({ type }) {
   const { userId, logout } = useContext(AuthContext)
@@ -97,9 +98,14 @@ function Header ({ type }) {
           </Nav>
         
           <Search/>
-          <Nav className=' my-2 my-lg-0' navbarScroll>
+          <Nav className=' my-2 my-lg-0' >
             {userId ? (
-              <>
+              <div className='d-flex align-items-center'>
+               
+
+              <Notification/>
+          
+
                 <Dropdown>
                   <Dropdown.Toggle variant='success' id='dropdown-basic'>
                     <div className='d-flex align-items-center me-1 gap-2'>
@@ -131,7 +137,7 @@ function Header ({ type }) {
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
-              </>
+              </div>
             ) : (
               <span className='d-flex align-items-center'>
                 <LinkContainer to='/login'>

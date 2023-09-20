@@ -181,7 +181,7 @@ function Comments({ type, id }) {
   }, [type, id, userId]);
 
   return (
-    <div className="details-related-content " style={{ zIndex: "13" }}>
+    <div className="details-related-content container" style={{ zIndex: "13" }}>
       <h3 className="mb-4">
         {" "}
         {rootComments.length}&nbsp;Comments &nbsp;

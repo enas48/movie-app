@@ -19,7 +19,7 @@ width: 120px;
     margin-bottom: 1rem;
 }
 .search-page .item:hover{
-    background: var(--dark-active);
+    /* background: var(--dark-active); */
  
 }
 @media screen and (max-width: 480px) {

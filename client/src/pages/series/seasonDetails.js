@@ -92,16 +92,19 @@ function SeasonDetails(props) {
     <>
       {isLoading && <Loading />}
       <SidebarLayout>
-        <Search />
+        {/* <Search /> */}
         <RegisterModal show={props.show} handleCloseModal={props.handleClose} />
         {details?.id && (
-          <div className="details-container ">
-            <div className=" details-content row m-0 d-flex justify-content-center">
+          <>
               <div
                 style={{ backgroundImage: `url(${bg})` }}
                 className="episode-bg"
               ></div>
               <div className="overlay eposide-overlay"></div>
+          <div className="details-container">
+         
+
+            <div className=" details-content row m-auto d-flex justify-content-center container">
 
               <div className="col-md-5 col-lg-3 order-md-2 text-center mb-3">
                 <LazyLoadImage
@@ -242,7 +245,9 @@ function SeasonDetails(props) {
                 cols={4}
               />
             </div>
-          </div>
+            </div>
+        
+          </>
         )}
       </SidebarLayout>
     </>

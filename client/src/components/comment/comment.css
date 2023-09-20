@@ -1,41 +1,41 @@
 /*comment section*/
 .overlay:has(.comment-title) {
-    position: relative;
-  }
-  .comment-title {
-    color: var(--white) !important;
-  }
-  .form .postBtn,
-  .signBox .signBtn {
-    border: 2px solid var(--primary) !important;
-    background-color: var(--primary) !important;
-  }
-  .signBox .loginBtn {
-    border: 2px solid var(--primary) !important;
-    color: var(--primary) !important;
-  }
-  .signBox .loginBtn:hover {
-    border: 2px solid var(--primary-active) !important;
-    color: var(--primary-active) !important;
-  }
-  .signBox .signBtn .form .postBtn:hover {
-    border: 2px solid var(--primary-active) !important;
-    background-color: var(--primary-active) !important;
-  }
-  .details-container .form {
-    background-color: var(--dark-active);
-  }
-  .form .postComment {
-    border-bottom: 1px solid var(--white) !important;
-    color: var(--white) !important;
-  }
-  .form .cancelBtn {
-    color: var(--dark) !important;
-  }
-  .userLink:hover {
-    color: var(--secondry);
-  }
-    
+  position: relative;
+}
+.comment-title {
+  color: var(--white) !important;
+}
+.form .postBtn,
+.signBox .signBtn {
+  border: 2px solid var(--primary) !important;
+  background-color: var(--primary) !important;
+}
+.signBox .loginBtn {
+  border: 2px solid var(--primary) !important;
+  color: var(--primary) !important;
+}
+.signBox .loginBtn:hover {
+  border: 2px solid var(--primary-active) !important;
+  color: var(--primary-active) !important;
+}
+.signBox .signBtn .form .postBtn:hover {
+  border: 2px solid var(--primary-active) !important;
+  background-color: var(--primary-active) !important;
+}
+.details-container .form {
+  background-color: var(--dark-active);
+}
+.form .postComment {
+  border-bottom: 1px solid var(--white) !important;
+  color: var(--white) !important;
+}
+.form .cancelBtn {
+  color: var(--dark) !important;
+}
+.userLink:hover {
+  color: var(--secondry);
+}
+
 .comment-container {
   background: var(--dark-active);
   padding: 1rem;
@@ -150,8 +150,53 @@
   right: 0;
   z-index: 4;
 }
+.like-list  .dropdown-menu {
+  box-shadow: 1px 1px 4px #373636;
+  margin-top: 0 !important;
+}
+.like-list .follow .dropdown-menu{
+  margin-top: 0.6rem!important;
+}
+.like-list > .dropdown-menu {
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 300px;
+}
+.like-list .dropdown-toggle::after {
+  display: none;
+}
+.like-list .dropdown-item {
+  border-bottom: none;
+  padding: 0.5rem 1rem;
+  cursor: default;
+}
+.like-list .img-container {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.like-list .dropdown-item:focus,
+.like-list .dropdown-item:hover,
+.like-list .dropdown-item:active,
+.like-list .dropdown-item.active {
+  background-color: transparent !important;
+}
+.like-list .follow-btn {
+  background-color: var(--secondry) !important;
 
-
+}
+.like-list .list-dropdown.follow,
+.like-list .follow-btn {
+  width: 100px;
+  height: 32px;
+}
+.like-list .list-dropdown.follow .dropdown-item{
+  padding: 0.1rem 1rem;
+}
+.like-list a{
+  color: white!important;
+}
 @media screen and (max-width: 480px) {
   .emoji-container {
     right: -6%;

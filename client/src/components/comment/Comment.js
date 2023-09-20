@@ -1,23 +1,24 @@
-import React, { useEffect, useState, useContext } from "react";
-import "./comment.css";
-import axios from "axios";
-import AuthContext from "../../helpers/authContext";
+import React, { useEffect, useState, useContext } from 'react'
+import './comment.css'
+import axios from 'axios'
+import AuthContext from '../../helpers/authContext'
 import {
   BsFillTrashFill,
   BsFillPencilFill,
   BsFillReplyFill,
   BsThreeDotsVertical,
-  BsSendFill,
-} from "react-icons/bs";
-import { Dropdown, Button } from "react-bootstrap";
-import moment from "moment";
-import { LinkContainer } from "react-router-bootstrap";
-import Modal from "react-bootstrap/Modal";
-import CommentForm from "./CommentForm";
-import LikeButton from "./LikeButton";
-import MessageModal from "../uiElements/messageModel";
+  BsSendFill
+} from 'react-icons/bs'
+import { Dropdown, Button } from 'react-bootstrap'
+import moment from 'moment'
+import { LinkContainer } from 'react-router-bootstrap'
+import Modal from 'react-bootstrap/Modal'
+import CommentForm from './CommentForm'
+import LikeButton from './LikeButton'
+import MessageModal from '../uiElements/messageModel'
+import LikeList from './LikeList'
 
-function Comment({
+function Comment ({
   type,
   id,
   comment,
@@ -32,33 +33,33 @@ function Comment({
   loading,
   showEmojis,
   setShowEmojis,
-  parentId = null,
+  parentId = null
 }) {
-  const { userId } = useContext(AuthContext);
-  const [image, setImage] = useState(process.env.PUBLIC_URL + "/person.png");
-  const [username, setUsername] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  const [message, setMessage] = useState({ text: null, state: "error" });
+  const { userId } = useContext(AuthContext)
+  const [image, setImage] = useState(process.env.PUBLIC_URL + '/person.png')
+  const [username, setUsername] = useState('')
+  const [showModal, setShowModal] = useState(false)
+  const [message, setMessage] = useState({ text: null, state: 'error' })
 
   const isReplying =
     activeComments &&
-    activeComments.type === "replying" &&
-    activeComments.id === comment._id;
+    activeComments.type === 'replying' &&
+    activeComments.id === comment._id
   const isEditing =
     activeComments &&
-    activeComments.type === "editing" &&
-    activeComments.id === comment._id;
-  const replyId = parentId ? parentId : comment._id;
+    activeComments.type === 'editing' &&
+    activeComments.id === comment._id
+  const replyId = parentId ? parentId : comment._id
 
   const handleClear = () => {
-    setMessage({ text: null, state: "error" });
-  };
+    setMessage({ text: null, state: 'error' })
+  }
 
   useEffect(() => {
     if (commentuserId) {
-      fetchUser();
+      fetchUser()
     }
-  }, [commentuserId, comment]);
+  }, [commentuserId, comment])
 
   const fetchUser = async () => {
     try {
@@ -66,75 +67,75 @@ function Comment({
         `${process.env.REACT_APP_APP_URL}/profile/users/${commentuserId}`,
         {
           headers: {
-            Accept: "application/json",
-          },
+            Accept: 'application/json'
+          }
         }
-      );
-      if (result.data.profile.profileImage !== "") {
-        setImage(result.data.profile.profileImage);
+      )
+      if (result.data.profile.profileImage !== '') {
+        setImage(result.data.profile.profileImage)
       }
-      setUsername(result.data.profile.user.username);
+      setUsername(result.data.profile.user.username)
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
-  const handelShowDelete = () => setShowModal(true);
-  const handleCloseDelete = () => setShowModal(false);
-  const handleDeleteComment = (id) => {
-    deleteComment(id);
-    handleCloseDelete();
-  };
+  }
+  const handelShowDelete = () => setShowModal(true)
+  const handleCloseDelete = () => setShowModal(false)
+  const handleDeleteComment = id => {
+    deleteComment(id)
+    handleCloseDelete()
+  }
   return (
     <>
       {message.text && <MessageModal message={message} onClear={handleClear} />}
       <Modal
-        data-bs-theme="dark"
+        data-bs-theme='dark'
         show={showModal}
         onHide={handleCloseDelete}
-        className="delete-modal "
+        className='delete-modal '
       >
         <Modal.Body>
-          <p className="text-center m-auto">
+          <p className='text-center m-auto'>
             Are you sure you want delete this comment?
           </p>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseDelete}>
+          <Button variant='secondary' onClick={handleCloseDelete}>
             Close
           </Button>
           <Button
-            variant="danger"
+            variant='danger'
             onClick={() => handleDeleteComment(comment._id)}
           >
             Delete
           </Button>
         </Modal.Footer>
       </Modal>
-      <div className="comment d-flex flex-column ">
-        <div className="comment-container">
-          <div className="comment-content d-flex gap-2 align-items-center mb-2">
+      <div className='comment d-flex flex-column '>
+        <div className='comment-container'>
+          <div className='comment-content d-flex gap-2 align-items-center mb-2'>
             <LinkContainer
               to={`/profile/${commentuserId}`}
-              className="cursor-pointer"
+              className='cursor-pointer'
             >
-              <div className="comment-image avater">
-                <img className="img-fluid" src={image} alt="img" />
+              <div className='comment-image avater'>
+                <img className='img-fluid' src={image} alt='img' />
               </div>
             </LinkContainer>
             <LinkContainer
               to={`/profile/${commentuserId}`}
-              className="nav-link cursor-pointer"
+              className='nav-link cursor-pointer'
             >
-              <div className="fw-bold">{username}</div>
+              <div className='fw-bold'>{username}</div>
             </LinkContainer>
-            <div className="text-white-50">
+            <div className='text-white-50'>
               {comment?.createdAt &&
                 moment(new Date(comment.createdAt)).fromNow()}
             </div>
-            <div className="comment-action ms-auto d-flex align-items-center gap-2">
+            <div className='comment-action ms-auto d-flex align-items-center gap-2'>
               {userId === commentuserId && (
                 <Dropdown>
-                  <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  <Dropdown.Toggle variant='success' id='dropdown-basic'>
                     <BsThreeDotsVertical />
                   </Dropdown.Toggle>
 
@@ -143,21 +144,21 @@ function Comment({
                       <Dropdown.Item>
                         <div
                           onClick={handelShowDelete}
-                          className="cursor-pointer "
+                          className='cursor-pointer '
                         >
                           <BsFillTrashFill /> Delete
                         </div>
                       </Dropdown.Item>
                       <Dropdown.Item>
                         <div
-                          className="cursor-pointer "
+                          className='cursor-pointer '
                           onClick={() => {
-                            setShowEmojis(false);
+                            setShowEmojis(false)
 
                             setActiveComments({
                               id: comment._id,
-                              type: "editing",
-                            });
+                              type: 'editing'
+                            })
                           }}
                         >
                           <BsFillPencilFill /> Edit
@@ -166,13 +167,13 @@ function Comment({
                     </>
                     <Dropdown.Item>
                       <div
-                        className="cursor-pointer"
+                        className='cursor-pointer'
                         onClick={() => {
-                          setShowEmojis(false);
+                          setShowEmojis(false)
                           setActiveComments({
                             id: comment._id,
-                            type: "replying",
-                          });
+                            type: 'replying'
+                          })
                         }}
                       >
                         <BsFillReplyFill /> Replay
@@ -183,16 +184,16 @@ function Comment({
               )}
             </div>
           </div>
-          {!isEditing && <div className="comment-text">{comment?.text}</div>}
+          {!isEditing && <div className='comment-text'>{comment?.text}</div>}
           {isEditing && (
             <CommentForm
               type={type}
               id={id}
               submitLabel={<BsFillPencilFill />}
-              handleSubmit={(text) => updateComment(text, comment._id)}
+              handleSubmit={text => updateComment(text, comment._id)}
               avaterUrl={userImage}
               setActiveComments={setActiveComments}
-              kind="editing"
+              kind='editing'
               value={comment?.text}
               loading={loading}
               activeComments={activeComments}
@@ -201,15 +202,15 @@ function Comment({
             />
           )}
           {userId && (
-            <div className="d-flex gap-3">
+            <div className='d-flex gap-3'>
               <div
-                className="cursor-pointer text-white-50 reply d-flex align-items-center gap-1"
+                className='cursor-pointer text-white-50 reply d-flex align-items-center gap-1'
                 onClick={() => {
-                  setShowEmojis(false);
+                  setShowEmojis(false)
                   setActiveComments({
                     id: comment._id,
-                    type: "replying",
-                  });
+                    type: 'replying'
+                  })
                 }}
               >
                 <BsFillReplyFill />
@@ -217,12 +218,22 @@ function Comment({
               </div>
               <LikeButton
                 commentId={comment._id}
-                setShowEmojis={setShowEmojis}
-                comment={comment}
-                postType={type}
                 id={id}
                 commentLikes={comment.likes}
+                postType={type}
+                setShowEmojis={setShowEmojis}
               />
+              {comment.likes.length !== 0 && (
+                <div className='ms-auto'>
+                  <LikeList
+                    commentId={comment._id}
+                    id={id}
+                    commentLikes={comment.likes}
+                    postType={type}
+                    setShowEmojis={setShowEmojis}
+                  />
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -231,10 +242,10 @@ function Comment({
             type={type}
             id={id}
             submitLabel={<BsSendFill />}
-            handleSubmit={(text) => addComment(text, replyId)}
+            handleSubmit={text => addComment(text, replyId)}
             avaterUrl={userImage}
             setActiveComments={setActiveComments}
-            kind="replying"
+            kind='replying'
             loading={loading}
             activeComments={activeComments}
             showEmojis={showEmojis}
@@ -242,8 +253,8 @@ function Comment({
           />
         )}
         {replies.length > 0 && (
-          <div className="replies">
-            {replies.map((reply) => (
+          <div className='replies'>
+            {replies.map(reply => (
               <Comment
                 type={type}
                 id={id}
@@ -267,6 +278,6 @@ function Comment({
         )}
       </div>
     </>
-  );
+  )
 }
-export default Comment;
+export default Comment

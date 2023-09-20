@@ -8,9 +8,9 @@ import './profile.css'
 import MessageModal from '../../components/uiElements/messageModel'
 
 function FollowButton ({
-  setFollowers,
+  setFollowers = () => {},
   followUserId,
-  setFollowing,
+  setFollowing = () => {},
   btnType = 'follow-list-btn'
 }) {
   const { userId } = useContext(AuthContext)
@@ -48,8 +48,7 @@ function FollowButton ({
           }
           //to update if userid not equal id
           console.log(btnType)
-          if(btnType !=='follow-list-btn'){
-
+          if (btnType !== 'follow-list-btn') {
             fetchUserProfile(id)
           }
         } else {
@@ -149,7 +148,9 @@ function FollowButton ({
       <Modal
         data-bs-theme='dark'
         show={showModal}
-        onHide={handleCloseDelete}
+        onHide={
+          handleCloseDelete
+          }
         className='delete-modal '
       >
         <Modal.Body>
@@ -158,12 +159,20 @@ function FollowButton ({
           </p>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='secondary' onClick={handleCloseDelete}>
+          <Button variant='secondary' onClick={e => {
+              e.stopPropagation()
+              e.preventDefault()
+              handleCloseDelete()
+              }}>
             Close
           </Button>
           <Button
             variant='danger'
-            onClick={() => handleDeleteFollow(followUserId)}
+            onClick={e => {
+              e.stopPropagation()
+              e.preventDefault()
+              handleDeleteFollow(followUserId)
+            }}
           >
             Delete
           </Button>
@@ -176,15 +185,26 @@ function FollowButton ({
               className={`list-dropdown follow ${
                 btnType === 'follow-list-btn' ? 'follow-list-btn' : ''
               }`}
+              onClick={e => {
+                e.stopPropagation()
+                e.preventDefault()
+              }}
             >
-              <Dropdown.Toggle variant='success' id='dropdown-basic'>
-                <span className='following-txt'> Following</span>
+              <Dropdown.Toggle variant='success' id={followUserId}>
+                <span className='following-txt'  
+                    
+                      > Following</span>
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
                 <Dropdown.Item>
                   <button
-                    onClick={() => handelShowDelete(followUserId)}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      e.preventDefault()
+                      handelShowDelete(followUserId)}
+                    }
+                      
                     className=' btn icon-container text-danger'
                   >
                     Unfollow
@@ -197,7 +217,9 @@ function FollowButton ({
               className={`secondry-btn rounded follow-btn ${
                 btnType === 'follow-list-btn' ? 'follow-list-btn' : ''
               }`}
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation()
+                e.preventDefault()
                 handleFollow(followUserId)
               }}
             >

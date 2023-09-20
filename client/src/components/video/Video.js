@@ -6,9 +6,9 @@ function Video ({ video, keyVideo, playVideo }) {
   return (
     <>
       {video.length !== 0 && (
-        <div className='details-related-content'>
+        <div className='details-related-content container'>
           <h3 className='mb-4'>Videos</h3>
-          <div className='gap-4 d-flex justify-content-center flex-wrap container'>
+          <div className='gap-4 d-flex justify-content-center flex-wrap '>
             <div className=' my-2 w-100 w-md-60 rounded overflow-hidden'>
               {video.map(
                 (item, i) =>

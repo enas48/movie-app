@@ -152,8 +152,8 @@ function AllSeries(props) {
       <SidebarLayout>
         <RegisterModal show={props.show} handleCloseModal={props.handleClose} />
 
-        <Search />
-        <div className="p-3 ">
+        {/* <Search /> */}
+        <div className="p-3 container">
           <div className="d-flex justify-content-between flex-wrap mb-2">
             <Nav className="tv-list flex-nowrap flex-shrink-0 mb-3">
               <LinkContainer to="onair">

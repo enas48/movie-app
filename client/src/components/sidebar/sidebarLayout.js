@@ -7,13 +7,18 @@ import './sidebarLayout.css'
 function SidebarLayout (props) {
   return (
     <>
-      <div className='content-container'>
+      <div className=''>
+      <Header  />
+        <div className='d-flex flex-column '>{props.children}</div>
+      </div>
+      {/* <div className='content-container'>
+      <Header  />
         <Header type='leftsidebar' />
         <div className='d-flex'>
           <LeftSidebar setEdit={props?.setEdit} />
         </div>
         <div className='content d-flex flex-column '>{props.children}</div>
-      </div>
+      </div> */}
     </>
   )
 }

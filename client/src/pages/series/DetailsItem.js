@@ -20,6 +20,7 @@ function DetailsItem ({
         style={{ backgroundImage: `url(${image})` }}
         className=' details-bg details-content d-flex flex-column gap-2'
       >
+        <div className='container'>
         <div className='d-flex gap-3 align-items-center'>
           <span>
             &bull;&nbsp;
@@ -105,6 +106,7 @@ function DetailsItem ({
             item={details}
           />
         </div>
+      </div>
       </div>
     </>
   )

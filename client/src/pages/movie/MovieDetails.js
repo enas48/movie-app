@@ -24,7 +24,7 @@ function MovieDetails ({
   handleClose,
   show
 }) {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const { id } = useParams()
   const [details, setDetails] = useState({})
   const [image, setImage] = useState(null)
@@ -111,9 +111,9 @@ function MovieDetails ({
 
   useEffect(() => {
     const loadData = async () => {
-      setIsLoading(true)
-      await new Promise(r => setTimeout(r, 1000))
-      setIsLoading(false)
+      // setIsLoading(true)
+      // await new Promise(r => setTimeout(r, 1000))
+      // setIsLoading(false)
     }
     loadData()
     if (id) {
@@ -128,7 +128,7 @@ function MovieDetails ({
       {isLoading && <Loading />}
 
       <SidebarLayout>
-        <Search />
+        {/* <Search /> */}
         <RegisterModal show={show} handleCloseModal={handleClose} />
         {details?.id && (
           <div className='details-container '>
@@ -148,7 +148,7 @@ function MovieDetails ({
             <Crew id={id} type='movie' />
             <Video keyVideo={key} playVideo={playVideo} video={trailerVideo} />
             <Comments id={id} type='movie' currentUserId={userId} />
-            <div className='details-related-content'>
+            <div className='details-related-content container'>
               <MovieList
                 bookmarkedIds={bookmarkedIds}
                 favouriteIds={favouriteIds}

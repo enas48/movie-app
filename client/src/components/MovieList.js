@@ -36,14 +36,15 @@ function MovieList (props) {
     autoplaySpeed: 4000,
     responsive: [
       {
-        breakpoint: 1200,
+        breakpoint: 1400,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
-          dots: false
-        }
+          dots: false,
+        },
       },
+     
       {
         breakpoint: 678,
         settings: {
@@ -107,11 +108,11 @@ function MovieList (props) {
   }, [kind, id])
 
   return (
-    <div className='list'>
+    <div className='list container'>
       {movies.length !== 0 && (
         <>
           <div className='d-flex align-items-start justify-content-between'>
-            <h3 className='px-md-4 mb-4'>
+            <h3 className=' mb-4'>
               {kind === 'trending' && 'Trending movies'}
               {kind === 'topRated' && 'Top rated movies'}
               {kind === 'upcoming' && 'Upcoming movies'}
@@ -126,7 +127,7 @@ function MovieList (props) {
           {isLoading ? (
             <Loading content={true} />
           ) : (
-            <div className='col-11 mx-auto mb-4 movieList'>
+            <div className='col-12 mx-auto mb-4 movieList'>
               <Slider {...settings}>
                 {movies.length !== 0 &&
                   movies.map((item, i) => {

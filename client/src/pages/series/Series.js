@@ -27,7 +27,7 @@ function Series (props) {
           handleCloseModal={props.handleClose}
         />
 
-          <Search  />
+          {/* <Search  /> */}
         <div className='p-3 '>
           <TvList
             bookmarkedIds={props.bookmarkedIds}

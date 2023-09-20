@@ -47,9 +47,9 @@ function Crew({ id, type }) {
 
   return (
     <>
-      <div className="details-related-content">
+      <div className="details-related-content ">
         {crew.length !== 0 && (
-          <>
+          < div className="container">
             <h2>Cast</h2>
             <div className="row m-0 gap-4 d-flex justify-content-center ">
               {crew?.slice(0, next)?.map((item) => {
@@ -86,7 +86,7 @@ function Crew({ id, type }) {
                 Load more
               </button>
             )}
-          </>
+          </div>
         )}
       </div>
     </>

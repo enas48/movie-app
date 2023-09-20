@@ -23,7 +23,7 @@ function Movies (props) {
       <SidebarLayout>
         <RegisterModal show={props.show} handleCloseModal={props.handleClose} />
 
-        <Search />
+        {/* <Search /> */}
         <div className='p-3 '>
           <MovieList
             bookmarkedIds={props.bookmarkedIds}
