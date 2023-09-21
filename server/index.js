@@ -4,6 +4,8 @@ const connectDB = require('./config/db')
 const cors = require('cors')
 const port = process.env.PORT || 8000
 const socketio = require('socket.io')
+const profileService = require('./services/profileService')
+const NotificationService = require('./services/notificationService')
 
 connectDB()
 const app = express()
@@ -61,12 +63,31 @@ const io = socketio(server, {
   }
 })
 // Socket.IO
+let onlineUser = []
 io.on('connection', socket => {
   console.log(`Socket ${socket.id} connected`)
+  socket.on('setUserId', async userId => {
+    if (userId) {
+      const oneUser = await profileService.getUser(userId)
+      if (oneUser) {
+        onlineUser[userId] = socket
+        console.log(`⚡ Socket: User with id ${userId} connected`)
+      } else {
+        console.log(`🚩 Socket: No user with id ${userId}`)
+      }
+    }
+  })
+  socket.on('getNotificationsLength', async userId => {
+    const notifications = NotificationService.getNotificationByUserId(
+      userId,
+      false
+    )
+    onlineUser[userId]?.emit('notificationsLength', notifications.length || 0)
+  })
 
-
-  socket.on('disconnect', () => {
+  socket.on('disconnect', userId => {
     console.log(`Socket ${socket.id} disconnected`)
+    onlineUser[userId] = null
   })
 })
-exports.io=io;
+exports.io = io
