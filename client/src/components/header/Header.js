@@ -17,7 +17,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import Search from '../search/search';
 import Notification from '../Notification/Notification'
 
-function Header ({ type }) {
+function Header ({ type, setEdit = () => {} }) {
   const { userId, logout } = useContext(AuthContext)
   const [profileImage, setImage] = useState(process.env.PUBLIC_URL + './person.png')
   const [name, setName] = useState('')
@@ -122,7 +122,7 @@ function Header ({ type }) {
 
                   <Dropdown.Menu>
                     <Dropdown.Item>
-                      <LinkContainer to={`/profile/${userId}`}>
+                      <LinkContainer to={`/profile/${userId}`}    onClick={() => setEdit(false)}>
                         <Nav.Link>profile</Nav.Link>
                       </LinkContainer>
                     </Dropdown.Item>
