@@ -31,9 +31,13 @@ const getProfileById = async (req, res, next) => {
 const getProfileByUserId = async (req, res, next) => {
   try {
     const userId = req.params.userid
-    if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
+    if (!userId) {
+      const error = new HttpError('Verify your data and proceed again', 401)
+      return next(error)
+    }
+    if (!userId || !userId.match(/^[0-9a-fA-F]{24}$/)) {
       // Yes, it's a valid ObjectId, proceed with `findById` call.
-      const error = new HttpError('user not found', 401)
+      const error = new HttpError('You must give a valid id', 401)
       return next(error)
     }
     const user = await User.findById(userId)

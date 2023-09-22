@@ -1,88 +1,84 @@
-import './notification.css'
-import React, { useEffect, useState, useContext } from 'react'
-import axios from 'axios'
-import AuthContext from '../../helpers/authContext'
-import Dropdown from 'react-bootstrap/Dropdown'
-import { Link } from 'react-router-dom'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
-import { IoIosNotificationsOutline } from 'react-icons/io'
-import {BiMessageRoundedError} from 'react-icons/bi'
-import Badge from 'react-bootstrap/Badge';
+import "./notification.css";
+import React, { useEffect, useState, useContext } from "react";
+import axios from "axios";
+import AuthContext from "../../helpers/authContext";
+import Dropdown from "react-bootstrap/Dropdown";
+import { Link } from "react-router-dom";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { BsFillPersonFill, BsFillHeartFill } from "react-icons/bs";
+import moment from "moment";
 
+function Notification({ notification }) {
+  const [image, setImage] = useState(process.env.PUBLIC_URL + "/person.png");
+  const [username, setUsername] = useState("");
 
-function Notification ({}) {
-  const { userId } = useContext(AuthContext)
-  const [notification, setNotification] = useState([])
-
-  //   const getLikesDetails = async commentLikes => {
-  //     try {
-  //       let arr = []
-  //       for (let data of commentLikes) {
-  //         const response = await axios(
-  //           `${process.env.REACT_APP_APP_URL}/profile/users/${data}`,
-  //           {
-  //             headers: {
-  //               Accept: 'application/json'
-  //             }
-  //           }
-  //         ).then(details => {
-  //           return details.data.profile
-  //         })
-  //         const details = await response
-  //         arr.push(details)
-  //       }
-
-  //       setLikesList(arr)
-  //     } catch (err) {
-  //       console.log(err)
-  //     }
-  //   }
-
-  useEffect(() => {}, [])
+  const fetchUser = async (id) => {
+    try {
+      const result = await axios(
+        `${process.env.REACT_APP_APP_URL}/profile/users/${id}`,
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
+      if (result.data.profile.profileImage !== "") {
+        setImage(result.data.profile.profileImage);
+      }
+      setUsername(result.data.profile.user.username);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    if (notification?.senderUser) {
+      fetchUser(notification.senderUser);
+    }
+  }, [notification]);
 
   return (
-    <Dropdown className='notification'>
-      <Dropdown.Toggle variant='success' id='notification' className='notifiction-icon'>
-      {notification.length !==0 && <Badge  className='rounded-circle'>9</Badge>}
-   <IoIosNotificationsOutline className='icon'/>
-      </Dropdown.Toggle>
-      <Dropdown.Menu>
-        {notification.length !== 0?
-          notification.map(item => {
-            console.log(item)
-            return (
-              <Dropdown.Item
-                key={item._id}
-                className='d-flex gap-2 align-items-center'
-              >
-                <Link to={`/profile/${item.user._id}`} className='w-100'>
-                  <div className='d-flex gap-2 align-items-center w-100'>
-                    <div className='img-container'>
-                      {item.profileImage !== '' && (
-                        <LazyLoadImage
-                          src={item.profileImage}
-                          alt={item.user?.username}
-                          className='img-fluid'
-                        />
-                      )}
-                      {item.profileImage === '' && (
-                        <LazyLoadImage
-                          className='no-img img-fluid'
-                          src={process.env.PUBLIC_URL + '../../person.png'}
-                          alt=''
-                        />
-                      )}
-                    </div>
-                    <span>
-                      {item.user?.username}
-                    </span>
-                  </div>
-                </Link>
-              </Dropdown.Item>
-            )
-          }) :<span>No Notification <BiMessageRoundedError/></span>}
-      </Dropdown.Menu>
-    </Dropdown>
-  )
+    <Dropdown.Item className={` ${notification.read ? "" : "active"}`}>
+      <div className="d-flex gap-2 align-items-center">
+        <Link
+          to={`/profile/${notification?.senderUser}`}
+          className=" text-white"
+        >
+          <div className="d-flex gap-2 align-items-center">
+            <div className="img-container avater">
+              {image !== "" && (
+                <LazyLoadImage src={image} alt="" className="img-fluid" />
+              )}
+              {image === "" && (
+                <LazyLoadImage
+                  className="no-img img-fluid"
+                  src={process.env.PUBLIC_URL + "../../person.png"}
+                  alt=""
+                />
+              )}
+            </div>
+            <span>{username}</span>
+          </div>
+        </Link>
+        {notification?.type === "like" && (
+          <Link to={`${notification?.link}`} className=" text-white">
+            <span>{notification?.text}</span>
+          </Link>
+        )}
+
+        {notification?.type === "follow" && (
+          <Link
+            to={`/profile/${notification?.senderUser}`}
+            className=" text-white"
+          >
+            <span>{notification?.text}</span>
+          </Link>
+        )}
+      </div>
+      <div className="text-white-50">
+        {notification?.createdAt &&
+          moment(new Date(notification.createdAt)).fromNow()}
+      </div>
+    </Dropdown.Item>
+  );
 }
-export default Notification
+export default Notification;

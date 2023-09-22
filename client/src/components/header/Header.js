@@ -1,32 +1,34 @@
-import React, { useState, useContext, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import './header.css'
-import Container from 'react-bootstrap/Container'
-import Nav from 'react-bootstrap/Nav'
-import Navbar from 'react-bootstrap/Navbar'
-import Dropdown from 'react-bootstrap/Dropdown'
-import { LinkContainer } from 'react-router-bootstrap'
+import React, { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./header.css";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import Dropdown from "react-bootstrap/Dropdown";
+import { LinkContainer } from "react-router-bootstrap";
 
-import { RiMovie2Fill } from 'react-icons/ri'
-import { BiLogIn } from 'react-icons/bi'
-import { MdPersonAddAlt1 } from 'react-icons/md'
+import { RiMovie2Fill } from "react-icons/ri";
+import { BiLogIn } from "react-icons/bi";
+import { MdPersonAddAlt1 } from "react-icons/md";
 
-import AuthContext from '../../helpers/authContext'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
-import Search from '../search/search';
-import Notification from '../Notification/Notification'
+import AuthContext from "../../helpers/authContext";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import Search from "../search/search";
+import Notifications from "../Notification/Notifications";
 
-function Header ({ type, setEdit = () => {} }) {
-  const { userId, logout } = useContext(AuthContext)
-  const [profileImage, setImage] = useState(process.env.PUBLIC_URL + './person.png')
-  const [name, setName] = useState('')
-  let navigate = useNavigate()
+function Header({ type, setEdit = () => {} }) {
+  const { userId, logout } = useContext(AuthContext);
+  const [profileImage, setImage] = useState(
+    process.env.PUBLIC_URL + "./person.png"
+  );
+  const [name, setName] = useState("");
+  let navigate = useNavigate();
 
   const handleLogout = () => {
-    logout()
-    navigate('/login', { replace: true })
-  }
+    logout();
+    navigate("/login", { replace: true });
+  };
 
   const fetchUser = async () => {
     try {
@@ -34,53 +36,53 @@ function Header ({ type, setEdit = () => {} }) {
         `${process.env.REACT_APP_APP_URL}/profile/users/${userId}`,
         {
           headers: {
-            Accept: 'application/json'
-          }
+            Accept: "application/json",
+          },
         }
-      )
-      if (result.data.profile.profileImage !== '') {
-        setImage(result.data.profile.profileImage)
+      );
+      if (result.data.profile.profileImage !== "") {
+        setImage(result.data.profile.profileImage);
       }
-      setName(result.data.profile.user.username)
+      setName(result.data.profile.user.username);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   useEffect(() => {
     if (userId) {
-      fetchUser()
+      fetchUser();
     }
-  }, [userId])
+  }, [userId]);
 
   return (
     <Navbar
-      bg='dark'
-      variant='dark'
-      expand='lg'
-      className={type === 'leftsidebar' ? 'leftsidebar-nav' : ''}
-      sticky="top" 
+      bg="dark"
+      variant="dark"
+      expand="lg"
+      className={type === "leftsidebar" ? "leftsidebar-nav" : ""}
+      sticky="top"
     >
       <Container>
-        <LinkContainer to='/'>
+        <LinkContainer to="/">
           <Navbar.Brand>
-            <RiMovie2Fill className='movie-icon' />
+            <RiMovie2Fill className="movie-icon" />
             Movie
           </Navbar.Brand>
         </LinkContainer>
-        <Navbar.Toggle aria-controls='navbarScroll' />
-        <Navbar.Collapse id='navbarScroll'>
-          <Nav className='me-auto my-2 my-lg-0' navbarScroll>
-            <LinkContainer to='/'>
+        <Navbar.Toggle aria-controls="navbarScroll" />
+        <Navbar.Collapse id="navbarScroll">
+          <Nav className="me-auto my-2 my-lg-0" navbarScroll>
+            <LinkContainer to="/">
               <Nav.Link>Home</Nav.Link>
             </LinkContainer>
-            <LinkContainer to='/movies'>
+            <LinkContainer to="/movies">
               <Nav.Link>Movies</Nav.Link>
             </LinkContainer>
-            <LinkContainer to='/series'>
+            <LinkContainer to="/series">
               <Nav.Link>Tv Series</Nav.Link>
             </LinkContainer>
-            
+
             {/* {userId && (
               <>
                 <LinkContainer to='/wishlist'>
@@ -94,26 +96,22 @@ function Header ({ type, setEdit = () => {} }) {
                 </LinkContainer>
               </>
             )} */}
-            
           </Nav>
-        
-          <Search/>
-          <Nav className=' my-2 my-lg-0' >
-            {userId ? (
-              <div className='d-flex align-items-center'>
-               
 
-              <Notification/>
-          
+          <Search />
+          <Nav className=" my-2 my-lg-0">
+            {userId ? (
+              <div className="d-flex align-items-center">
+                <Notifications />
 
                 <Dropdown>
-                  <Dropdown.Toggle variant='success' id='dropdown-basic'>
-                    <div className='d-flex align-items-center me-1 gap-2'>
-                      <div className='avater'>
+                  <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    <div className="d-flex align-items-center me-1 gap-2">
+                      <div className="avater">
                         <LazyLoadImage
                           src={profileImage}
-                          className='img-fluid'
-                          alt=''
+                          className="img-fluid"
+                          alt=""
                         />
                       </div>
                       <span>{name}</span>
@@ -122,49 +120,51 @@ function Header ({ type, setEdit = () => {} }) {
 
                   <Dropdown.Menu>
                     <Dropdown.Item>
-                      <LinkContainer to={`/profile/${userId}`}    onClick={() => setEdit(false)}>
+                      <LinkContainer
+                        to={`/profile/${userId}`}
+                        onClick={() => setEdit(false)}
+                      >
                         <Nav.Link>profile</Nav.Link>
                       </LinkContainer>
                     </Dropdown.Item>
                     <Dropdown.Item>
                       <button
                         onClick={handleLogout}
-                        className='btn-outline d-flex align-items-center gap-2 text-danger'
+                        className="btn-outline d-flex align-items-center gap-2 text-danger"
                       >
-                        <span className='icon-text'>Logout</span>
-                        <BiLogIn className='icon' />
+                        <span className="icon-text">Logout</span>
+                        <BiLogIn className="icon" />
                       </button>
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </div>
             ) : (
-              <span className='d-flex align-items-center'>
-                <LinkContainer to='/login'>
+              <span className="d-flex align-items-center">
+                <LinkContainer to="/login">
                   <Nav.Link>
-                    <span className='d-flex align-items-center gap-2'>
+                    <span className="d-flex align-items-center gap-2">
                       <BiLogIn />
-                      <span className='icon-text'>Login</span>
+                      <span className="icon-text">Login</span>
                     </span>
                   </Nav.Link>
                 </LinkContainer>
                 <span>|</span>
-                <LinkContainer to='/register'>
+                <LinkContainer to="/register">
                   <Nav.Link>
-                    <span className='d-flex align-items-center gap-2'>
+                    <span className="d-flex align-items-center gap-2">
                       <MdPersonAddAlt1 />
-                      <span className='icon-text'>Signup</span>
+                      <span className="icon-text">Signup</span>
                     </span>
                   </Nav.Link>
                 </LinkContainer>
               </span>
             )}
           </Nav>
-      
         </Navbar.Collapse>
       </Container>
     </Navbar>
-  )
+  );
 }
 
-export default Header
+export default Header;

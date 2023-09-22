@@ -3,14 +3,20 @@ const Schema = mongoose.Schema;
 
 const NotificationSchema = new Schema(
   {
-   
-  
-    userId: { type: mongoose.Schema.Types.ObjectId, require: true ,   ref: "User"},
-    title: { type: String, require: true },
-    type: { type: Number, required: true },
+    senderUser: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      require: true,
+      ref: "User",
+    },
+    type: { type: String, required: true },
     text: { type: String, require: true },
     read: { type: Boolean, default: false },
- 
+    link: { type: String },
   },
   {
     timestamps: true,

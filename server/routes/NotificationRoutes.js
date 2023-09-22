@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const {
+  createNotification,
   getAllNotifications,
   deleteNotification,
   markOneNotificationasread,
@@ -11,9 +12,13 @@ const { protect } = require('../middleware/authMiddleware')
 
 router
   .route('/')
-  .post(getAllNotifications)
+  .post(createNotification)
   .delete(deleteNotification)
   .put(markOneNotificationasread)
+
+  router
+  .route('/:userId')
+  .get(getAllNotifications)
 
 router
   .route('/all')
