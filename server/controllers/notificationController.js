@@ -9,7 +9,7 @@ const main = require("../index");
 //@access private
 const createNotification = async (req, res, next) => {
   try {
-    const { senderUser, userId, type, text, read, link } = req.body;
+    const { senderUser, userId, type, text, read, link, commentId} = req.body;
     const notification = await NotificationService.createNotification({
       senderUser,
       userId,
@@ -17,6 +17,7 @@ const createNotification = async (req, res, next) => {
       text,
       read,
       link,
+      commentId
     }); 
     main.io.emit("set-notification", notification);
 

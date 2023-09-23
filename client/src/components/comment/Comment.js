@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext,useRef  } from "react";
 import "./comment.css";
 import axios from "axios";
 import AuthContext from "../../helpers/authContext";
@@ -11,7 +11,8 @@ import {
 } from "react-icons/bs";
 import { Dropdown, Button } from "react-bootstrap";
 import moment from "moment";
-import { LinkContainer } from "react-router-bootstrap";
+import { LinkContainer  } from "react-router-bootstrap";
+import { useLocation } from 'react-router-dom'
 import Modal from "react-bootstrap/Modal";
 import CommentForm from "./CommentForm";
 import LikeButton from "./LikeButton";
@@ -35,12 +36,15 @@ function Comment({
   setShowEmojis,
   parentId = null,
 }) {
+  const ref = useRef(null);
   const { userId } = useContext(AuthContext);
   const [image, setImage] = useState(process.env.PUBLIC_URL + "/person.png");
   const [username, setUsername] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [message, setMessage] = useState({ text: null, state: "error" });
-
+  const location = useLocation()
+  const  commentId  = location?.state?.commentId
+  console.log(commentId)
   const isReplying =
     activeComments &&
     activeComments.type === "replying" &&
@@ -54,11 +58,35 @@ function Comment({
   const handleClear = () => {
     setMessage({ text: null, state: "error" });
   };
+  function scrollToId(itemId) {
+    console.log(itemId)
+    const map = getMap();
+    const node = map.get(itemId);
+    console.log(node)
+    node?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'center'
+    });
+  }
+
+  function getMap() {
+    if (!ref.current) {
+      // Initialize the Map on first usage.
+      ref.current = new Map();
+    }
+    return ref.current;
+  }
 
   useEffect(() => {
     if (commentuserId) {
       fetchUser();
     }
+ 
+    if(commentId){
+      scrollToId(commentId)
+    }
+
   }, [commentuserId, comment]);
 
   const fetchUser = async () => {
@@ -112,7 +140,14 @@ function Comment({
         </Modal.Footer>
       </Modal>
       <div className="comment d-flex flex-column ">
-        <div className="comment-container" id={comment?._id}>
+        <div className="comment-container" id={comment._id} ref={(node) => {
+                const map = getMap();
+                if (node) {
+                  map.set(comment?._id, node);
+                } else {
+                  map.delete(comment?._id);
+                }
+              }}  >
           <div className="comment-content d-flex gap-2 align-items-center mb-2">
             <LinkContainer
               to={`/profile/${commentuserId}`}
@@ -222,6 +257,7 @@ function Comment({
                 commentLikes={comment.likes}
                 postType={type}
                 setShowEmojis={setShowEmojis}
+                comment={comment}
               />
               {comment.likes.length !== 0 && (
                 <div className="ms-auto">

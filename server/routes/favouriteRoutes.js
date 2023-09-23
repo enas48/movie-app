@@ -9,4 +9,4 @@ router.route('/').post(protect, createFavourite);
 router.route('/:userid').get(protect, getFavouritesByUserId);
 router.route('/:userId/:id').delete(protect, deleteFavourite);
 
-module.exports = router;
+module.exports = router; 

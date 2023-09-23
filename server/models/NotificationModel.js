@@ -17,6 +17,7 @@ const NotificationSchema = new Schema(
     text: { type: String, require: true },
     read: { type: Boolean, default: false },
     link: { type: String },
+    commentId:{ type: String },
   },
   {
     timestamps: true,
