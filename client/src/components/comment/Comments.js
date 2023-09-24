@@ -1,45 +1,43 @@
-import React, { useEffect, useState, useContext } from "react";
-import "./comment.css";
-import axios from "axios";
-import AuthContext from "../../helpers/authContext";
-import Comment from "./Comment";
-import { LinkContainer } from "react-router-bootstrap";
-import CommentForm from "./CommentForm";
-import { BsSendFill } from "react-icons/bs";
-import { FaRegComment } from "react-icons/fa";
-import io from "socket.io-client";
+import React, { useEffect, useState, useContext } from 'react'
+import './comment.css'
+import axios from 'axios'
+import AuthContext from '../../helpers/authContext'
+import Comment from './Comment'
+import { LinkContainer } from 'react-router-bootstrap'
+import CommentForm from './CommentForm'
+import { BsSendFill } from 'react-icons/bs'
+import { FaRegComment } from 'react-icons/fa'
+import io from 'socket.io-client'
 
-const socket = io(`${process.env.REACT_APP_APP_URL}`, { reconnection: true });
+const socket = io(`${process.env.REACT_APP_APP_URL}`, { reconnection: true })
 
-function Comments({ type, id }) {
-  const { userId } = useContext(AuthContext);
-  const [userImage, setImage] = useState(
-    process.env.PUBLIC_URL + "/person.png"
-  );
+function Comments ({ type, id }) {
+  const { userId } = useContext(AuthContext)
+  const [userImage, setImage] = useState(process.env.PUBLIC_URL + '/person.png')
   const [activeComments, setActiveComments] = useState({
     id: null,
-    type: "add",
-  });
-  const [backendComments, setBackendComments] = useState([]);
-  const [authorized, setAuthorized] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [showEmojis, setShowEmojis] = useState(false);
+    type: 'add'
+  })
+  const [backendComments, setBackendComments] = useState([])
+  const [authorized, setAuthorized] = useState(true)
+  const [loading, setLoading] = useState(false)
+  const [showEmojis, setShowEmojis] = useState(false)
 
   const rootComments = backendComments
-    .filter((c) => c.parentCommentId === null)
+    .filter(c => c.parentCommentId === null)
     .sort(
       (a, b) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    );
+    )
 
-  const getReplies = (commentId) => {
+  const getReplies = commentId => {
     return backendComments
-      .filter((item) => item.parentCommentId === commentId)
+      .filter(item => item.parentCommentId === commentId)
       .sort(
         (a, b) =>
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-      );
-  };
+      )
+  }
 
   const addComment = (text, parentId = null) => {
     let comment = {
@@ -47,38 +45,38 @@ function Comments({ type, id }) {
       text: text,
       post_id: id,
       type: type,
-      parentCommentId: parentId,
-    };
-    setLoading(true);
+      parentCommentId: parentId
+    }
+    setLoading(true)
     axios
       .post(`${process.env.REACT_APP_APP_URL}/comments`, comment)
-      .then((response) => {
+      .then(response => {
         if (response?.status === 200) {
           // setBackendComments([response.data.comment, ...backendComments]);
           setActiveComments({
             id: null,
-            type: "add",
-          });
-          setShowEmojis(false);
-          setLoading(false);
+            type: 'add'
+          })
+          setShowEmojis(false)
+          setLoading(false)
         }
       })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
-  };
+      .catch(err => {
+        console.log(err)
+        setLoading(false)
+      })
+  }
   const updateComment = (text, commentId) => {
     let comment = {
       userId: userId,
       text: text,
       post_id: id,
-      type: type,
-    };
-    setLoading(true);
+      type: type
+    }
+    setLoading(true)
     axios
       .put(`${process.env.REACT_APP_APP_URL}/comments/${commentId}`, comment)
-      .then((response) => {
+      .then(response => {
         if (response?.status === 200) {
           // const updatedComments = backendComments.map((item) => {
           //   if (item._id === commentId) {
@@ -90,25 +88,25 @@ function Comments({ type, id }) {
           // setBackendComments(updatedComments);
           setActiveComments({
             id: null,
-            type: "add",
-          });
-          setShowEmojis(false);
-          setLoading(false);
+            type: 'add'
+          })
+          setShowEmojis(false)
+          setLoading(false)
         }
       })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
-  };
+      .catch(err => {
+        console.log(err)
+        setLoading(false)
+      })
+  }
 
-  const deleteComment = (commentId) => {
-    let data = { post_id: id, type: type };
+  const deleteComment = commentId => {
+    let data = { post_id: id, type: type }
     axios
       .delete(`${process.env.REACT_APP_APP_URL}/comments/${commentId}`, {
-        data: data,
+        data: data
       })
-      .then((response) => {
+      .then(response => {
         if (response.status === 200) {
           // const updatedComments = backendComments.filter(
           //   item => item._id !== commentId
@@ -116,28 +114,28 @@ function Comments({ type, id }) {
           // setBackendComments(updatedComments)
           setActiveComments({
             id: null,
-            type: "add",
-          });
-          setShowEmojis(false);
+            type: 'add'
+          })
+          setShowEmojis(false)
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+      .catch(err => {
+        console.log(err)
+      })
+  }
 
   const fetchComents = async () => {
     axios
       .get(`${process.env.REACT_APP_APP_URL}/comments/${type}/${id}`)
-      .then((response) => {
+      .then(response => {
         if (response?.status === 200) {
-          setBackendComments(response.data.comments);
+          setBackendComments(response.data.comments)
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+      .catch(err => {
+        console.log(err)
+      })
+  }
 
   const fetchUser = async () => {
     try {
@@ -145,65 +143,62 @@ function Comments({ type, id }) {
         `${process.env.REACT_APP_APP_URL}/profile/users/${userId}`,
         {
           headers: {
-            Accept: "application/json",
-          },
+            Accept: 'application/json'
+          }
         }
-      );
-      if (result.data.profile.profileImage !== "") {
-        setImage(result.data.profile.profileImage);
+      )
+      if (result.data.profile.profileImage !== '') {
+        setImage(result.data.profile.profileImage)
       }
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
+  }
 
   useEffect(() => {
     if (!userId) {
-      setAuthorized(false);
+      setAuthorized(false)
     }
     if (userId) {
-      fetchUser();
+      fetchUser()
     }
 
-    fetchComents();
-    socket.on("add-comment", (comment) => {
-      console.log(comment);
-      setBackendComments((backendComments) => [comment, ...backendComments]);
-    });
-    socket.on("update-comment", (comments) => {
-      console.log(comments);
-      setBackendComments(comments);
-    });
-    socket.on("delete-Comment", (comments) => {
-      console.log(comments);
-      setBackendComments(comments);
-    });
-  }, [type, id, userId]);
+    fetchComents()
+    socket.on('add-comment', comment => {
+      setBackendComments(backendComments => [comment, ...backendComments])
+    })
+    socket.on('update-comment', comments => {
+      setBackendComments(comments)
+    })
+    socket.on('delete-Comment', comments => {
+      setBackendComments(comments)
+    })
+  }, [type, id, userId])
 
   return (
-    <div className="details-related-content container" style={{ zIndex: "13" }}>
-      <h3 className="mb-4">
-        {" "}
+    <div className='details-related-content container' style={{ zIndex: '13' }}>
+      <h3 className='mb-4'>
+        {' '}
         {rootComments.length}&nbsp;Comments &nbsp;
         <FaRegComment />
       </h3>
-      <div className="container">
-        <div className="comments-container ">
+      <div className='container'>
+        <div className='comments-container '>
           {!authorized && (
-            <div className="login-comments d-flex align-items-center gap-2 justify-content-between flex-wrap ">
-              <p className="mb-0">Login or signup to leave a comment</p>
-              <div className="d-flex gap-2">
-                <LinkContainer to="/login">
-                  <button className="btn  btn-outline rounded">Login</button>
+            <div className='login-comments d-flex align-items-center gap-2 justify-content-between flex-wrap '>
+              <p className='mb-0'>Login or signup to leave a comment</p>
+              <div className='d-flex gap-2'>
+                <LinkContainer to='/login'>
+                  <button className='btn  btn-outline rounded'>Login</button>
                 </LinkContainer>
-                <LinkContainer to="/register">
-                  <button className="btn custom-btn rounded">Signup</button>
+                <LinkContainer to='/register'>
+                  <button className='btn custom-btn rounded'>Signup</button>
                 </LinkContainer>
               </div>
             </div>
           )}
         </div>
-        <div className="comments-container ">
+        <div className='comments-container '>
           {authorized && (
             <CommentForm
               type={type}
@@ -212,7 +207,7 @@ function Comments({ type, id }) {
               handleSubmit={addComment}
               avaterUrl={userImage}
               setActiveComments={setActiveComments}
-              kind="add"
+              kind='add'
               activeComments={activeComments}
               loading={loading}
               showEmojis={showEmojis}
@@ -220,8 +215,8 @@ function Comments({ type, id }) {
             />
           )}
         </div>
-        <div className="comments-container">
-          {rootComments.map((item) => (
+        <div className='comments-container'>
+          {rootComments.map(item => (
             <Comment
               type={type}
               id={id}
@@ -243,6 +238,6 @@ function Comments({ type, id }) {
         </div>
       </div>
     </div>
-  );
+  )
 }
-export default Comments;
+export default Comments

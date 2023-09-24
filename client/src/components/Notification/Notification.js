@@ -30,6 +30,22 @@ function Notification ({ notification }) {
       console.log(err)
     }
   }
+
+  const markOneNotificationasread = async (id, userId) => {
+    let data = { id, userId }
+    axios
+      .put(`${process.env.REACT_APP_APP_URL}/notifications`, data)
+      .then(response => {
+        if (response?.status === 200) {
+        } else {
+  
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
   useEffect(() => {
     if (notification?.senderUser) {
       fetchUser(notification.senderUser)
@@ -42,6 +58,7 @@ function Notification ({ notification }) {
         <Link
           to={`/profile/${notification?.senderUser}`}
           className=' text-white'
+          onClick={() => markOneNotificationasread(notification._id,notification.userId)}
         >
           <div className='d-flex gap-2 align-items-center'>
             <div className='img-container avater'>
@@ -64,6 +81,9 @@ function Notification ({ notification }) {
             to={`${notification?.link}`}
             state={{ commentId: '650ab3351ac0c89b671241c8' }}
             className=' text-white'
+            onClick={() =>
+              markOneNotificationasread(notification._id, notification.userId)
+            }
           >
             <span>{notification?.text}</span>
           </Link>
@@ -73,6 +93,9 @@ function Notification ({ notification }) {
           <Link
             to={`/profile/${notification?.senderUser}`}
             className=' text-white'
+            onClick={() =>
+              markOneNotificationasread(notification._id, notification.userId)
+            }
           >
             <span>{notification?.text}</span>
           </Link>

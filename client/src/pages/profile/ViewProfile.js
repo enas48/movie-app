@@ -54,6 +54,7 @@ function ViewProfile ({ handleUpdate, edit, setEdit }) {
     if (id) {
       fetchUserProfile(id)
     }
+    
   }, [id, edit])
 
   return (

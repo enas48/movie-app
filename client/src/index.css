@@ -310,6 +310,7 @@ form .icon-container .icon {
   opacity: 1;
   box-shadow: none;
   background-color: var(--primary-active) !important;
+  color: white;
 }
 
 .custom-btn.disabled,

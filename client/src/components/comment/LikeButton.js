@@ -22,11 +22,19 @@ function LikeButton ({
     if (liked) {
       setLikes(likes - 1)
       setLiked(false)
-      updateCommentLike(commentId, 'unlike')
+      updateCommentLike(commentId, 'unlike').then(() => {
+        if (userId !== comment.userId) {
+          deleteNotification()
+        }
+      })
     } else {
       setLikes(likes + 1)
       setLiked(true)
-      updateCommentLike(commentId, 'like')
+      updateCommentLike(commentId, 'like').then(() => {
+        if (userId !== comment.userId) {
+          createNotification()
+        }
+      })
     }
   }
 
@@ -44,9 +52,7 @@ function LikeButton ({
       .then(response => {
         setShowEmojis(false)
         if (response?.status === 200) {
-          createNotification()
         } else {
-          console.log(response?.data.message)
           setLikes(likes)
           setLiked(liked)
         }
@@ -65,14 +71,13 @@ function LikeButton ({
       type: 'like',
       text: 'liked your comment.',
       read: false,
-      link: `${process.env.REACT_APP_APP_URL}/${location.pathname}`,
+      link: `${location.pathname}`,
       commentId: commentId
     }
     axios
       .post(`${process.env.REACT_APP_APP_URL}/notifications`, notification)
       .then(response => {
         if (response?.status === 200) {
-          console.log(response.data)
         } else {
         }
       })
@@ -81,21 +86,25 @@ function LikeButton ({
       })
   }
 
-  const deleteNotification = (id) => {
-    let data = { id: id};
+  const deleteNotification = () => {
+    let data = {
+      type: 'like',
+      commentId: commentId,
+      senderUser: userId,
+      userId: comment.userId
+    }
     axios
       .delete(`${process.env.REACT_APP_APP_URL}/notifications`, {
-        data: data,
+        data: data
       })
-      .then((response) => {
+      .then(response => {
         if (response.status === 200) {
-       
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+      .catch(err => {
+        console.log(err)
+      })
+  }
 
   useEffect(() => {
     let userLiked = commentLikes.filter(item => item === userId)

@@ -20,4 +20,9 @@ display: none;
  .navbar-nav .dropdown-menu{
     position: absolute!important;
     padding: 0;
+    max-height: 300px;
+    overflow-y: auto;
+}
+.notification .dropdown-item:has(button):hover{
+background-color: var(--dark-active)!important;
 }

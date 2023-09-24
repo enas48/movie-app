@@ -19,15 +19,15 @@ function FollowButton ({
   const [showModal, setShowModal] = useState(false)
   const [followed, setFollowed] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-
+  const [notificationId, setNotificationId] = useState('')
   const handleFollow = followUserId => {
     setFollowed(true)
-    handleFollowUser(followUserId, 'follow')
+    handleFollowUser(followUserId, 'follow').then(() => createNotification())
   }
 
   const handleUnfollow = followUserId => {
     setFollowed(false)
-    handleFollowUser(followUserId, 'unfollow')
+    handleFollowUser(followUserId, 'unfollow').then(() => deleteNotification())
   }
 
   const handleFollowUser = async (followUserId, type) => {
@@ -41,13 +41,11 @@ function FollowButton ({
       )
       .then(response => {
         if (response?.status === 200) {
-          console.log(response.data.user)
           if (userId === id) {
             setFollowers(response.data.user.followers)
             setFollowing(response.data.user.following)
           }
           //to update if userid not equal id
-          console.log(btnType)
           if (btnType !== 'follow-list-btn') {
             fetchUserProfile(id)
           }
@@ -80,6 +78,67 @@ function FollowButton ({
           })
         }
         setFollowed(false)
+      })
+  }
+  const getNotifications = async id => {
+    try {
+      const response = await axios(
+        `${process.env.REACT_APP_APP_URL}/notifications/${id}`,
+        {
+          headers: {
+            Accept: 'application/json'
+          }
+        }
+      )
+      if (response.data?.notifications) {
+        response.data.notifications.map(item => {
+          if (item.type === 'follow' && item.senderUser === userId) {
+            setNotificationId(item._id)
+          }
+        })
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  const createNotification = async () => {
+    let notification = {
+      senderUser: userId,
+      userId: followUserId,
+      type: 'follow',
+      text: 'started following you.',
+      read: false,
+      link: `/profile/${userId}`
+    }
+    axios
+      .post(`${process.env.REACT_APP_APP_URL}/notifications`, notification)
+      .then(response => {
+        if (response?.status === 200) {
+          getNotifications(followUserId)
+        } else {
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+  const deleteNotification = () => {
+    let data = {
+      type: 'follow',
+      id: notificationId,
+      userId: followUserId
+    }
+    axios
+      .delete(`${process.env.REACT_APP_APP_URL}/notifications`, {
+        data: data
+      })
+      .then(response => {
+        if (response.status === 200) {
+
+        }
+      })
+      .catch(err => {
+        console.log(err)
       })
   }
   const fetchUserProfile = async id => {
@@ -141,6 +200,8 @@ function FollowButton ({
     if (userId) {
       fetchUser(userId)
     }
+    getNotifications(followUserId)
+
   }, [id])
   return (
     <>
@@ -148,9 +209,7 @@ function FollowButton ({
       <Modal
         data-bs-theme='dark'
         show={showModal}
-        onHide={
-          handleCloseDelete
-          }
+        onHide={handleCloseDelete}
         className='delete-modal '
       >
         <Modal.Body>
@@ -159,11 +218,14 @@ function FollowButton ({
           </p>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='secondary' onClick={e => {
+          <Button
+            variant='secondary'
+            onClick={e => {
               e.stopPropagation()
               e.preventDefault()
               handleCloseDelete()
-              }}>
+            }}
+          >
             Close
           </Button>
           <Button
@@ -191,20 +253,17 @@ function FollowButton ({
               }}
             >
               <Dropdown.Toggle variant='success' id={followUserId}>
-                <span className='following-txt'  
-                    
-                      > Following</span>
+                <span className='following-txt'> Following</span>
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
                 <Dropdown.Item>
                   <button
-                    onClick={(e) => {
+                    onClick={e => {
                       e.stopPropagation()
                       e.preventDefault()
-                      handelShowDelete(followUserId)}
-                    }
-                      
+                      handelShowDelete(followUserId)
+                    }}
                     className=' btn icon-container text-danger'
                   >
                     Unfollow
@@ -217,7 +276,7 @@ function FollowButton ({
               className={`secondry-btn rounded follow-btn ${
                 btnType === 'follow-list-btn' ? 'follow-list-btn' : ''
               }`}
-              onClick={(e) => {
+              onClick={e => {
                 e.stopPropagation()
                 e.preventDefault()
                 handleFollow(followUserId)

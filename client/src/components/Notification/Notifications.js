@@ -17,8 +17,13 @@ function Notifications ({}) {
   const { userId } = useContext(AuthContext)
   const [notification, setNotification] = useState([])
   const [notificationLength, setNotificationsLength] = useState(0)
-
-  const getNotifications = async (userId) => {
+  const itemPerRow = 5
+  const [next, setNext] = useState(itemPerRow)
+  const handleMoreItem = e => {
+    e.stopPropagation()
+    setNext(next + itemPerRow)
+  }
+  const getNotifications = async userId => {
     try {
       const response = await axios(
         `${process.env.REACT_APP_APP_URL}/notifications/${userId}`,
@@ -29,7 +34,7 @@ function Notifications ({}) {
         }
       )
       if (response.data?.notifications) {
-        console.log(response.data.notifications)
+   
         setNotification(response.data.notifications)
       }
     } catch (err) {
@@ -38,38 +43,45 @@ function Notifications ({}) {
   }
 
   useEffect(() => {
-    console.log(notificationLength)
     if (userId) {
       getNotifications(userId)
     }
-    let timer
+
     socket?.on('connect', () => {
       socket.emit('setUserId', userId)
-      // Getting first notifications length
       socket.emit('getNotificationsLength', userId)
+
       socket?.on('notificationsLength', data => {
         setNotificationsLength(data)
       })
+
       socket?.on('set-notification', data => {
-        console.log(data)
         socket.emit('getNotificationsLength', userId)
-        setNotification(notification => [...notification, data])
+        if (userId === data.userId) {
+          setNotification(notification => [...notification, data])
+        }
       })
-      timer = setTimeout(() => {
-        console.log('d')
+      socket?.on('delete-notification', data => {
         socket.emit('getNotificationsLength', userId)
-        getNotifications(userId)
-      }, 10000) // run every 10 seconds
+        if (userId === data.userId) {
+          setNotification(data)
+        }
+      })
+      socket?.on('update-notification', data => {
+        socket.emit('getNotificationsLength', userId)
+        if (userId === data.userId) {
+          setNotification(data)
+        }
+      })
       socket?.on('disconnect', () => {})
     })
 
     return () => {
-      socket?.off("connect");
-      socket?.off("disconnect");
-      socket?.off("notifications");
-      // clearTimeout(timer)
+      socket?.off('connect')
+      socket?.off('disconnect')
+      socket?.off('notifications')
     }
-  }, [userId, socket,])
+  }, [userId, socket, notificationLength])
 
   return (
     <Dropdown className='notification'>
@@ -79,7 +91,6 @@ function Notifications ({}) {
         drop='down-centered'
         title={
           <div className='notification-icon'>
-            {' '}
             {notification.length !== 0 && notificationLength !== 0 && (
               <Badge className='rounded-circle'>{notificationLength}</Badge>
             )}
@@ -87,7 +98,6 @@ function Notifications ({}) {
           </div>
         }
       >
-        {' '}
         {notification.length !== 0 ? (
           notification
             .sort(
@@ -95,7 +105,8 @@ function Notifications ({}) {
                 new Date(b.createdAt).getTime() -
                 new Date(a.createdAt).getTime()
             )
-            .map(item => {
+            ?.slice(0, next)
+            ?.map(item => {
               return <Notification key={item?._id} notification={item} />
             })
         ) : (
@@ -103,28 +114,17 @@ function Notifications ({}) {
             No Notification <BiMessageRoundedError />
           </Dropdown.Item>
         )}
+        <Dropdown.Item className='p-0'>
+          {next < notification?.length && (
+            <button
+              className='m-auto btn  my-2'
+              onClick={e => handleMoreItem(e)}
+            >
+              Load more
+            </button>
+          )}
+        </Dropdown.Item>
       </DropdownButton>
-      {/* <Dropdown.Toggle
-        variant="success"
-        id="notification"
-        className="notifiction-icon"
-      >
-        {notificationLength !== 0 && (
-          <Badge className="rounded-circle">{notificationLength}</Badge>
-        )}
-        <IoIosNotificationsOutline className="icon" />
-      </Dropdown.Toggle> */}
-      {/* <Dropdown.Menu className="p-0">
-        {notification.length !== 0 ? (
-          notification.map((item) => {
-            return <Notification key={item?._id} notification={item} />;
-          })
-        ) : (
-          <span>
-            No Notification <BiMessageRoundedError />
-          </span>
-        )}
-      </Dropdown.Menu> */}
     </Dropdown>
   )
 }
