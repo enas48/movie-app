@@ -28,8 +28,6 @@ function WatchedList(props) {
   const handleWatched = (e, id, type) => {
     e.stopPropagation();
     addWatched(id, type);
-    // console.log(profileUserId)
-    // console.log(userId)
     if (!profilePage || userId === profileUserId) {
       if (type === "movie") {
         let filteredWatched = watchedMovie.filter((item) => {

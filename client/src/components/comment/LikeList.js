@@ -56,7 +56,6 @@ function LikeList ({ commentId, id, commentLikes, postType, setShowEmojis }) {
         }`}
       >
         {likesList.map(item => {
-          console.log(item)
           return (
             <Dropdown.Item
               key={item._id}
@@ -99,9 +98,7 @@ function LikeList ({ commentId, id, commentLikes, postType, setShowEmojis }) {
           )
         })}
       </DropdownButton>
-
     </Dropdown>
-
   )
 }
 export default LikeList

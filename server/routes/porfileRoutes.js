@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const dotenv = require('dotenv').config();
+const dotenv = require('dotenv').config()
 const {
   getProfileByUserId,
   getProfileById,
@@ -27,11 +27,17 @@ const storage = new CloudinaryStorage({
 })
 const parser = multer({ storage: storage })
 
-router.route('/:id').get(getProfileById).put( parser.fields([{name:'profileImage',maxCount:1},
-{name:'coverImage',maxCount:1},
-
-]), protect, updatedProfile)
+router
+  .route('/:id')
+  .get(getProfileById)
+  .put(
+    parser.fields([
+      { name: 'profileImage', maxCount: 1 },
+      { name: 'coverImage', maxCount: 1 }
+    ]),
+    protect,
+    updatedProfile
+  )
 router.route('/users/:userid').get(getProfileByUserId)
 
 module.exports = router
- 

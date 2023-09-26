@@ -111,14 +111,14 @@ function AllMovies (props) {
     })
     MovieApi.getCountries().then(data => {
       // let countries = data.map(item => {
-      //   console.log(item)
+      //
       //   return { name: item.english_name, code: item.iso_3166_1 }
       // })
 
-      let countries =[
+      let countries = [
         { name: 'America', code: 'US' },
         { name: 'Egypt', code: 'EG' },
-        { name: 'United Kingdom', code: 'GB' },
+        { name: 'United Kingdom', code: 'GB' }
         // { name: 'Germany', code: 'DE' },
         // { name: 'France', code: 'FR' },
         // { name: 'Spain', code: 'ES' },
@@ -153,7 +153,7 @@ function AllMovies (props) {
       {isLoading && <Loading />}
       <SidebarLayout>
         <RegisterModal show={props.show} handleCloseModal={props.handleClose} />
-{/* 
+        {/* 
         <Search /> */}
         <div className='p-3 container'>
           <div className='d-flex justify-content-between flex-wrap mb-2'>

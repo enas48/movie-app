@@ -96,16 +96,7 @@ const updatedProfile = async (req, res, next) => {
       } else {
         coverImage = req.files['coverImage'][0].path
       }
-      // console.log(req.files['bgImage'])
-      // if (req.file) {
-
-      // console.log(req.files['image'])
-      // console.log(req.files['bgImage'])
-      // imageurl = req.file.path
-
-      // } else {
-      //   imageurl = profile.image
-      // }
+    
       await profileService.updateUser(userId, {
         username: req.body.username
       })

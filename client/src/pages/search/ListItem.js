@@ -9,14 +9,13 @@ import { BiCameraMovie } from 'react-icons/bi'
 import { useParams, useOutletContext } from 'react-router-dom'
 import * as MovieApi from '../../api/MovieApi'
 
-
 function ListItem () {
   const [list, setList] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [totalPages, setTotalPages] = useState(1)
   const [results, setResults] = useState(0)
   const [images, setImages] = useState([])
-  const [badWords, setBackwords] = useState([]);
+  const [badWords, setBackwords] = useState([])
   const { type, query } = useParams()
 
   let [handleChange, currentPage] = useOutletContext()
@@ -119,15 +118,15 @@ function ListItem () {
         } else {
           setTotalPages(data.total_pages)
         }
-        let filtered = data.results.filter((i) => {
-          const helloExist = badWords.some((item) =>
+        let filtered = data.results.filter(i => {
+          const helloExist = badWords.some(item =>
             (i?.name || i?.title).toLowerCase().includes(item)
-          );
-          console.log(helloExist);
+          )
+
           if (!helloExist) {
-            return i;
+            return i
           }
-        });
+        })
         setList(filtered)
         if (data.media_type === 'person') {
           preloadPersonImages(data.results).then(data => {
@@ -147,15 +146,15 @@ function ListItem () {
         } else {
           setTotalPages(data.total_pages)
         }
-        let filtered = data.results.filter((i) => {
-          const helloExist = badWords.some((item) =>
+        let filtered = data.results.filter(i => {
+          const helloExist = badWords.some(item =>
             (i?.name || i?.title).toLowerCase().includes(item)
-          );
-          console.log(helloExist);
+          )
+
           if (!helloExist) {
-            return i;
+            return i
           }
-        });
+        })
 
         setList(filtered)
         if (type === 'person') {
@@ -178,7 +177,7 @@ function ListItem () {
   }
 
   useEffect(() => {
-    MovieApi.badWords().then((data) => setBackwords(data));
+    MovieApi.badWords().then(data => setBackwords(data))
     if (type === 'all') {
       loadData(currentPage)
     } else {
@@ -192,8 +191,8 @@ function ListItem () {
         <Loading content={true} />
       ) : list.length !== 0 ? (
         <div className=''>
-          <p>       {results} results</p>
-   
+          <p> {results} results</p>
+
           {list.map((item, i) => {
             return (
               <div key={i} className='item'>

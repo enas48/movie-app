@@ -212,7 +212,7 @@ const unfollowUser = async (req, res, next) => {
       return next(error);
     }
 
-    console.log(user.following.includes(followUserId));
+  
     if(user.following.includes(followUserId)){
 
       let updatedUser = await profileService.updateUser(userId, {
