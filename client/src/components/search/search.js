@@ -116,16 +116,14 @@ function Search() {
       )}
       {searchField !== "" && searchField.length < 3 && (
         <div className="search-results  p-3">
-          <span >
-            Please enter at least 3 characters to search...
-          </span>
+          <span>Please enter at least 3 characters to search...</span>
         </div>
       )}
       {searchList.length === 0 &&
         searchField !== "" &&
         searchField.length >= 3 && (
           <div className="search-results p-3">
-            <span >No Results found</span>
+            <span>No Results found</span>
           </div>
         )}
     </div>

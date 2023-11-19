@@ -105,28 +105,31 @@ const loginUser = async (req, res, next) => {
 
 const getUser = async (req, res) => {
   try {
-  const { userId } = req.body
+    const { userId } = req.body;
 
-  if (!userId) {
-      const error = new HttpError('Verify your data and proceed again', 401)
-      return next(error)
+    if (!userId) {
+      const error = new HttpError("Verify your data and proceed again", 401);
+      return next(error);
+    }
+    if (!userId || !userId.match(/^[0-9a-fA-F]{24}$/)) {
+      const error = new HttpError("You must give a valid id", 401);
+      return next(error);
+    }
+    // Check if the note exist
+    const oneUser = await User.findById(userId).lean().exec();
+    if (!oneUser) {
+      const error = new HttpError(
+        `Can't find a user with this id: ${userId}`,
+        401
+      );
+      return next(error);
+    }
+    res.json(oneUser);
+  } catch (err) {
+    const error = new HttpError(err.message, 500);
+    return next(error);
   }
-  if (!userId || !userId.match(/^[0-9a-fA-F]{24}$/)) {
-    const error = new HttpError('You must give a valid id', 401)
-    return next(error)
-  }
-  // Check if the note exist
-  const oneUser = await User.findById(userId).lean().exec()
-  if (!oneUser) {
-    const error = new HttpError(`Can't find a user with this id: ${userId}`, 401)
-    return next(error)
-  }
-  res.json(oneUser)
-} catch (err) {
-  const error = new HttpError(err.message, 500)
-  return next(error)
-}
-}
+};
 
 // @desc update comment
 //@route put /users/follow/:id
@@ -158,16 +161,14 @@ const followUser = async (req, res, next) => {
       return next(error);
     }
 
-
-    if(!user.following.includes(followUserId)){
-
+    if (!user.following.includes(followUserId)) {
       let updatedUser = await profileService.updateUser(userId, {
         $push: { following: followUserId },
       });
       let updatedFollowingUser = await profileService.updateUser(followUserId, {
         $push: { followers: userId },
       });
-  
+
       res.status(200).json({
         user: updatedUser,
         followingUser: updatedFollowingUser,
@@ -185,7 +186,7 @@ const followUser = async (req, res, next) => {
 //@route put /users/unfollow/:id
 //@access private
 const unfollowUser = async (req, res, next) => {
-   const followUserId = req.params.id;
+  const followUserId = req.params.id;
   try {
     const { userId } = req.body;
     if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
@@ -204,7 +205,7 @@ const unfollowUser = async (req, res, next) => {
       const error = new HttpError("user not found", 401);
       return next(error);
     }
-    
+
     const userToFollow = await User.findById(followUserId);
     //check for  user
     if (!userToFollow) {
@@ -212,16 +213,14 @@ const unfollowUser = async (req, res, next) => {
       return next(error);
     }
 
-  
-    if(user.following.includes(followUserId)){
-
+    if (user.following.includes(followUserId)) {
       let updatedUser = await profileService.updateUser(userId, {
         $pull: { following: followUserId },
       });
       let updatedFollowingUser = await profileService.updateUser(followUserId, {
         $pull: { followers: userId },
       });
-      
+
       res.status(200).json({
         user: updatedUser,
         followingUser: updatedFollowingUser,
@@ -247,5 +246,5 @@ module.exports = {
   getUser,
   generateToken,
   followUser,
-  unfollowUser
+  unfollowUser,
 };
